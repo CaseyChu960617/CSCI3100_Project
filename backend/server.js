@@ -1,5 +1,5 @@
 //Import
-//const Users = require('./userSchema')
+
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -7,6 +7,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Users = require('./model/user')
 
 //App config
 const app = express();
@@ -18,7 +19,7 @@ const connectionURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PAS
 
 
 //Middleware
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(cors());
 
 socketIO.on("connection", (socket) => {
@@ -39,15 +40,15 @@ http.listen(port, () => {
 
     db.on('error', console.error.bind(console, 'Connection error:'));// Upon opening the database successfully
 
-    db.once('open', function () {
+    db.once('open', () => {
         console.log("Connection is open...");
     });
 
     //API routes
     app.post("/signup", async (req, res) => {
         console.log(req.body);
+
         var lastname = req.body.lastname;
-        console.log(lastname);
         var firstname = req.body.firstname;
         var username = req.body.username;
         var email = req.body.email;
@@ -55,38 +56,39 @@ http.listen(port, () => {
         var gender = req.body.gender;
         var reset_token = "";
 
-        db.collection("users").findOne({
-            $or: [{
-                "email": email
-            }, {
-                "username": username
-            }]
-        }), (err,user) => {
+        Users.findOne({
+                "email": email,
+                "username": username    
+        }, (err,user) => {
             if (user == null) {
+                console.log("user null");
                 bcrypt.hash(password, 10, (err, hash) => {
-                    db.collection("users").insertOne({
-                        "lastname": lastname,
-                        "firstname": firstname,
-                        "username": username,
-                        "email": email,
-                        "password": hash,
-                        "gender": gender,
-                        "reset_token": reset_token,
-                        "profileImage": "",
-                        "following": [],
-                        "notifications": [],
-                        "groups": [],
-                        "posts": []
+                    Users.create({
+                        lastname: lastname,
+                        firstname: firstname,
+                        username: username,
+                        email: email,
+                        password: hash,
+                        gender: gender,
+                        reset_token: reset_token,
+                        profileImage: "",
                     });
+                });
+                res.status(201).json({
+                    "status": "201",
+                    "message": "Account created successfully"
                 });
             } else {
                 res.json({
                     "status": "error",
                     "message": "Email or username already exist."
-                })
+                });
             }
         }
+        );
     });
+
+    
 });
 
 
