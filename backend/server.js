@@ -56,39 +56,33 @@ http.listen(port, () => {
         var gender = req.body.gender;
         var reset_token = "";
 
-        Users.findOne({
-                "email": email,
-                "username": username    
-        }, (err,user) => {
-            if (user == null) {
-                console.log("user null");
-                bcrypt.hash(password, 10, (err, hash) => {
-                    Users.create({
-                        lastname: lastname,
-                        firstname: firstname,
-                        username: username,
-                        email: email,
-                        password: hash,
-                        gender: gender,
-                        reset_token: reset_token,
-                        profileImage: "",
-                    });
+        try {   
+            hash = await bcrypt.hash(password, 10) 
+            const response = await Users.create({
+                lastname: lastname,
+                firstname: firstname,
+                username: username,
+                email: email,
+                password: hash,
+                gender: gender,
+                reset_token: reset_token,
+                profileImage: "",
                 });
-                res.status(201).json({
-                    "status": "201",
-                    "message": "Account created successfully"
-                });
-            } else {
-                res.json({
+            res.status(201).json({
+                "status": "201",
+                "message": "Account created successfully"
+            });
+        } catch (err) {
+            if (err.code === 11000) {
+                return res.json({
                     "status": "error",
                     "message": "Email or username already exist."
                 });
             }
+            throw err
         }
-        );
+        
     });
-
-    
 });
 
 
