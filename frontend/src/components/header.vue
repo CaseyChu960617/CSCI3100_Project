@@ -5,11 +5,11 @@
       <v-toolbar-title style="cursor: pointer" @click="$router.push('/home')">Urge</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="currentUser">
-        <v-btn to="/profile" class="grey darken-3 mr-2">{{ currentUser.username }}</v-btn>
-        <v-btn @click="logOut" class="grey darken-2">Logout</v-btn>
+        <v-btn to="/profile" class="grey darken-3 mr-2 text-capitalize">{{ currentUser.username }}</v-btn>
+        <v-btn @click="signout" class="grey darken-2">Sign out</v-btn>
       </div>
       <div v-else>
-        <v-toolbar-title style="cursor: pointer" @click="$router.push('/login')">Sign up / Login</v-toolbar-title>
+        <v-btn to="/sign">Sign up / Sign in</v-btn>
       </div>
     </v-app-bar>
 
@@ -54,9 +54,9 @@ export default {
     },
   },
   methods: {
-    logOut() {
-      this.$store.dispatch("auth/logout");
-      this.$router.push("/login");
+    signout() {
+      this.$store.dispatch("auth/signout");
+      this.$router.push("/home");
     },
   },
 };

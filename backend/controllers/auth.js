@@ -60,7 +60,7 @@ exports.signin = async (req, res) => {
     const user = await User.findOne({ email }).lean();
 
     if (!user) {
-        return res.json({ status: 'error', error: 'Invalid email'});
+        return res.status(400).send({ status: 'error', error: 'Invalid email'});
     }
 
     if (await bcrypt.compare(password, user.password)) {
@@ -69,7 +69,7 @@ exports.signin = async (req, res) => {
             process.env.JWT_ACC_ACTIVATE,
             { expiresIn: '20m'});
 
-        res.json({ accessToken: token,
+        res.status(200).send({ accessToken: token,
             uid: user._id,
             lastname: user.lastname,
             firstname: user.firstname,
@@ -78,7 +78,7 @@ exports.signin = async (req, res) => {
             gender: user.gender });
     }
     else
-        res.json({ status: 'error', error:'Invalid password'});
+        res.status(400).send({ status: 'error', error:'Invalid password'});
 };
 
 exports.activateAccount = async (req, res) => {

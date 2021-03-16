@@ -1,10 +1,10 @@
 import http from "../http-common";
 
 class AuthService {
-  login(user) {
+  signin(user) {
     return http
-      .post("/signin", {
-        username: user.username,
+      .post("/auth/signin", {
+        email: user.email,
         password: user.password,
       })
       .then((response) => {
@@ -16,7 +16,7 @@ class AuthService {
       });
   }
 
-  logout() {
+  signout() {
     localStorage.removeItem("user");
   }
 }

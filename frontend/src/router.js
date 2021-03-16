@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import home from "./components/home.vue";
-import login from "./components/login.vue";
+import sign from "./components/sign.vue";
 import profile from "./components/profile.vue";
 
 Vue.use(Router);
@@ -14,8 +14,8 @@ export const router = new Router({
       component: home,
     },
     {
-      path: "/login",
-      component: login,
+      path: "/sign",
+      component: sign,
     },
     {
       path: "/profile",

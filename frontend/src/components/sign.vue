@@ -1,24 +1,27 @@
 <template>
   <v-layout class="mt-8" justify-center>
-    <v-flex xs12 sm8 md4>
+    <v-flex xs12 sm8 md3>
       <v-card class="elevation-12">
         <v-toolbar dark>
-          <v-toolbar-title>Login form</v-toolbar-title>
+          <v-toolbar-title>Sign In</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-card-text>
           <v-form>
+            
             <v-text-field
               prepend-icon="mdi-account"
-              v-model="username"
-              label="Username"
+              v-model="email"
+              label="Email"
               type="text"
+              @keypress.enter="signin"
             ></v-text-field>
             <v-text-field
               prepend-icon="mdi-lock"
               v-model="password"
               label="Password"
               type="password"
+              @keypress.enter="signin"
             ></v-text-field>
           </v-form>
         </v-card-text>
@@ -27,7 +30,7 @@
             {{ message }}
           </div>
           <v-spacer></v-spacer>
-          <v-btn dark @click="logIn" class="mr-4 mb-2">Login</v-btn>
+          <v-btn dark @click="signin"  class="mr-4 mb-2">Sign In</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -38,26 +41,26 @@
 export default {
   data() {
     return {
-      username: null,
+      email: null,
       password: null,
       message: "",
     };
   },
   created: function () {
-    this.$store.dispatch("auth/logout");
+    this.$store.dispatch("auth/signout");
   },
   methods: {
-    logIn() {
+    signin() {
       this.$store
-        .dispatch("auth/login", {
-          username: this.username,
+        .dispatch("auth/signin", {
+          email: this.email,
           password: this.password,
         })
         .then(() => {
-          this.$router.push("/user");
+          this.$router.push("/profile");
         })
         .catch((err) => {
-          this.message = err.response.data.message;
+          this.message = err.response.data.error;
           this.password = "";
         });
     },

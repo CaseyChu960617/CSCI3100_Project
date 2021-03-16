@@ -1,10 +1,12 @@
 <template>
   <div class="container mt-4">
     <h3>Profile</h3>
-    <p>ID: {{ currentUser.id }}</p>
-    <p>Name: {{ currentUser.username }}</p>
+    <p>ID: {{ currentUser.uid }}</p>
+    <p>Username: {{ currentUser.username }}</p>
+    <p>First Name: {{ currentUser.firstname }}</p>
+    <p>Last Name: {{ currentUser.lastname }}</p>
     <p>Email: {{ currentUser.email }}</p>
-    <p>Role: {{ role }}</p>
+    <p>Gender: {{ currentUser.gender }}</p>
   </div>
 </template>
 
@@ -13,12 +15,6 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
-    },
-    role() {
-      if (this.currentUser.role == 0) {
-        return "Admin";
-      }
-      return "Standard User";
     },
   },
   mounted() {
