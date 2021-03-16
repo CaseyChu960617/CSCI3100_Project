@@ -36,7 +36,7 @@ http.listen(port, () => {
     console.log("Listenting at localhost:" + port);
 
     //API routes
-    app.use("/api/authentication", authRoutes);
+    app.use("/auth", authRoutes);
 });
 
 
