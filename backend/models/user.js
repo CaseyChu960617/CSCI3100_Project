@@ -12,6 +12,5 @@ const userSchema = new mongoose.Schema({
     token: { type: String },
 }, { collection: 'users'});
 
-const userModel = mongoose.model('userSchema', userSchema);
-
+const userModel = mongoose.model('user', userSchema);
 module.exports = userModel;
