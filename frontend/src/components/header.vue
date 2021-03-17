@@ -3,19 +3,24 @@
     <v-app-bar color="#1F5A98" class="white--text" flat height="100">
       <!-- <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon> -->
       <v-img
-        src="../assets/Logo/URGE GIF.gif"
-        max-height="80"
-        max-width="200"
-        aspect-ratio="2"
+        src="../assets/Logo/urge.gif"
+        max-height="90"
+        contain
+        position="left"
         style="cursor: pointer"
         @click="$router.push('/home')"
       ></v-img>
-      <!-- <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
       <div v-if="currentUser">
-        <v-btn to="/profile" class="grey darken-3 mr-2 text-capitalize">{{ currentUser.username }}</v-btn>
-        <v-btn @click="signout" class="grey darken-2">Sign out</v-btn>
+        <v-btn to="/profile" class="text-capitalize" rounded plain>{{
+          currentUser.username
+        }}</v-btn>
+
+        <v-btn @click="signout" rounded
+          ><v-icon>mdi-logout</v-icon>Sign out</v-btn
+        >
       </div>
-      <div v-else>
+      <!-- <div v-else>
         <v-btn to="/sign">Sign up / Sign in</v-btn>
       </div> -->
     </v-app-bar>
