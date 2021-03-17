@@ -77,7 +77,8 @@ exports.signup = async (req, res) => {
             firstname: newUser.firstname,
             username: newUser.username,
             email: newUser.email,
-            gender: newUser.gender
+            gender: newUser.gender,
+            activation: newUser.activation
         });
 };
 
@@ -102,7 +103,9 @@ exports.signin = async (req, res) => {
             firstname: user.firstname,
             username: user.username,
             email: user.email,
-            gender: user.gender });
+            gender: user.gender,
+            activation: user.activation
+        });
     }
 
         res.status(400).send({ status: 'error', error:'Invalid password'});
@@ -121,7 +124,7 @@ exports.activateAccount = async (req, res) => {
             process.env.JWT_ACC_ACTIVATE,
             { expiresIn: '20m'});
 
-        res.json({
+        res.status(200).json({
             message: "Account is activated",
             accessToken: token,
             uid: user._id,
@@ -132,7 +135,7 @@ exports.activateAccount = async (req, res) => {
             gender: user.gender });
     }
     else {
-        return res.json({ status: 'error', message: 'token is not existed.'});
+        return res.status(400).json({ status: 'error', message: 'token is not existed.'});
     }
 };
 
