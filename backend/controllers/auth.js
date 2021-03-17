@@ -77,7 +77,8 @@ exports.signup = async (req, res) => {
             firstname: newUser.firstname,
             username: newUser.username,
             email: newUser.email,
-            gender: newUser.gender
+            gender: newUser.gender,
+            activation: newUser.activation
         });
 };
 
@@ -102,7 +103,9 @@ exports.signin = async (req, res) => {
             firstname: user.firstname,
             username: user.username,
             email: user.email,
-            gender: user.gender });
+            gender: user.gender,
+            activation: user.activation
+        });
     }
 
         res.status(400).send({ status: 'error', error:'Invalid password'});
