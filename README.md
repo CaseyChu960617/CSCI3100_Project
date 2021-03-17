@@ -1,1 +1,6 @@
-# CSCI3100_Project
+# CSCI3100-Project
+- Group: A8
+- Project name: Urge
+
+
+
