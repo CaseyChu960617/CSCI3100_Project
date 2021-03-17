@@ -1,21 +1,42 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-spacer />
-      <v-col cols="6"><Carousel /> </v-col>
-      <v-col cols="3"><Signin /> </v-col><v-spacer />
-    </v-row>
+  <v-container fluid class="mt-4">
+    <div v-if="!signup">
+      <v-row>
+        <v-spacer />
+        <v-col cols="6"><Carousel /> </v-col>
+        <v-col cols="3"><Signin @switchform="switchform" /> </v-col><v-spacer />
+      </v-row>
+    </div>
+    <div v-else>
+      <v-row justify="center">
+        <v-col cols="6">
+          <Signup @switchform="switchform" />
+        </v-col>
+      </v-row>
+    </div>
   </v-container>
 </template>
 
 <script>
 import Signin from "./signin.vue";
+import Signup from "./signup.vue";
 import Carousel from "../carousel.vue";
 
 export default {
   components: {
     Signin,
+    Signup,
     Carousel,
+  },
+  data() {
+    return {
+      signup: true,
+    };
+  },
+  methods: {
+    switchform() {
+      this.signup = !this.signup;
+    },
   },
 };
 </script>

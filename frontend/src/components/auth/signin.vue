@@ -43,9 +43,9 @@
         dark
         rounded
         block
-        @click="signin"
         class="mt-4 mb-8 black--text"
         color="#99CFEA"
+        @click="signup"
         >Sign Up</v-btn
       >
     </div>
@@ -87,6 +87,9 @@ export default {
       } else {
         this.message = "Email/Password cannot be empty";
       }
+    },
+    signup() {
+      this.$emit("switchform");
     },
   },
 };
