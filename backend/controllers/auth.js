@@ -48,7 +48,7 @@ exports.signup = async (req, res) => {
         });
 
         const token = jwt.sign({
-                uid: user._id },
+                uid: newUser._id },
             process.env.JWT_ACC_ACTIVATE,
             { expiresIn: '20m'});
 
@@ -56,12 +56,12 @@ exports.signup = async (req, res) => {
             status: "success",
             message: "Email has been sent. Please activate your account.",
             accessToken: token,
-            uid: user._id,
-            lastname: user.lastname,
-            firstname: user.firstname,
-            username: user.username,
-            email: user.email,
-            gender: user.gender
+            uid: newUser._id,
+            lastname: newUser.lastname,
+            firstname: newUser.firstname,
+            username: newUser.username,
+            email: newUser.email,
+            gender: newUser.gender
         });
 };
 
@@ -88,7 +88,7 @@ exports.signin = async (req, res) => {
             email: user.email,
             gender: user.gender });
     }
-    else
+   
         res.status(400).send({ status: 'error', error:'Invalid password'});
 };
 
@@ -99,23 +99,21 @@ exports.activateAccount = async (req, res) => {
     if (uid) {
         const user = await User.findByIdAndUpdate({ _id: uid } , {  activation: true }, { new: true, lean: true});
 
-
         console.log(user);
         const token = jwt.sign({
                 uid: user._id },
             process.env.JWT_ACC_ACTIVATE,
             { expiresIn: '20m'});
 
-        res.json({ accessToken: token,
+        res.json({
+            message: "Account is activated",
+            accessToken: token,
             uid: user._id,
             lastname: user.lastname,
             firstname: user.firstname,
             username: user.username,
             email: user.email,
             gender: user.gender });
-
-
-            return res.send("Account is activated. Redirecting...");
     }
     else {
         return res.json({ status: 'error', message: 'token is not existed.'});
