@@ -30,38 +30,38 @@ exports.signup = async (req, res) => {
 
         console.log(newUser);
 
-        // const data = {
-        //     from: 'noreply@urge.org',
-        //     to: email,
-        //     subject: "Account activiation",
-        //     html:`  <div class="email-wrapper" style="width: 800px;">
-        //             <div class="header" style="background-color: #1f5a98; height: 100px;"><img src="../../frontend/src/assets/Logo/URGE%20GIF.gif" style="height: 50px;"></div>
-        //             <div class="content-wrapper" style="display: flex;">
-        //             <div style="width: 25%;">&nbsp;</div>
-        //             <div><br /><br /><br />
-        //             <div><strong style="color: #333333;">Email Activation </strong></div>
-        //             <br />
-        //             <p><span style="color: #808080; font-size: 12px;">Howdy,</span></p>
-        //             <p style="text-align: justify;"><span style="color: #808080; font-size: 12px;">Thank you for choosing Urge. Please click the link below to activate your account. You can only view all the discussions and tutorials with unactivated account.<br /></span></p>
-        //             <p style="text-align: justify;">&nbsp;</p>
-        //             <div style="display: flex; justify-content: center;"><a style="display: block; width: 200px; height: 25px; background: #1F5A98; padding: 10px; text-align: center; border-radius: 5px; color: white; font-weight: bold; font-size: 15px; fon    line-height: 25px; text-decoration: none;" href="&#96;${process.env.DOMAIN_URL}/auth/activateAccount/${newUser._id}&#96;"> Activate your account </a></div>
-        //             <div style="width: 25%;">&nbsp;</div>
+        const data = {
+            from: 'noreply@urge.org',
+            to: email,
+            subject: "Account activiation",
+            html:`  <div class="email-wrapper" style="width: 800px;">
+                    <div class="header" style="background-color: #1f5a98; height: 100px;"><img src="../../frontend/src/assets/Logo/URGE%20GIF.gif" style="height: 50px;"></div>
+                    <div class="content-wrapper" style="display: flex;">
+                    <div style="width: 25%;">&nbsp;</div>
+                    <div><br /><br /><br />
+                    <div><strong style="color: #333333;">Email Activation </strong></div>
+                    <br />
+                    <p><span style="color: #808080; font-size: 12px;">Howdy,</span></p>
+                    <p style="text-align: justify;"><span style="color: #808080; font-size: 12px;">Thank you for choosing Urge. Please click the link below to activate your account. You can only view all the discussions and tutorials with unactivated account.<br /></span></p>
+                    <p style="text-align: justify;">&nbsp;</p>
+                    <div style="display: flex; justify-content: center;"><a style="display: block; width: 200px; height: 25px; background: #1F5A98; padding: 10px; text-align: center; border-radius: 5px; color: white; font-weight: bold; font-size: 15px; fon    line-height: 25px; text-decoration: none;" href="&#96;${process.env.DOMAIN_URL}/auth/activateAccount/${newUser._id}&#96;"> Activate your account </a></div>
+                    <div style="width: 25%;">&nbsp;</div>
  
-        //             </div>
-        //             <div class="footer">
-        //             </div>>
-        //             </div>`
+                    </div>
+                    <div class="footer">
+                    </div>>
+                    </div>`
 
-        // }
+        }
 
-        // mg.messages().send(data, (err, body) => {
-        //     console.log(data);
-        //     if (err) {
-        //         return res.json({
-        //             message: err.message
-        //         });
-        //     }
-        // });
+        mg.messages().send(data, (err, body) => {
+            console.log(data);
+            if (err) {
+                return res.json({
+                    message: err.message
+                });
+            }
+        });
 
         const token = jwt.sign({
                 uid: newUser._id },
