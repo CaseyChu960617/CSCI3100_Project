@@ -121,7 +121,7 @@ exports.activateAccount = async (req, res) => {
             process.env.JWT_ACC_ACTIVATE,
             { expiresIn: '20m'});
 
-        res.json({
+        res.status(200).json({
             message: "Account is activated",
             accessToken: token,
             uid: user._id,
@@ -132,7 +132,7 @@ exports.activateAccount = async (req, res) => {
             gender: user.gender });
     }
     else {
-        return res.json({ status: 'error', message: 'token is not existed.'});
+        return res.status(400).json({ status: 'error', message: 'token is not existed.'});
     }
 };
 
