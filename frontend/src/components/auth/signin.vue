@@ -1,0 +1,93 @@
+<template>
+  <v-card>
+    <v-toolbar flat>
+      <v-toolbar-title class="display-1 pt-4 pl-4"
+        >Account Login</v-toolbar-title
+      >
+    </v-toolbar>
+    <v-card-text>
+      <v-form v-model="isValid">
+        <v-text-field
+          prepend-icon="mdi-account"
+          v-model="email"
+          label="Email"
+          type="text"
+          :rules="[rules.required]"
+        ></v-text-field>
+        <v-text-field
+          prepend-icon="mdi-lock"
+          v-model="password"
+          label="Password"
+          :rules="[rules.required]"
+          @keypress.enter="signin"
+          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="show1 ? 'text' : 'password'"
+          @click:append="show1 = !show1"
+        ></v-text-field>
+      </v-form>
+    </v-card-text>
+    <div v-if="message" class="ml-4 mb-2 red--text">
+      {{ message }}
+    </div>
+    <div class="mx-4 py-2">
+      <v-btn
+        dark
+        rounded
+        block
+        @click="signin"
+        class="my-4 black--text"
+        color="#99CFEA"
+        >Sign In</v-btn
+      >
+      <v-btn
+        dark
+        rounded
+        block
+        @click="signin"
+        class="mt-4 mb-8 black--text"
+        color="#99CFEA"
+        >Sign Up</v-btn
+      >
+    </div>
+  </v-card>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+      message: "",
+      isValid: false,
+      show1: false,
+      rules: {
+        required: (value) => !!value || "Required",
+      },
+    };
+  },
+  created: function () {
+    this.$store.dispatch("auth/signout");
+  },
+  methods: {
+    signin() {
+      if (this.isValid) {
+        this.$store
+          .dispatch("auth/signin", {
+            email: this.email,
+            password: this.password,
+          })
+          .then(() => {
+            this.$router.push("/profile");
+          })
+          .catch((err) => {
+            this.message = err.response.data.error;
+            this.password = "";
+          });
+      } else {
+        this.message = "Email/Password cannot be empty";
+      }
+    },
+  },
+};
+</script>
