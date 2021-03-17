@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      signup: true,
+      signup: false,
     };
   },
   methods: {

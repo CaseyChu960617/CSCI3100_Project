@@ -25,6 +25,10 @@ export const auth = {
       AuthService.signout();
       commit("signout");
     },
+    registered({commit}, user){
+      commit("signinSuccess", user);
+      return Promise.resolve(user);
+    }
   },
   mutations: {
     signinSuccess(state, user) {

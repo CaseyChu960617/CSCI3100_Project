@@ -66,9 +66,6 @@ export default {
       },
     };
   },
-  created: function () {
-    this.$store.dispatch("auth/signout");
-  },
   methods: {
     signin() {
       if (this.isValid) {

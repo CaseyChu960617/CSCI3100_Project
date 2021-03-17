@@ -8,7 +8,7 @@
         contain
         position="left"
         style="cursor: pointer"
-        to="/home"
+        @click="$router.push('/home')"
       ></v-img>
       <v-spacer></v-spacer>
       <div v-if="currentUser">

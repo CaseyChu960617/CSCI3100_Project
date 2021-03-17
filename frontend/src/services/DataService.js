@@ -13,6 +13,10 @@ class DataService {
     return http.post(`/${table}`, data, header);
   }
 
+  post(table, data) {
+    return http.post(`/${table}`, data);
+  }
+
   update(table, id, data, header) {
     return http.put(`/${table}/${id}`, data, header);
   }

@@ -89,7 +89,7 @@
       <v-btn
         rounded
         block
-        @click="signin"
+        @click="signup"
         class="my-4 black--text"
         color="#99CFEA"
         :disabled="!isValid"
@@ -108,6 +108,8 @@
 </template>
 
 <script>
+import DataService from "../../services/DataService";
+
 export default {
   data() {
     return {
@@ -136,23 +138,20 @@ export default {
     };
   },
   methods: {
-    signin() {
-      //   if (this.isValid) {
-      //     this.$store
-      //       .dispatch("auth/signin", {
-      //         email: this.email,
-      //         password: this.password,
-      //       })
-      //       .then(() => {
-      //         this.$router.push("/profile");
-      //       })
-      //       .catch((err) => {
-      //         this.message = err.response.data.error;
-      //         this.password = "";
-      //       });
-      //   } else {
-      //     this.message = "Cannot be empty";
-      //   }
+    signup() {
+      this.account.email = this.account.email + "@link.cuhk.edu.hk";
+      DataService.post("auth/signup", this.account)
+        .then((res) => {
+          alert(res.data.message);
+          if (res.data.accessToken) {
+            localStorage.setItem("user", JSON.stringify(res.data));
+          }
+          this.$store.dispatch("auth/registered", res.data);
+          this.$router.push("/profile");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     back() {
       this.$emit("switchform");
