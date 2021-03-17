@@ -36,7 +36,7 @@ exports.signup = async (req, res) => {
             to: email,
             subject: "Account activiation",
             html:`<h2>Please click the link to activate your account.</h2>
-                  <p>${process.env.CLIENT_URL}/api/authentication/activateAccount/${newUser._id}</p>`
+                  <p>${process.env.DOMAIN_URL}/auth/activateAccount/${newUser._id}</p>`
         }
 
         mg.messages().send(data, (err, body) => {
