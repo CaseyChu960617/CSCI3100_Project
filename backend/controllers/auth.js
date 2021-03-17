@@ -30,7 +30,6 @@ exports.signup = async (req, res) => {
 
         console.log(newUser);
 
-
         const data = {
             from: 'noreply@urge.org',
             to: email,
@@ -48,9 +47,21 @@ exports.signup = async (req, res) => {
             }
         });
 
+        const token = jwt.sign({
+                uid: user._id },
+            process.env.JWT_ACC_ACTIVATE,
+            { expiresIn: '20m'});
+
         res.status(201).json({
-            "status": "success",
-            "message": "Email has been sent. Please activate your account."
+            status: "success",
+            message: "Email has been sent. Please activate your account.",
+            accessToken: token,
+            uid: user._id,
+            lastname: user.lastname,
+            firstname: user.firstname,
+            username: user.username,
+            email: user.email,
+            gender: user.gender
         });
 };
 
@@ -109,5 +120,4 @@ exports.activateAccount = async (req, res) => {
     else {
         return res.json({ status: 'error', message: 'token is not existed.'});
     }
-
 };
