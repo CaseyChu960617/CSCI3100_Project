@@ -3,8 +3,9 @@
     <div v-if="!signup">
       <v-row>
         <v-spacer />
-        <v-col cols="6"><Carousel /> </v-col>
-        <v-col cols="3"><Signin @switchform="switchform" /> </v-col><v-spacer />
+        <v-col md="6" sm="12"><Carousel /> </v-col>
+        <v-col md="4" sm="12"><Signin @switchform="switchform" /> </v-col
+        ><v-spacer />
       </v-row>
     </div>
     <div v-else>

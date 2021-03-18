@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
 import home from "./views/home.vue";
-import profile from "./components/profile.vue";
+import tutorial from "./views/tutorial.vue";
+import discussion from "./views/discussion.vue";
+import profile from "./views/profile.vue";
 
 Vue.use(Router);
 
@@ -11,6 +13,14 @@ export const router = new Router({
     {
       path: "/home",
       component: home,
+    },
+    {
+      path: "/tutorial",
+      component: tutorial,
+    },
+    {
+      path: "/discussion",
+      component: discussion,
     },
     {
       path: "/profile",
