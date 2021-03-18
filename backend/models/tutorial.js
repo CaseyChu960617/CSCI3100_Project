@@ -3,7 +3,7 @@ const user = require('../models/user')
 const chapter = require('../models/chapter')
 const tutorReply = require('../models/tutorReply')
 
-const tutorialschema = new mongoose.Schema({
+const tutorialSchema = new mongoose.Schema({
     author: {type: Schema.Types.ObjectId, ref: 'user' ,required: true, },
     chapter: [{ type: Schema.Types.ObjectId, ref: 'chapter' ,required: true, }],
     tutorReply:  [{ type: Schema.Types.ObjectId, ref: 'tutorReply' ,required: true, }],
@@ -12,6 +12,6 @@ const tutorialschema = new mongoose.Schema({
     
 }, { collection: 'tutorial'});
 
-const tutorialModel = mongoose.model('tutorial', tutorialschema);
+const tutorialModel = mongoose.model('tutorial', tutorialSchema);
 module.exports = tutorialModel;
 

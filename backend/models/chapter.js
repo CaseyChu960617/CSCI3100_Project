@@ -5,5 +5,5 @@ const chapterSchema = new mongoose.Schema({
 
 }, { collection: 'chapter'});
 
-const chapterModel = mongoose.model('chapterschema', chapterSchema);
+const chapterModel = mongoose.model('chapter', chapterSchema);
 module.exports = chapterModel;
