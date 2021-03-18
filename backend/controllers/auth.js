@@ -32,15 +32,14 @@ exports.signup = async (req, res) => {
 
         activate_link=process.env.DOMAIN_URL+"/auth/activateAccount/"+newUser._id
          const data = {
-             
                 //from: "Mailgun Sandbox <postmaster@sandboxa6113ec32ac246bf99819221de84c22f.mailgun.org>",
                 from: 'noreply@urge.org',
                 to: email ,
                 subject: "Account activiation",
-                template: "testing2",
+                template: "testing",
                 "h:X-Mailgun-Variables": '{"test": "test",  "firstname":"John"}',
                 "v:act":activate_link 
-                
+         
          }
 
          mg.messages().send(data, (err, body) => {
