@@ -31,17 +31,21 @@ exports.signup = async (req, res) => {
         console.log(newUser);
 
          const data = {
-             from: 'noreply@urge.org',
-             to: email,
-             subject: "Account activiation",
-             template: "testing",
-	'h:X-Mailgun-Variables': {test: "test"}
-
+             
+                    //from: "Mailgun Sandbox <postmaster@sandboxa6113ec32ac246bf99819221de84c22f.mailgun.org>",
+                    from: 'noreply@urge.org',
+                    to: email ,
+                    subject: "Account activiation",
+                    template: "testing",
+                    "v:firstname":"John"
          }
 
          mg.messages().send(data, (err, body) => {
              console.log(data);
+             console.log(process.env.MAILGUN_API_KEY)
+                console.log(process.env.MAILGUN_DOMAIN)
              if (err) {
+                 console(res.status)
                  return res.json({
                      message: err.message
                  });
