@@ -107,7 +107,7 @@ exports.signin = async (req, res) => {
             activation: user.activation
         });
     }
-
+    else
         res.status(400).send({ status: 'error', error:'Invalid password'});
 };
 
