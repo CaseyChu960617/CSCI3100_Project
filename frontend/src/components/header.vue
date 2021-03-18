@@ -4,25 +4,34 @@
       <!-- <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon> -->
       <v-img
         src="../assets/Logo/urge.gif"
-        max-height="90"
+        max-width="175"
         contain
         position="left"
         style="cursor: pointer"
-        @click="$router.push('/home')"
+        @click="$router.push('/home').catch(() => {})"
       ></v-img>
       <v-spacer></v-spacer>
       <div v-if="currentUser">
-        <v-btn to="/profile" class="text-capitalize" rounded plain>{{
-          currentUser.username
-        }}</v-btn>
+        <v-btn to="/tutorial" class="text-capitalize headline white--text" plain
+          >Tutorial</v-btn
+        >
+        <v-btn
+          to="/discussion"
+          class="text-capitalize headline white--text"
+          plain
+          >Discussion</v-btn
+        >
+        <v-btn
+          to="/profile"
+          class="mr-4 ml-2 text-capitalize white--text"
+          color="#757575"
+          >{{ currentUser.username }}</v-btn
+        >
 
         <v-btn @click="signout" rounded
           ><v-icon>mdi-logout</v-icon>Sign out</v-btn
         >
       </div>
-      <!-- <div v-else>
-        <v-btn to="/sign">Sign up / Sign in</v-btn>
-      </div> -->
     </v-app-bar>
 
     <!-- <v-navigation-drawer v-if="currentUser" v-model="drawer" absolute temporary>
@@ -68,7 +77,7 @@ export default {
   methods: {
     signout() {
       this.$store.dispatch("auth/signout");
-      this.$router.push("/home");
+      this.$router.push("/home").catch(() => {});
     },
   },
 };

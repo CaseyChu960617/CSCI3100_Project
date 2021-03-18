@@ -82,9 +82,9 @@
         </v-container>
       </v-form>
     </v-card-text>
-    <!-- <div v-if="message" class="ml-4 mb-2 red--text">
+    <div v-if="message" class="ml-4 mb-2 red--text">
       {{ message }}
-    </div> -->
+    </div>
     <div class="mx-4 py-2">
       <v-btn
         rounded
@@ -139,6 +139,7 @@ export default {
   },
   methods: {
     signup() {
+      var temp = this.account.email;
       this.account.email = this.account.email + "@link.cuhk.edu.hk";
       DataService.post("auth/signup", this.account)
         .then((res) => {
@@ -148,9 +149,11 @@ export default {
           }
           this.$store.dispatch("auth/registered", res.data);
           this.$router.push("/profile");
+          this.account.email = temp;
         })
         .catch((err) => {
-          console.log(err);
+          this.message = err;
+          this.account.email = temp;
         });
     },
     back() {

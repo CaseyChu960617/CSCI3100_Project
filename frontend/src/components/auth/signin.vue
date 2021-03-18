@@ -31,7 +31,6 @@
     </div>
     <div class="mx-4 py-2">
       <v-btn
-        dark
         rounded
         block
         @click="signin"
@@ -40,7 +39,6 @@
         >Sign In</v-btn
       >
       <v-btn
-        dark
         rounded
         block
         class="mt-4 mb-8 black--text"
