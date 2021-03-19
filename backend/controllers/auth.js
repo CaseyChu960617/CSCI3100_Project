@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
             gender: gender,
             profileImage: "",
         });
-
+       
         // For debugging
         console.log(newUser);
 
@@ -43,7 +43,9 @@ exports.signup = async (req, res) => {
                 subject: "Account activiation",
                 template: "testing",
                 "h:X-Mailgun-Variables": '{"test": "test",  "firstname":"John"}',
-                "v:act":activate_link
+                "v:act":activate_link,
+                "v:fname":newUser.firstname,
+                inline: "../frontend/src/assets/Logo/urge.gif"
          }
 
          mg.messages().send(data, (err, body) => {
