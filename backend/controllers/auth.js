@@ -46,12 +46,12 @@ exports.signup = async (req, res) => {
              console.log(data);
              console.log(process.env.MAILGUN_API_KEY)
                 console.log(process.env.MAILGUN_DOMAIN)
-             if (err) {
+             /*if (err) {
                  console(res.status)
                  return res.json({
                      message: err.message
                  });
-             }
+             }*/
          });
 
         const token = jwt.sign({
@@ -98,7 +98,7 @@ exports.signin = async (req, res) => {
             activation: user.activation
         });
     }
-
+    else
         res.status(400).send({ status: 'error', error:'Invalid password'});
 };
 
