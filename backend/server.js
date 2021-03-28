@@ -10,6 +10,7 @@ const User = require('./models/user');
 
 //Import routes
 const authRoutes = require('./routes/auth');
+//const threadRoutes = require('./routes/thread');
 
 //App config
 var corsOptions = {
@@ -62,6 +63,8 @@ http.listen(port, () => {
 
     //API routes
     app.use("/auth", authRoutes);
+
+    //app.use("/thread", threadRoutes);
 });
 
 

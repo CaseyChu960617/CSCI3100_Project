@@ -5,6 +5,7 @@ import tutorial from "./views/tutorial.vue";
 import discussion from "./views/discussion.vue";
 import profile from "./views/profile.vue";
 import chat from "./views/chat.vue";
+import activateAccount from "./views/ActivateAccount";
 
 Vue.use(Router);
 
@@ -29,11 +30,15 @@ export const router = new Router({
     },
     {
       path: "*",
-      redirect: "/home"
+      redirect: "/home",
     },
     {
       path: "/chat",
       component: chat,
+    },
+    {
+      path: "/activateAccount/:uid",
+      component: activateAccount,
     },
   ],
 });
