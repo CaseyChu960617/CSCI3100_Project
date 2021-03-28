@@ -1,10 +1,34 @@
 <template>
   <v-container fluid class="pa-0">
     <div>
+      <p>Username: {{ currentUser.username }}</p>
+      <ul class="list-group list-group-flush ">
+        <small class="text-white">{{ currentUser.username }} is typing</small>
+        <li
+          class="list-group-item"
+          v-for="(message, index) in messages"
+          v-bind:key="index"
+        >
+          <span>
+            {{ message.user }}
+            <small>:{{ message.message }}</small>
+          </span>
+        </li>
+      </ul>
+      <div>
+        <form @submit.prevent="send">
+          <div>
+            <input
+              type="text"
+              class="form control"
+              v-model="newMessage"
+              placeholder="Enter message here"
+            />
+          </div>
+        </form>
+      </div>
+
       <button v-on:click="send">Send</button>
-    </div>
-    <div>
-      <button v-on:click="receive">receive</button>
     </div>
     <div></div>
   </v-container>
@@ -22,6 +46,7 @@ export default {
 
   data() {
     return {
+      newMessage: null,
       messages: [],
       socket: io("http://localhost:9000", {
         transports: ["websocket", "polling", "flashsocket"],
@@ -36,11 +61,12 @@ export default {
   methods: {
     send() {
       console.log(this.socket);
-      alert("fuck");
-      this.socket.emit("send", {
-        user: "Kenny",
-        message: "Hi",
-      });
+      if (this.newMessage != null) {
+        this.socket.emit("send", {
+          user: this.currentUser.username,
+          message: this.newMessage,
+        });
+      }
     },
 
     receive() {
@@ -53,6 +79,7 @@ export default {
     this.socket.on("recieve", (data) => {
       this.messages = [...this.messages, data];
       console.log(this.messages);
+      this.newMessage = null;
     });
   },
 };
