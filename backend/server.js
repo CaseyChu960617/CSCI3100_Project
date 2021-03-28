@@ -24,13 +24,38 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const http = require("http").createServer(app);
-const socketIO = require("socket.io")(http);
-var socketID = "";
 
-socketIO.on("connection", (socket) => {
-    console.log("User connected", socket.id);
+var socketID = "";
+const io = require("socket.io")(http,
+    {   
+        cors: {
+            origin: "http://localhost:9000",
+            methods: ["GET", "POST"],
+            allowedHeaders: ["my-custom-header"],
+            credentials: true
+         
+        }
+    }
+);
+
+
+io.on("connection", (socket) => {
+    
+    console.log("a user connected", socket.id);
     socketID = socket.id;
+
+    socket.on('disconnect', () => {
+        console.log("disconnected");
+    });
+
+    //send meessage and emit to recieve function
+    socket.on('send', (data) => {
+        console.log(data)
+        io.emit('recieve',data)
+        
+    });
 });
+
 
 http.listen(port, () => {
     console.log("Listenting at localhost:" + port);
@@ -38,7 +63,6 @@ http.listen(port, () => {
     //API routes
     app.use("/auth", authRoutes);
 });
-
 
 
 

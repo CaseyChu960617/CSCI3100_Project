@@ -4,6 +4,7 @@ import home from "./views/home.vue";
 import tutorial from "./views/tutorial.vue";
 import discussion from "./views/discussion.vue";
 import profile from "./views/profile.vue";
+import chat from "./views/chat.vue";
 
 Vue.use(Router);
 
@@ -29,6 +30,10 @@ export const router = new Router({
     {
       path: "*",
       redirect: "/home"
+    },
+    {
+      path: "/chat",
+      component: chat,
     },
   ],
 });
