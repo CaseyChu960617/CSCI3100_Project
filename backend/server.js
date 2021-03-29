@@ -2,14 +2,13 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const jwt = require("jsonwebtoken");
 require('dotenv').config();
 require('./db/connectDB');
-require('./socket.io/connectSocket');
-const User = require('./models/user');
+
 
 //Import routes
 const authRoutes = require('./routes/auth');
+const threadRoutes = require('./routes/thread');
 
 //App config
 var corsOptions = {
@@ -37,6 +36,8 @@ http.listen(port, () => {
 
     //API routes
     app.use("/auth", authRoutes);
+
+    app.use("/thread", threadRoutes);
 });
 
 

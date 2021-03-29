@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
 
         // If no error, hashed the password and create a new user.
         hashedPassword = await bcrypt.hash(password, 10)
-        var newUser = await User.create({
+        var newUser = await users.create({
             lastname: lastname,
             firstname: firstname,
             username: username,
@@ -35,7 +35,7 @@ exports.signup = async (req, res) => {
         console.log(newUser);
 
         // Generate activation email with mailgun.
-         activate_link= process.env.DOMAIN_URL + "/auth/activateAccount/" + newUser._id
+         activate_link= process.env.CLIENT_URL + "/activateAccount/" + newUser._id
          const data = {
                 from: 'noreply@urge.org',
                 to: email ,
@@ -52,24 +52,21 @@ exports.signup = async (req, res) => {
              console.log(process.env.MAILGUN_API_KEY)
                 console.log(process.env.MAILGUN_DOMAIN)
              /*if (err) {
-                 console(res.status)
-                 return res.json({
-                     message: err.message
-                 });
+                 console.log(res.status)
              }*/
          });
 
          // Generate and sign a token
-        const token = jwt.sign({
+        const accessToken = jwt.sign({
                 uid: newUser._id },
-            process.env.JWT_ACC_ACTIVATE,
+            process.env.JWT_ACC_SECRET,
             { expiresIn: '20m'});
 
         // Return json with user info when user is created successfully.
         res.status(201).json({
             status: "success",
             message: "Email has been sent. Please activate your account.",
-            accessToken: token,
+            accessToken: accessToken,
             uid: newUser._id,
             lastname: newUser.lastname,
             firstname: newUser.firstname,
@@ -98,14 +95,14 @@ exports.signin = async (req, res) => {
         if (await bcrypt.compare(password, user.password)) {
 
             // Generate a token if password is matched.
-            const token = jwt.sign({
+            const accessToken = jwt.sign({
                     uid: user._id
                 },
-                process.env.JWT_ACC_ACTIVATE,
+                process.env.JWT_ACC_SECRET,
                 {expiresIn: '20m'});
 
             res.status(200).send({
-                accessToken: token,
+                accessToken: accessToken,
                 uid: user._id,
                 lastname: user.lastname,
                 firstname: user.firstname,
@@ -135,15 +132,15 @@ exports.activateAccount = async (req, res) => {
         console.log(user);
 
         // Generate a token.
-        const token = jwt.sign({
+        const accessToken = jwt.sign({
                 uid: user._id },
-            process.env.JWT_ACC_ACTIVATE,
+            process.env.JWT_ACC_SECRET,
             { expiresIn: '20m'});
 
         // Return the new data of the user.
         res.status(200).json({
             message: "Account is activated",
-            accessToken: token,
+            accessToken: accessToken,
             uid: user._id,
             lastname: user.lastname,
             firstname: user.firstname,
