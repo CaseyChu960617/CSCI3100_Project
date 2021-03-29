@@ -7,10 +7,7 @@ const { Mongoose } = require("mongoose");
 
 // getAllThread function
 exports.getAllThreads = async (req, res) => {
-  //const accessToken = req.fields.accessToken;
-  //const decodedToken = jwt.verify(accessToken, process.env.JWT_ACC_SECRET);
-  //console.log(decodedToken);
-
+    
   Thread.find()
     .sort({ createdAt: -1 })
     .select("author category title createdAt")
@@ -21,7 +18,7 @@ exports.getAllThreads = async (req, res) => {
     });
 };
 
-// createThread function
+// getCategory function
 exports.getCategory = async (req, res) => {
   Thread.find({ category: req.params["category_id"] })
     .sort({ createdAt: -1 })
@@ -29,9 +26,7 @@ exports.getCategory = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.status(200).json({
-        discussionThreads: docs,
-      });
+      res.send(docs);
     });
 };
 
@@ -39,27 +34,28 @@ exports.getCategory = async (req, res) => {
 exports.getOneThread = async (req, res) => {
   const { uid } = req.body;
   const thread_id = req.params["thread_id"];
+  var populateQuery = [
+      { path:'author', select:'_id username'}, 
+      { path:'comments', select:'content', populate: {
+        path: 'author',
+        select: '_id username'
+        }
+      }
+    ];
   console.log(thread_id);
   Thread.findById(thread_id)
-    .select("author title content createdAt")
-    .populate("author", "_id username")
+    .select("author title content comments createdAt")
+    .populate(populateQuery)
     .exec()
     .then((docs) => {
       res.send(docs);
-    }); /*(err,data) => {
-    if (err) {
-            res.status(400).json({ error: "Discussion thread not found."});
-        }
-        console.log(data);
-        data.populated('author');
-        console.log(data.author.username);
-    });*/
+    }); 
 };
 
-// createThread function
+// editThread function
 exports.editThread = async (req, res) => {};
 
-// createThread function
+// postComment function
 exports.postComment = async (req, res) => {
   const thread_id = req.params["thread_id"];
   const { uid, content } = req.body;
@@ -94,7 +90,7 @@ exports.postComment = async (req, res) => {
   });
 };
 
-// createThread function
+// deleteThread function
 exports.deleteThread = async (req, res) => {
   Thread.findById(req.params["thread_id"], (err, doc) => {
     doc.remove();
