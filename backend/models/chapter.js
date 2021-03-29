@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 
 const chapterSchema = new mongoose.Schema({
     title:  { type: String, required: true },
+    content: { type: String, required: true },
+    createdAt:  { type: Date, required: true }
+}, { collection: 'chapters'});
 
-}, { collection: 'chapter'});
-
-const chapterModel = mongoose.model('chapter', chapterSchema);
+const chapterModel = mongoose.model('Chapter', chapterSchema);
 module.exports = chapterModel;

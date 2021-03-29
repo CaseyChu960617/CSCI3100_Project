@@ -1,5 +1,5 @@
 const Thread = require("../models/thread");
-const ThreadComment = require("../models/threadComments");
+const ThreadComment = require("../models/threadComment");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 var ObjectId = require("mongoose").Types.ObjectId;
@@ -7,7 +7,7 @@ const { Mongoose } = require("mongoose");
 
 // getAllThread function
 exports.getAllThreads = async (req, res) => {
-    
+
   Thread.find()
     .sort({ createdAt: -1 })
     .select("author category title createdAt")

@@ -9,6 +9,7 @@ require('./db/connectDB');
 //Import routes
 const authRoutes = require('./routes/auth');
 const threadRoutes = require('./routes/thread');
+const tutorialRoutes = require('./routes/tutorial.js');
 
 //App config
 var corsOptions = {
@@ -38,6 +39,8 @@ http.listen(port, () => {
     app.use("/auth", authRoutes);
 
     app.use("/thread", threadRoutes);
+
+    app.use("/tutorial", tutorialRoutes);
 });
 
 
