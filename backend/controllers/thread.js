@@ -7,13 +7,12 @@ const { Mongoose } = require("mongoose");
 
 // getAllThread function
 exports.getAllThreads = async (req, res) => {
-<<<<<<< Updated upstream
+
 
   Thread.find()
     .sort({ createdAt: -1 })
     .select("author category title createdAt")
     .populate("author", "_id username")
-=======
     //const accessToken = req.fields.accessToken;
     //const decodedToken = jwt.verify(accessToken, process.env.JWT_ACC_SECRET);
     //console.log(decodedToken);
@@ -22,7 +21,6 @@ exports.getAllThreads = async (req, res) => {
     .sort({ createdAt: -1})
     .select('author category title createdAt')
     .populate('author', '_id username')
->>>>>>> Stashed changes
     .exec()
     .then((docs) => {
       res.send(docs);
@@ -31,12 +29,12 @@ exports.getAllThreads = async (req, res) => {
 
 // getCategory function
 exports.getCategory = async (req, res) => {
-<<<<<<< Updated upstream
+
   Thread.find({ category: req.params["category_id"] })
     .sort({ createdAt: -1 })
     .select("author category title createdAt")
     .populate("author", "_id username")
-=======
+
     var populateQuery = [ 
         { path:'author', select:'_id username'}, 
         //{ path: 'comments', select:'author content' }, 
@@ -50,7 +48,6 @@ exports.getCategory = async (req, res) => {
     .sort({ createdAt: -1})
     .select('author category title createdAt')
     .populate('author', '_id username')
->>>>>>> Stashed changes
     .exec()
     .then((docs) => {
       res.send(docs);
@@ -59,7 +56,7 @@ exports.getCategory = async (req, res) => {
 
 // getOneThread function
 exports.getOneThread = async (req, res) => {
-<<<<<<< Updated upstream
+
   const { uid } = req.body;
   const thread_id = req.params["thread_id"];
   var populateQuery = [
@@ -67,7 +64,7 @@ exports.getOneThread = async (req, res) => {
       { path:'comments', select:'content', populate: {
         path: 'author',
         select: '_id username'
-=======
+
     const { uid } = req.body;
     const thread_id  = req.params['thread_id'];
     console.log(thread_id);
@@ -84,7 +81,6 @@ exports.getOneThread = async (req, res) => {
     }); /*(err,data) => {
     if (err) {
             res.status(400).json({ error: "Discussion thread not found."});
->>>>>>> Stashed changes
         }
       }
     ];
