@@ -1,8 +1,8 @@
 <template>
   <v-container fluid class="pa-0">
     <v-card
-      style="max-width:1200px; height:500px;overflow-y: scroll; width: 100%; padding: 12px;margin-right: auto;margin-left: auto; "
-      class="scroll-bar blue-grey lighten-5 nl-auto mr-auto"
+      style="max-width:1200px; height:500px;overflow-y: scroll; width: 100%; padding: 12px;"
+      class="scroll-bar blue-grey lighten-5 ml-auto mr-auto"
       elevation="16"
       v-bind:style="messages.length == 0 ? 'display:flex' : ''"
       ><!--max-width:400px;-->
@@ -149,6 +149,7 @@ export default {
     return {
       newMessage: null,
       messages: [],
+      //make connection to socket io
       socket: io("http://localhost:9000", {
         transports: ["websocket", "polling", "flashsocket"],
         withCredentials: true,
