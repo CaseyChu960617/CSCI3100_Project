@@ -52,15 +52,12 @@ exports.getOneThread = async (req, res) => {
     const thread_id  = req.params['thread_id'];
     console.log(thread_id);
     Thread.findById(thread_id)
-    .select('author category title content createdAt')
+    .select('author title content createdAt')
     .populate('author', '_id username')
     .exec()
     .then((doc) => {
-        res.status(400).json({
-            author: doc.author,
-            title: doc.title,
-            content: doc.content,
-            createdAt: doc.createdAt
+        res.status(200).json({
+            discussionThread: doc
         })
     }); /*(err,data) => {
     if (err) {
