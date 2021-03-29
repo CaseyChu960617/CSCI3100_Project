@@ -12,13 +12,13 @@
             min-height="83vh"
             max-height="83vh"
             item-height="85"
-            :items="items"
+            :items="threads"
           >
             <template v-slot:default="{ item }">
-              <v-list-item :key="item">
+              <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title class="text-wrap">
-                    <strong>ID {{ item }}</strong>
+                    <strong>{{ item.title }}</strong>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -41,7 +41,10 @@ import DataService from "../services/DataService";
 import authHeader from "../services/auth-header.js";
 export default {
   data() {
-    return {};
+    return { threads: [], loading: true };
+  },
+  created() {
+    this.fetchThread();
   },
   computed: {
     items() {
@@ -49,10 +52,28 @@ export default {
     },
   },
   methods: {
+    fetchThread() {
+      this.loading = true;
+      DataService.getAllThread()
+        .then((response) => {
+          //console.log(response);
+          this.threads = response.data.dicussionThreads;
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$router.push("/home");
+          } else {
+            alert(err.response.data.message);
+          }
+        });
+    },
     createThread() {
       const data = {
         category: 4,
-        title: "YOYOYO",
+        title: "bbb",
         content: "HI",
       };
       DataService.create("thread/", data, {

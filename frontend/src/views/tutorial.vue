@@ -4,13 +4,24 @@
       <v-spacer />
       <v-col md="3" class="hidden-sm-and-down">
         <v-card elevation="16">
-          <v-card-title>Tutorial</v-card-title>
+          <v-card-title
+            >Tutorial<v-spacer /><v-btn icon @click.stop="dialog = true"
+              ><v-icon>mdi-plus</v-icon></v-btn
+            ></v-card-title
+          >
+          <modal
+            :dialog.sync="dialog"
+            :editedItem="editedItem"
+            :title="`${title}`"
+            @show="show"
+            @submit="save()"
+          ></modal>
           <v-divider />
           <v-virtual-scroll
             bench="25"
             min-height="83vh"
             max-height="83vh"
-            item-height="85"
+            item-height="75"
             :items="items"
           >
             <template v-slot:default="{ item }">
@@ -36,13 +47,28 @@
 </template>
 
 <script>
+import modal from "../components/modal/tutor.vue";
+
 export default {
+  components: {
+    modal,
+  },
   data() {
-    return {};
+    return {
+      title: "",
+      dialog: false,
+      load: true,
+      editedItem: {},
+    };
   },
   computed: {
     items() {
       return Array.from({ length: 20 }, (k, v) => v + 1);
+    },
+  },
+  methods: {
+    show(bool) {
+      this.dialog = bool;
     },
   },
 };
