@@ -2,6 +2,7 @@
   <v-container fluid class="pa-0">
     <v-row no-gutters>
       <v-spacer />
+      <v-btn @click="createThread"> Post </v-btn>
       <v-col md="3" class="hidden-sm-and-down">
         <v-card elevation="16">
           <v-card-title>Discussion Thread</v-card-title>
@@ -36,6 +37,8 @@
 </template>
 
 <script>
+import DataService from "../services/DataService";
+import authHeader from "../services/auth-header.js";
 export default {
   data() {
     return {};
@@ -43,6 +46,18 @@ export default {
   computed: {
     items() {
       return Array.from({ length: 20 }, (k, v) => v + 1);
+    },
+  },
+  methods: {
+    createThread() {
+      const data = {
+        category: 4,
+        title: "YOYOYO",
+        content: "HI",
+      };
+      DataService.create("thread/", data, {
+        headers: authHeader(),
+      });
     },
   },
 };
