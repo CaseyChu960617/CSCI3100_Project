@@ -1,7 +1,9 @@
 const Thread = require('../models/thread');
+const ThreadComment = require('../models/threadComments');
 const User = require('../models/user');
 const jwt = require("jsonwebtoken");
 var ObjectId = require('mongoose').Types.ObjectId;
+const { Mongoose } = require('mongoose');
 
 
 // getAllThread function
@@ -24,7 +26,6 @@ exports.getAllThreads = async (req, res) => {
                     author: doc.author,
                     createdAt: doc.createdAt,
                     title: doc.title,
-                    content: doc.content,
                 }
             }) 
         })
@@ -40,16 +41,7 @@ exports.getCategory = async (req, res) => {
     .exec()
     .then(docs => {
         res.status(200).json({
-            dicussionThreads: docs.map(doc => {
-                return {
-                    _id: doc._id,
-                    category: doc.category,
-                    author: doc.author,
-                    createdAt: doc.createdAt,
-                    title: doc.title,
-                    content: doc.content,
-                }
-            }) 
+            discussionThreads: docs  
         })
     })
 }
@@ -87,8 +79,34 @@ exports.editThread = async (req, res) => {
 
 // createThread function
 exports.postComment = async (req, res) => {
-    
+    const thread_id = req.params['thread_id'];
+    const { uid , content } = req.body;
+            
+    var newcomment = new ThreadComment({
+        author: new ObjectId(uid),
+        createdAt: new Date().getTime(),
+        content: content
+    }, (err, data) => {
+        if (err) {
+            console.log(err);
+            res.status(400).json({ error: "Bad request."});
+        }
+        //else
+        //    console.log(data);
+    });
+    console.log(newcomment);
+    console.log(thread_id);
+    Thread.findOneAndUpdate({ _id: thread_id },
+        { "$push": { "comments": newcomment._id } },
+        (err, doc) => {
+        res.status(200).json({
+            thread: doc,
+            message: "successfully comment."
+        });
+    })
 }
+
+
 
 // createThread function
 exports.deleteThread = async (req, res) => {

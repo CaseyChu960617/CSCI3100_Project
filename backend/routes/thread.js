@@ -21,7 +21,7 @@ router.post('/', authJwt.verifyToken, createThread);
 
 router.put('/:thread_id', editThread);
 
-router.put('/postComment',  postComment);
+router.put('/postComment/:thread_id',  postComment);
 
 router.delete('/:thread_id',  deleteThread);
 

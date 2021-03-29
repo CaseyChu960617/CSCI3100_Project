@@ -4,7 +4,7 @@ import home from "./views/home.vue";
 import tutorial from "./views/tutorial.vue";
 import discussion from "./views/discussion.vue";
 import profile from "./views/profile.vue";
-import activateAccount from "./views/activateAccount";
+import activateAccount from "./views/activateAccount.vue";
 
 Vue.use(Router);
 
