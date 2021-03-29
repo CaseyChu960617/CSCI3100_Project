@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { authJwt } = require("../middlewares");
+
 const { getAllThreads,
         getCategory,
         getOneThread,
@@ -15,12 +17,12 @@ router.get('/category/:category_id', getCategory);
 
 router.get('/:thread_id', getOneThread);
 
-router.post('/:thread_id', createThread);
+router.post('/', authJwt.verifyToken, createThread);
 
 router.put('/:thread_id', editThread);
 
-router.put('/postComment', postComment);
+router.put('/postComment/:thread_id',  postComment);
 
-router.delete('/:thread_id', deleteThread);
+router.delete('/:thread_id',  deleteThread);
 
 module.exports = router;

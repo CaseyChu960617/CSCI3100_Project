@@ -25,6 +25,7 @@
           to="/profile"
           class="mr-4 ml-2 text-capitalize white--text"
           color="#757575"
+          text
           >{{ currentUser.username }}</v-btn
         >
 

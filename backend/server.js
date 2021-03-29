@@ -2,15 +2,12 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
 require("./db/connectDB");
-require("./socket.io/connectSocket");
-const User = require("./models/user");
 
 //Import routes
 const authRoutes = require("./routes/auth");
-//const threadRoutes = require('./routes/thread');
+const threadRoutes = require("./routes/thread");
 
 //App config
 var corsOptions = {
@@ -49,6 +46,8 @@ io.on("connection", (socket) => {
     io.emit("recieve", data);
   });
 });
+
+app.use("/thread", threadRoutes);
 
 http.listen(port, () => {
   console.log("Listenting at localhost:" + port);

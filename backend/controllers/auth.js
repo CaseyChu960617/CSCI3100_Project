@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
 
         // If no error, hashed the password and create a new user.
         hashedPassword = await bcrypt.hash(password, 10)
-        var newUser = await User.create({
+        var newUser = await users.create({
             lastname: lastname,
             firstname: firstname,
             username: username,
@@ -59,7 +59,7 @@ exports.signup = async (req, res) => {
          // Generate and sign a token
         const accessToken = jwt.sign({
                 uid: newUser._id },
-            process.env.JWT_ACC_ACTIVATE,
+            process.env.JWT_ACC_SECRET,
             { expiresIn: '20m'});
 
         // Return json with user info when user is created successfully.
@@ -98,7 +98,7 @@ exports.signin = async (req, res) => {
             const accessToken = jwt.sign({
                     uid: user._id
                 },
-                process.env.JWT_ACC_ACTIVATE,
+                process.env.JWT_ACC_SECRET,
                 {expiresIn: '20m'});
 
             res.status(200).send({
@@ -134,7 +134,7 @@ exports.activateAccount = async (req, res) => {
         // Generate a token.
         const accessToken = jwt.sign({
                 uid: user._id },
-            process.env.JWT_ACC_ACTIVATE,
+            process.env.JWT_ACC_SECRET,
             { expiresIn: '20m'});
 
         // Return the new data of the user.
