@@ -28,12 +28,13 @@ export const router = new Router({
       component: profile,
     },
     {
-      path: "*",
-      redirect: "/home"
-    },
-    {
       path: "/activateAccount/:uid",
       component: activateAccount,
     },
+    {
+      path: "*",
+      redirect: "/home"
+    },
+    
   ],
 });

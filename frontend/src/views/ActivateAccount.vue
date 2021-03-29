@@ -3,12 +3,8 @@
     <v-row justify="center">
       <v-col cols="6">
         <v-card elevation="16" height="50vh">
-          <v-card-title>
-            Activate your account
-          </v-card-title>
-          <v-card-text>
-            Your account is activated successfully.
-          </v-card-text>
+          <v-card-title> Activate your account </v-card-title>
+          <v-card-text> Your account is activated successfully. </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -24,11 +20,6 @@ export default {
     return {
       message: "abc",
     };
-  },
-  computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
   },
   created() {
     this.activateAccount();
