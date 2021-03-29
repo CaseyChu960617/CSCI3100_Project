@@ -10,7 +10,6 @@ const { getAllTutorials,
         postComment,
         deleteTutorial } = require('../controllers/tutorial');
 
-
 router.get('/', getAllTutorials);
 
 router.get('/category/:category_id', getCategory);

@@ -2,7 +2,7 @@ const Thread = require("../models/thread");
 const ThreadComment = require("../models/threadComment");
 const User = require("../models/user");
 var ObjectId = require("mongoose").Types.ObjectId;
-const { Mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
 // getAllThread function
 exports.getAllThreads = async (req, res) => {
