@@ -19,7 +19,7 @@ router.get('/:tutorial_id', getOneTutorial);
 
 router.post('/', createTutorial);
 
-router.put('/:tutorial_id', editThread);
+router.put('/:tutorial_id', editTutorial);
 
 router.put('/postComment/:tutorial_id',  postComment);
 

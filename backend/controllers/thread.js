@@ -1,7 +1,6 @@
 const Thread = require("../models/thread");
 const ThreadComment = require("../models/threadComment");
 const User = require("../models/user");
-const jwt = require("jsonwebtoken");
 var ObjectId = require("mongoose").Types.ObjectId;
 const { Mongoose } = require("mongoose");
 
@@ -9,14 +8,6 @@ const { Mongoose } = require("mongoose");
 exports.getAllThreads = async (req, res) => {
 
 
-  Thread.find()
-    .sort({ createdAt: -1 })
-    .select("author category title createdAt")
-    .populate("author", "_id username")
-    //const accessToken = req.fields.accessToken;
-    //const decodedToken = jwt.verify(accessToken, process.env.JWT_ACC_SECRET);
-    //console.log(decodedToken);
-   
     Thread.find()
     .sort({ createdAt: -1})
     .select('author category title createdAt')
@@ -40,7 +31,8 @@ exports.getCategory = async (req, res) => {
         //{ path: 'comments', select:'author content' }, 
         { path:'comments', select: 'author content',
           Populate: { 
-            path: 'author' 
+            path: 'author',
+            select: '_id username'
           } 
         } ];    
 
@@ -64,26 +56,8 @@ exports.getOneThread = async (req, res) => {
       { path:'comments', select:'content', populate: {
         path: 'author',
         select: '_id username'
-
-    const { uid } = req.body;
-    const thread_id  = req.params['thread_id'];
-    console.log(thread_id);
-    var populateQuery = [{path:'author', select:'_id username'}, {path:'comments author', select:'title content', populate: { path: 'author', select: '_id username'}}];
-
-    Thread.findById(thread_id)
-    .select('author title content createdAt')
-    .populate(populateQuery)
-    .exec()
-    .then((doc) => {
-        res.status(200).json({
-            discussionThread: doc
-        })
-    }); /*(err,data) => {
-    if (err) {
-            res.status(400).json({ error: "Discussion thread not found."});
-        }
-      }
-    ];
+      }}];
+    
   console.log(thread_id);
   Thread.findById(thread_id)
     .select("author title content comments createdAt")
