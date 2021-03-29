@@ -11,12 +11,13 @@
             bench="25"
             min-height="83vh"
             max-height="83vh"
-            item-height="85"
+            item-height="70"
             :items="threads"
           >
             <template v-slot:default="{ item }">
-              <v-list-item>
+              <v-list-item @click="selectThread(item._id)">
                 <v-list-item-content>
+                  {{ item.author.username }}
                   <v-list-item-title class="text-wrap">
                     <strong>{{ item.title }}</strong>
                   </v-list-item-title>
@@ -27,11 +28,7 @@
           </v-virtual-scroll>
         </v-card>
       </v-col>
-      <v-col md="6" sm="12"
-        ><v-card tile elevation="16" outlined height="100%">
-          <v-card-text>content</v-card-text>
-        </v-card></v-col
-      ><v-spacer />
+      <v-col md="6" sm="12"><Thread :id="id" /></v-col><v-spacer />
     </v-row>
   </v-container>
 </template>
@@ -39,12 +36,17 @@
 <script>
 import DataService from "../services/DataService";
 import authHeader from "../services/auth-header.js";
+import Thread from "../components/discussion/thread.vue";
+
 export default {
+  components: {
+    Thread,
+  },
   data() {
-    return { threads: [], loading: true };
+    return { threads: [], loading: true, id: null };
   },
   created() {
-    this.fetchThread();
+    this.fetchThreadList();
   },
   computed: {
     items() {
@@ -52,12 +54,11 @@ export default {
     },
   },
   methods: {
-    fetchThread() {
+    fetchThreadList() {
       this.loading = true;
       DataService.getAllThread()
         .then((response) => {
-          //console.log(response);
-          this.threads = response.data.dicussionThreads;
+          this.threads = response.data;
           this.loading = false;
         })
         .catch((err) => {
@@ -73,12 +74,15 @@ export default {
     createThread() {
       const data = {
         category: 4,
-        title: "bbb",
-        content: "HI",
+        title: "qqq",
+        content: "ewqewqeqweqw",
       };
-      DataService.create("thread/", data, {
+      DataService.createThread(data, {
         headers: authHeader(),
       });
+    },
+    selectThread(id) {
+      this.id = id;
     },
   },
 };
