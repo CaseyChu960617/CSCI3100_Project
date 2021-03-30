@@ -7,12 +7,26 @@ const mongoose = require("mongoose");
 
 // getAllTutorials function
 exports.getAllTutorials = async (req, res) => {
-    console.log("HI");
+    Tutorial.find()
+    .sort({ createdAt: -1})
+    .select('author category title createdAt')
+    .populate('author', '_id username')
+    .exec()
+    .then((docs) => {
+      res.send(docs);
+    });
 };
 
 // getCategory function
 exports.getCategory = async (req, res) => {
-    console.log("HI");
+    Tutorial.find({category: req.params['category_id']})
+    .sort({ createdAt: -1})
+    .select('author category title createdAt')
+    .populate('author', '_id username')
+    .exec()
+    .then((docs) => {
+      res.send(docs);
+    });
 };
 
 // getOneTutorial function

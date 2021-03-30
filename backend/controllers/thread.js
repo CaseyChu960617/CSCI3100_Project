@@ -6,8 +6,6 @@ const mongoose = require("mongoose");
 
 // getAllThread function
 exports.getAllThreads = async (req, res) => {
-
-
     Thread.find()
     .sort({ createdAt: -1})
     .select('author category title createdAt')
@@ -20,22 +18,7 @@ exports.getAllThreads = async (req, res) => {
 
 // getCategory function
 exports.getCategory = async (req, res) => {
-
-  Thread.find({ category: req.params["category_id"] })
-    .sort({ createdAt: -1 })
-    .select("author category title createdAt")
-    .populate("author", "_id username")
-
-    var populateQuery = [ 
-        { path:'author', select:'_id username'}, 
-        //{ path: 'comments', select:'author content' }, 
-        { path:'comments', select: 'author content',
-          Populate: { 
-            path: 'author',
-            select: '_id username'
-          } 
-        } ];    
-
+    
     Thread.find({category: req.params['category_id']})
     .sort({ createdAt: -1})
     .select('author category title createdAt')
