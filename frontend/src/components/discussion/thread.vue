@@ -9,7 +9,7 @@
         :loading="loading"
         class="mb-2"
       >
-        <v-card-title @click="profile">{{
+        <v-card-title @click="selectProfile(thread.author._id)">{{
           thread.author.username
         }}</v-card-title>
         <v-card-text>{{ thread.content }}</v-card-text>
@@ -53,6 +53,7 @@ export default {
   },
   methods: {
     fetchThread() {
+      console.log(this.id);
       this.loading = true;
       DataService.getOneThread(this.id)
         .then((response) => {

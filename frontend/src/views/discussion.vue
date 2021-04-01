@@ -28,7 +28,7 @@
           </v-virtual-scroll>
         </v-card>
       </v-col>
-      <v-col md="6" sm="12"><Thread :id="id" /></v-col><v-spacer />
+      <v-col md="6" sm="12"><Thread :id="id"/></v-col><v-spacer />
     </v-row>
   </v-container>
 </template>
@@ -43,7 +43,7 @@ export default {
     Thread,
   },
   data() {
-    return { threads: [], loading: true, id: null};
+    return { threads: [], loading: true, id: null };
   },
   created() {
     this.fetchThreadList();
