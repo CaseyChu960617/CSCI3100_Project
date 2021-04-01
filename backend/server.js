@@ -33,9 +33,21 @@ const io = require("socket.io")(http, {
   },
 });
 
-io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
+io.on("connection", async (socket) => {
   socketID = socket.id;
+
+  await socket.join("cdsa");
+  console.log("At room", socket.rooms);
+
+  console.log("a user connected", socket.id);
+
+  socket.emit("clientGetId", {
+    socketID: socketID,
+  });
+
+  socket.on("joinRoom", (data) => {
+    console.log("user " + data.id + "join room");
+  });
 
   socket.on("disconnect", () => {
     console.log("disconnected");
@@ -44,7 +56,7 @@ io.on("connection", (socket) => {
   //send meessage and emit to recieve function
   socket.on("send", (data) => {
     console.log(data);
-    io.emit("recieve", data);
+    io.emit("updateMessage", data);
   });
 });
 

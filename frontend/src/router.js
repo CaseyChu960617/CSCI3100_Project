@@ -6,7 +6,7 @@ import discussion from "./views/discussion.vue";
 import profile from "./views/profile.vue";
 
 import chat from "./views/chat.vue";
-import activateAccount from "./views/activateAccount.vue";
+import activateAccount from "./views/ActivateAccount.vue";
 
 Vue.use(Router);
 

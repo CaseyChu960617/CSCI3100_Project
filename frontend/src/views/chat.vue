@@ -22,7 +22,7 @@
         <v-card v-for="message in messages" :key="message.time" flat>
           <v-list-item
             :key="message.time"
-            v-if="message.from != 'You'"
+            v-if="!message.user.localeCompare(currentUser.username)"
             class="blue-grey lighten-5 "
           >
             <v-list-item-avatar class="align-self-start mr-2">
@@ -33,7 +33,9 @@
             <v-list-item-content class="received-message">
               <v-card color="#99CFEA" class="flex-none">
                 <v-card-text class="white--text pa-2 d-flex flex-column">
-                  <span class="text-caption">{{ message.user }} </span>
+                  <span class="text-caption"
+                    >{{ message.user }} {{ currentUser.username }}</span
+                  >
                   <span class="align-self-start text-subtitle-1">{{
                     message.message
                   }}</span>
@@ -173,7 +175,17 @@ export default {
     },
   },
   mounted() {
-    this.socket.on("recieve", (data) => {
+    this.socket.emit("joinRoom", {
+      id: this.socket.id,
+    });
+
+    this.socket.on("clientGetId", (data) => {
+      console.log("Created " + data.socketID + " Room");
+    });
+
+    this.socket.on("updateMessage", (data) => {
+      //pushed to daatbsae
+
       this.messages = [...this.messages, data];
       console.log(this.messages);
       this.newMessage = null;
