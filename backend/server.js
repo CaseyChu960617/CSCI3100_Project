@@ -8,6 +8,7 @@ require("./db/connectDB");
 //Import routes
 const authRoutes = require("./routes/auth");
 const threadRoutes = require("./routes/thread");
+const tutorialRoutes = require("./routes/tutorial");
 
 //App config
 var corsOptions = {
@@ -48,6 +49,8 @@ io.on("connection", (socket) => {
 });
 
 app.use("/thread", threadRoutes);
+
+app.use("/tutorial", tutorialRoutes);
 
 http.listen(port, () => {
   console.log("Listenting at localhost:" + port);
