@@ -6,8 +6,8 @@ class DataService {
     return http.get(`/${table}`, header);
   }
 
-  get(table, id, header) {
-    return http.get(`/${table}/${id}`, header);
+  get(table, id) { //header) {
+    return http.get(`/${table}/${id}`); //, header);
   }
 
   create(table, data, header) {
