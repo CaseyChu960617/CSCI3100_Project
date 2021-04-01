@@ -43,7 +43,7 @@ export default {
     Thread,
   },
   data() {
-    return { threads: [], loading: true, id: null };
+    return { threads: [], loading: true, id: null};
   },
   created() {
     this.fetchThreadList();
