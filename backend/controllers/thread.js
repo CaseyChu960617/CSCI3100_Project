@@ -43,7 +43,7 @@ exports.getOneThread = async (req, res) => {
     
   console.log(thread_id);
   Thread.findById(thread_id)
-    .select("author title content comments createdAt")
+    .select("author title contentSD comments createdAt")
     .populate(populateQuery)
     .exec()
     .then((docs) => {
