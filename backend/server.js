@@ -10,6 +10,7 @@ require('./db/connectDB');
 const authRoutes = require('./routes/auth');
 const threadRoutes = require('./routes/thread');
 const tutorialRoutes = require('./routes/tutorial');
+const userRoutes = require('./routes/user');
 
 //App config
 var corsOptions = {
@@ -41,6 +42,8 @@ http.listen(port, () => {
     app.use("/thread", threadRoutes);
 
     app.use("/tutorial", tutorialRoutes);
+
+    app.use("/user", userRoutes);
 });
 
 

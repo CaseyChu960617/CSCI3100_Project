@@ -19,10 +19,10 @@ router.get('/:thread_id', getOneThread);
 
 router.post('/', authJwt.verifyToken, createThread);
 
-router.put('/:thread_id', editThread);
+router.put('/:thread_id', authJwt.verifyToken, editThread);
 
 router.put('/postComment/:thread_id',  postComment);
 
-router.delete('/:thread_id',  deleteThread);
+router.delete('/:thread_id', authJwt.verifyToken, deleteThread);
 
 module.exports = router;
