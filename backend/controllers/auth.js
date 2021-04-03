@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
 
         // If no error, hashed the password and create a new user.
         hashedPassword = await bcrypt.hash(password, 10)
-        var newUser = await User.create({
+        var newUser = await users.create({
             lastname: lastname,
             firstname: firstname,
             username: username,
@@ -35,7 +35,7 @@ exports.signup = async (req, res) => {
         console.log(newUser);
 
         // Generate activation email with mailgun.
-        activate_link= process.env.CLIENT_URL + "/activateAccount/" + newUser._id
+         activate_link= process.env.CLIENT_URL + "/activateAccount/" + newUser._id
          const data = {
                 from: 'noreply@urge.org',
                 to: email ,
