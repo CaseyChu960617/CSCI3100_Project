@@ -5,7 +5,6 @@ import tutorial from "./views/tutorial.vue";
 import discussion from "./views/discussion.vue";
 import profile from "./views/profile.vue";
 import activateAccount from "./views/activateAccount.vue";
-import userProfile from "./views/userProfile.vue";
 
 Vue.use(Router);
 
@@ -36,11 +35,6 @@ export const router = new Router({
       path: "*",
       redirect: "/home"
     },
-    {
-      name: "userProfile",
-      path: "/userProfile/:uid",
-      component: userProfile,
-    }
     
   ],
 });

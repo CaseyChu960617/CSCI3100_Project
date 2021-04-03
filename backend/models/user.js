@@ -8,8 +8,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     gender: { type: Number },
     profileImage: { type: String },
-    activation: { type: Boolean, default: false },
-    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    activation: { type: Boolean, default: false }
 }, { collection: 'users'});
 
 const userModel = mongoose.model('User', userSchema);

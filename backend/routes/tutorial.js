@@ -24,6 +24,4 @@ router.put('/postComment/:tutorial_id',  postComment);
 
 router.delete('/:tutorial_id',  deleteTutorial);
 
-//router.post('/createChapter', createChapter);
-
 module.exports = router;

@@ -52,16 +52,7 @@ exports.getOneThread = async (req, res) => {
 };
 
 // editThread function
-exports.editThread = async (req, res) => {
-  const thread_id = req.params["thread_id"];
-  const { content } = req.body
-
-  Thread.findOneAndUpdate({ _id: thread_id }, { $set: { content: content } }, (err, doc) => {
-    if (err) res.status(400).json({ error: "Bad request." });
-    else
-      res.send(doc);
-  });
-};
+exports.editThread = async (req, res) => {};
 
 // postComment function
 exports.postComment = async (req, res) => {

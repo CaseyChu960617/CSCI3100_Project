@@ -1,40 +1,19 @@
 <template>
   <span>
-    <v-container v-if="thread">
-      <v-card
-        tile
-        elevation="16"
-        outlined
-        height="80%"
-        :loading="loading"
-        class="mb-2"
-      >
-        <v-card-title @click="profile">{{
-          thread.author.username
-        }}</v-card-title>
-        <v-card-text>{{ thread.content }}</v-card-text>
-      </v-card>
-      <v-card
-        v-for="comment in thread.comments"
-        :key="comment"
-        tile
-        elevation="16"
-        outlined
-        height="40%"
-        :loading="loading"
-        class="mb-2"
-      >
-        <v-card-title @click="selectProfile(comment.author._id)">{{
-          comment.author.username
-        }}</v-card-title>
-        <v-card-text>{{ comment.content }}</v-card-text>
-      </v-card>
-    </v-container>
-    <v-container v-else>
-      <v-card tile elevation="16" outlined height="40%">
-        <v-card-text>have not selected any thread</v-card-text>
-      </v-card>
-    </v-container>
+    <v-card
+      tile
+      elevation="16"
+      outlined
+      height="100%"
+      :loading="loading"
+      v-if="thread"
+    >
+      <v-card-title>{{ thread.title }}</v-card-title>
+      <v-card-text>{{ thread.content }}</v-card-text>
+    </v-card>
+    <v-card tile elevation="16" outlined height="100%" v-else>
+      <v-card-text>have not selected any thread</v-card-text>
+    </v-card>
   </span>
 </template>
 
@@ -44,7 +23,7 @@ import DataService from "../../services/DataService";
 export default {
   props: ["id"],
   data() {
-    return { thread: null, loading: true, uid: null };
+    return { thread: null, loading: true };
   },
   watch: {
     id() {
@@ -57,7 +36,6 @@ export default {
       DataService.getOneThread(this.id)
         .then((response) => {
           // console.log(response);
-          //console.log(response.data);
           this.thread = response.data;
           this.loading = false;
         })
@@ -70,14 +48,6 @@ export default {
             alert(err.response.data.message);
           }
         });
-    },
-    selectProfile(uid) {
-      this.uid = uid;
-      console.log(this.uid);
-      this.$router.push({
-        name: "userProfile",
-        params: { uid: this.uid },
-      });
     },
   },
 };
