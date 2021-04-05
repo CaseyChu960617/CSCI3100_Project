@@ -33,7 +33,8 @@ export const router = new Router({
     },
 
     {
-      path: "/chat:uid",
+      name: "chat",
+      path: "/chat/:oppId",
       component: chat,
     },
     {

@@ -22,7 +22,7 @@
         <v-card v-for="message in messages" :key="message.time" flat>
           <v-list-item
             :key="message.time"
-            v-if="!message.user.localeCompare(currentUser.username)"
+            v-if="!message.sender.localeCompare(currentUser.username)"
             class="blue-grey lighten-5 "
           >
             <v-list-item-avatar class="align-self-start mr-2">
@@ -34,7 +34,7 @@
               <v-card color="#99CFEA" class="flex-none">
                 <v-card-text class="white--text pa-2 d-flex flex-column">
                   <span class="text-caption"
-                    >{{ message.user }} {{ currentUser.username }}</span
+                    >{{ message.sender }} {{ currentUser.username }}</span
                   >
                   <span class="align-self-start text-subtitle-1">{{
                     message.message
@@ -139,7 +139,7 @@
 
 <script>
 import io from "socket.io-client";
-import DataService from "../services/DataService";
+//import DataService from "../services/DataService";
 
 export default {
   computed: {
@@ -150,6 +150,7 @@ export default {
 
   data() {
     return {
+      oppID: this.$route.params.oppId,
       newMessage: null,
       messages: [],
       //make connection to socket io
@@ -168,26 +169,15 @@ export default {
       console.log(this.socket);
       if (this.newMessage != null) {
         this.socket.emit("send", {
-          user: this.currentUser.username,
+          sender: this.currentUser.username,
           message: this.newMessage,
           time: new Date(),
         });
       }
     },
-
-    fetchOtherID() {
-      console.log(this.$route.params.uid);
-      //this.uid = this.$route.params.uid;
-
-      DataService.get("user/getProfile", this.$route.params.uid).then(
-        (response) => {
-          console.log(response.data[0]);
-          this.user = response.data[0];
-        }
-      );
-    },
   },
   mounted() {
+    console.log("oppID is in chat.vue ", this.oppId);
     this.socket.emit("joinRoom", {
       id: this.socket.id,
     });

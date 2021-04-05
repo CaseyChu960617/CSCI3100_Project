@@ -7,6 +7,7 @@
     <p>Last Name: {{ this.user.firstname }}</p>
     <p>Email: {{ this.user.email }}</p>
     <p>Gender:</p>
+    <v-btn elevation="2" @click="startChat(user._id)">Start chat</v-btn>
   </div>
 </template>
 
@@ -14,7 +15,6 @@
 import DataService from "../services/DataService";
 //import authHeader from "../services/auth-header.js";
 export default {
-  props: ["_id"],
   data() {
     return { user: null };
   },
@@ -33,6 +33,13 @@ export default {
           this.user = response.data[0];
         }
       );
+    },
+    startChat(id) {
+      console.log("oppId is ", id);
+      this.$router.push({
+        name: "chat",
+        params: { oppId: id },
+      });
     },
   },
 };
