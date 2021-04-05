@@ -51,6 +51,7 @@ export default {
       this.fetchThread();
     },
   },
+
   methods: {
     fetchThread() {
       console.log(this.id);
@@ -73,12 +74,16 @@ export default {
         });
     },
     selectProfile(uid) {
+      const currentUser = this.$store.state.auth.user;
+      console.log(currentUser);
       this.uid = uid;
-      console.log(this.uid);
-      this.$router.push({
-        name: "userProfile",
-        params: { uid: this.uid },
-      });
+      if (currentUser.uid == this.uid) 
+        this.$router.push({ path: "/profile" });
+      else
+        this.$router.push({
+          name: "userProfile",
+          params: { uid: this.uid },
+        });
     },
   },
 };

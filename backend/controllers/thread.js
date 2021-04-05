@@ -68,7 +68,7 @@ exports.postComment = async (req, res) => {
   const thread_id = req.params["thread_id"];
   const { uid, content } = req.body;
 
-  var newcomment = new ThreadComment(
+  var newComment = new ThreadComment(
     {
       author: new ObjectId(uid),
       createdAt: new Date().getTime(),
@@ -83,18 +83,18 @@ exports.postComment = async (req, res) => {
       //    console.log(data);
     }
   );
-  newcomment.save((err) => {
+  newComment.save((err) => {
     if (err) res.status(400).json({ error: "Comment cannot be posted successfully." });
   });
-  console.log(newcomment);
+  console.log(newComment);
   console.log(thread_id);
-  Thread.findOneAndUpdate({ _id: thread_id }, { $push: { comments: newcomment._id } }, (err, doc) => {
-    if (err) res.status(400).json({ error: "Bad request." });
-    else
-      res.status(200).json({
-        discussionThread: doc,
-        message: "successfully comment.",
-      });
+  Thread.findOneAndUpdate({ _id: thread_id }, 
+    { $push: { comments: newcomment._id } }, 
+    (err, doc) => {
+      if (err) 
+        res.status(400).json({ error: "Bad request." });
+      else
+        res.send(doc);  
   });
 };
 
