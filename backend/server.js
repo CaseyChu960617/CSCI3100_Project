@@ -10,6 +10,7 @@ const authRoutes = require("./routes/auth");
 const threadRoutes = require("./routes/thread");
 const tutorialRoutes = require("./routes/tutorial");
 const userRoutes = require("./routes/user");
+const chatRoutes = require("./routes/chat");
 
 //App config
 var corsOptions = {
@@ -34,20 +35,32 @@ const io = require("socket.io")(http, {
   },
 });
 
-io.on("connection", async (socket) => {
+io.on("connection", (socket) => {
+  console.log("At room before joining", socket.rooms);
   socketID = socket.id;
 
-  await socket.join("cdsa");
+  socket.on("joinRoom", (data) => {
+    //socket.join(data.roomId);
+    //console.log("user " + data.user + " join roomID " + data.roomId);
+
+    if (data.user.localeCompare("555")) {
+      socket.join("1234");
+      console.log("user " + data.user + " join roomID 1234");
+      var roster = io.sockets.clients("1234");
+    }
+
+    if (!data.user.localeCompare("555")) {
+      socket.join("123");
+      console.log("user " + data.user + " join roomID 123");
+    }
+  });
+
   console.log("At room", socket.rooms);
 
   console.log("a user connected", socket.id);
 
   socket.emit("clientGetId", {
     socketID: socketID,
-  });
-
-  socket.on("joinRoom", (data) => {
-    console.log("user " + data.id + "join room");
   });
 
   socket.on("disconnect", () => {
@@ -61,17 +74,17 @@ io.on("connection", async (socket) => {
   });
 });
 
-app.use("/thread", threadRoutes);
-
-app.use("/tutorial", tutorialRoutes);
-
-app.use("/user", userRoutes);
-
 http.listen(port, () => {
   console.log("Listenting at localhost:" + port);
 
   //API routes
   app.use("/auth", authRoutes);
 
-  //app.use("/thread", threadRoutes);
+  app.use("/thread", threadRoutes);
+
+  app.use("/tutorial", tutorialRoutes);
+
+  app.use("/user", userRoutes);
+
+  app.use("/chat", chatRoutes);
 });

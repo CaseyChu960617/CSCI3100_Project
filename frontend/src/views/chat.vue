@@ -1,7 +1,9 @@
 <template>
   <v-container fluid class="pa-0">
     <v-card
-      style="max-width:1200px; height:500px;overflow-y: scroll; width: 100%; padding: 12px;"
+      max-height="70vh"
+      min-height="70vh"
+      style="max-width:1200px; overflow-y: scroll; width: 100%; padding: 12px;"
       class="scroll-bar blue-grey lighten-5 ml-auto mr-auto"
       elevation="16"
       v-bind:style="messages.length == 0 ? 'display:flex' : ''"
@@ -142,6 +144,7 @@ import io from "socket.io-client";
 //import DataService from "../services/DataService";
 
 export default {
+  props: ["chatId"],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -176,12 +179,15 @@ export default {
       }
     },
   },
-  mounted() {
-    console.log("oppID is in chat.vue", this.oppId);
+  created() {
+    console.log("chatId is chat.vue ", this.chatId);
     this.socket.emit("joinRoom", {
-      id: this.socket.id,
+      user: this.currentUser.username,
+      roomId: this.$props.chatId,
     });
+  },
 
+  mounted() {
     this.socket.on("clientGetId", (data) => {
       console.log("Created " + data.socketID + " Room");
     });
