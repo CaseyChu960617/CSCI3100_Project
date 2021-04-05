@@ -177,7 +177,7 @@ export default {
     },
   },
   mounted() {
-    console.log("oppID is in chat.vue ", this.oppId);
+    console.log("oppID is in chat.vue", this.oppId);
     this.socket.emit("joinRoom", {
       id: this.socket.id,
     });
