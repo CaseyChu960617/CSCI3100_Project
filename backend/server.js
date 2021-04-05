@@ -10,6 +10,7 @@ const authRoutes = require("./routes/auth");
 const threadRoutes = require("./routes/thread");
 const tutorialRoutes = require("./routes/tutorial");
 const userRoutes = require("./routes/user");
+const chatRoutes = require("./routes/chat");
 
 //App config
 var corsOptions = {
@@ -61,11 +62,6 @@ io.on("connection", async (socket) => {
   });
 });
 
-app.use("/thread", threadRoutes);
-
-app.use("/tutorial", tutorialRoutes);
-
-app.use("/user", userRoutes);
 
 http.listen(port, () => {
   console.log("Listenting at localhost:" + port);
@@ -73,5 +69,12 @@ http.listen(port, () => {
   //API routes
   app.use("/auth", authRoutes);
 
-  //app.use("/thread", threadRoutes);
+  app.use("/thread", threadRoutes);
+
+  app.use("/tutorial", tutorialRoutes);
+
+  app.use("/user", userRoutes);
+
+  app.use("/chat", chatRoutes);
+
 });

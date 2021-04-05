@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { authJwt } = require("../middlewares");
+//const { authJwt } = require("../middlewares");
 
 const { getAllChats,
-        sendMessage } = require('../controllers/thread');
+        getOneChat,
+        sendMessage } = require('../controllers/chat');
 
 
-router.get('/getAllChats', getAllChats);
+router.get('/getAllChats/:uid', getAllChats);
 
-router.get('/getOneChat', getOneChat);
+router.post('/getOneChat', getOneChat);
 
 router.put('/sendMessage/:chat_id', sendMessage);
+
+module.exports = router;

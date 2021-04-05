@@ -11,13 +11,13 @@
             min-height="83vh"
             max-height="83vh"
             item-height="70"
-            :items="threads"
+            :items="chats"
           >
             <template v-slot:default="{ item }">
               <v-list-item @click="selectChat(item._id)">
                 <v-list-item-content>
                   <v-list-item-title class="text-wrap">
-                    <strong>{{}}</strong>
+                    <strong>{{ item.user.username }}</strong>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-//import DataService from "../services/DataService";
+import DataService from "../services/DataService";
 //import authHeader from "../services/auth-header.js";
 
 export default {
@@ -51,10 +51,20 @@ export default {
   methods: {
     fetchChatList() {
       this.loading = true;
-      /*DataService.getAllThread()
+      //console.log(this.$store.state.auth.user.uid);
+      DataService.get("chat/getAllChats", this.$store.state.auth.user.uid)
         .then((response) => {
           console.log(response.data);
-          this.threads = response.data;
+          const rawData = response.data;
+
+          rawData.forEach((element) => {
+            if (element.userA._id == this.$store.state.auth.user.uid) {
+              this.chats.push({ user: element.userB, _id: element._id });
+            } else {
+              this.chats.push({ user: element.userA, _id: element._id });
+            }
+          });
+          console.log(this.chats[0]);
           this.loading = false;
         })
         .catch((err) => {
@@ -65,7 +75,7 @@ export default {
           } else {
             alert(err.response.data.message);
           }
-        });*/
+        });
     },
 
     selectChat(id) {

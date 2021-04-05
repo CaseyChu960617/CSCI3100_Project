@@ -7,17 +7,19 @@ const mongoose = require("mongoose");
 // getAllChatsfunction
 exports.getAllChats = async (req, res) => {
 
-    const { uid } = req.body;
+    const uid  = req.params['uid'];
+    console.log(uid);
 
     Chat.find({$or: [
-        { 'userA': uid}, 
-        { 'userB': uid} 
+        { userA: uid }, 
+        { userB: uid } 
     ]})
     .sort({ createdAt: -1})
     .select('_id userA userB')
     .populate('userA userB', '_id username')
     .exec()
     .then((docs) => {
+      console.log(docs);
       res.send(docs);
     });
 };
@@ -44,7 +46,7 @@ exports.getOneChat = async (req, res) => {
     .populate(populateQuery)
     .exec()
     .then((doc) => {
-
+      console.log(doc);
       if (!doc) {
         Chat.create({
             userA: uid_1,
@@ -65,12 +67,12 @@ exports.getOneChat = async (req, res) => {
 exports.sendMessage = async (req, res) => {
 
     const chat_id = req.params['chat_id'];
-    const { sender_id, content, timestamp } = req.body;
+    const { sender_id, content } = req.body;
 
     const newMessage = new Message({
         sender: new ObjectId(sender_id),
         content: content,
-        timestamp: timestamp,
+        timestamp: new Date().getTime(),
     }, err => {
         if (err) {
           console.log(err);
