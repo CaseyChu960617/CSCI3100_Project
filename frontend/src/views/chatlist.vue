@@ -26,15 +26,12 @@
           </v-virtual-scroll>
         </v-card>
       </v-col>
-      <<<<<<< HEAD
+
       <v-col cols="12" md="6" sm="12"
         ><chat :chatId="chatId" v-if="chatId" /><v-card v-else
           >No chat</v-card
         ></v-col
       ><v-spacer />
-      =======
-      <v-col cols="12" md="6" sm="12"><chat :oppId="id"/></v-col><v-spacer />
-      >>>>>>> master
     </v-row>
   </v-container>
 </template>
