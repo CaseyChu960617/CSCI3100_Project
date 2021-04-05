@@ -8,6 +8,7 @@ import profile from "./views/profile.vue";
 import chat from "./views/chat.vue";
 import activateAccount from "./views/activateAccount.vue";
 import userProfile from "./views/userProfile.vue";
+import editProfile from "./views/editProfile.vue";
 
 Vue.use(Router);
 
@@ -48,6 +49,11 @@ export const router = new Router({
       name: "userProfile",
       path: "/userProfile/:uid",
       component: userProfile,
+    },
+
+    {
+      path: "/editProfile",
+      component: editProfile,
     },
   ],
 });

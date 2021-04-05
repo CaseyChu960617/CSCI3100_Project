@@ -58,6 +58,7 @@ export default {
       this.loading = true;
       DataService.getAllThread()
         .then((response) => {
+          console.log(response.data);
           this.threads = response.data;
           this.loading = false;
         })
