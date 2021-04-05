@@ -77,8 +77,7 @@ export default {
       const currentUser = this.$store.state.auth.user;
       console.log(currentUser);
       this.uid = uid;
-      if (currentUser.uid == this.uid) 
-        this.$router.push({ path: "/profile" });
+      if (currentUser.uid == this.uid) this.$router.push({ path: "/profile" });
       else
         this.$router.push({
           name: "userProfile",
