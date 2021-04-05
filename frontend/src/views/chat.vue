@@ -139,6 +139,7 @@
 
 <script>
 import io from "socket.io-client";
+import DataService from "../services/DataService";
 
 export default {
   computed: {
@@ -172,6 +173,18 @@ export default {
           time: new Date(),
         });
       }
+    },
+
+    fetchOtherID() {
+      console.log(this.$route.params.uid);
+      //this.uid = this.$route.params.uid;
+
+      DataService.get("user/getProfile", this.$route.params.uid).then(
+        (response) => {
+          console.log(response.data[0]);
+          this.user = response.data[0];
+        }
+      );
     },
   },
   mounted() {

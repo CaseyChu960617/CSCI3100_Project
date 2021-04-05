@@ -32,7 +32,7 @@ export const router = new Router({
     },
 
     {
-      path: "/chat",
+      path: "/chat:uid",
       component: chat,
     },
     {
