@@ -34,7 +34,8 @@ export const router = new Router({
       component: profile,
     },
     {
-      path: "/chats",
+      name: "chat",
+      path: "/chat/:oppId",
       component: chat,
     },
     {
