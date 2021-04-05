@@ -12,6 +12,9 @@
       ></v-img>
       <v-spacer></v-spacer>
       <div v-if="currentUser">
+        <v-btn to="/chat" class="text-capitalize headline white--text" plain
+          >Chat</v-btn
+        >
         <v-btn to="/tutorial" class="text-capitalize headline white--text" plain
           >Tutorial</v-btn
         >

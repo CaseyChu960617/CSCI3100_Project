@@ -9,6 +9,8 @@ import chat from "./views/chat.vue";
 import activateAccount from "./views/activateAccount.vue";
 import userProfile from "./views/userProfile.vue";
 import editProfile from "./views/editProfile.vue";
+import chatList from "./views/chatList.vue";
+//import { component } from "vue/types/umd";
 
 Vue.use(Router);
 
@@ -31,10 +33,13 @@ export const router = new Router({
       path: "/profile",
       component: profile,
     },
-
+    {
+      path: "/chats",
+      component: chat,
+    },
     {
       path: "/chat",
-      component: chat,
+      component: chatList,
     },
     {
       path: "/activateAccount/:uid",
@@ -44,13 +49,11 @@ export const router = new Router({
       path: "*",
       redirect: "/home",
     },
-
     {
       name: "userProfile",
       path: "/userProfile/:uid",
       component: userProfile,
     },
-
     {
       path: "/editProfile",
       component: editProfile,
