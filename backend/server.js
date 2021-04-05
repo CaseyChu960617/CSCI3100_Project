@@ -35,20 +35,20 @@ const io = require("socket.io")(http, {
   },
 });
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   socketID = socket.id;
 
-  socket.on("joinRoom", (data) => {
-    socket.join(data.roomId);
-    console.log("user " + data.user + " join roomID " + data.roomId);
-  });
-
+  await socket.join("cdsa");
   console.log("At room", socket.rooms);
 
   console.log("a user connected", socket.id);
 
   socket.emit("clientGetId", {
     socketID: socketID,
+  });
+
+  socket.on("joinRoom", (data) => {
+    console.log("user " + data.id + "join room");
   });
 
   socket.on("disconnect", () => {
@@ -62,15 +62,19 @@ io.on("connection", (socket) => {
   });
 });
 
-console.log("Listenting at localhost:" + port);
 
-//API routes
-app.use("/auth", authRoutes);
+http.listen(port, () => {
+  console.log("Listenting at localhost:" + port);
 
-app.use("/thread", threadRoutes);
+  //API routes
+  app.use("/auth", authRoutes);
 
-app.use("/tutorial", tutorialRoutes);
+  app.use("/thread", threadRoutes);
 
-app.use("/user", userRoutes);
+  app.use("/tutorial", tutorialRoutes);
 
-app.use("/chat", chatRoutes);
+  app.use("/user", userRoutes);
+
+  app.use("/chat", chatRoutes);
+
+});

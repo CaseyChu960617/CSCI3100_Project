@@ -1,7 +1,6 @@
 <template>
   <v-container fluid class="pa-5">
     <v-card
-      max-height="70vh"
       min-height="70vh"
       style="max-width:1200px; overflow-y: scroll; width: 100%; padding: 12px;"
       class="scroll-bar blue-grey lighten-5 ml-auto mr-auto"
@@ -144,8 +143,7 @@ import io from "socket.io-client";
 //import DataService from "../services/DataService";
 
 export default {
-  props: ["chatId"],
-
+  props: ["oppId"],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -180,15 +178,12 @@ export default {
       }
     },
   },
-  created() {
-    console.log("chatId is chat.vue ", this.chatId);
-    this.socket.emit("joinRoom", {
-      user: this.currentUser.username,
-      roomId: this.$props.chatId,
-    });
-  },
-
   mounted() {
+    console.log("oppID is in chat.vue", this.oppId);
+    this.socket.emit("joinRoom", {
+      id: this.socket.id,
+    });
+
     this.socket.on("clientGetId", (data) => {
       console.log("Created " + data.socketID + " Room");
     });
