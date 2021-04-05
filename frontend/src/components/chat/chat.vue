@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="pa-0">
+  <v-container fluid class="pa-5">
     <v-card
       max-height="70vh"
       min-height="70vh"
@@ -145,6 +145,7 @@ import io from "socket.io-client";
 
 export default {
   props: ["chatId"],
+
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

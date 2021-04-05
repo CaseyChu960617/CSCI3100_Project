@@ -89,7 +89,7 @@ exports.postComment = async (req, res) => {
   console.log(newComment);
   console.log(thread_id);
   Thread.findOneAndUpdate({ _id: thread_id }, 
-    { $push: { comments: newcomment._id } }, 
+    { $push: { comments: newComment._id } }, 
     (err, doc) => {
       if (err) 
         res.status(400).json({ error: "Bad request." });

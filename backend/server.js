@@ -74,17 +74,15 @@ io.on("connection", (socket) => {
   });
 });
 
-http.listen(port, () => {
-  console.log("Listenting at localhost:" + port);
+console.log("Listenting at localhost:" + port);
 
-  //API routes
-  app.use("/auth", authRoutes);
+//API routes
+app.use("/auth", authRoutes);
 
-  app.use("/thread", threadRoutes);
+app.use("/thread", threadRoutes);
 
-  app.use("/tutorial", tutorialRoutes);
+app.use("/tutorial", tutorialRoutes);
 
-  app.use("/user", userRoutes);
+app.use("/user", userRoutes);
 
-  app.use("/chat", chatRoutes);
-});
+app.use("/chat", chatRoutes);
