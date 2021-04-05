@@ -1,7 +1,8 @@
 <template>
-  <v-container fluid class="pa-0">
+  <v-container fluid class="pa-5">
     <v-card
-      style="max-width:1200px; height:500px;overflow-y: scroll; width: 100%; padding: 12px;"
+      min-height="70vh"
+      style="max-width:1200px; overflow-y: scroll; width: 100%; padding: 12px;"
       class="scroll-bar blue-grey lighten-5 ml-auto mr-auto"
       elevation="16"
       v-bind:style="messages.length == 0 ? 'display:flex' : ''"
@@ -142,6 +143,7 @@ import io from "socket.io-client";
 //import DataService from "../services/DataService";
 
 export default {
+  props: ["oppId"],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

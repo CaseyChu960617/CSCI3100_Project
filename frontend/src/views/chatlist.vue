@@ -2,14 +2,14 @@
   <v-container fluid class="pa-0">
     <v-row no-gutters>
       <v-spacer />
-      <v-col md="3" class="hidden-sm-and-down">
+      <v-col mt="5" md="3" class="hidden-sm-and-down mt-5">
         <v-card elevation="16">
           <v-card-title>Chat list</v-card-title>
           <v-divider />
           <v-virtual-scroll
             bench="25"
-            min-height="83vh"
-            max-height="83vh"
+            min-height="74vh"
+            max-height="74vh"
             item-height="70"
             :items="threads"
           >
@@ -26,7 +26,7 @@
           </v-virtual-scroll>
         </v-card>
       </v-col>
-      <v-col md="6" sm="12">Chat</v-col><v-spacer />
+      <v-col cols="12" md="6" sm="12"><chat :oppId="id"/></v-col><v-spacer />
     </v-row>
   </v-container>
 </template>
@@ -34,9 +34,10 @@
 <script>
 //import DataService from "../services/DataService";
 //import authHeader from "../services/auth-header.js";
+import chat from "../components/chat/chat.vue";
 
 export default {
-  components: {},
+  components: { chat },
   data() {
     return { chats: [], loading: true, id: null };
   },

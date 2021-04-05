@@ -37,7 +37,7 @@ export default {
     startChat(id) {
       console.log("oppId is ", id);
       this.$router.push({
-        name: "chat",
+        name: "chatList",
         params: { oppId: id },
       });
     },

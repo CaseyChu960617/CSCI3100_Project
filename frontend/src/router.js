@@ -4,8 +4,6 @@ import home from "./views/home.vue";
 import tutorial from "./views/tutorial.vue";
 import discussion from "./views/discussion.vue";
 import profile from "./views/profile.vue";
-
-import chat from "./views/chat.vue";
 import activateAccount from "./views/activateAccount.vue";
 import userProfile from "./views/userProfile.vue";
 import editProfile from "./views/editProfile.vue";
@@ -33,12 +31,13 @@ export const router = new Router({
       path: "/profile",
       component: profile,
     },
+    //{
+    //  name: "chat",
+    //  path: "/chat/:oppId",
+    //  component: chat,
+    //},
     {
-      name: "chat",
-      path: "/chat/:oppId",
-      component: chat,
-    },
-    {
+      name: "chatList",
       path: "/chat",
       component: chatList,
     },
