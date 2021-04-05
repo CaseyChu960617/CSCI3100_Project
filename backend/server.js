@@ -36,23 +36,11 @@ const io = require("socket.io")(http, {
 });
 
 io.on("connection", (socket) => {
-  console.log("At room before joining", socket.rooms);
   socketID = socket.id;
 
   socket.on("joinRoom", (data) => {
-    //socket.join(data.roomId);
-    //console.log("user " + data.user + " join roomID " + data.roomId);
-
-    if (data.user.localeCompare("555")) {
-      socket.join("1234");
-      console.log("user " + data.user + " join roomID 1234");
-      var roster = io.sockets.clients("1234");
-    }
-
-    if (!data.user.localeCompare("555")) {
-      socket.join("123");
-      console.log("user " + data.user + " join roomID 123");
-    }
+    socket.join(data.roomId);
+    console.log("user " + data.user + " join roomID " + data.roomId);
   });
 
   console.log("At room", socket.rooms);
