@@ -18,6 +18,11 @@ export default {
   data() {
     return { user: null };
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
   created() {
     this.fetchProfile();
   },
@@ -36,9 +41,17 @@ export default {
     },
     startChat(id) {
       console.log("oppId is ", id);
-      this.$router.push({
-        name: "chatList",
-        params: { oppId: id },
+      var chat_id = "";
+      DataService.post("chat/getOneChat", {
+        uid_1: this.currentUser.uid,
+        uid_2: id,
+      }).then((response) => {
+        chat_id = response.data._id;
+        console.log("ChatId:" + chat_id);
+        this.$router.push({
+          name: "chat",
+          params: { chatId: chat_id },
+        });
       });
     },
   },

@@ -34,13 +34,12 @@ export const router = new Router({
       path: "/profile",
       component: profile,
     },
-    //{
-    //  name: "chat",
-    //  path: "/chat/:oppId",
-    //  component: chat,
-    //},
     {
-      name: "chatList",
+      name: "chat",
+      path: "/chat/:chatId",
+      component: chatList,
+    },
+    {
       path: "/chat",
       component: chatList,
     },
