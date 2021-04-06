@@ -1,6 +1,7 @@
 <template>
   <v-container fluid class="pa-5">
     <v-card
+      max-height="70vh"
       min-height="70vh"
       style="max-width:1200px; overflow-y: scroll; width: 100%; padding: 12px;"
       class="scroll-bar blue-grey lighten-5 ml-auto mr-auto"
@@ -143,7 +144,7 @@ import io from "socket.io-client";
 //import DataService from "../services/DataService";
 
 export default {
-  props: ["oppId"],
+  props: ["chatId"],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -168,25 +169,28 @@ export default {
 
   methods: {
     send() {
-      console.log(this.socket);
       if (this.newMessage != null) {
-        this.socket.emit("send", {
-          sender: this.currentUser.username,
-          message: this.newMessage,
-          time: new Date(),
-        });
+        console.log("chat id is ", this.chatId);
+        this.socket.emit(
+          "send",
+          {
+            chatId: this.chatId,
+            sender: this.currentUser.username,
+            message: this.newMessage,
+            time: new Date(),
+          },
+          this.chatId
+        );
       }
     },
   },
   mounted() {
-    console.log("oppID is in chat.vue", this.oppId);
     this.socket.emit("joinRoom", {
-      id: this.socket.id,
+      chatId: this.chatId,
+      sender: this.currentUser.username,
     });
 
-    this.socket.on("clientGetId", (data) => {
-      console.log("Created " + data.socketID + " Room");
-    });
+    console.log("Join " + this.chatId + " Room");
 
     this.socket.on("updateMessage", (data) => {
       //pushed to daatbsae
@@ -200,6 +204,11 @@ export default {
     //scroll to bottom after the chat is sent or updated
     const scrollbar = document.querySelector(".scroll-bar");
     scrollbar.scrollTo(0, scrollbar.scrollHeight);
+  },
+  beforeMount() {
+    this.socket.emit("leave", {
+      chatId: this.chatId,
+    });
   },
 };
 </script>

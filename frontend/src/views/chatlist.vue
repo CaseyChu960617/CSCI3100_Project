@@ -26,7 +26,10 @@
           </v-virtual-scroll>
         </v-card>
       </v-col>
-      <v-col cols="12" md="6" sm="12"><chat :oppId="id"/></v-col><v-spacer />
+      <v-col cols="12" md="6" sm="12"
+        ><chat :chatId="chatId" v-if="chatId" />
+        <v-card v-else>No chat</v-card></v-col
+      ><v-spacer />
     </v-row>
   </v-container>
 </template>
@@ -39,12 +42,15 @@ import chat from "../components/chat/chat.vue";
 export default {
   components: { chat },
   data() {
-    return { chats: [], loading: true, id: null };
+    return { chats: [], loading: true, chatId: null };
   },
   created() {
     this.fetchChatList();
   },
   computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
     items() {
       return Array.from({ length: 20 }, (k, v) => v + 1);
     },
@@ -66,6 +72,7 @@ export default {
             }
           });
           console.log(this.chats[0]);
+
           this.loading = false;
         })
         .catch((err) => {
@@ -80,7 +87,8 @@ export default {
     },
 
     selectChat(id) {
-      this.id = id;
+      this.chatId = id;
+      console.log(this.currentUser.username + " in room " + this.chatId);
     },
   },
 };

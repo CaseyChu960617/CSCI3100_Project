@@ -38,8 +38,10 @@ const io = require("socket.io")(http, {
 io.on("connection", async (socket) => {
   socketID = socket.id;
 
-  await socket.join("cdsa");
-  console.log("At room", socket.rooms);
+  socket.on("joinRoom", (data) => {
+    socket.join(data.chatId);
+    console.log("user " + data.sender + " join room " + data.chatId);
+  });
 
   console.log("a user connected", socket.id);
 
@@ -47,21 +49,19 @@ io.on("connection", async (socket) => {
     socketID: socketID,
   });
 
-  socket.on("joinRoom", (data) => {
-    console.log("user " + data.id + "join room");
-  });
-
   socket.on("disconnect", () => {
     console.log("disconnected");
   });
 
-  //send meessage and emit to recieve function
   socket.on("send", (data) => {
-    console.log(data);
-    io.emit("updateMessage", data);
+    console.log(data.sender + " send in room " + data.chatId);
+    io.to(data.chatId).emit("updateMessage", data);
+  });
+  socket.on("leave", (data) => {
+    socket.disconnect();
+    console.log("disconnected");
   });
 });
-
 
 http.listen(port, () => {
   console.log("Listenting at localhost:" + port);
@@ -76,5 +76,4 @@ http.listen(port, () => {
   app.use("/user", userRoutes);
 
   app.use("/chat", chatRoutes);
-
 });
