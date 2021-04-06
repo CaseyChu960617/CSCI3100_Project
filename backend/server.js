@@ -40,7 +40,20 @@ io.on("connection", async (socket) => {
 
   socket.on("joinRoom", (data) => {
     socket.join(data.chatId);
-    console.log("user " + data.sender + " join room " + data.chatId);
+    console.log(
+      "user " +
+        data.sender +
+        " join room " +
+        data.chatId +
+        " old chatId = " +
+        data.oldChatId
+    );
+    if (data.oldChatId != null && !(data.oldChatId === data.chatId)) {
+      //console.log("clear");
+      //io.to(data.chatId).emit("clearMessage", {
+      // messages: [],
+      // });
+    }
   });
 
   console.log("a user connected", socket.id);

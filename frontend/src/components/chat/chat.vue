@@ -24,7 +24,7 @@
         <v-card v-for="message in messages" :key="message.time" flat>
           <v-list-item
             :key="message.time"
-            v-if="!message.sender.localeCompare(currentUser.username)"
+            v-if="message.sender.localeCompare(currentUser.username)"
             class="blue-grey lighten-5 "
           >
             <v-list-item-avatar class="align-self-start mr-2">
@@ -140,11 +140,11 @@
 </template>
 
 <script>
-import io from "socket.io-client";
+//import io from "socket.io-client";
 //import DataService from "../services/DataService";
 
 export default {
-  props: ["chatId"],
+  props: ["chatId", "socket"],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -157,13 +157,6 @@ export default {
       newMessage: null,
       messages: [],
       //make connection to socket io
-      socket: io("http://localhost:9000", {
-        transports: ["websocket", "polling", "flashsocket"],
-        withCredentials: true,
-        extraHeaders: {
-          "my-custom-header": "abcd",
-        },
-      }),
     };
   },
 
@@ -184,20 +177,24 @@ export default {
       }
     },
   },
-  mounted() {
-    this.socket.emit("joinRoom", {
-      chatId: this.chatId,
-      sender: this.currentUser.username,
-    });
 
+  mounted() {
+    //this.socket.emit("joinRoom", {
+    //  chatId: this.chatId,
+    //  sender: this.currentUser.username,
+    // });
     console.log("Join " + this.chatId + " Room");
 
     this.socket.on("updateMessage", (data) => {
       //pushed to daatbsae
 
       this.messages = [...this.messages, data];
-      console.log(this.messages);
+      console.log(this.newMessage);
       this.newMessage = null;
+    });
+
+    this.socket.on("clearMessage", (data) => {
+      this.messages = data.messages;
     });
   },
   updated() {
@@ -205,10 +202,10 @@ export default {
     const scrollbar = document.querySelector(".scroll-bar");
     scrollbar.scrollTo(0, scrollbar.scrollHeight);
   },
-  beforeMount() {
-    this.socket.emit("leave", {
-      chatId: this.chatId,
-    });
-  },
+  // beforeMount() {
+  //  this.socket.emit("leave", {
+  //    chatId: this.chatId,
+  //  });
+  // },
 };
 </script>

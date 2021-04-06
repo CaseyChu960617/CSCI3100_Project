@@ -27,7 +27,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="6" sm="12"
-        ><chat :chatId="chatId" v-if="chatId" />
+        ><chat :chatId="chatId" :socket="socket" v-if="chatId" />
         <v-card v-else>No chat</v-card></v-col
       ><v-spacer />
     </v-row>
@@ -38,11 +38,28 @@
 import DataService from "../services/DataService";
 //import authHeader from "../services/auth-header.js";
 import chat from "../components/chat/chat.vue";
+import io from "socket.io-client";
 
 export default {
   components: { chat },
   data() {
-    return { chats: [], loading: true, chatId: null };
+    return {
+      chats: [],
+      loading: true,
+      chatId: null,
+
+      //oppID: this.$route.params.oppId,
+      // newMessage: null,
+      // messages: [],
+      //make connection to socket io
+      socket: io("http://localhost:9000", {
+        transports: ["websocket", "polling", "flashsocket"],
+        withCredentials: true,
+        extraHeaders: {
+          "my-custom-header": "abcd",
+        },
+      }),
+    };
   },
   created() {
     this.fetchChatList();
@@ -87,8 +104,14 @@ export default {
     },
 
     selectChat(id) {
+      let oldChatId = this.chatId;
       this.chatId = id;
       console.log(this.currentUser.username + " in room " + this.chatId);
+      this.socket.emit("joinRoom", {
+        chatId: this.chatId,
+        oldChatId: oldChatId,
+        sender: this.currentUser.username,
+      });
     },
   },
 };
