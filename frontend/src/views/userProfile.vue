@@ -41,16 +41,20 @@ export default {
     },
     startChat(id) {
       console.log("oppId is ", id);
-      var chat_id = "";
+      var chatId = "";
       DataService.post("chat/getOneChat", {
         uid_1: this.currentUser.uid,
         uid_2: id,
       }).then((response) => {
-        chat_id = response.data._id;
-        console.log("ChatId:" + chat_id);
-        this.$router.push({
+        chatId = response.data._id;
+        console.log("ChatId:" + chatId);
+        /*this.$router.push({
           name: "chat",
           params: { chatId: chat_id },
+        });*/
+        this.$router.push({
+          name: "chat",
+          params: { chatId },
         });
       });
     },

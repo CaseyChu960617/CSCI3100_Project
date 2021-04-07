@@ -42,6 +42,7 @@ import io from "socket.io-client";
 
 export default {
   components: { chat },
+  //props: ["chatId"],
   data() {
     return {
       chats: [],
@@ -64,8 +65,7 @@ export default {
 
   created() {
     this.fetchChatList();
-    console.log(this.$route.params.chatId);
-    if (this.$route.params.chatId !== "") {
+    if (this.$route.params.chatId !== undefined) {
       this.chatId = this.$route.params.chatId;
     }
   },
@@ -81,6 +81,7 @@ export default {
 
   watch: {
     chatId() {
+      console.log("Updated chatId: " + this.chatId);
       this.selectChat(this.chatId);
     },
   },
@@ -114,6 +115,11 @@ export default {
         });
     },
 
+    //mounted() {
+    //  console.log(this.$route.params.chatId);
+    //  this.chatId = this.$route.params.chatId;
+    //},
+    //
     selectChat(id) {
       let oldChatId = this.chatId;
       this.chatId = id;
