@@ -1,6 +1,7 @@
 <template>
   <v-container fluid class="pa-5">
     <v-card
+      max-height="70vh"
       min-height="70vh"
       style="max-width:1200px; overflow-y: scroll; width: 100%; padding: 12px;"
       class="scroll-bar blue-grey lighten-5 ml-auto mr-auto"
@@ -20,10 +21,10 @@
       </v-container>
 
       <v-row justify="space-around d-flex flex-column">
-        <v-card v-for="message in messages" :key="message.time" flat>
+        <v-card v-for="message in messages" :key="message.timestamp" flat>
           <v-list-item
-            :key="message.time"
-            v-if="!message.sender.localeCompare(currentUser.username)"
+            :key="message.timestamp"
+            v-if="message.sender.username.localeCompare(currentUser.username)"
             class="blue-grey lighten-5 "
           >
             <v-list-item-avatar class="align-self-start mr-2">
@@ -35,27 +36,30 @@
               <v-card color="#99CFEA" class="flex-none">
                 <v-card-text class="white--text pa-2 d-flex flex-column">
                   <span class="text-caption"
-                    >{{ message.sender }} {{ currentUser.username }}</span
-                  >
+                    >{{ message.sender.username }}
+                  </span>
                   <span class="align-self-start text-subtitle-1">{{
                     message.message
                   }}</span>
                   <span class="text-caption font-italic align-self-end">{{
-                    message.time
+                    message.timestamp
                   }}</span>
                 </v-card-text>
               </v-card>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item v-else :key="message.time">
+          <v-list-item v-else :key="message.timestamp">
             <v-list-item-content class="sent-message justify-end">
               <v-card color="primary" class="flex-none">
                 <v-card-text class="white--text pa-2 d-flex flex-column">
+                  <span class="text-caption"
+                    >{{ message.sender.username }}
+                  </span>
                   <span class="text-subtitle-1 chat-message">{{
                     message.message
                   }}</span>
                   <span class="text-caption font-italic align-self-start">{{
-                    message.time
+                    message.timestamp
                   }}</span>
                 </v-card-text>
               </v-card>
@@ -139,11 +143,11 @@
 </template>
 
 <script>
-import io from "socket.io-client";
-//import DataService from "../services/DataService";
+//import io from "socket.io-client";
+import DataService from "../../services/DataService";
 
 export default {
-  props: ["oppId"],
+  props: ["chatId", "socket", "oppId"],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -152,54 +156,99 @@ export default {
 
   data() {
     return {
-      oppID: this.$route.params.oppId,
+      loading: false,
+      //oppID: this.$route.params.oppId,
       newMessage: null,
       messages: [],
       //make connection to socket io
-      socket: io("http://localhost:9000", {
-        transports: ["websocket", "polling", "flashsocket"],
-        withCredentials: true,
-        extraHeaders: {
-          "my-custom-header": "abcd",
-        },
-      }),
     };
   },
 
   methods: {
     send() {
-      console.log(this.socket);
       if (this.newMessage != null) {
-        this.socket.emit("send", {
-          sender: this.currentUser.username,
-          message: this.newMessage,
-          time: new Date(),
-        });
+        console.log("chat id is ", this.chatId);
+        this.socket.emit(
+          "send",
+          {
+            chatId: this.chatId,
+            sender: {
+              _id: this.currentUser.uid,
+              username: this.currentUser.username,
+            },
+            message: this.newMessage,
+            timestamp: new Date(),
+          },
+          this.chatId
+        );
       }
     },
-  },
-  mounted() {
-    console.log("oppID is in chat.vue", this.oppId);
-    this.socket.emit("joinRoom", {
-      id: this.socket.id,
-    });
 
-    this.socket.on("clientGetId", (data) => {
-      console.log("Created " + data.socketID + " Room");
-    });
+    getOneChat() {
+      this.loading = true;
+      console.log(this.chatId);
+      //const data = {
+      //  uid_1: this.currentUser.uid,
+      //  uid_2: this.oppId,
+      //};
+      DataService.get("chat/getOneChat", this.chatId)
+        .then((response) => {
+          console.log(response.data.messages);
+          this.messages = response.data.messages;
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$router.push("/home");
+          } else {
+            alert(err.response.data.message);
+          }
+          console.log(this.messages);
+        });
+    },
+  },
+
+  watch: {
+    chatId() {
+      this.getOneChat();
+    },
+  },
+
+  created() {
+    this.getOneChat();
+  },
+
+  mounted() {
+    //this.socket.emit("joinRoom", {
+    //  chatId: this.chatId,
+    //  sender: this.currentUser.username,
+    //});
+
+    console.log("Join " + this.chatId + " Room");
 
     this.socket.on("updateMessage", (data) => {
       //pushed to daatbsae
 
       this.messages = [...this.messages, data];
-      console.log(this.messages);
+      console.log(this.newMessage);
       this.newMessage = null;
     });
+
+    //this.socket.on("clearMessage", (data) => {
+    //  this.messages = data.messages;
+    //});
   },
   updated() {
     //scroll to bottom after the chat is sent or updated
     const scrollbar = document.querySelector(".scroll-bar");
     scrollbar.scrollTo(0, scrollbar.scrollHeight);
   },
+  // beforeMount() {
+  //  this.socket.emit("leave", {
+  //    chatId: this.chatId,
+  //  });
+  // },
 };
 </script>

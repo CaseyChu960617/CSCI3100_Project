@@ -65,7 +65,7 @@ exports.editThread = async (req, res) => {
 
 // postComment function
 exports.postComment = async (req, res) => {
-  const thread_id = req.params["thread_id"];
+  const thread_id = req.params['thread_id'];
   const { uid, content } = req.body;
 
   var newComment = new ThreadComment(
@@ -77,7 +77,7 @@ exports.postComment = async (req, res) => {
     (err, data) => {
       if (err) {
         console.log(err);
-        res.status(400).json({ error: "Bad request." });
+        res.status(400).json({ error: err.message });
       }
       //else
       //    console.log(data);
@@ -92,7 +92,7 @@ exports.postComment = async (req, res) => {
     { $push: { comments: newComment._id } }, 
     (err, doc) => {
       if (err) 
-        res.status(400).json({ error: "Bad request." });
+        res.status(400).json({ error: err.message });
       else
         res.send(doc);  
   });

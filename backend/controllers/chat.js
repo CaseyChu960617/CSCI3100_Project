@@ -1,6 +1,5 @@
 const Chat = require("../models/chat");
 const Message = require("../models/message");
-const User = require("../models/user");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
 
@@ -10,7 +9,7 @@ exports.getAllChats = async (req, res) => {
     const uid  = req.params['uid'];
     console.log(uid);
 
-    Chat.find({$or: [
+    await Chat.find({$or: [
         { userA: uid }, 
         { userB: uid } 
     ]})
@@ -24,7 +23,43 @@ exports.getAllChats = async (req, res) => {
     });
 };
 
-// getOneChatsfunction
+// getOneChatByIdfunction
+exports.getOneChatById = async (req, res) => {
+    const chat_id = req.params['chat_id'];
+
+    var populateQuery = [
+        { path:'userA', select:'_id username'}, 
+        { path:'userB', select:'_id username'},
+        { path:'messages', select:'message timestamp', populate: {
+            path: 'sender',
+            select: '_id username'
+        }}
+    ];
+
+    await Chat.findOne({ _id: chat_id })
+    .select('userA userB messages')
+    .populate(populateQuery)
+    .exec()
+    .then((doc) => {
+      console.log(doc);
+      if (!doc) {
+        Chat.create({
+            userA: uid_1,
+            userB: uid_2,
+            messages: []
+        }, (err, doc) => {
+            if (err) 
+                res.status(400).json({ error: "Bad request."});
+            else
+                res.send(doc);
+        })
+      }
+      else
+        res.send(doc);
+    });
+};
+
+// getOneChatfunction
 exports.getOneChat = async (req, res) => {
 
     const { uid_1, uid_2 } = req.body;
@@ -32,13 +67,13 @@ exports.getOneChat = async (req, res) => {
     var populateQuery = [
         { path:'userA', select:'_id username'}, 
         { path:'userB', select:'_id username'},
-        { path:'messages', select:'sender content timestamp', populate: {
+        { path:'messages', select:'message timestamp', populate: {
             path: 'sender',
             select: '_id username'
         }}
     ];
 
-    Chat.findOne({$or: [
+    await Chat.findOne({$or: [
         { 'userA': uid_1, 'userB': uid_2 }, 
         { 'userA': uid_2, 'userB': uid_1 } 
     ]})
@@ -67,11 +102,11 @@ exports.getOneChat = async (req, res) => {
 exports.sendMessage = async (req, res) => {
 
     const chat_id = req.params['chat_id'];
-    const { sender_id, content } = req.body;
+    const { sender_id, message } = req.body;
 
     const newMessage = new Message({
         sender: new ObjectId(sender_id),
-        content: content,
+        message: message,
         timestamp: new Date().getTime(),
     }, err => {
         if (err) {
