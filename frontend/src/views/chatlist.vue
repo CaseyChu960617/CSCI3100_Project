@@ -27,7 +27,12 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="6" sm="12"
-        ><chat :chatId="chatId" :socket="socket" :oppId="oppId" v-if="chatId" />
+        ><chat
+          :chatId="chatId"
+          :socket="socket"
+          :oppUsername="oppUsername"
+          v-if="chatId"
+        />
         <v-card v-else>No chat</v-card></v-col
       ><v-spacer />
     </v-row>
@@ -49,6 +54,7 @@ export default {
       loading: true,
       chatId: null,
       oppId: null,
+      oppUsername: null,
       //oppID: this.$route.params.oppId,
       // newMessage: null,
       // messages: [],
@@ -127,6 +133,7 @@ export default {
       this.chats.forEach((element) => {
         if (element._id == this.chatId) {
           this.oppId = element.user._id;
+          this.oppUsername = element.user.username;
         }
       });
       //console.log(this.currentUser.username + " in room " + this.chatId);
