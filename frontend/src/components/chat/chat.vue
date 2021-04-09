@@ -1,9 +1,22 @@
 <template>
   <v-container fluid class="pa-5">
     <v-card
-      max-height="70vh"
-      min-height="70vh"
-      style="max-width:1200px; overflow-y: scroll; width: 100%; padding: 12px;"
+      class="header pa-3"
+      style="  height: 60px;background: white;z-index: 5; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; "
+    >
+      <div>
+        <span class="mr-2 ">
+          <v-avatar size="40">
+            <v-img
+              src="https://via.placeholder.com/50"
+            ></v-img> </v-avatar></span
+        >{{ oppUsername }}
+      </div>
+    </v-card>
+    <v-card
+      max-height="calc(70vh - 60px)"
+      min-height="calc(70vh - 60px)"
+      style="max-width:1200px; overflow-y: scroll; width: 100%; padding: 12px"
       class="scroll-bar blue-grey lighten-5 ml-auto mr-auto"
       elevation="16"
       v-bind:style="messages.length == 0 ? 'display:flex' : ''"
@@ -32,24 +45,48 @@
                 <v-img src="https://via.placeholder.com/50"></v-img>
               </v-avatar>
             </v-list-item-avatar>
-            <v-list-item-content class="received-message">
-              <v-card color="#99CFEA" class="flex-none">
+            <div
+              class="received-message"
+              style="align-items: center;
+    align-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1;
+    overflow: hidden;
+    padding: 12px 0;"
+            >
+              <v-card color="#808080" class="flex-none">
                 <v-card-text class="white--text pa-2 d-flex flex-column">
                   <span class="text-caption"
                     >{{ message.sender.username }}
                   </span>
-                  <span class="align-self-start text-subtitle-1">{{
-                    message.message
-                  }}</span>
+                  <span
+                    class="align-self-start text-subtitle-1"
+                    style="max-width: 100%;"
+                    >{{ message.message }}</span
+                  >
                   <span class="text-caption font-italic align-self-end">{{
                     message.timestamp
                   }}</span>
                 </v-card-text>
               </v-card>
-            </v-list-item-content>
+            </div>
           </v-list-item>
-          <v-list-item v-else :key="message.timestamp">
-            <v-list-item-content class="sent-message justify-end">
+          <v-list-item
+            v-else
+            :key="message.timestamp"
+            class="blue-grey lighten-5 "
+          >
+            <div
+              class="sent-message justify-end"
+              style="align-items: center;
+    align-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1;
+    overflow: hidden;
+    padding: 12px 0;"
+            >
               <v-card color="primary" class="flex-none">
                 <v-card-text class="white--text pa-2 d-flex flex-column">
                   <span class="text-caption"
@@ -58,12 +95,12 @@
                   <span class="text-subtitle-1 chat-message">{{
                     message.message
                   }}</span>
-                  <span class="text-caption font-italic align-self-start">{{
+                  <span class="text-caption font-italic align-self-end">{{
                     message.timestamp
                   }}</span>
                 </v-card-text>
               </v-card>
-            </v-list-item-content>
+            </div>
             <v-list-item-avatar class="align-self-start ml-2">
               <v-img src="https://via.placeholder.com/50"></v-img>
             </v-list-item-avatar>
@@ -147,7 +184,7 @@
 import DataService from "../../services/DataService";
 
 export default {
-  props: ["chatId", "socket", "oppId"],
+  props: ["chatId", "socket", "oppUsername"],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

@@ -4,8 +4,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 require("./db/connectDB");
-const Message = require('./models/message');
-const Chat = require('./models/chat');
+const Message = require("./models/message");
+const Chat = require("./models/chat");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
 
@@ -45,13 +45,14 @@ io.on("connection", async (socket) => {
   socketID = socket.id;
 
   socket.on("joinRoom", (data) => {
+    socket.leave(data.oldChatId);
     socket.join(data.chatId);
     console.log(
       "user " +
         data.sender +
         " join room " +
         data.chatId +
-        " old chatId = " +
+        " leave room " +
         data.oldChatId
     );
     if (data.oldChatId != null && !(data.oldChatId === data.chatId)) {
@@ -78,11 +79,13 @@ io.on("connection", async (socket) => {
     io.to(data.chatId).emit("updateMessage", data);
     //const { sender_id, message } = req.body;
 
-    const newMessage = new Message({
+    const newMessage = new Message(
+      {
         sender: new ObjectId(data.sender._id),
         message: data.message,
         timestamp: data.timestamp,
-    }, err => {
+      },
+      (err) => {
         if (err) {
           console.log(err);
           res.status(400).json({ error: "Bad request." });
@@ -91,15 +94,19 @@ io.on("connection", async (socket) => {
     );
 
     newMessage.save((err) => {
-      if (err) res.status(400).json({ error: "message cannot be posted successfully." });
+      if (err)
+        res
+          .status(400)
+          .json({ error: "message cannot be posted successfully." });
     });
 
-    Chat.findOneAndUpdate({ _id: data.chatId }, 
-        { $push: { messages: newMessage._id } }, 
-        err => {
-            if (err) 
-                res.status(400).json({ error: "Bad request." });
-    });
+    Chat.findOneAndUpdate(
+      { _id: data.chatId },
+      { $push: { messages: newMessage._id } },
+      (err) => {
+        if (err) res.status(400).json({ error: "Bad request." });
+      }
+    );
   });
   socket.on("leave", (data) => {
     socket.disconnect();

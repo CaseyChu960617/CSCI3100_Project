@@ -53,6 +53,7 @@ export default {
     startChat(id) {
       console.log("oppId is ", id);
       var chatId = "";
+      var oppUsername = this.user.username;
       DataService.post("chat/getOneChat", {
         uid_1: this.currentUser.uid,
         uid_2: id,
@@ -65,7 +66,7 @@ export default {
         });*/
         this.$router.push({
           name: "chat",
-          params: { chatId: chatId },
+          params: { chatId: chatId, oppUsername },
         });
       });
     },
@@ -86,7 +87,6 @@ export default {
     follow() {
       const data = { my_id: this.currentUser.uid, follow_id: this.user._id };
       DataService.put("user/follow", data).then((response) => {
-
         const following = [];
         response.data.forEach((element) => {
           following.push({ _id: element });
