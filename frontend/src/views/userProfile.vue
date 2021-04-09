@@ -42,6 +42,7 @@ export default {
     startChat(id) {
       console.log("oppId is ", id);
       var chatId = "";
+      var oppUsername = this.user.username;
       DataService.post("chat/getOneChat", {
         uid_1: this.currentUser.uid,
         uid_2: id,
@@ -54,7 +55,7 @@ export default {
         });*/
         this.$router.push({
           name: "chat",
-          params: { chatId },
+          params: { chatId, oppUsername },
         });
       });
     },

@@ -73,6 +73,7 @@ export default {
     this.fetchChatList();
     if (this.$route.params.chatId !== undefined) {
       this.chatId = this.$route.params.chatId;
+      this.oppUsername = this.$route.params.oppUsername;
     }
   },
 
