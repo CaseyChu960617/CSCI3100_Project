@@ -2,7 +2,7 @@
   <v-container>
     <v-card> </v-card>
     <v-row justify="center">
-      <v-col sm="11" class="hidden-sm-and-down">
+      <v-col sm="11">
         <v-card-title
           >Tutorial<v-spacer /><v-btn icon @click.stop="dialog = true"
             ><v-icon>mdi-plus</v-icon></v-btn
@@ -45,7 +45,7 @@
           <v-row>
             <v-col
               cols="12"
-              sm="3"
+              sm="6"
               md="4"
               v-for="tutorial in tutorials"
               :key="tutorial"
