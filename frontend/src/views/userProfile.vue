@@ -8,6 +8,10 @@
     <p>Email: {{ this.user.email }}</p>
     <p>Gender:</p>
     <v-btn elevation="2" @click="startChat(user._id)">Start chat</v-btn>
+    <v-btn v-if="followed" elevation="2" @click="unfollow(user._id)"
+      >Unfollow</v-btn
+    >
+    <v-btn v-else elevation="2" @click="follow(user._id)">Follow</v-btn>
   </div>
 </template>
 
@@ -16,7 +20,7 @@ import DataService from "../services/DataService";
 //import authHeader from "../services/auth-header.js";
 export default {
   data() {
-    return { user: null };
+    return { user: null, followed: null };
   },
   computed: {
     currentUser() {
@@ -24,7 +28,9 @@ export default {
     },
   },
   created() {
-    this.fetchProfile();
+    if (this.$route.params.uid === undefined)
+      alert("User profile does not exist.");
+    else this.fetchProfile();
   },
 
   methods: {
@@ -32,13 +38,18 @@ export default {
       console.log(this.$route.params.uid);
       //this.uid = this.$route.params.uid;
 
-      DataService.get("user/getProfile", this.$route.params.uid).then(
-        (response) => {
+      DataService.get("user/getProfile", this.$route.params.uid)
+        .then((response) => {
           console.log(response.data[0]);
           this.user = response.data[0];
-        }
-      );
+        })
+        .then(() => {
+          console.log("This user following");
+          console.log(this.currentUser.following);
+          this.checkFollowed();
+        });
     },
+
     startChat(id) {
       console.log("oppId is ", id);
       var chatId = "";
@@ -54,8 +65,47 @@ export default {
         });*/
         this.$router.push({
           name: "chat",
-          params: { chatId },
+          params: { chatId: chatId },
         });
+      });
+    },
+
+    checkFollowed() {
+      this.followed = false;
+      this.currentUser.following.forEach((element) => {
+        console.log("HI");
+        console.log(element);
+        if (element._id === this.user._id) {
+          this.followed = true;
+          console.log("followed");
+        }
+      });
+      console.log(this.followed);
+    },
+
+    follow() {
+      const data = { my_id: this.currentUser.uid, follow_id: this.user._id };
+      DataService.put("user/follow", data).then((response) => {
+
+        const following = [];
+        response.data.forEach((element) => {
+          following.push({ _id: element });
+        });
+        this.currentUser.following = following;
+        this.checkFollowed();
+      });
+    },
+
+    unfollow() {
+      const data = { my_id: this.currentUser.uid, follow_id: this.user._id };
+
+      DataService.put("user/unfollow", data).then((response) => {
+        const following = [];
+        response.data.forEach((element) => {
+          following.push({ _id: element });
+        });
+        this.currentUser.following = following;
+        this.checkFollowed();
       });
     },
   },

@@ -82,7 +82,9 @@ exports.signin = async (req, res) => {
     const { email, password } = req.body;
 
     // Search db to  see if the user with this email exists.
-    const user = await User.findOne({ email }).lean();
+    const user = await User.findOne({ email }).populate({ path:'following', 
+        select: '_id'
+      }).lean();
 
     // If not exist, handle the error.
     if (!user) {
@@ -109,7 +111,8 @@ exports.signin = async (req, res) => {
                 username: user.username,
                 email: user.email,
                 gender: user.gender,
-                activation: user.activation
+                activation: user.activation,
+                following: user.following
             });
         }
     else

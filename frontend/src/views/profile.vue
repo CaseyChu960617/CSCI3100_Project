@@ -21,13 +21,24 @@
             >
           </v-avatar>
         </div>
+        <v-btn @click.stop="dialog = true">Upload Profile Picture</v-btn>
+        <modal :dialog.sync="dialog" @show="show"></modal>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import modal from "../components/modal/uploadProPic.vue";
 export default {
+  data() {
+    return {
+      dialog: false,
+    };
+  },
+  components: {
+    modal,
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -42,6 +53,10 @@ export default {
   methods: {
     editProfile() {
       this.$router.push({ path: "/editProfile" });
+    },
+
+    show(bool) {
+      this.dialog = bool;
     },
   },
 };

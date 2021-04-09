@@ -15,8 +15,10 @@ const threadRoutes = require("./routes/thread");
 const tutorialRoutes = require("./routes/tutorial");
 const userRoutes = require("./routes/user");
 const chatRoutes = require("./routes/chat");
+//const uploadRoutes = require('./routes/upload');
 
 //App config
+global.baseURL = __dirname;
 var corsOptions = {
   origin: `${process.env.CLIENT_URL}`,
 };

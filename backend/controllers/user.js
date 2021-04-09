@@ -19,19 +19,37 @@ exports.editProfile = async (req, res) => {
 
 };
 
-// getChats function
-exports.getChats = async (req, res) => {
-    console.log("HI");
-};
-
 // follow function
 exports.follow = async (req, res) => {
-    console.log("HI");
+    const { my_id, follow_id } = req.body;
+
+    User.findOneAndUpdate({ _id: my_id }, 
+        { $push: { following: follow_id } }, 
+        (err) => {
+          if (err) 
+            res.status(400).json({ error: err.message });
+      });
+
+    const user = await User.findOne({ _id: my_id}).select('following');
+    console.log(user);
+    res.send(user.following);
 };
 
 // unfollow function
 exports.unfollow = async (req, res) => {
-    console.log("HI");
+    const { my_id, follow_id } = req.body;
+
+    console.log(my_id);
+    console.log(follow_id);
+    User.findOneAndUpdate({ _id: my_id },
+         { $pull: { following: { $in: [ObjectId(follow_id)]} } }, 
+         (doc, err) => {
+        //if (err)
+            //res.status(400).json({ error: err.message });
+    });
+
+    const user = await User.findOne({ _id: my_id}).select('following');
+    res.send(user.following);
 };
 
 
