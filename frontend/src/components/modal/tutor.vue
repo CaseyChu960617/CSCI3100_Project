@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" max-width="40%" @click:outside="close">
     <v-card>
       <v-card-title class="headline">
-        Tutorial<v-spacer /><v-btn icon @click="close"
+        Create your own Tutorial<v-spacer /><v-btn icon @click="close"
           ><v-icon>mdi-close</v-icon></v-btn
         >
       </v-card-title>
@@ -18,9 +18,16 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
+                <v-text-field
+                  v-model="editedItem.title"
+                  label="Subject"
+                  :rules="[rules.required]"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
                 <v-textarea
                   v-model="editedItem.content"
-                  label="Content"
+                  label="Description"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -52,7 +59,7 @@ export default {
       },
     };
   },
-  created: function () {
+  created: function() {
     if (Object.keys(this.editedItem).length > 0) {
       Object.assign(this.Item, this.editedItem);
     }
