@@ -5,6 +5,8 @@ const { authJwt } = require("../middlewares");
 const { getAllThreads,
         getCategory,
         getOneThread,
+        getMyThreads,
+        getFollowingThreads,
         createThread,
         editThread,
         postComment,
@@ -17,12 +19,17 @@ router.get('/category/:category_id', getCategory);
 
 router.get('/:thread_id', getOneThread);
 
+router.get('/myThreads/:my_id', getMyThreads);
+
+router.post('/followingThreads', getFollowingThreads);
+
 router.post('/',  createThread);
 
-router.put('/:thread_id',  editThread);
+router.put('/editThread',  editThread);
 
-router.put('/postComment/:thread_id',  postComment);
+router.put('/postComment',  postComment);
 
-router.delete('/:thread_id', deleteThread);
+router.delete('/deleteThread', deleteThread);
+
 
 module.exports = router;
