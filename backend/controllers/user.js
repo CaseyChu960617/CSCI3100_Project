@@ -16,7 +16,21 @@ exports.getProfile = async (req, res) => {
 
 // editProfile function
 exports.editProfile = async (req, res) => {
-
+  const {uid, firstname, lastname, gender, username} = req.body;
+   {
+        User.findOneAndUpdate({ _id: uid }, 
+            { lastname: lastname, firstname: firstname, username: username,
+            gender: gender}, {new : true},
+            (err, data) => {
+            if (err) 
+                res.status(400).json({ error: err.message });
+            else {
+                console.log(data);
+                res.send(data);
+            }
+        });
+    }
+      
 };
 
 // follow function
