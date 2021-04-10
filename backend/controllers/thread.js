@@ -32,7 +32,6 @@ exports.getCategory = async (req, res) => {
 // getOneThread function
 exports.getOneThread = async (req, res) => {
 
-  const { uid } = req.body;
   const thread_id = req.params["thread_id"];
   var populateQuery = [
       { path:'author', select:'_id username'}, 
@@ -51,63 +50,40 @@ exports.getOneThread = async (req, res) => {
     }); 
 };
 
-// editThread function
-exports.editThread = async (req, res) => {
-  const thread_id = req.params["thread_id"];
-  const { content } = req.body
+// getMyThreads function
+exports.getMyThreads = async (req, res) => {
 
-  Thread.findOneAndUpdate({ _id: thread_id }, { $set: { content: content } }, (err, doc) => {
-    if (err) res.status(400).json({ error: "Bad request." });
-    else
-      res.send(doc);
+  const my_id = req.params["my_id"];
+
+  Thread.find({ author: my_id })
+  .sort({ createdAt: -1})
+  .select('author category title createdAt')
+  .populate('author', '_id username')
+  .exec()
+  .then((docs) => {
+    res.send(docs);
   });
 };
 
-// postComment function
-exports.postComment = async (req, res) => {
-  const thread_id = req.params["thread_id"];
-  const { uid, content } = req.body;
+// getFollowingThreads function
+exports.getFollowingThreads = async (req, res) => {
 
-  var newcomment = new ThreadComment(
-    {
-      author: new ObjectId(uid),
-      createdAt: new Date().getTime(),
-      content: content,
-    },
-    (err, data) => {
-      if (err) {
-        console.log(err);
-        res.status(400).json({ error: "Bad request." });
-      }
-      //else
-      //    console.log(data);
-    }
-  );
-  newcomment.save((err) => {
-    if (err) res.status(400).json({ error: "Comment cannot be posted successfully." });
-  });
-  console.log(newcomment);
-  console.log(thread_id);
-  Thread.findOneAndUpdate({ _id: thread_id }, { $push: { comments: newcomment._id } }, (err, doc) => {
-    if (err) res.status(400).json({ error: "Bad request." });
-    else
-      res.status(200).json({
-        discussionThread: doc,
-        message: "successfully comment.",
-      });
-  });
-};
+  const { following } = req.body;
 
-// deleteThread function
-exports.deleteThread = async (req, res) => {
-  Thread.findById(req.params["thread_id"], (err, doc) => {
-    doc.remove();
-    res.status(200).json({
-      discussionThread: doc,
-      message: "Thread successfully deleted.",
+     Thread.find({ author: { $in: following } })
+    .sort({ createdAt: -1})
+    .select('author category title createdAt')
+    .populate('author', '_id username')
+    .exec()
+    .then((err, docs) => {
+
+      if (err) 
+        res.status(400).json({ error: err.message });
+      else
+        res.send(docs);
     });
-  });
-};
+
+  }
 
 // createThread function
 exports.createThread = async (req, res) => {
@@ -134,19 +110,64 @@ exports.createThread = async (req, res) => {
       );
     } else res.status(400).json({ error: "User not found." });
   });
-  /*discussionThread.create({
-        author: uid,
-        category: category,
-        createdAt: new Date().getTime(),
-        title: title,
-        content: content
-    }, (err, data) => {
-        if (err) {
-            console.log(err);
-            res.status(400).json({ error: "Bad request."});
-        }
-        else
-            console.log(data);
-            res.status(200).json({ message: "Thread created successfully."})
-    })*/
 };
+
+// editThread function
+exports.editThread = async (req, res) => {
+  const { thread_id, title, content } = req.body
+
+  Thread.findOneAndUpdate({ _id: thread_id }, { $set: { title: title, content: content } }, (err, doc) => {
+    if (err) res.status(400).json({ error: "Bad request." });
+    else
+      res.send(doc);
+  });
+};
+
+// postComment function
+exports.postComment = async (req, res) => {
+  
+  const { uid, content, theread_id } = req.body;
+
+  var newComment = new ThreadComment(
+    {
+      author: new ObjectId(uid),
+      createdAt: new Date().getTime(),
+      content: content,
+    },
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json({ error: err.message });
+      }
+      //else
+      //    console.log(data);
+    }
+  );
+  newComment.save((err) => {
+    if (err) res.status(400).json({ error: "Comment cannot be posted successfully." });
+  });
+  console.log(newComment);
+  console.log(thread_id);
+  Thread.findOneAndUpdate({ _id: thread_id }, 
+    { $push: { comments: newComment._id } }, 
+    (err, doc) => {
+      if (err) 
+        res.status(400).json({ error: err.message });
+      else
+        res.send(doc);  
+  });
+};
+
+// deleteThread function
+exports.deleteThread = async (req, res) => {
+  const { thread_id } = req.body;
+  Thread.findById(thread_id, (err, doc) => {
+    doc.remove();
+    res.status(200).json({
+      discussionThread: doc,
+      message: "Thread successfully deleted.",
+    });
+  });
+};
+
+

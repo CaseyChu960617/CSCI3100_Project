@@ -16,13 +16,25 @@ router.get('/category/:category_id', getCategory);
 
 router.get('/:tutorial_id', getOneTutorial);
 
+router.get('/getChapter/:chapter_id', getOneChapter);
+
+router.get('/myTutorials/:my_id', getMyThreads);
+
+router.post('/followingTutorials', getFollowingThreads);
+
 router.post('/', createTutorial);
 
-router.put('/:tutorial_id', editTutorial);
+router.post('/createChapter', createTutorial);
 
-router.put('/postComment/:tutorial_id',  postComment);
+router.put('/editTutorial', editTutorial);
 
-router.delete('/:tutorial_id',  deleteTutorial);
+router.post('/editChapter', createTutorial);
+
+router.put('/postComment',  postComment);
+
+router.delete('/deleteTutorial',  deleteTutorial);
+
+router.delete('/deleteChatper',  deleteChapter);
 
 //router.post('/createChapter', createChapter);
 

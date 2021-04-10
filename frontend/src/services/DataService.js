@@ -47,6 +47,11 @@ class DataService {
     return http.post(`/${table}`, data);
   }
 
+  put(table, data) {
+    return http.put(`/${table}`, data);
+  }
+
+
   // create(table, data, header) {
   //   return http.post(`/${table}`, data, header);
   // }

@@ -1,4 +1,4 @@
-const Tutorial = require("../models/tutorial");
+    const Tutorial = require("../models/tutorial");
 const TutorialComment = require("../models/tutorialComment");
 const Chapter = require("../models/chapter");
 const User = require("../models/user");
@@ -34,8 +34,38 @@ exports.getOneTutorial = async (req, res) => {
     console.log("HI");
 };
 
+// getOneChapter function
+exports.getOneChapter = async (req, res) => {
+    console.log("HI");
+};
+
+// getOneTutorial function
+exports.getMyTutorials = async (req, res) => {
+    console.log("HI");
+};
+
+// getOneTutorial function
+exports.getFollowingTutorials = async (req, res) => {
+    console.log("HI");
+};
+
+// createTutorial function
+exports.createTutorial = async (req, res) => {
+    console.log("HI");
+};
+
+// createChapter function
+exports.createChapter = async (req, res) => {
+    console.log("HI");
+};
+
 // editTutorial function
 exports.editTutorial = async (req, res) => {
+    console.log("HI");
+};
+
+// editChapter function
+exports.editChapter = async (req, res) => {
     console.log("HI");
 };
 
@@ -49,7 +79,9 @@ exports.deleteTutorial = async (req, res) => {
     console.log("HI");
 };
 
-// createTutorial function
-exports.createTutorial = async (req, res) => {
+// deleteChapter function
+exports.deleteChapter = async (req, res) => {
     console.log("HI");
 };
+
+

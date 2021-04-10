@@ -1,0 +1,124 @@
+<template>
+  <v-card>
+    <v-toolbar flat>
+      <v-toolbar-title class="display-1 pt-4 pl-4"
+        >Edit Profile</v-toolbar-title
+      >
+    </v-toolbar>
+    <v-card-text>
+      <v-form v-model="isValid">
+        <v-container>
+          <v-row>
+            <v-col cols="4">
+              <v-text-field
+                v-model="account.firstname"
+                label="First Name"
+                type="text"
+                clearable
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4"
+              ><v-text-field
+                v-model="account.lastname"
+                label="Last Name"
+                type="text"
+                clearable
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4"
+              ><v-select
+                v-model="account.gender"
+                :items="genderlist"
+                item-text="text"
+                item-value="value"
+                label="Gender"
+                clearable
+                :rules="[rules.required]"
+              ></v-select> </v-col
+          ></v-row>
+          <v-text-field
+            v-model="account.username"
+            label="Username"
+            type="text"
+            clearable
+            :rules="[rules.required]"
+          ></v-text-field>
+          <v-row> </v-row>
+        </v-container>
+      </v-form>
+    </v-card-text>
+    <div v-if="message" class="ml-4 mb-2 red--text">
+      {{ message }}
+    </div>
+    <div class="mx-4 py-2">
+      <v-btn
+        rounded
+        block
+        @click="signup"
+        class="my-4 black--text"
+        color="#99CFEA"
+        :disabled="!isValid"
+        >Save</v-btn
+      >
+      <v-btn
+        rounded
+        block
+        @click="back"
+        class="my-4 black--text"
+        color="#99CFEA"
+        >Back</v-btn
+      >
+    </div>
+  </v-card>
+</template>
+
+<script>
+import DataService from "../services/DataService";
+
+export default {
+  data() {
+    return {
+      account: {
+        firstname: this.$store.state.auth.user.firstname,
+        lastname: this.$store.state.auth.user.firstname,
+        username: this.$store.state.auth.user.firstname,
+        gender: this.$store.state.auth.user.gender,
+      },
+      genderlist: [
+        { text: "Male", value: 1 },
+        { text: "Female", value: 2 },
+        { text: "Prefer not to disclose", value: 3 },
+      ],
+      message: "",
+      isValid: false,
+      show1: false,
+      rules: {
+        required: (value) => !!value || "Required",
+        repeat: (value) =>
+          value == this.account.password || "Password doesn't match",
+      },
+    };
+  },
+  methods: {
+    editProfile() {
+      DataService.post("user/editProfile", this.account)
+        .then((res) => {
+          alert(res.data.message);
+          if (res.data.accessToken) {
+            localStorage.setItem("user", JSON.stringify(res.data));
+          }
+          this.$store.dispatch("auth/registered", res.data);
+          this.$router.push("/profile");
+        })
+        .catch((err) => {
+          this.message = err;
+        });
+    },
+    back() {
+      this.$emit("switchform");
+    },
+  },
+};
+</script>

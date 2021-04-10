@@ -9,7 +9,7 @@
         :loading="loading"
         class="mb-2"
       >
-        <v-card-title @click="profile">{{
+        <v-card-title @click="selectProfile(thread.author._id)">{{
           thread.author.username
         }}</v-card-title>
         <v-card-text>{{ thread.content }}</v-card-text>
@@ -51,8 +51,10 @@ export default {
       this.fetchThread();
     },
   },
+
   methods: {
     fetchThread() {
+      console.log(this.id);
       this.loading = true;
       DataService.getOneThread(this.id)
         .then((response) => {
@@ -72,12 +74,15 @@ export default {
         });
     },
     selectProfile(uid) {
+      const currentUser = this.$store.state.auth.user;
+      console.log(currentUser);
       this.uid = uid;
-      console.log(this.uid);
-      this.$router.push({
-        name: "userProfile",
-        params: { uid: this.uid },
-      });
+      if (currentUser.uid == this.uid) this.$router.push({ path: "/profile" });
+      else
+        this.$router.push({
+          name: "userProfile",
+          params: { uid: this.uid },
+        });
     },
   },
 };
