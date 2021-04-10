@@ -68,11 +68,11 @@ class DataService {
   //   return http.delete(`/${table}/${id}`, header);
   // }
 
-  upload(file, header) {
+  upload(file) { //header) {
     let formData = new FormData();
     formData.append("file", file);
     //header.headers["Content-Type"]="text/csv";
-    return http.post(`/upload`, formData, header);
+    return http.post(`/upload`, formData);// header);
   }
 }
 

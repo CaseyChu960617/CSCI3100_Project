@@ -5,10 +5,17 @@ const { authJwt } = require("../middlewares");
 const { getAllTutorials,
         getCategory,
         getOneTutorial,
+        getOneChapter,
+        getMyTutorials,
+        getFollowingTutorials,
         createTutorial,
+        createChapter,
         editTutorial,
+        editChapter,
         postComment,
-        deleteTutorial } = require('../controllers/tutorial');
+        deleteTutorial, 
+        deleteChapter 
+    } = require('../controllers/tutorial');
 
 router.get('/', getAllTutorials);
 
@@ -16,14 +23,25 @@ router.get('/category/:category_id', getCategory);
 
 router.get('/:tutorial_id', getOneTutorial);
 
+router.get('/getChapter/:chapter_id', getOneChapter);
+
+router.get('/myTutorials/:my_id', getMyTutorials);
+
+router.post('/followingTutorials', getFollowingTutorials);
+
 router.post('/', createTutorial);
 
-router.put('/:tutorial_id', editTutorial);
+router.post('/createChapter', createChapter);
 
-router.put('/postComment/:tutorial_id',  postComment);
+router.put('/editTutorial', editTutorial);
 
-router.delete('/:tutorial_id',  deleteTutorial);
+router.put('/editChapter', editChapter);
 
-//router.post('/createChapter', createChapter);
+router.put('/postComment',  postComment);
+
+router.delete('/deleteTutorial',  deleteTutorial);
+
+router.delete('/deleteChapter',  deleteChapter);
+;
 
 module.exports = router;
