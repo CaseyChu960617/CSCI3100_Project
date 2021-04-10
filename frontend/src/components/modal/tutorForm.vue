@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" max-width="40%" @click:outside="close">
     <v-card>
       <v-card-title class="headline">
-        Tutorial<v-spacer /><v-btn icon @click="close"
+        Create your own Tutorial<v-spacer /><v-btn icon @click="close"
           ><v-icon>mdi-close</v-icon></v-btn
         >
       </v-card-title>
@@ -12,15 +12,25 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="editedItem.title"
+                  v-model="title"
                   label="Title"
                   :rules="[rules.required]"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
+                <v-select
+                  v-model="subject"
+                  :items="subjects"
+                  label="Subject"
+                  :rules="[rules.required]"
+                ></v-select>
+              </v-col>
+              <v-col cols="12">
                 <v-textarea
-                  v-model="editedItem.content"
-                  label="Content"
+                  v-model="description"
+                  label="Description"
+                  hint="Briefly describe the tutorial"
+                  :rules="[rules.required]"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -30,9 +40,9 @@
       <v-card-actions>
         <v-spacer />
         <div>
-          <v-btn color="blue darken-1" text @click="close">Preview</v-btn>
-          <v-btn color="blue darken-1" text @click="save" :disabled="!isValid"
-            >Post</v-btn
+          <!--<v-btn color="blue darken-1" text @click="close">Preview</v-btn>-->
+          <v-btn color="blue darken-1" text @click="create" :disabled="!isValid"
+            >Start creating</v-btn
           >
         </div>
       </v-card-actions>
@@ -41,8 +51,11 @@
 </template>
 
 <script>
+import subjectsList from "../../assets/subjects.json";
+//import DataService from "../services/DataService";
+
 export default {
-  props: ["dialog", "editedItem", "title"],
+  props: ["dialog", "editedItem"],
   data() {
     return {
       Item: {},
@@ -50,9 +63,13 @@ export default {
       rules: {
         required: (value) => !!value || "Required",
       },
+      subjects: subjectsList,
+      title: null,
+      subject: null,
+      description: null,
     };
   },
-  created: function () {
+  created: function() {
     if (Object.keys(this.editedItem).length > 0) {
       Object.assign(this.Item, this.editedItem);
     }
@@ -61,9 +78,12 @@ export default {
     close() {
       this.$emit("show", false);
     },
-    save() {
+    create() {
       this.$emit("update:editedItem", this.Item);
       this.$emit("submit");
+      console.log(this.title);
+      console.log(this.subject);
+      console.log(this.description);
     },
   },
 };
