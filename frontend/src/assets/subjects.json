@@ -1,77 +1,302 @@
 [
-    "Anthropology",
-    "Architectural Studies",
-    "Artificial Intelligence: Systems and Technologies",
-    "BA (Chinese Language Studies) and BEd (Chinese Language Education)",
-    "BA (English Studies) and BEd (English Language Education)",
-    "BA in Early Childhood Education (2-year)",
-    "BBA(IBBA)-JD Double Degree Programme",
-    "BBA(IBBA)-JD Double Degree Programme",
-    "BEd in Early Childhood Education (5-year)",
-    "BEd in Mathematics and Mathematics Education",
-    "BEng Financial Technology",
-    "Bachelor of Laws",
-    "Bimodal Bilingual Studies",
-    "Biomedical Engineering",
-    "Biomedical Sciences",
-    "Chinese Language and Literature",
-    "Chinese Medicine",
-    "Chinese Studies",
-    "Community Health Practice",
-    "Computer Engineering",
-    "Computer Science",
-    "Cultural Management",
-    "Cultural Studies",
-    "Data Science and Policy Studies",
-    "Earth System Science (Atmospheric Science / Geophysics)",
-    "Economics",
-    "Electronic Engineering",
-    "Energy and Environmental Engineering",
-    "Engineering",
-    "English",
-    "Enrichment Mathematics",
-    "Enrichment Stream in Theoretical Physics",
-    "Exercise Science and Health Education",
-    "Fine Arts",
-    "Gender Studies",
-    "Geography and Resource Management",
-    "Gerontology",
-    "Global Business Studies",
-    "Global Communication",
-    "Global Economics and Finance",
-    "Global Economics and Finance",
-    "Global Studies (4-year)",
-    "Government and Public Administration",
-    "History",
-    "Hospitality and Real Estate",
-    "Information Engineering",
-    "Insurance, Financial and Actuarial Analysis",
-    "Integrated BBA",
-    "Japanese Studies",
-    "Journalism and Communication",
-    "Linguistics",
-    "Mechanical and Automation Engineering",
-    "Medicine (MBChB) Programme / Medicine (MBChB) Programme Global Physician-Leadership Stream (GPS)",
-    "Music",
-    "Natural Sciences",
-    "Nursing",
-    "Pharmacy",
-    "Philosophy",
-    "Physical Education, Exercise Science and Health",
-    "Professional Accountancy",
-    "Psychology",
-    "Public Health",
-    "Quantitative Finance",
-    "Quantitative Finance and Risk Management Science",
-    "Quantitative Finance and Risk Management Science",
-    "Religious Studies",
-    "Risk Management Science",
-    "Science",
-    "Social Science",
-    "Social Work",
-    "Sociology",
-    "Systems Engineering and Engineering Management",
-    "Theology",
-    "Translation",
-    "Urban Studies"
+    {
+        "text": "Anthropology",
+        "value": 1
+    },
+    {
+        "text": "Architectural Studies",
+        "value": 2
+    },
+    {
+        "text": "Artificial Intelligence: Systems and Technologies",
+        "value": 3
+    },
+    {
+        "text": "BA (Chinese Language Studies) and BEd (Chinese Language Education)",
+        "value": 4
+    },
+    {
+        "text": "BA (English Studies) and BEd (English Language Education)",
+        "value": 5
+    },
+    {
+        "text": "BA in Early Childhood Education (2-year)",
+        "value": 6
+    },
+    {
+        "text": "BBA(IBBA)-JD Double Degree Programme",
+        "value": 7
+    },
+    {
+        "text": "BBA(IBBA)-JD Double Degree Programme",
+        "value": 8
+    },
+    {
+        "text": "BEd in Early Childhood Education (5-year)",
+        "value": 9
+    },
+    {
+        "text": "BEd in Mathematics and Mathematics Education",
+        "value": 10
+    },
+    {
+        "text": "BEng Financial Technology",
+        "value": 11
+    },
+    {
+        "text": "Bachelor of Laws",
+        "value": 12
+    },
+    {
+        "text": "Bimodal Bilingual Studies",
+        "value": 13
+    },
+    {
+        "text": "Biomedical Engineering",
+        "value": 14
+    },
+    {
+        "text": "Biomedical Sciences",
+        "value": 15
+    },
+    {
+        "text": "Chinese Language and Literature",
+        "value": 16
+    },
+    {
+        "text": "Chinese Medicine",
+        "value": 17
+    },
+    {
+        "text": "Chinese Studies",
+        "value": 18
+    },
+    {
+        "text": "Community Health Practice",
+        "value": 19
+    },
+    {
+        "text": "Computer Engineering",
+        "value": 20
+    },
+    {
+        "text": "Computer Science",
+        "value": 21
+    },
+    {
+        "text": "Cultural Management",
+        "value": 22
+    },
+    {
+        "text": "Cultural Studies",
+        "value": 23
+    },
+    {
+        "text": "Data Science and Policy Studies",
+        "value": 24
+    },
+    {
+        "text": "Earth System Science (Atmospheric Science / Geophysics)",
+        "value": 25
+    },
+    {
+        "text": "Economics",
+        "value": 26
+    },
+    {
+        "text": "Electronic Engineering",
+        "value": 27
+    },
+    {
+        "text": "Energy and Environmental Engineering",
+        "value": 28
+    },
+    {
+        "text": "Engineering",
+        "value": 29
+    },
+    {
+        "text": "English",
+        "value": 30
+    },
+    {
+        "text": "Enrichment Mathematics",
+        "value": 31
+    },
+    {
+        "text": "Enrichment Stream in Theoretical Physics",
+        "value": 32
+    },
+    {
+        "text": "Exercise Science and Health Education",
+        "value": 33
+    },
+    {
+        "text": "Fine Arts",
+        "value": 34
+    },
+    {
+        "text": "Gender Studies",
+        "value": 35
+    },
+    {
+        "text": "Geography and Resource Management",
+        "value": 36
+    },
+    {
+        "text": "Gerontology",
+        "value": 37
+    },
+    {
+        "text": "Global Business Studies",
+        "value": 38
+    },
+    {
+        "text": "Global Communication",
+        "value": 39
+    },
+    {
+        "text": "Global Economics and Finance",
+        "value": 40
+    },
+    {
+        "text": "Global Economics and Finance",
+        "value": 41
+    },
+    {
+        "text": "Global Studies (4-year)",
+        "value": 42
+    },
+    {
+        "text": "Government and Public Administration",
+        "value": 43
+    },
+    {
+        "text": "History",
+        "value": 44
+    },
+    {
+        "text": "Hospitality and Real Estate",
+        "value": 45
+    },
+    {
+        "text": "Information Engineering",
+        "value": 46
+    },
+    {
+        "text": "Insurance, Financial and Actuarial Analysis",
+        "value": 47
+    },
+    {
+        "text": "Integrated BBA",
+        "value": 48
+    },
+    {
+        "text": "Japanese Studies",
+        "value": 49
+    },
+    {
+        "text": "Journalism and Communication",
+        "value": 50
+    },
+    {
+        "text": "Linguistics",
+        "value": 51
+    },
+    {
+        "text": "Mechanical and Automation Engineering",
+        "value": 52
+    },
+    {
+        "text": "Medicine (MBChB) Programme / Medicine (MBChB) Programme Global Physician-Leadership Stream (GPS)",
+        "value": 53
+    },
+    {
+        "text": "Music",
+        "value": 54
+    },
+    {
+        "text": "Natural Sciences",
+        "value": 55
+    },
+    {
+        "text": "Nursing",
+        "value": 56
+    },
+    {
+        "text": "Pharmacy",
+        "value": 57
+    },
+    {
+        "text": "Philosophy",
+        "value": 58
+    },
+    {
+        "text": "Physical Education, Exercise Science and Health",
+        "value": 59
+    },
+    {
+        "text": "Professional Accountancy",
+        "value": 60
+    },
+    {
+        "text": "Psychology",
+        "value": 61
+    },
+    {
+        "text": "Public Health",
+        "value": 62
+    },
+    {
+        "text": "Quantitative Finance",
+        "value": 63
+    },
+    {
+        "text": "Quantitative Finance and Risk Management Science",
+        "value": 64
+    },
+    {
+        "text": "Quantitative Finance and Risk Management Science",
+        "value": 65
+    },
+    {
+        "text": "Religious Studies",
+        "value": 66
+    },
+    {
+        "text": "Risk Management Science",
+        "value": 67
+    },
+    {
+        "text": "Science",
+        "value": 68
+    },
+    {
+        "text": "Social Science",
+        "value": 69
+    },
+    {
+        "text": "Social Work",
+        "value": 70
+    },
+    {
+        "text": "Sociology",
+        "value": 71
+    },
+    {
+        "text": "Systems Engineering and Engineering Management",
+        "value": 72
+    },
+    {
+        "text": "Theology",
+        "value": 73
+    },
+    {
+        "text": "Translation",
+        "value": 74
+    },
+    {
+        "text": "Urban Studie",
+        "value": 75
+    }
 ]

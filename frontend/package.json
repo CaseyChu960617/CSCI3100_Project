@@ -14,6 +14,7 @@
     "core-js": "^3.6.5",
     "socket.io": "^4.0.0",
     "socket.io-client": "^4.0.0",
+    "tiptap": "^1.32.2",
     "vue": "^2.6.11",
     "vue-avatar-cropper": "^1.0.9",
     "vue-router": "^3.5.1",
