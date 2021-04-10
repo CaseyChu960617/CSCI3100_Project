@@ -1,4 +1,4 @@
-    const Tutorial = require("../models/tutorial");
+const Tutorial = require("../models/tutorial");
 const TutorialComment = require("../models/tutorialComment");
 const Chapter = require("../models/chapter");
 const User = require("../models/user");
@@ -71,7 +71,47 @@ exports.editChapter = async (req, res) => {
 
 // postComment function
 exports.postComment = async (req, res) => {
+<<<<<<< Updated upstream
     console.log("HI");
+=======
+
+  const { uid, content, tutorial_id } = req.body;
+
+  User.findById(uid, { lean: true }, (err, user) => {
+    if (err) 
+       res.status(400).json({ error: "User not found!" });
+    if (user) {
+        var newComment = new TutorialComment(
+            {
+                author: new ObjectId(uid),
+                createdAt: new Date().getTime().toLocaleString(),
+                content: content,
+            },
+            (err, data) => {
+            if (err) {
+                res.status(400).json({ error: err.message });
+                }
+            }
+        );
+
+        newComment.save((err) => {
+            if (err) res.status(400).json({ error: "Comment cannot be posted successfully." });
+        });
+        
+        const update = { 
+            $push: { comments: newComment._id }, 
+            $set: { lastModifiedAt: new Date().getTime().toLocaleString() } 
+        }
+
+        Tutorial.findOneAndUpdate({ _id: tutorial_id }, update,
+            (err, doc) => {
+            if (err) 
+                res.status(400).json({ error: err.message });
+            else
+                res.send(doc);  
+        });
+    }});
+>>>>>>> Stashed changes
 };
 
 // deleteTutorial function
