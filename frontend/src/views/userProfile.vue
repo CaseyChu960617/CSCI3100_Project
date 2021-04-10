@@ -104,6 +104,8 @@ export default {
         response.data.forEach((element) => {
           following.push({ _id: element });
         });
+
+        console.log(following);
         this.currentUser.following = following;
         this.checkFollowed();
       });
