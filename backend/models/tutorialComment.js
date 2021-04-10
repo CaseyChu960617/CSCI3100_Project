@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 const tutorCommentSchema = new mongoose.Schema({
-    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User' ,required: true, },
+    author: {type: mongoose.Schema.Types.ObjectId, ref: 'User' ,required: true, },
     content: { type: String, required: true },
     createdAt:  { type: Date, required: true }
 }, { collection: 'tutorialComments'});

@@ -1,21 +1,36 @@
-const util = require("util");
+const aws = require("aws-sdk");
 const multer = require("multer");
-const maxSize = 2 * 1024 * 1024;
+const multerS3 = require("multer-s3");
 
-let storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, __baseURL + "/resources/static/p");
-  },
-  filename: (req, file, cb) => {
-    console.log(file.originalname);
-    cb(null, file.originalname);
-  },
+const s3 = new aws.S3();
+
+aws.config.update({
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  region: process.env.AWS_BUCKET_REGION,
 });
 
-let uploadFile = multer({
-  storage: storage,
-  limits: { fileSize: maxSize },
-}).single("file");
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(new Error("Invalid file type, only JPEG and PNG is allowed!"), false);
+  }
+};
 
-let uploadFile = util.promisify(uploadFile);
-module.exports = uploadFile;
+const upload = multer({
+  fileFilter,
+  storage: multerS3({
+    acl: "public-read",
+    s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: "TESTING_METADATA" });
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString());
+    },
+  }),
+});
+
+module.exports = upload;
