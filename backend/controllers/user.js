@@ -42,7 +42,7 @@ exports.unfollow = async (req, res) => {
     console.log(my_id);
     console.log(follow_id);
     User.findOneAndUpdate({ _id: my_id },
-         { $pull: { following: { $in: [ObjectId(follow_id)]} } }, 
+         { $pullAll: { following: [ObjectId(follow_id)] } }, 
          (doc, err) => {
         //if (err)
             //res.status(400).json({ error: err.message });
