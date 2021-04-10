@@ -95,6 +95,7 @@ exports.getFollowingTutorials = async (req, res) => {
 
 // createTutorial function
 exports.createTutorial = async (req, res) => {
+
     const { uid, subject, title, description } = req.body;
 
     User.findById(uid, { lean: true }, (err, user) => {
@@ -126,27 +127,39 @@ exports.createTutorial = async (req, res) => {
 
 // createChapter function
 exports.createChapter = async (req, res) => {
-    const { uid, title, content } = req.body;
+    const { uid, tutorial_id, title, content } = req.body;
 
-    User.findById(uid, { lean: true }, (err, user) => {
-    if (err) res.status(400).json({ error: "User not found!" });
-    if (user) {
-        console.log(user);
-        Chapter.create(
-            {
+    var newChapter = new Chapter(
+        {   
             title: title,
             content: content,
             createdAt: new Date().getTime().toLocaleString(),
-            lastEditedAt: new Date().getTime().toLocaleString(),
-            },
-            (err, data) => {
-            if (err) 
-                res.status(400).json({ error: "Bad request." });
-            else
-                console.log(data);
-            });
-        } else res.status(400).json({ error: "User not found." });
+            lastEditedAt: new Date().getTime().toLocaleString()
+        },
+        err => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            }
+        }
+    );
+
+    newChapter.save((err) => {
+        if (err) 
+            res.status(400).json({ error: "Comment cannot be posted successfully." });
     });
+    
+    const update = { 
+        $push: { chapers: newChapter._id }, 
+        $set: { lastModifiedAt: new Date().getTime().toLocaleString() } 
+    }
+
+    Tutorial.findOneAndUpdate({ _id: tutorial_id }, update,
+        (err, doc) => {
+        if (err) 
+            res.status(400).json({ error: err.message });
+        else
+            res.send(doc);  
+    });     
 };
 
 // editTutorial function
