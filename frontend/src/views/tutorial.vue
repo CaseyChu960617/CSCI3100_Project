@@ -128,7 +128,7 @@
 }
 </style>
 <script>
-import modal from "../components/modal/tutor.vue";
+import modal from "../components/modal/tutorForm.vue";
 
 export default {
   components: {
