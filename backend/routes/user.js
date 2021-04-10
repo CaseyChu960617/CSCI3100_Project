@@ -9,7 +9,7 @@ const { getProfile,
 
 router.get('/getProfile/:uid', getProfile);
 
-router.put('/editProfile/:uid', editProfile);
+router.put('/editProfile', editProfile);
 
 router.put('/follow', follow);
 
