@@ -1,8 +1,9 @@
-const upload = require("../services/ImageUpload");
-const singleUpload = upload.single("image");
+const express = require('express');
+const router = express.Router();
+const upload = require("../middlewares/upload");
+const singleUpload = upload.single("file");
 
-router.post("/upload", function (req, res) {
-  const { uid } = req.body;
+router.post("/uploadProPic", function (req, res)  {
 
   singleUpload(req, res, function (err) {
     if (err) {
@@ -15,11 +16,15 @@ router.post("/upload", function (req, res) {
         },
       });
     }
-
-    let update = { profileImage: req.file.location };
-
-    User.findByIdAndUpdate(uid, update, { new: true })
+    else
+    //let update = { profileImage: req.file.location };
+      console.log(req.files.location);
+    /*User.findByIdAndUpdate(uid, update, { new: true })
       .then((user) => res.status(200).json({ success: true, user: user }))
       .catch((err) => res.status(400).json({ success: false, error: err }));
-  });
-});
+  })*/
+
+})});
+
+
+module.exports = router;

@@ -107,7 +107,7 @@ exports.createTutorial = async (req, res) => {
             {
                 author: user._id,
                 title: title,
-                subject, subject,
+                subject: subject,
                 description: description,
                 createdAt: new Date().getTime().toLocaleString(),
                 lastEditedAt: new Date().getTime().toLocaleString(),
