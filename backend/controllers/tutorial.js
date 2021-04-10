@@ -95,7 +95,7 @@ exports.getFollowingTutorials = async (req, res) => {
 
 // createTutorial function
 exports.createTutorial = async (req, res) => {
-    const { uid, subject, title, content } = req.body;
+    const { uid, subject, title, description } = req.body;
 
     User.findById(uid, { lean: true }, (err, user) => {
         if (err) 
@@ -107,7 +107,7 @@ exports.createTutorial = async (req, res) => {
                 author: user._id,
                 title: title,
                 subject, subject,
-                content: content,
+                description: description,
                 createdAt: new Date().getTime().toLocaleString(),
                 lastEditedAt: new Date().getTime().toLocaleString(),
                 lastModifiedAt: new Date().getTime().toLocaleString(),

@@ -4,6 +4,7 @@ const tutorialSchema = new mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' ,required: true, },
     subject: { type: String, required: true },
     title: { type: String, required: true },
+    description: { type: String },
     chapters: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chapter' ,required: true, }],
     comments:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'TutorialComment' ,required: true, }],
     createdAt:  { type: Date, required: true },
