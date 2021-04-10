@@ -200,7 +200,7 @@ exports.postComment = async (req, res) => {
     if (err) 
        res.status(400).json({ error: "User not found!" });
     if (user) {
-        var newComment = new Tutorialomment(
+        var newComment = new TutorialComment(
             {
                 author: new ObjectId(uid),
                 createdAt: new Date().getTime().toLocaleString(),
