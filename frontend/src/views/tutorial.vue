@@ -220,6 +220,28 @@ export default {
       this.buttonClose *= -1;
     },
 
+    flip(event, id) {
+      let card = this.$refs[id][0];
+      //let frontcard = this.$ref["front-" + id][0];
+      console.log(card.classList);
+
+      if (!card.classList.contains("is-flipped")) {
+        card.classList.add("is-flipped");
+      }
+
+      console.log(card);
+    },
+
+    unflip(event, id) {
+      let card = this.$refs[id][0];
+      console.log(card.classList);
+
+      if (card.classList.contains("is-flipped")) {
+        card.classList.remove("is-flipped");
+      }
+      console.log(card);
+    },
+
     fetchAllTutorials() {
       DataService.getAllTutorial().then((response) => {
         console.log("Data is ", response.data);
