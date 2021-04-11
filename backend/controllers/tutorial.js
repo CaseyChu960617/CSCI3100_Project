@@ -17,12 +17,12 @@ exports.getAllTutorials = async (req, res) => {
     });
 };
 
-// getCategory function
-exports.getCategory = async (req, res) => {
-  Tutorial.find({ category: req.params["category_id"] })
-    .sort({ createdAt: -1 })
-    .select("author category title lastModifiedAt")
-    .populate("author", "_id username")
+// getSubject function
+exports.getSubject = async (req, res) => {
+    Tutorial.find({subject: req.params['subject_id']})
+    .sort({ lastModifiedAt: -1})
+    .select('author subject title lastModifiedAt')
+    .populate('author', '_id username')
     .exec()
     .then((docs) => {
       res.send(docs);
@@ -31,21 +31,19 @@ exports.getCategory = async (req, res) => {
 
 // getOneTutorial function
 exports.getOneTutorial = async (req, res) => {
-  var populateQuery = [
-    { path: "author", select: "_id username" },
-    {
-      path: "comments",
-      select: "content createdAt",
-      populate: {
-        path: "author",
-        select: "_id username",
-      },
-    },
-    { path: "chapters", select: "_id title content lastModifiedAt" },
-  ];
 
-  Tutorial.findOne({ _id: req.params["tutorial_id"] })
-    .select("_id title content lastEditedAt createdAt")
+    var populateQuery = [
+        { path:'author', select:'_id username'}, 
+        { path:'comments', select:'content createdAt', populate: {
+                path: 'author',
+                select: '_id username'
+            }
+        },
+        { path:'chapters', select:'_id title content lastModifiedAt' }
+    ];
+    
+    Tutorial.findOne({ _id: req.params['tutorial_id'] })
+    .select('_id title subject description chapters lastModified lastEditedAt createdAt')
     .populate(populateQuery)
     .exec()
     .then((doc) => {
@@ -63,9 +61,10 @@ exports.getOneChapter = async (req, res) => {
     });
 };
 
-// getOneTutorial function
-exports.getMyTutorials = async (req, res) => {
-  Tutorial.find({ author: req.params["my_id"] })
+// getUserTutorial function
+exports.getUserTutorials = async (req, res) => {
+
+    Tutorial.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAt: -1 })
     .select(
       "author subject category title createdAt lastModifiedAt description"
@@ -94,34 +93,34 @@ exports.getFollowingTutorials = async (req, res) => {
 
 // createTutorial function
 exports.createTutorial = async (req, res) => {
-  //console.log(req.body);
+
   const { uid, subject, title, description } = req.body;
 
-  User.findById(uid, { lean: true }, (err, user) => {
-    //console.log(req.body)
-    if (err) res.status(400).json({ error: "User not found!" });
-    if (user) {
-      Tutorial.create(
-        {
-          author: user._id,
-          title: title,
-          subject: subject,
-          description: description,
-          createdAt: new Date().getTime().toLocaleString(),
-          lastEditedAt: new Date().getTime().toLocaleString(),
-          lastModifiedAt: new Date().getTime().toLocaleString(),
-          published: false,
-        },
-        (err, doc) => {
-          if (err) res.status(400).json({ error: "Bad request." });
-          else {
-            console.log(doc);
-            res.send(doc);
-          }
-        }
-      );
-    }
-  });
+    User.findById(uid, { lean: true }, (err, user) => {
+        if (err) 
+           res.status(400).json({ error: "User not found!" });
+        if (user) {
+        
+        Tutorial.create(
+            {
+                author: user._id,
+                title: title,
+                subject: subject,
+                description: description,
+                createdAt: new Date().getTime().toLocaleString(),
+                lastEditedAt: new Date().getTime().toLocaleString(),
+                lastModifiedAt: new Date().getTime().toLocaleString(),
+                published: false,
+            },
+            (err, data) => {
+                if (err) 
+                    res.status(400).json({ error: "Bad request." });
+                else 
+                    console.log(data);
+                });
+        } else 
+            res.status(400).json({ error: "User not found." });
+    });
 };
 
 // createChapter function

@@ -1,10 +1,9 @@
 <template>
   <v-container fluid class="pa-0">
     <v-row no-gutters>
-      <v-spacer />
-      <v-btn @click="createThread"> Post </v-btn>
-      <v-col md="3" class="hidden-sm-and-down">
+      <v-col md="3" class="hidden-sm-and-down pa-5">
         <v-card elevation="16">
+          <v-btn @click="createThread"> Post </v-btn>
           <v-card-title>Discussion Thread</v-card-title>
           <v-divider />
           <v-virtual-scroll
@@ -28,7 +27,7 @@
           </v-virtual-scroll>
         </v-card>
       </v-col>
-      <v-col md="6" sm="12"><Thread :id="id"/></v-col><v-spacer />
+      <v-col md="9" sm="12" class="pa-5"><Thread :id="id"/></v-col>
     </v-row>
   </v-container>
 </template>

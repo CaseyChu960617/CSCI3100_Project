@@ -5,7 +5,8 @@ const { authJwt } = require("../middlewares");
 const { getProfile,
         editProfile,
         follow,
-        unfollow } = require('../controllers/user');
+        unfollow,
+        updateProPic } = require('../controllers/user');
 
 router.get('/getProfile/:uid', getProfile);
 
@@ -15,5 +16,6 @@ router.put('/follow', follow);
 
 router.put('/unfollow', unfollow);
 
+router.put('/updateProPic', updateProPic);
 
 module.exports = router;

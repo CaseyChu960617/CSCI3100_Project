@@ -66,4 +66,22 @@ exports.unfollow = async (req, res) => {
     res.send(user.following);
 };
 
+// updateProPic function
+exports.updateProPic = async (req, res) => {
+    const { my_id, profileImage } = req.body;
+
+    console.log(my_id);
+    console.log(profileImage);
+    User.findOneAndUpdate({ _id: my_id },
+         { profileImage: profileImage }, 
+         (err) => {
+        if (err)
+            res.status(400).json({ error: "User not exist" });
+    });
+
+    const user = await User.findOne({ _id: my_id}).select('profileImage');
+    res.send(user.profileImage);
+};
+
+
 
