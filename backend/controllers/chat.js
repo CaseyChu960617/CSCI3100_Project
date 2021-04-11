@@ -11,7 +11,7 @@ exports.getAllChats = async (req, res) => {
   await Chat.find({ $or: [{ userA: uid }, { userB: uid }] })
     .sort({ createdAt: -1 })
     .select("_id userA userB")
-    .populate("userA userB", "_id username")
+    .populate("userA userB", "_id username profileImage")
     .exec()
     .then((docs) => {
       //console.log(docs);

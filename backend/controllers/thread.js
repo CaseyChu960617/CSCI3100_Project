@@ -52,9 +52,9 @@ exports.getOneThread = async (req, res) => {
 };
 
 // getMyThreads function
-exports.getMyThreads = async (req, res) => {
+exports.getUserThreads = async (req, res) => {
 
-  Thread.find({ author: req.params["my_id"] })
+  Thread.find({ author: req.params["_id"] })
   .sort({ lastModifiedAt: -1 })
   .select('author category title createdAt lastModifiedAt')
   .populate('author', '_id username')

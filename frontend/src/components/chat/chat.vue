@@ -236,6 +236,8 @@ export default {
           },
           this.chatId
         );
+        const scrollbar = document.querySelector(".scroll-bar");
+        scrollbar.scrollTo(0, scrollbar.scrollHeight);
       }
     },
 
@@ -293,20 +295,6 @@ export default {
       console.log(this.newMessage);
       this.newMessage = null;
     });
-
-    //this.socket.on("clearMessage", (data) => {
-    //  this.messages = data.messages;
-    //});
   },
-  updated() {
-    //scroll to bottom after the chat is sent or updated
-    const scrollbar = document.querySelector(".scroll-bar");
-    scrollbar.scrollTo(0, scrollbar.scrollHeight);
-  },
-  // beforeMount() {
-  //  this.socket.emit("leave", {
-  //    chatId: this.chatId,
-  //  });
-  // },
 };
 </script>

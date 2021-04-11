@@ -24,7 +24,7 @@ exports.getCategory = async (req, res) => {
     .sort({ createdAt: -1})
     .select('author category title lastModifiedAt')
     .populate('author', '_id username')
-    .exec()
+    .exec(
     .then( docs => {
         res.send(docs);
     });
@@ -64,9 +64,9 @@ exports.getOneChapter = async (req, res) => {
 };
 
 // getOneTutorial function
-exports.getMyTutorials = async (req, res) => {
+exports.getUserTutorials = async (req, res) => {
 
-    Tutorial.find({ author: req.params["my_id"] })
+    Tutorial.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAt: -1 })
     .select('author category title createdAt lastModifiedAt')
     .populate('author', '_id username')

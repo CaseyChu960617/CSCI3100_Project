@@ -7,7 +7,7 @@
         outlined
         height="80%"
         :loading="loading"
-        class="mb-2"
+        class="mb-4"
       >
         <v-card-title @click="selectProfile(thread.author._id)">{{
           thread.author.username
@@ -22,7 +22,7 @@
         outlined
         height="40%"
         :loading="loading"
-        class="mb-2"
+        class="mb-4"
       >
         <v-card-title @click="selectProfile(comment.author._id)">{{
           comment.author.username

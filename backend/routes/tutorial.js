@@ -6,7 +6,7 @@ const { getAllTutorials,
         getCategory,
         getOneTutorial,
         getOneChapter,
-        getMyTutorials,
+        getUserTutorials,
         getFollowingTutorials,
         createTutorial,
         createChapter,
@@ -25,7 +25,7 @@ router.get('/:tutorial_id', getOneTutorial);
 
 router.get('/getChapter/:chapter_id', getOneChapter);
 
-router.get('/myTutorials/:my_id', getMyTutorials);
+router.get('/userTutorials/:my_id', getUserTutorials);
 
 router.post('/followingTutorials', getFollowingTutorials);
 
