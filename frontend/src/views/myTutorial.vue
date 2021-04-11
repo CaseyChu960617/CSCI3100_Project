@@ -233,7 +233,7 @@ export default {
         }
       );
     },
-    
+
     flip(event, id) {
       let card = this.$refs[id][0];
       //let frontcard = this.$ref["front-" + id][0];

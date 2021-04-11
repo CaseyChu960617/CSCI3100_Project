@@ -86,9 +86,9 @@ export default {
     create() {
       this.$emit("update:editedItem", this.Item);
       this.$emit("submit");
-      console.log(this.title);
-      console.log(this.subject);
-      console.log(this.description);
+      //console.log(this.title);
+      //console.log(this.subject);
+      //console.log(this.description);
       const data = {
         uid: this.currentUser.uid,
         title: this.title,
@@ -96,9 +96,8 @@ export default {
         description: this.description,
       };
       DataService.post("tutorial/createTutorial", data).then((response) => {
-        console.log("repsone ", response.data);
-        let tutorialId = response.data._id;
-        console.log("tutorialId:" + tutorialId);
+        let tutorialId = response.data;
+        console.log("tutorialId is" + tutorialId);
         this.$router.push({
           name: "editTutorial",
           params: { tutorialId: tutorialId },

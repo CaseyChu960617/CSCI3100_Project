@@ -21,10 +21,10 @@ exports.getAllTutorials = async (req, res) => {
 
 // getSubject function
 exports.getSubject = async (req, res) => {
-    Tutorial.find({subject: req.params['subject_id']})
-    .sort({ lastModifiedAt: -1})
-    .select('author subject title lastModifiedAt')
-    .populate('author', '_id username')
+  Tutorial.find({ subject: req.params["subject_id"] })
+    .sort({ lastModifiedAt: -1 })
+    .select("author subject title lastModifiedAt")
+    .populate("author", "_id username")
     .exec()
     .then((docs) => {
       res.send(docs);
@@ -33,19 +33,23 @@ exports.getSubject = async (req, res) => {
 
 // getOneTutorial function
 exports.getOneTutorial = async (req, res) => {
+  var populateQuery = [
+    { path: "author", select: "_id username" },
+    {
+      path: "comments",
+      select: "content createdAt",
+      populate: {
+        path: "author",
+        select: "_id username",
+      },
+    },
+    { path: "chapters", select: "_id title content lastModifiedAt" },
+  ];
 
-    var populateQuery = [
-        { path:'author', select:'_id username'}, 
-        { path:'comments', select:'content createdAt', populate: {
-                path: 'author',
-                select: '_id username'
-            }
-        },
-        { path:'chapters', select:'_id title content lastModifiedAt' }
-    ];
-    
-    Tutorial.findOne({ _id: req.params['tutorial_id'] })
-    .select('_id title subject description chapters lastModified lastEditedAt createdAt')
+  Tutorial.findOne({ _id: req.params["tutorial_id"] })
+    .select(
+      "_id title subject description chapters lastModified lastEditedAt createdAt"
+    )
     .populate(populateQuery)
     .exec()
     .then((doc) => {
@@ -65,12 +69,9 @@ exports.getOneChapter = async (req, res) => {
 
 // getUserTutorial function
 exports.getUserTutorials = async (req, res) => {
-
-    Tutorial.find({ author: req.params["user_id"] })
+  Tutorial.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAt: -1 })
-    .select(
-      "author subject title description createdAt lastModifiedAt"
-    )   
+    .select("author subject title description createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
@@ -95,34 +96,29 @@ exports.getFollowingTutorials = async (req, res) => {
 
 // createTutorial function
 exports.createTutorial = async (req, res) => {
+  const { uid, subject, title, description } = req.body;
 
-    const { uid, subject, title, description } = req.body;
-
-    User.findById(uid, { lean: true }, (err, user) => {
-        if (err) 
-           res.status(400).json({ error: "User not found!" });
-        if (user) {
-        
-        Tutorial.create(
-            {
-                author: user._id,
-                title: title,
-                subject: subject,
-                description: description,
-                createdAt: new Date().getTime().toLocaleString(),
-                lastEditedAt: new Date().getTime().toLocaleString(),
-                lastModifiedAt: new Date().getTime().toLocaleString(),
-                published: false,
-            },
-            (err) => {
-                if (err) 
-                    res.status(400).json({ error: "Bad request." });
-                else 
-                    res.send(doc._id);
-                });
-        } else 
-            res.status(400).json({ error: "User not found." });
-    });
+  User.findById(uid, { lean: true }, (err, user) => {
+    if (err) res.status(400).json({ error: "User not found!" });
+    if (user) {
+      Tutorial.create(
+        {
+          author: user._id,
+          title: title,
+          subject: subject,
+          description: description,
+          createdAt: new Date().getTime().toLocaleString(),
+          lastEditedAt: new Date().getTime().toLocaleString(),
+          lastModifiedAt: new Date().getTime().toLocaleString(),
+          published: false,
+        },
+        (err, doc) => {
+          if (err) res.status(400).json({ error: "Bad request." });
+          else res.send(doc._id);
+        }
+      );
+    } else res.status(400).json({ error: "User not found." });
+  });
 };
 
 // createChapter function
