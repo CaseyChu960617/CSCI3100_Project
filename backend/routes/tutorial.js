@@ -3,7 +3,7 @@ const router = express.Router();
 const { authJwt } = require("../middlewares");
 
 const { getAllTutorials,
-        getCategory,
+        getSubject,
         getOneTutorial,
         getOneChapter,
         getUserTutorials,
@@ -19,7 +19,7 @@ const { getAllTutorials,
 
 router.get('/', getAllTutorials);
 
-router.get('/category/:category_id', getCategory);
+router.get('/subjecty/:subject_id', getSubject);
 
 router.get('/:tutorial_id', getOneTutorial);
 

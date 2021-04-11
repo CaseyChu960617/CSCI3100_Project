@@ -18,13 +18,13 @@ exports.getAllTutorials = async (req, res) => {
     });
 };
 
-// getCategory function
-exports.getCategory = async (req, res) => {
-    Tutorial.find({category: req.params['category_id']})
-    .sort({ createdAt: -1})
-    .select('author category title lastModifiedAt')
+// getSubject function
+exports.getSubject = async (req, res) => {
+    Tutorial.find({subject: req.params['subject_id']})
+    .sort({ lastModifiedAt: -1})
+    .select('author subject title lastModifiedAt')
     .populate('author', '_id username')
-    .exec(
+    .exec()
     .then( docs => {
         res.send(docs);
     });
@@ -44,7 +44,7 @@ exports.getOneTutorial = async (req, res) => {
     ];
     
     Tutorial.findOne({ _id: req.params['tutorial_id'] })
-    .select('_id title content lastEditedAt createdAt')
+    .select('_id title subject description chapters lastModified lastEditedAt createdAt')
     .populate(populateQuery)
     .exec()
     .then( doc => {
