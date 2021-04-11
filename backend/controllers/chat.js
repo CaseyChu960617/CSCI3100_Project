@@ -24,8 +24,8 @@ exports.getOneChatById = async (req, res) => {
   const chat_id = req.params["chat_id"];
 
   var populateQuery = [
-    { path: "userA", select: "_id username" },
-    { path: "userB", select: "_id username" },
+    { path: "userA", select: "_id username profileImage" },
+    { path: "userB", select: "_id username profileImage" },
     {
       path: "messages",
       select: "message timestamp",
@@ -102,7 +102,7 @@ exports.getOneChat = async (req, res) => {
     });
 };
 
-exports.sendMessage = async (req, res) => {
+/*exports.sendMessage = async (req, res) => {
   const chat_id = req.params["chat_id"];
   const { sender_id, message } = req.body;
 
@@ -133,4 +133,4 @@ exports.sendMessage = async (req, res) => {
       else res.send(doc);
     }
   );
-};
+};*/

@@ -20,7 +20,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({
+const uploadProPic = multer({
   fileFilter,
   storage: multerS3({
     acl: "public-read",
@@ -35,4 +35,19 @@ const upload = multer({
   }),
 });
 
-module.exports = upload;
+const uploadThumbnail = multer({
+  fileFilter,
+  storage: multerS3({
+    acl: "public-read",
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: "TESTING_METADATA" });
+    },
+    key: function (req, file, cb) {
+      cb(null, '/tutorial/thumbnail' + Date.now().toString() + file.originalname);
+    },
+  }),
+});
+
+module.exports = { uploadProPic, uploadThumbnail };

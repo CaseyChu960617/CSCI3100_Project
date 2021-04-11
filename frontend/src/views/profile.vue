@@ -24,7 +24,7 @@
           </v-avatar>
           <v-avatar v-else color="grey" size="200">
             <span class="white--text headline">
-              {{ currentUser.username }}</span
+              {{ currentUser.username[0] }}</span
             >
           </v-avatar>
         </div>
