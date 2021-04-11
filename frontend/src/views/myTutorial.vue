@@ -4,7 +4,7 @@
     <v-row justify="center">
       <v-col sm="11">
         <v-card-title
-          >Fuck<v-spacer /><v-btn icon @click.stop="dialog = true"
+          >My tutorials<v-spacer /><v-btn icon @click.stop="dialog = true"
             ><v-icon>mdi-plus</v-icon></v-btn
           ></v-card-title
         >
@@ -57,7 +57,7 @@
               <v-card
                 elevation="8"
                 class="card__face card__face--front"
-                ref="front"
+                :ref="'front-' + tutorial.id"
               >
                 <v-img src="../assets/Homepage/1.jpg"></v-img>
                 <v-card-title>{{ tutorial.title }}</v-card-title>
@@ -72,6 +72,7 @@
               >
                 <h3>Description</h3>
                 <v-card-text>{{ tutorial.description }} </v-card-text>
+                <v-btn class="testing"> wtf</v-btn>
               </v-card>
             </v-col>
           </v-row>
@@ -145,7 +146,7 @@
 }
 
 .tutorial-card {
-  transition: transform 0.5s;
+  transition: transform 0.5s ease-in-out;
   transform-style: preserve-3d;
   position: relative;
 }
@@ -176,8 +177,9 @@
   width: calc(100% - 24px);
   height: calc(100% - 24px);
 }
-.back {
-  z-index: 5;
+.is-flipped > .card__face--front {
+  transition: 0.25s;
+  visibility: hidden;
 }
 </style>
 <script>
@@ -233,11 +235,13 @@ export default {
     },
     flip(event, id) {
       let card = this.$refs[id][0];
+      //let frontcard = this.$ref["front-" + id][0];
       console.log(card.classList);
 
       if (!card.classList.contains("is-flipped")) {
         card.classList.add("is-flipped");
       }
+
       console.log(card);
     },
 
