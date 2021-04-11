@@ -49,12 +49,29 @@
               md="4"
               v-for="tutorial in tutorials"
               :key="tutorial"
+              class="tutorial-card"
+              :ref="'' + tutorial.id"
+              @mouseover="flip($event, tutorial.id)"
+              @mouseleave="unflip($event, tutorial.id)"
             >
-              <v-card elevation="8">
+              <v-card
+                elevation="8"
+                class="card__face card__face--front"
+                ref="front"
+              >
                 <v-img src="../assets/Homepage/1.jpg"></v-img>
                 <v-card-title>{{ tutorial.title }}</v-card-title>
                 <v-card-text>{{ tutorial.subject }} </v-card-text>
                 <v-card-text> Instructor </v-card-text>
+              </v-card>
+
+              <v-card
+                elevation="8"
+                class="card__face card__face--back"
+                ref="back"
+              >
+                <h3>Description</h3>
+                <v-card-text>{{ tutorial.description }} </v-card-text>
               </v-card>
             </v-col>
           </v-row>
@@ -126,6 +143,42 @@
 .v-speed-dial__list {
   align-items: flex-end !important;
 }
+
+.tutorial-card {
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.tutorial-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card__face {
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card__face--front {
+  background: red;
+}
+
+.card__face--back {
+  background: blue;
+  transform: rotateY(180deg);
+  position: absolute;
+  padding: 12px;
+  height: 500px;
+  top: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+}
+.back {
+  z-index: 5;
+}
 </style>
 <script>
 import modal from "../components/modal/tutorForm.vue";
@@ -146,6 +199,7 @@ export default {
       load: true,
       editedItem: {},
       buttonClose: -1,
+      isActive: false,
     };
   },
   computed: {
@@ -159,12 +213,11 @@ export default {
   },
 
   created() {
-    console.log("fuck");
     this.fetchMyTutorial();
   },
+
   methods: {
     fetchMyTutorial() {
-      console.log("fuck");
       DataService.get("tutorial/myTutorials", this.currentUser.uid).then(
         (response) => {
           console.log(response.data);
@@ -172,10 +225,30 @@ export default {
           //mapping the subjects
           rawData.forEach((element) => {
             element.subject = this.subjects[element.subject - 1]["text"];
+            element.id = element._id;
           });
           this.tutorials = rawData;
         }
       );
+    },
+    flip(event, id) {
+      let card = this.$refs[id][0];
+      console.log(card.classList);
+
+      if (!card.classList.contains("is-flipped")) {
+        card.classList.add("is-flipped");
+      }
+      console.log(card);
+    },
+
+    unflip(event, id) {
+      let card = this.$refs[id][0];
+      console.log(card.classList);
+
+      if (card.classList.contains("is-flipped")) {
+        card.classList.remove("is-flipped");
+      }
+      console.log(card);
     },
 
     show(bool) {
