@@ -4,9 +4,7 @@
     <v-row justify="center">
       <v-col sm="11">
         <v-card-title
-          >Check out for some the interesting tutorials<v-spacer /><v-btn
-            icon
-            @click.stop="dialog = true"
+          >Tutorials<v-spacer /><v-btn icon @click.stop="dialog = true"
             ><v-icon>mdi-plus</v-icon></v-btn
           ></v-card-title
         >
@@ -51,12 +49,30 @@
               md="4"
               v-for="tutorial in tutorials"
               :key="tutorial"
+              class="tutorial-card"
+              :ref="'' + tutorial.id"
+              @mouseover="flip($event, tutorial.id)"
+              @mouseleave="unflip($event, tutorial.id)"
             >
-              <v-card elevation="8">
+              <v-card
+                elevation="8"
+                class="card__face card__face--front"
+                :ref="'front-' + tutorial.id"
+              >
                 <v-img src="../assets/Homepage/1.jpg"></v-img>
-                <v-card-title>Tutorial Title</v-card-title>
-                <v-card-text>Subject </v-card-text>
+                <v-card-title>{{ tutorial.title }}</v-card-title>
+                <v-card-text>{{ tutorial.subject }} </v-card-text>
                 <v-card-text> Instructor </v-card-text>
+              </v-card>
+
+              <v-card
+                elevation="8"
+                class="card__face card__face--back"
+                ref="back"
+              >
+                <h3>Description</h3>
+                <v-card-text>{{ tutorial.description }} </v-card-text>
+                <v-btn class="testing"> wtf</v-btn>
               </v-card>
             </v-col>
           </v-row>
@@ -98,15 +114,7 @@
         <!--<v-icon style="float:left">mdi-plus</v-icon>-->
         Create tutorial
       </v-btn>
-      <v-btn
-        class="extended mr-0"
-        fab
-        dark
-        small
-        color="#1F5A98"
-        width="185px"
-        @click="goToMyTutorial()"
-      >
+      <v-btn class="extended mr-0" fab dark small color="#1F5A98" width="185px">
         <!--<v-icon style="float:left">mdi-book-open-blank-variant</v-icon>-->View
         my tutorials
       </v-btn>
@@ -136,9 +144,48 @@
 .v-speed-dial__list {
   align-items: flex-end !important;
 }
+
+.tutorial-card {
+  transition: transform 0.5s ease-in-out;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.tutorial-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card__face {
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card__face--front {
+  background: red;
+}
+
+.card__face--back {
+  background: blue;
+  transform: rotateY(180deg);
+  position: absolute;
+  padding: 12px;
+  height: 500px;
+  top: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+}
+.is-flipped > .card__face--front {
+  transition: 0.25s;
+  visibility: hidden;
+}
 </style>
 <script>
 import modal from "../components/modal/tutorForm.vue";
+import DataService from "../services/DataService";
+import subjectsList from "../assets/subjects.json";
 
 export default {
   components: {
@@ -146,7 +193,8 @@ export default {
   },
   data() {
     return {
-      tutorials: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 12],
+      subjects: subjectsList,
+      tutorials: [],
       title: "",
       dialog: false,
       load: true,
@@ -159,6 +207,11 @@ export default {
       return Array.from({ length: 20 }, (k, v) => v + 1);
     },
   },
+
+  created() {
+    this.fetchAllTutorials();
+  },
+
   methods: {
     show(bool) {
       this.dialog = bool;
@@ -166,6 +219,20 @@ export default {
     toggle() {
       this.buttonClose *= -1;
     },
+
+    fetchAllTutorials() {
+      DataService.getAllTutorial().then((response) => {
+        console.log("Data is ", response.data);
+        let rawData = response.data;
+        //mapping the subjects
+        rawData.forEach((element) => {
+          element.subject = this.subjects[element.subject - 1]["text"];
+          element.id = element._id;
+        });
+        this.tutorials = rawData;
+      });
+    },
+
     goToMyTutorial() {
       this.$router.push({
         name: "myTutorial",

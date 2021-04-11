@@ -9,11 +9,12 @@ const mongoose = require("mongoose");
 exports.getAllTutorials = async (req, res) => {
   Tutorial.find()
     .sort({ lastModifiedAt: -1 })
-    .select("_id author category title createdAt")
+    .select("_id author subject title description lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
       res.send(docs);
+      console.log(docs);
     });
 };
 
@@ -67,7 +68,7 @@ exports.getUserTutorials = async (req, res) => {
     Tutorial.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAt: -1 })
     .select(
-      "author subject category title createdAt lastModifiedAt description"
+      "author subject title description createdAt lastModifiedAt"
     )   
     .populate("author", "_id username")
     .exec()

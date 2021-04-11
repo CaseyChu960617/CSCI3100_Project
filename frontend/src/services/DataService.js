@@ -1,5 +1,6 @@
 import http from "../http-common";
 const Thread = "/thread/";
+const Tutorial = "/tutorial/";
 
 class DataService {
   getAll(table, header) {
@@ -51,6 +52,9 @@ class DataService {
     return http.put(`/${table}`, data);
   }
 
+  getAllTutorial() {
+    return http.get(Tutorial);
+  }
 
   // create(table, data, header) {
   //   return http.post(`/${table}`, data, header);
