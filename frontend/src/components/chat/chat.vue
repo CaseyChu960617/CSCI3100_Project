@@ -18,7 +18,7 @@
     <v-card
       max-height="calc(70vh - 60px)"
       min-height="calc(70vh - 60px)"
-      style="overflow-y: scroll; width: 100%; padding: 12px"
+      style=" overflow-y: scroll; width: 100%; padding: 12px"
       class="scroll-bar blue-grey lighten-5 ml-auto mr-auto"
       elevation="16"
       v-bind:style="messages.length == 0 ? 'display:flex' : ''"
@@ -254,7 +254,7 @@ export default {
           this.messages = response.data.messages;
           this.loading = false;
 
-          if (response.data.userA == this.currentUser.uid)
+          if (response.data.userA._id == this.currentUser.uid)
             this.chatOpp = response.data.userB;
           else this.chatOpp = response.data.userA;
         })
