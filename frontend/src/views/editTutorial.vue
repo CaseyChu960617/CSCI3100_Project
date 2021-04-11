@@ -86,7 +86,7 @@ export default {
         const rawData = response.data;
         //this.title = rawData.title;
         this.tutorial = rawData;
-        this.chapters = rawData.chapters;
+        this.chapters = ["1"];
         console.log("Chapter is ", this.chapters);
       });
     },
