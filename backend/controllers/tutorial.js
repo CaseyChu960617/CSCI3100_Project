@@ -68,7 +68,7 @@ exports.getUserTutorials = async (req, res) => {
     .sort({ lastModifiedAt: -1 })
     .select(
       "author subject category title createdAt lastModifiedAt description"
-    )
+    )   
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
