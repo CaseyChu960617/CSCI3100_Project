@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const { authJwt } = require("../middlewares");
 
@@ -17,31 +17,31 @@ const { getAllTutorials,
         deleteChapter 
     } = require('../controllers/tutorial');
 
-router.get('/', getAllTutorials);
+
+router.get("/", getAllTutorials);
 
 router.get('/subjecty/:subject_id', getSubject);
 
-router.get('/:tutorial_id', getOneTutorial);
+router.get("/getOneTutorial/:tutorial_id", getOneTutorial);
 
-router.get('/getChapter/:chapter_id', getOneChapter);
+router.get("/getChapter/:chapter_id", getOneChapter);
 
 router.get('/userTutorials/:my_id', getUserTutorials);
 
-router.post('/followingTutorials', getFollowingTutorials);
+router.post("/followingTutorials", getFollowingTutorials);
 
-router.post('/', createTutorial);
+router.post("/createTutorial", createTutorial);
 
-router.post('/createChapter', createChapter);
+router.post("/createChapter", createChapter);
 
-router.put('/editTutorial', editTutorial);
+router.put("/editTutorial", editTutorial);
 
-router.put('/editChapter', editChapter);
+router.put("/editChapter", editChapter);
 
-router.put('/postComment',  postComment);
+router.put("/postComment", postComment);
 
-router.delete('/deleteTutorial',  deleteTutorial);
+router.delete("/deleteTutorial", deleteTutorial);
 
-router.delete('/deleteChapter',  deleteChapter);
-;
+router.delete("/deleteChapter", deleteChapter);
 
 module.exports = router;
