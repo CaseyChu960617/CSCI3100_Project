@@ -4,6 +4,7 @@ const Chapter = require("../models/chapter");
 const User = require("../models/user");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
+const { response } = require("express");
 
 // getAllTutorials function
 exports.getAllTutorials = async (req, res) => {
@@ -113,11 +114,11 @@ exports.createTutorial = async (req, res) => {
                 lastModifiedAt: new Date().getTime().toLocaleString(),
                 published: false,
             },
-            (err, data) => {
+            (err) => {
                 if (err) 
                     res.status(400).json({ error: "Bad request." });
                 else 
-                    console.log(data);
+                    res.send(doc._id);
                 });
         } else 
             res.status(400).json({ error: "User not found." });
