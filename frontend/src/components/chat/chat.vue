@@ -6,11 +6,13 @@
     >
       <div>
         <span class="mr-2 ">
-          <v-avatar size="40">
-            <v-img
-              src="https://via.placeholder.com/50"
-            ></v-img> </v-avatar></span
-        >{{ oppUsername }}
+          <v-avatar size="40" v-if="chatOpp.profileImage">
+            <img :src="chatOpp.profileImage" />
+          </v-avatar>
+          <v-avatar v-else color="grey" size="40">
+            <span class="white--text headline"> {{ chatOpp.username[0] }}</span>
+          </v-avatar> </span
+        >{{ chatOpp.username }}
       </div>
     </v-card>
     <v-card
@@ -41,8 +43,13 @@
             class="blue-grey lighten-5 "
           >
             <v-list-item-avatar class="align-self-start mr-2">
-              <v-avatar size="40">
-                <v-img src="https://via.placeholder.com/50"></v-img>
+              <v-avatar size="40" v-if="chatOpp.profileImage">
+                <img :src="chatOpp.profileImage" />
+              </v-avatar>
+              <v-avatar v-else color="grey" size="40">
+                <span class="white--text headline">
+                  {{ chatOpp.username[0] }}</span
+                >
               </v-avatar>
             </v-list-item-avatar>
             <div
@@ -102,7 +109,14 @@
               </v-card>
             </div>
             <v-list-item-avatar class="align-self-start ml-2">
-              <v-img src="https://via.placeholder.com/50"></v-img>
+              <v-avatar size="40" v-if="currentUser.profileImage">
+                <img :src="currentUser.profileImage" />
+              </v-avatar>
+              <v-avatar v-else color="grey" size="40">
+                <span class="white--text headline">
+                  {{ currentUser.username[0] }}</span
+                >
+              </v-avatar>
             </v-list-item-avatar>
           </v-list-item>
         </v-card>
@@ -198,6 +212,9 @@ export default {
       newMessage: null,
       messages: [],
       //make connection to socket io
+      userA: null,
+      userB: null,
+      chatOpp: null,
     };
   },
 
@@ -212,12 +229,15 @@ export default {
             sender: {
               _id: this.currentUser.uid,
               username: this.currentUser.username,
+              profileImage: this.currentUser.profileImage,
             },
             message: this.newMessage,
             timestamp: new Date(),
           },
           this.chatId
         );
+        const scrollbar = document.querySelector(".scroll-bar");
+        scrollbar.scrollTo(0, scrollbar.scrollHeight);
       }
     },
 
@@ -233,6 +253,10 @@ export default {
           console.log(response.data.messages);
           this.messages = response.data.messages;
           this.loading = false;
+
+          if (response.data.userA == this.currentUser.uid)
+            this.chatOpp = response.data.userB;
+          else this.chatOpp = response.data.userA;
         })
         .catch((err) => {
           console.log(err);
@@ -242,7 +266,6 @@ export default {
           } else {
             alert(err.response.data.message);
           }
-          console.log(this.messages);
         });
     },
   },
@@ -272,20 +295,6 @@ export default {
       console.log(this.newMessage);
       this.newMessage = null;
     });
-
-    //this.socket.on("clearMessage", (data) => {
-    //  this.messages = data.messages;
-    //});
   },
-  updated() {
-    //scroll to bottom after the chat is sent or updated
-    const scrollbar = document.querySelector(".scroll-bar");
-    scrollbar.scrollTo(0, scrollbar.scrollHeight);
-  },
-  // beforeMount() {
-  //  this.socket.emit("leave", {
-  //    chatId: this.chatId,
-  //  });
-  // },
 };
 </script>

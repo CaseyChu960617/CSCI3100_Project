@@ -15,9 +15,16 @@
       </v-col>
       <v-col md="6"
         ><div class="container mt-4">
-          <v-avatar color="grey" size="200">
+          <v-avatar size="200" v-if="currentUser.profileImage">
+            <img
+              :src="currentUser.profileImage"
+              max-width="100%"
+              height="auto"
+            />
+          </v-avatar>
+          <v-avatar v-else color="grey" size="200">
             <span class="white--text headline">
-              {{ currentUser.username }}</span
+              {{ currentUser.username[0] }}</span
             >
           </v-avatar>
         </div>

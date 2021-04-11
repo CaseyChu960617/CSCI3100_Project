@@ -1,41 +1,72 @@
 <template>
-  <div class="container">
-    <!--UPLOAD-->
-    <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-      <h1>Upload images</h1>
-      <div class="dropbox">
-        <input
-          type="file"
-          multiple
-          :name="uploadFieldName"
-          :disabled="isSaving"
-          @change="
-            filesChange($event.target.name, $event.target.files);
-            fileCount = $event.target.files.length;
-          "
-          accept="image/*"
-          class="input-file"
-        />
-        <p v-if="isInitial">
-          Drag your file(s) here to begin<br />
-          or click to browse
-        </p>
-        <p v-if="isSaving">Uploading {{ fileCount }} files...</p>
-      </div>
-    </form>
-  </div>
+  <v-dialog v-model="dialog" max-width="80%" @click:outside="close">
+    <v-card height="80vh">
+      <v-container>
+        <!--UPLOAD-->
+        <v-form enctype="multipart/form-data">
+          <h1>Upload images</h1>
+          <input name="file" single type="file" @change="fileChange" />
+          <v-btn @click="uploadProPic">Upload</v-btn>
+        </v-form>
+        <v-avatar size="200" v-if="src">
+          <img :src="src" max-width="100%" height="auto" />
+        </v-avatar>
+        <v-btn @click="save">Save</v-btn>
+      </v-container>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
+import DataService from "../../services/DataService";
+
 export default {
   props: ["dialog"],
 
   data() {
-    return {};
+    return {
+      src: null,
+      formData: new FormData(),
+    };
   },
+
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+
   methods: {
-    close() {},
-    handleUploaded() {},
+    close() {
+      this.$emit("show", false);
+      this.formData = new FormData();
+    },
+
+    fileChange(e) {
+      this.formData.append("file", e.target.files[0]);
+    },
+
+    uploadProPic() {
+      console.log(this.formData);
+      DataService.upload("uploadProPic", this.formData).then((response) => {
+        this.src = response.data.location;
+        this.formData = new FormData();
+      });
+    },
+
+    save() {
+      const data = {
+        my_id: this.currentUser.uid,
+        profileImage: this.src,
+      };
+
+      console.log(data);
+      DataService.put("user/updateProPic", data).then((response) => {
+        console.log(response.data);
+        this.currentUser.profileImage = this.src;
+        this.close();
+      });
+    },
   },
 };
 </script>

@@ -1,8 +1,7 @@
 <template>
   <v-container fluid class="pa-0">
     <v-row no-gutters>
-      <v-spacer />
-      <v-col mt="5" md="3" class="hidden-sm-and-down mt-5">
+      <v-col mt="5" md="3" class="hidden-sm-and-down my-5 px-5">
         <v-card elevation="16">
           <v-card-title>Chat list</v-card-title>
           <v-divider />
@@ -17,7 +16,15 @@
               <v-list-item @click="selectChat(item._id)">
                 <v-list-item-content>
                   <v-list-item-title class="text-wrap">
-                    <strong>{{ item.user.username }}</strong>
+                    <v-avatar size="40" v-if="item.user.profileImage">
+                      <img :src="item.user.profileImage" />
+                    </v-avatar>
+                    <v-avatar v-else color="grey" size="40">
+                      <span class="white--text headline">
+                        {{ item.user.username[0] }}</span
+                      >
+                    </v-avatar>
+                    <strong class="pl-3">{{ item.user.username }}</strong>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -26,15 +33,15 @@
           </v-virtual-scroll>
         </v-card>
       </v-col>
-      <v-col cols="12" md="6" sm="12"
+      <v-col cols="12" md="9" sm="12"
         ><chat
           :chatId="chatId"
           :socket="socket"
           :oppUsername="oppUsername"
           v-if="chatId"
         />
-        <v-card v-else>No chat</v-card></v-col
-      ><v-spacer />
+        <v-card class="my-5 mx-5 pa-5" v-else>No chat selected</v-card></v-col
+      >
     </v-row>
   </v-container>
 </template>
