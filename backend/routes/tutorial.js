@@ -19,7 +19,6 @@ const { getAllTutorials,
 
 router.get("/", getAllTutorials);
 
-
 router.get('/subjecty/:subject_id', getSubject);
 
 router.get("/getOneTutorial/:tutorial_id", getOneTutorial);

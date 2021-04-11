@@ -61,8 +61,7 @@ exports.getOneChapter = async (req, res) => {
     });
 };
 
-// getOneTutorial function
-
+// getUserTutorial function
 exports.getUserTutorials = async (req, res) => {
 
     Tutorial.find({ author: req.params["user_id"] })
@@ -94,7 +93,6 @@ exports.getFollowingTutorials = async (req, res) => {
 
 // createTutorial function
 exports.createTutorial = async (req, res) => {
-  //console.log(req.body);
 
     const { uid, subject, title, description } = req.body;
 
