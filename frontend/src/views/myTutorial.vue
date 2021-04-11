@@ -220,9 +220,9 @@ export default {
 
   methods: {
     fetchMyTutorial() {
-      DataService.get("tutorial/myTutorials", this.currentUser.uid).then(
+      DataService.get("tutorial/userTutorials", this.currentUser.uid).then(
         (response) => {
-          console.log(response.data);
+          console.log("Data is ", response.data);
           let rawData = response.data;
           //mapping the subjects
           rawData.forEach((element) => {

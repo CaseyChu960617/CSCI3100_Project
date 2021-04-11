@@ -96,7 +96,7 @@ export default {
         description: this.description,
       };
       DataService.post("tutorial/createTutorial", data).then((response) => {
-        console.log(response.data);
+        console.log("repsone ", response.data);
         let tutorialId = response.data._id;
         console.log("tutorialId:" + tutorialId);
         this.$router.push({

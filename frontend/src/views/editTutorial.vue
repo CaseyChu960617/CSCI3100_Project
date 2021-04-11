@@ -7,13 +7,49 @@
     >
       <v-layout>
         <v-toolbar-title>
-          <a class="navbar-item"> Your are editing {{ this.title }} </a>
+          <a class="navbar-item">
+            Your are editing {{ this.tutorial.title }}
+          </a>
         </v-toolbar-title>
       </v-layout>
     </v-toolbar>
-    <editChapter />
+    <div>
+      <v-row class="ml-2 mt-2">
+        <v-col mt="5" md="3" class="hidden-sm-and-down mt-5">
+          <div class="pa-5">Edit tutorial information</div>
+          <v-divider />
+          <v-virtual-scroll
+            v-if="!chapters"
+            bench="25"
+            min-height="74vh"
+            max-height="74vh"
+            item-height="70"
+            :items="chapters"
+          >
+            <template v-slot:default="{ item }">
+              <v-list-item @click="selectChat(item._id)">
+                <v-list-item-content>
+                  <v-list-item-title class="text-wrap">
+                    <strong>{{ item.user.username }}</strong>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-divider />
+            </template>
+          </v-virtual-scroll>
+          <v-card v-else> no tutorial fuck you</v-card>
+          <v-btn>Create chpater </v-btn>
+        </v-col>
+        <v-col>
+          <editChapter />
+        </v-col>
+      </v-row>
+    </div>
   </v-container>
 </template>
+
+<style></style>
 
 <script>
 //import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -29,8 +65,8 @@ export default {
   },
   data() {
     return {
-      title: null,
-      chapter: [],
+      tutorial: null, //the whole returned object from tutorial
+      chapters: [],
       //editor: ClassicEditor,
       editorData: "fuck",
     };
@@ -44,6 +80,20 @@ export default {
       console.log(this.$route.params.tutorialId);
       DataService.get(
         "tutorial/getOneTutorial",
+        this.$route.params.tutorialId
+      ).then((response) => {
+        console.log(response.data);
+        const rawData = response.data;
+        //this.title = rawData.title;
+        this.tutorial = rawData;
+        this.chapters = rawData.chapters;
+        console.log("Chapter is ", this.chapters);
+      });
+    },
+
+    fetchChapter() {
+      DataService.get(
+        "tutorial/createChapter",
         this.$route.params.tutorialId
       ).then((response) => {
         console.log(response.data);
