@@ -112,7 +112,8 @@ exports.signin = async (req, res) => {
                 email: user.email,
                 gender: user.gender,
                 activation: user.activation,
-                following: user.following
+                following: user.following,
+                profileImage: user.profileImage
             });
         }
     else
