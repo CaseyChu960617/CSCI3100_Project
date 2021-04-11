@@ -1,47 +1,46 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const { authJwt } = require("../middlewares");
 
-const { getAllTutorials,
-        getCategory,
-        getOneTutorial,
-        getOneChapter,
-        getMyTutorials,
-        getFollowingTutorials,
-        createTutorial,
-        createChapter,
-        editTutorial,
-        editChapter,
-        postComment,
-        deleteTutorial, 
-        deleteChapter 
-    } = require('../controllers/tutorial');
+const {
+  getAllTutorials,
+  getCategory,
+  getOneTutorial,
+  getOneChapter,
+  getMyTutorials,
+  getFollowingTutorials,
+  createTutorial,
+  createChapter,
+  editTutorial,
+  editChapter,
+  postComment,
+  deleteTutorial,
+  deleteChapter,
+} = require("../controllers/tutorial");
 
-router.get('/', getAllTutorials);
+router.get("/", getAllTutorials);
 
-router.get('/category/:category_id', getCategory);
+router.get("/category/:category_id", getCategory);
 
-router.get('/:tutorial_id', getOneTutorial);
+router.get("/getOneTutorial/:tutorial_id", getOneTutorial);
 
-router.get('/getChapter/:chapter_id', getOneChapter);
+router.get("/getChapter/:chapter_id", getOneChapter);
 
-router.get('/myTutorials/:my_id', getMyTutorials);
+router.get("/myTutorials/:my_id", getMyTutorials);
 
-router.post('/followingTutorials', getFollowingTutorials);
+router.post("/followingTutorials", getFollowingTutorials);
 
-router.post('/', createTutorial);
+router.post("/createTutorial", createTutorial);
 
-router.post('/createChapter', createChapter);
+router.post("/createChapter", createChapter);
 
-router.put('/editTutorial', editTutorial);
+router.put("/editTutorial", editTutorial);
 
-router.put('/editChapter', editChapter);
+router.put("/editChapter", editChapter);
 
-router.put('/postComment',  postComment);
+router.put("/postComment", postComment);
 
-router.delete('/deleteTutorial',  deleteTutorial);
+router.delete("/deleteTutorial", deleteTutorial);
 
-router.delete('/deleteChapter',  deleteChapter);
-;
-
+router.delete("/deleteChapter", deleteChapter);
 module.exports = router;

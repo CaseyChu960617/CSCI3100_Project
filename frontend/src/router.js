@@ -11,6 +11,8 @@ import activateAccount from "./views/activateAccount.vue";
 import userProfile from "./views/userProfile.vue";
 import editProfile from "./views/editProfile.vue";
 import chatList from "./views/chatList.vue";
+import editTutorial from "./views/editTutorial.vue";
+import myTutorial from "./views/myTutorial.vue";
 //import { component } from "vue/types/umd";
 
 Vue.use(Router);
@@ -60,6 +62,16 @@ export const router = new Router({
     {
       path: "/editProfile",
       component: editProfile,
+    },
+    {
+      name: "editTutorial",
+      path: "/editTutorial/:tutorialId",
+      component: editTutorial,
+    },
+    {
+      name: "myTutorial",
+      path: "/myTutorial",
+      component: myTutorial,
     },
   ],
 });

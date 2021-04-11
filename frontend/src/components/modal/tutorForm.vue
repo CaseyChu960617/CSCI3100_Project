@@ -52,7 +52,7 @@
 
 <script>
 import subjectsList from "../../assets/subjects.json";
-//import DataService from "../services/DataService";
+import DataService from "../../services/DataService";
 
 export default {
   props: ["dialog", "editedItem"],
@@ -69,6 +69,11 @@ export default {
       description: null,
     };
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
   created: function() {
     if (Object.keys(this.editedItem).length > 0) {
       Object.assign(this.Item, this.editedItem);
@@ -84,6 +89,21 @@ export default {
       console.log(this.title);
       console.log(this.subject);
       console.log(this.description);
+      const data = {
+        uid: this.currentUser.uid,
+        title: this.title,
+        subject: this.subject,
+        description: this.description,
+      };
+      DataService.post("tutorial/createTutorial", data).then((response) => {
+        console.log(response.data);
+        let tutorialId = response.data._id;
+        console.log("tutorialId:" + tutorialId);
+        this.$router.push({
+          name: "editTutorial",
+          params: { tutorialId: tutorialId },
+        });
+      });
     },
   },
 };

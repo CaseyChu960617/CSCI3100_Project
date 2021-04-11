@@ -7,276 +7,264 @@ const mongoose = require("mongoose");
 
 // getAllTutorials function
 exports.getAllTutorials = async (req, res) => {
-
-    Tutorial.find()
-    .sort({ lastModifiedAt: -1})
-    .select('author category title createdAt')
-    .populate('author', '_id username')
+  Tutorial.find()
+    .sort({ lastModifiedAt: -1 })
+    .select("author category title createdAt")
+    .populate("author", "_id username")
     .exec()
-    .then( docs => {
-        res.send(docs);
+    .then((docs) => {
+      res.send(docs);
     });
 };
 
 // getCategory function
 exports.getCategory = async (req, res) => {
-    Tutorial.find({category: req.params['category_id']})
-    .sort({ createdAt: -1})
-    .select('author category title lastModifiedAt')
-    .populate('author', '_id username')
+  Tutorial.find({ category: req.params["category_id"] })
+    .sort({ createdAt: -1 })
+    .select("author category title lastModifiedAt")
+    .populate("author", "_id username")
     .exec()
-    .then( docs => {
-        res.send(docs);
+    .then((docs) => {
+      res.send(docs);
     });
 };
 
 // getOneTutorial function
 exports.getOneTutorial = async (req, res) => {
+  var populateQuery = [
+    { path: "author", select: "_id username" },
+    {
+      path: "comments",
+      select: "content createdAt",
+      populate: {
+        path: "author",
+        select: "_id username",
+      },
+    },
+    { path: "chapters", select: "_id title content lastModifiedAt" },
+  ];
 
-    var populateQuery = [
-        { path:'author', select:'_id username'}, 
-        { path:'comments', select:'content createdAt', populate: {
-                path: 'author',
-                select: '_id username'
-            }
-        },
-        { path:'chapters', select:'_id title content lastModifiedAt' }
-    ];
-    
-    Tutorial.findOne({ _id: req.params['tutorial_id'] })
-    .select('_id title content lastEditedAt createdAt')
+  Tutorial.findOne({ _id: req.params["tutorial_id"] })
+    .select("_id title content lastEditedAt createdAt")
     .populate(populateQuery)
     .exec()
-    .then( doc => {
-        res.send(doc);
-    })
+    .then((doc) => {
+      res.send(doc);
+    });
 };
 
 // getOneChapter function
 exports.getOneChapter = async (req, res) => {
-
-    Chapter.findOne({ _id: req.params['chapter_id'] })
-    .select('_id title content lastEditedAt createdAt')
+  Chapter.findOne({ _id: req.params["chapter_id"] })
+    .select("_id title content lastEditedAt createdAt")
     .exec()
-    .then( doc => {
-        res.send(doc);
-    })
+    .then((doc) => {
+      res.send(doc);
+    });
 };
 
 // getOneTutorial function
 exports.getMyTutorials = async (req, res) => {
-
-    Tutorial.find({ author: req.params["my_id"] })
+  Tutorial.find({ author: req.params["my_id"] })
     .sort({ lastModifiedAt: -1 })
-    .select('author category title createdAt lastModifiedAt')
-    .populate('author', '_id username')
+    .select("author subject category title createdAt lastModifiedAt")
+    .populate("author", "_id username")
     .exec()
     .then((docs) => {
-        res.send(docs);
+      res.send(docs);
     });
 };
 
 // getOneTutorial function
 exports.getFollowingTutorials = async (req, res) => {
-    const { following } = req.body;
+  const { following } = req.body;
 
-    Tutorial.find({ author: { $in: following } })
-    .sort({ lastModifiedAt: -1})
-    .select('author category title createdAt lastModifiedAt')
-    .populate('author', '_id username')
+  Tutorial.find({ author: { $in: following } })
+    .sort({ lastModifiedAt: -1 })
+    .select("author category title createdAt lastModifiedAt")
+    .populate("author", "_id username")
     .exec()
     .then((err, docs) => {
-        if (err) 
-            res.status(400).json({ error: err.message });
-        else
-            res.send(docs);
+      if (err) res.status(400).json({ error: err.message });
+      else res.send(docs);
     });
 };
 
 // createTutorial function
 exports.createTutorial = async (req, res) => {
+  //console.log(req.body);
+  const { uid, subject, title, description } = req.body;
 
-    const { uid, subject, title, description } = req.body;
-
-    User.findById(uid, { lean: true }, (err, user) => {
-        if (err) 
-           res.status(400).json({ error: "User not found!" });
-        if (user) {
-        
-        Tutorial.create(
-            {
-                author: user._id,
-                title: title,
-                subject, subject,
-                description: description,
-                createdAt: new Date().getTime().toLocaleString(),
-                lastEditedAt: new Date().getTime().toLocaleString(),
-                lastModifiedAt: new Date().getTime().toLocaleString(),
-                published: false,
-            },
-            (err, data) => {
-                if (err) 
-                    res.status(400).json({ error: "Bad request." });
-                else 
-                    console.log(data);
-                });
-        } else 
-            res.status(400).json({ error: "User not found." });
-    });
+  User.findById(uid, { lean: true }, (err, user) => {
+    //console.log(req.body)
+    if (err) res.status(400).json({ error: "User not found!" });
+    if (user) {
+      Tutorial.create(
+        {
+          author: user._id,
+          title: title,
+          subject: subject,
+          description: description,
+          createdAt: new Date().getTime().toLocaleString(),
+          lastEditedAt: new Date().getTime().toLocaleString(),
+          lastModifiedAt: new Date().getTime().toLocaleString(),
+          published: false,
+        },
+        (err, doc) => {
+          if (err) res.status(400).json({ error: "Bad request." });
+          else {
+            console.log(doc);
+            res.send(doc);
+          }
+        }
+      );
+    }
+  });
 };
 
 // createChapter function
 exports.createChapter = async (req, res) => {
-    const { uid, tutorial_id, title, content } = req.body;
+  const { uid, tutorial_id, title, content } = req.body;
 
-    var newChapter = new Chapter(
-        {   
-            title: title,
-            content: content,
-            createdAt: new Date().getTime().toLocaleString(),
-            lastEditedAt: new Date().getTime().toLocaleString()
-        },
-        err => {
-        if (err) {
-            res.status(400).json({ error: err.message });
-            }
-        }
-    );
-
-    newChapter.save((err) => {
-        if (err) 
-            res.status(400).json({ error: "Comment cannot be posted successfully." });
-    });
-    
-    const update = { 
-        $push: { chapers: newChapter._id }, 
-        $set: { lastModifiedAt: new Date().getTime().toLocaleString() } 
+  var newChapter = new Chapter(
+    {
+      title: title,
+      content: content,
+      createdAt: new Date().getTime().toLocaleString(),
+      lastEditedAt: new Date().getTime().toLocaleString(),
+    },
+    (err) => {
+      if (err) {
+        res.status(400).json({ error: err.message });
+      }
     }
+  );
 
-    Tutorial.findOneAndUpdate({ _id: tutorial_id }, update,
-        (err, doc) => {
-        if (err) 
-            res.status(400).json({ error: err.message });
-        else
-            res.send(doc);  
-    });     
+  newChapter.save((err) => {
+    if (err)
+      res.status(400).json({ error: "Comment cannot be posted successfully." });
+  });
+
+  const update = {
+    $push: { chapers: newChapter._id },
+    $set: { lastModifiedAt: new Date().getTime().toLocaleString() },
+  };
+
+  Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
+    if (err) res.status(400).json({ error: err.message });
+    else res.send(doc);
+  });
 };
 
 // editTutorial function
 exports.editTutorial = async (req, res) => {
-    const { tutorial_id, title, subject, published } = req.body
+  const { tutorial_id, title, subject, published } = req.body;
 
-    const update = {
-        $set: { 
-                title: title,
-                subject: subject,
-                lastEditedAt: new Date().getTime().toLocaleString(),
-                lastModifiedAt: new Date().getTime().toLocaleString(),
-                published: published
-            }
-        }
+  const update = {
+    $set: {
+      title: title,
+      subject: subject,
+      lastEditedAt: new Date().getTime().toLocaleString(),
+      lastModifiedAt: new Date().getTime().toLocaleString(),
+      published: published,
+    },
+  };
 
-    Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
-        if (err) 
-        res.status(400).json({ error: "Bad request." });
-        else
-        res.send(doc);
-    });
+  Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
+    if (err) res.status(400).json({ error: "Bad request." });
+    else res.send(doc);
+  });
 };
 
 // editChapter function
 exports.editChapter = async (req, res) => {
-    
-  const { chapter_id, title, content } = req.body
+  const { chapter_id, title, content } = req.body;
 
   const update = {
-    $set: { title: title, 
-            content: content, 
-            lastEditedAt: new Date().getTime().toLocaleString(),
-         }
-    }
+    $set: {
+      title: title,
+      content: content,
+      lastEditedAt: new Date().getTime().toLocaleString(),
+    },
+  };
 
   Chapter.findOneAndUpdate({ _id: chapter_id }, update, (err, doc) => {
-    if (err) 
-      res.status(400).json({ error: "Bad request." });
-    else
-      res.send(doc);
+    if (err) res.status(400).json({ error: "Bad request." });
+    else res.send(doc);
   });
 };
 
 // postComment function
 exports.postComment = async (req, res) => {
-
   const { uid, content, tutorial_id } = req.body;
 
   User.findById(uid, { lean: true }, (err, user) => {
-    if (err) 
-       res.status(400).json({ error: "User not found!" });
+    if (err) res.status(400).json({ error: "User not found!" });
     if (user) {
-        var newComment = new TutorialComment(
-            {
-                author: new ObjectId(uid),
-                createdAt: new Date().getTime().toLocaleString(),
-                content: content,
-            },
-            (err, data) => {
-            if (err) {
-                res.status(400).json({ error: err.message });
-                }
-            }
-        );
-
-        newComment.save((err) => {
-            if (err) res.status(400).json({ error: "Comment cannot be posted successfully." });
-        });
-        
-        const update = { 
-            $push: { comments: newComment._id }, 
-            $set: { lastModifiedAt: new Date().getTime().toLocaleString() } 
+      var newComment = new TutorialComment(
+        {
+          author: new ObjectId(uid),
+          createdAt: new Date().getTime().toLocaleString(),
+          content: content,
+        },
+        (err, data) => {
+          if (err) {
+            res.status(400).json({ error: err.message });
+          }
         }
+      );
 
-        Tutorial.findOneAndUpdate({ _id: tutorial_id }, update,
-            (err, doc) => {
-            if (err) 
-                res.status(400).json({ error: err.message });
-            else
-                res.send(doc);  
-        });
-    }});
+      newComment.save((err) => {
+        if (err)
+          res
+            .status(400)
+            .json({ error: "Comment cannot be posted successfully." });
+      });
+
+      const update = {
+        $push: { comments: newComment._id },
+        $set: { lastModifiedAt: new Date().getTime().toLocaleString() },
+      };
+
+      Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
+        if (err) res.status(400).json({ error: err.message });
+        else res.send(doc);
+      });
+    }
+  });
 };
 
 // deleteTutorial function
 exports.deleteTutorial = async (req, res) => {
-  
-    const { tutorial_id } = req.body;
-    
-    Tutorial.findById(tutorial_id, (err, doc) => {
-            doc.remove();
-            res.status(200).json({
-            discussionThread: doc,
-            message: "Thread successfully deleted.",
-        });
+  const { tutorial_id } = req.body;
+
+  Tutorial.findById(tutorial_id, (err, doc) => {
+    doc.remove();
+    res.status(200).json({
+      discussionThread: doc,
+      message: "Thread successfully deleted.",
     });
+  });
 };
 
 // deleteChapter function
 exports.deleteChapter = async (req, res) => {
-    const { tutorial_id, chapter_id } = req.body;
-  
-    Chapter.findById(chapter_id, (err, doc) => {
-            doc.remove();
-            res.status(200).json({
-            discussionThread: doc,
-            message: "Thread successfully deleted.",
-        });
-    });
+  const { tutorial_id, chapter_id } = req.body;
 
-    Tutorial.findOneAndUpdate({ _id: tutorial_id },
-        { $pullAll: { chapters: chapter_id } }, 
-        (doc, err) => {
-        if (err)
-            res.status(400).json({ error: err.message });
-        else
-            res.send(doc);
+  Chapter.findById(chapter_id, (err, doc) => {
+    doc.remove();
+    res.status(200).json({
+      discussionThread: doc,
+      message: "Thread successfully deleted.",
     });
+  });
+
+  Tutorial.findOneAndUpdate(
+    { _id: tutorial_id },
+    { $pullAll: { chapters: chapter_id } },
+    (doc, err) => {
+      if (err) res.status(400).json({ error: err.message });
+      else res.send(doc);
+    }
+  );
 };
