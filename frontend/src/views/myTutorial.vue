@@ -222,7 +222,7 @@ export default {
 
   methods: {
     fetchMyTutorial() {
-      DataService.get("tutorial/userTutorials", this.currentUser.uid).then(
+      DataService.get("tutorial/userTutorials", this.currentUser.user_id).then(
         (response) => {
           console.log("Data is ", response.data);
           let rawData = response.data;

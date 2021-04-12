@@ -90,7 +90,7 @@ export default {
       //console.log(this.subject);
       //console.log(this.description);
       const data = {
-        uid: this.currentUser.uid,
+        uid: this.currentUser.user_id,
         title: this.title,
         subject: this.subject,
         description: this.description,
