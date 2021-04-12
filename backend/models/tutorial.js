@@ -7,7 +7,7 @@ const tutorialSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    subject: { type: String, required: true },
+    subject: { type: Number, required: true },
     title: { type: String, required: true },
     description: { type: String },
     chapters: [

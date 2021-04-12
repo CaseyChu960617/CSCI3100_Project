@@ -49,14 +49,14 @@
               v-for="tutorial in tutorials"
               :key="tutorial"
               class="tutorial-card"
-              :ref="'' + tutorial.id"
-              @mouseover="flip($event, tutorial.id)"
-              @mouseleave="unflip($event, tutorial.id)"
+              :ref="'' + tutorial._id"
+              @mouseover="flip($event, tutorial._id)"
+              @mouseleave="unflip($event, tutorial._id)"
             >
               <v-card
                 elevation="8"
                 class="card__face card__face--front"
-                :ref="'front-' + tutorial.id"
+                :ref="'front-' + tutorial._id"
               >
                 <v-img src="../assets/Homepage/1.jpg"></v-img>
                 <v-card-title>{{ tutorial.title }}</v-card-title>
@@ -195,7 +195,6 @@ export default {
   data() {
     return {
       subjects: subjectsList,
-
       tutorials: [],
       title: "",
       dialog: false,
@@ -230,7 +229,15 @@ export default {
           //mapping the subjects
           rawData.forEach((element) => {
             element.subject = this.subjects[element.subject - 1]["text"];
-            element.id = element._id;
+            DataService.getAllTutorial().then((response) => {
+              console.log("Data is ", response.data);
+              let rawData = response.data;
+              //mapping the subjects
+              rawData.forEach((element) => {
+                element.subject = this.subjects[element.subject - 1]["text"];
+              });
+              this.tutorials = rawData;
+            });
           });
           this.tutorials = rawData;
         }
