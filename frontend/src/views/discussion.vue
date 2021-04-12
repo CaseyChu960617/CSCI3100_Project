@@ -3,8 +3,69 @@
     <v-row no-gutters>
       <v-col md="3" class="hidden-sm-and-down pa-5">
         <v-card elevation="16">
-          <v-btn @click="createThread"> Post </v-btn>
-          <v-card-title>Discussion Thread</v-card-title>
+          <!-- <v-btn @click="createThread"> Post </v-btn> -->
+          <v-app-bar>
+            <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+            <v-app-bar-title>Discussion Thread</v-app-bar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-btn icon>
+              <v-icon>mdi-refresh</v-icon>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </v-app-bar>
+          <v-navigation-drawer v-model="drawer" absolute temporary>
+            <v-list nav>
+              <v-list-item-group>
+                <v-list-item
+                  @click="
+                    cat = -1;
+                    drawer = false;
+                  "
+                >
+                  <v-list-item-title>All</v-list-item-title>
+                </v-list-item>
+                <v-list-item
+                  @click="
+                    cat = 1;
+                    drawer = false;
+                  "
+                >
+                  <v-list-item-title>Cat 1</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item
+                  @click="
+                    cat = 2;
+                    drawer = false;
+                  "
+                >
+                  <v-list-item-title>Cat 2</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item
+                  @click="
+                    cat = 3;
+                    drawer = false;
+                  "
+                >
+                  <v-list-item-title>Cat 3</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item
+                  @click="
+                    cat = 4;
+                    drawer = false;
+                  "
+                >
+                  <v-list-item-title>Cat 4</v-list-item-title>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-navigation-drawer>
           <v-divider />
           <v-virtual-scroll
             bench="25"
@@ -27,7 +88,7 @@
           </v-virtual-scroll>
         </v-card>
       </v-col>
-      <v-col md="9" sm="12" class="pa-5"><Thread :id="id"/></v-col>
+      <v-col md="9" sm="12" class="pa-5"><Thread :id="id" /></v-col>
     </v-row>
 
     <v-speed-dial
@@ -114,7 +175,7 @@ import Thread from "../components/discussion/thread.vue";
 export default {
   components: {
     Thread,
-  }, 
+  },
 
   data() {
     return {
@@ -122,18 +183,21 @@ export default {
       loading: true,
       id: null,
       buttonClose: -1,
+      drawer: false,
+      cat: -1,
     };
   },
 
   created() {
     this.fetchThreadList();
   },
-  compute: {
-    items() {
-      return Array.from({ length: 20 }, (k, v) => v + 1);
+  watch: {
+    cat() {
+      if (this.cat != -1) {
+        this.fetchCatList();
+      }
     },
   },
-  
   methods: {
     fetchThreadList() {
       this.loading = true;
@@ -150,6 +214,24 @@ export default {
             this.$router.push("/home");
           } else {
             alert(err.response.data.message);
+          }
+        });
+    },
+    fetchCatList() {
+      this.loading = true;
+      DataService.getCatThread(this.cat)
+        .then((response) => {
+          console.log(response.data);
+          this.threads = response.data;
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$router.push("/home");
+          } else {
+            alert(err.response.data);
           }
         });
     },

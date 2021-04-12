@@ -124,9 +124,6 @@ export default {
     }
   },
   methods: {
-    editProfile() {
-      this.$router.push({ path: "/editProfile" });
-    },
     changePassword() {
       this.$emit("switchform");
     },
