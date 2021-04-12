@@ -8,7 +8,8 @@ const threadSchema = new mongoose.Schema({
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ThreadComment'}],
     createdAt:  { type: String, required: true },
     lastEditedAt:  { type: String, required: true },
-    lastModifiedAt:  { type: String, required: true },
+    lastModifiedAt: { type: String, require: true },
+    lastModifiedAtDate: { type: Date, required: true },
 }, { collection: 'threads'});
 
 const threadModel = mongoose.model('Thread', threadSchema);

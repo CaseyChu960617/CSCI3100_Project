@@ -22,7 +22,7 @@ exports.getAllTutorials = async (req, res) => {
 
 exports.getLatestTutorials = async (req, res) => {
   Tutorial.find()
-    .sort({ lastModifiedAt: -1 })
+    .sort({ lastModifiedAtDate: -1 })
     .limit(3)
     .select("_id author subject title description lastModifiedAt")
     .populate("author", "_id username")
@@ -36,7 +36,7 @@ exports.getLatestTutorials = async (req, res) => {
 // getSubject function
 exports.getSubject = async (req, res) => {
   Tutorial.find({ subject: req.params["subject_id"] })
-    .sort({ lastModifiedAt: -1 })
+    .sort({ lastModifiedAtDate: -1 })
     .select("author subject title lastModifiedAt")
     .populate("author", "_id username")
     .exec()
@@ -84,7 +84,7 @@ exports.getOneChapter = async (req, res) => {
 // getUserTutorial function
 exports.getUserTutorials = async (req, res) => {
   Tutorial.find({ author: req.params["user_id"] })
-    .sort({ lastModifiedAt: -1 })
+    .sort({ lastModifiedAtDate: -1 })
     .select("author subject title description createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
@@ -98,7 +98,7 @@ exports.getFollowingTutorials = async (req, res) => {
   const { following } = req.body;
 
   Tutorial.find({ author: { $in: following } })
-    .sort({ lastModifiedAt: -1 })
+    .sort({ lastModifiedAtDate: -1 })
     .select("author category title createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
@@ -124,6 +124,7 @@ exports.createTutorial = async (req, res) => {
           createdAt: new Date().toLocaleString("zh-HK"),
           lastEditedAt: new Date().toLocaleString("zh-HK"),
           lastModifiedAt: new Date().toLocaleString("zh-HK"),
+          lastModifiedAtDate: new Date().getTime(),
           published: false,
         },
         (err, doc) => {
@@ -161,7 +162,8 @@ exports.createChapter = async (req, res) => {
   const update = {
     $push: { chapers: newChapter._id },
     $set: {
-      lastModifiedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
+      lastModifiedAt: new Date().getTime().toLocaleDateString("zh-HK"),
+      lastModifiedAtDate: new Date().getTime(),
     },
   };
 
@@ -181,6 +183,7 @@ exports.editTutorial = async (req, res) => {
       subject: subject,
       lastEditedAt: new Date().toLocaleDateString("zh-HK"),
       lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
+      lastModifiedAtDate: new Date().getTime(),
       published: published,
     },
   };
@@ -239,9 +242,8 @@ exports.postComment = async (req, res) => {
       const update = {
         $push: { comments: newComment._id },
         $set: {
-          lastModifiedAt: new Date()
-            .getTime()
-            .toLocaleDateString("zh-HK", options),
+          lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
+          lastModifiedAtDate: new Date().getTime(),
         },
       };
 
