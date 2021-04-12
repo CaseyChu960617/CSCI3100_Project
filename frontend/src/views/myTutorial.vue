@@ -275,6 +275,7 @@ export default {
       title: "",
       dialog: false,
       load: true,
+      deleteID: null,
     };
   },
   computed: {
@@ -348,7 +349,7 @@ export default {
       let elements = document.querySelectorAll(".des");
       let title_elements = document.querySelectorAll(".des-title");
 
-      elements.forEach(function(element) {
+      elements.forEach((element) => {
         console.log(element.offsetHeight);
         element.style.height =
           element.parentElement.parentElement.offsetHeight * 0.62 + "px";
@@ -365,6 +366,7 @@ export default {
     show(bool) {
       this.dialog = bool;
     },
+
     view(tutorialId) {
       console.log(tutorialId);
     },
@@ -377,9 +379,12 @@ export default {
     },
 
     deleteTutorial(tutorialId) {
-      console.log("delete ", tutorialId);
-      DataService.delete("tutorial/deleteTutorial", {
-        tutorial_id: tutorialId,
+      console.log("delete", tutorialId);
+      const data = {
+        tutorial_id: tutorialId
+      };
+      DataService.delete("tutorial/deleteTutorial", data).then((response) => {
+        console.log(response);
       });
     },
   },

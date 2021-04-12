@@ -159,7 +159,7 @@ exports.createChapter = async (req, res) => {
   });
 
   const update = {
-    $push: { chapers: newChapter._id },
+    $push: { chapters: newChapter._id },
     $set: {
       lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
       lastModifiedAtDate: new Date().getTime(),
@@ -258,14 +258,18 @@ exports.postComment = async (req, res) => {
 // deleteTutorial function
 exports.deleteTutorial = async (req, res) => {
   const { tutorial_id } = req.body;
+  console.log("tut_Id:" + tutorial_id);
+  const tutorial = await Tutorial.findOne({ _id: tutorial_id });
 
-  console.log({ tutorial_id });
-  Tutorial.findById(tutorial_id, (doc) => {
-    doc.remove();
+  if (tutorial) {
+    tutorial.remove();
+
     res.status(200).json({
       message: "Thread successfully deleted.",
     });
-  });
+  } else {
+    res.status(400).json({ error: "Tutorial not found." });
+  }
 };
 
 // deleteChapter function
