@@ -4,7 +4,15 @@
       <v-col cols="6">
         <v-card elevation="16" height="50vh">
           <v-card-title> Activate your account </v-card-title>
-          <v-btn @click="generateEmail"> Generate Email </v-btn>
+          <v-btn
+            rounded
+            block
+            @click="generateEmail"
+            class="my-4 black--text"
+            color="#1F5A98"
+            width="30%"
+            >Generate Email</v-btn
+          >
         </v-card>
       </v-col>
     </v-row>

@@ -30,7 +30,7 @@ export default {
       DataService.get("auth/activateAccount", this.$route.params.user_id, {
         headers: authHeader(),
       }).then(() => {
-        this.$router.push("/profile");
+        this.$router.push("/home");
       });
     },
   },
