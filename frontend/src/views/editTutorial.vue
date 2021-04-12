@@ -24,7 +24,7 @@
             min-height="74vh"
             max-height="74vh"
             item-height="70"
-            :items="this.tutorials.chapters"
+            :items="tutorial.chapters"
           >
             <template v-slot:default="{ item }">
               <v-list-item @click="selectChat(item._id)">
@@ -115,12 +115,13 @@ export default {
         content: "123",
       };
       //console.log(data);
-      DataService.post("tutorial/createChapter", data).then(() => {
+      DataService.post("tutorial/createChapter", data).then((response) => {
         //console.log("respone is ", response.data);
-
+        console.log("this.tutorial._id :", response.data);
         DataService.get("tutorial/getOneTutorial", this.tutorial._id).then(
           (response) => {
-            console.log(response.data);
+            console.log("this.tutorial._id :", this.tutorial._id);
+            console.log("return :", response.data);
             this.tutorial = response.data;
             this.chapters = this.tutorial.chapters;
           }

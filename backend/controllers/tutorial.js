@@ -170,6 +170,8 @@ exports.createChapter = async (req, res) => {
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
     if (err) res.status(400).json({ error: err.message });
   });
+
+  res.send(tutorial_id);
 };
 
 // editTutorial function
@@ -256,8 +258,7 @@ exports.postComment = async (req, res) => {
 
 // deleteTutorial function
 exports.deleteTutorial = async (req, res) => {
-  
-  const tutorial = await Tutorial.findOne({ _id: req.params['tutorial_id'] });
+  const tutorial = await Tutorial.findOne({ _id: req.params["tutorial_id"] });
 
   if (tutorial) {
     tutorial.remove();
@@ -272,7 +273,6 @@ exports.deleteTutorial = async (req, res) => {
 
 // deleteChapter function
 exports.deleteChapter = async (req, res) => {
-  
   const { tutorial_id, chapter_id } = req.body;
 
   Chapter.findById(chapter_id, (doc) => {

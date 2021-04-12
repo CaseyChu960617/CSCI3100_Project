@@ -31,12 +31,12 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.params.tutorialId);
+    //console.log(this.$route.params.tutorialId);
     this.fetchTutorial();
   },
   methods: {
     fetchTutorial() {
-      console.log(this.$route.params.tutorialId);
+      //console.log(this.$route.params.tutorialId);
       DataService.get(
         "tutorial/getOneTutorial",
         this.$route.params.tutorialId
