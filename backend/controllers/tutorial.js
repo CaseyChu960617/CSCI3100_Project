@@ -98,7 +98,7 @@ exports.getFollowingTutorials = async (req, res) => {
 
   Tutorial.find({ author: { $in: following } })
     .sort({ lastModifiedAtDate: -1 })
-    .select("author category title createdAt lastModifiedAt")
+    .select("author subject title createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((err, docs) => {
@@ -167,9 +167,8 @@ exports.createChapter = async (req, res) => {
   };
   console.log(update);
 
-  Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
+  Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
     if (err) res.status(400).json({ error: err.message });
-    else res.send(doc);
   });
 };
 
