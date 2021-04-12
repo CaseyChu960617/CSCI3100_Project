@@ -21,8 +21,8 @@ class DataService {
     return http.put(`/${table}/${id}`, data, header);
   }
 
-  delete(table, data) {//, //id, header) {
-    return http.delete(`/${table}`, data); //header);
+  delete(table, id) {//, //id, header) {
+    return http.delete(`/${table}/${id}`); //header);
   }
 
   //discussions

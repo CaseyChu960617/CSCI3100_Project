@@ -223,12 +223,6 @@ export default {
       userA: null,
       userB: null,
       chatOpp: null,
-      options: {
-        weekday: "long",
-        year: "numeric",
-        month: "numberic",
-        day: "numeric",
-      },
     };
   },
 

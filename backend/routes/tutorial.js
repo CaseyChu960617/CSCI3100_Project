@@ -43,7 +43,7 @@ router.put("/editChapter", editChapter);
 
 router.put("/postComment", postComment);
 
-router.delete("/deleteTutorial", deleteTutorial);
+router.delete("/deleteTutorial/:tutorial_id", deleteTutorial);
 
 router.delete("/deleteChapter", deleteChapter);
 

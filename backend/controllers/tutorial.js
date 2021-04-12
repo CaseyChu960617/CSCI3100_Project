@@ -257,9 +257,8 @@ exports.postComment = async (req, res) => {
 
 // deleteTutorial function
 exports.deleteTutorial = async (req, res) => {
-  const { tutorial_id } = req.body;
-  console.log("tut_Id:" + tutorial_id);
-  const tutorial = await Tutorial.findOne({ _id: tutorial_id });
+  
+  const tutorial = await Tutorial.findOne({ _id: req.params['tutorial_id'] });
 
   if (tutorial) {
     tutorial.remove();
@@ -274,6 +273,7 @@ exports.deleteTutorial = async (req, res) => {
 
 // deleteChapter function
 exports.deleteChapter = async (req, res) => {
+  
   const { tutorial_id, chapter_id } = req.body;
 
   Chapter.findById(chapter_id, (doc) => {
