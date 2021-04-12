@@ -92,9 +92,10 @@ export default {
       const data = {
         uid: this.currentUser.user_id,
         title: this.title,
-        subject: this.subject,
+        subject: this.subjects[this.subject - 1]["code"],
         description: this.description,
       };
+      //console.log(this.subjects[this.subject - 1]["code"]);
       DataService.post("tutorial/createTutorial", data).then((response) => {
         let tutorialId = response.data;
         console.log("tutorialId is" + tutorialId);
