@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" sm="12" md="10">
     <v-card elevation="16" outlined>
-      <v-card-title class="display-1">Profile</v-card-title>
+      <v-card-title class="display-1 pa-10">Profile</v-card-title>
       <v-container>
         <v-row
           ><v-col cols="12" sm="12" md="4" align-self="center"
@@ -26,7 +26,11 @@
               </v-avatar></v-row
             >
             <v-row justify="center"
-              ><v-btn text color="primary" @click.stop="dialog = true"
+              ><v-btn
+                class="mt-4"
+                text
+                color="primary"
+                @click.stop="dialog = true"
                 >Change Profile Photo</v-btn
               >
               <modal :dialog.sync="dialog" @show="show"></modal></v-row></v-col

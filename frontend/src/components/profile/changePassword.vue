@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" sm="8" md="6">
     <v-card elevation="16" outlined>
-      <v-card-title class="display-1">Change Password</v-card-title>
+      <v-card-title class="display-1 pa-10">Change Password</v-card-title>
       <v-container>
         <v-row
           ><v-col>
