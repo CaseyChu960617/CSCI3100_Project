@@ -380,14 +380,17 @@ export default {
 
     deleteTutorial(tutorialId) {
       console.log("delete", tutorialId);
-      //const data = {
-      //  tutorial_id: tutorialId
-      //};
+
       DataService.delete("tutorial/deleteTutorial", tutorialId).then(
         (response) => {
           console.log(response);
         }
       );
+
+      this.tutorials.forEach((element, index, object) => {
+        if (tutorialId === element._id) object.splice(index, 1);
+        console.log(tutorialId);
+      });
     },
   },
 };
