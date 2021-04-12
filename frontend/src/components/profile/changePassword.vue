@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       password: {
-        uid: this.$store.state.auth.user.uid,
+        user_id: this.$store.state.auth.user.user_id,
         oldPassword: "",
         newPassword: "",
       },
@@ -88,11 +88,12 @@ export default {
         headers: authHeader(),
       })
         .then((response) => {
-          console.log(response.data);
+          alert(response.data.message);
+          this.$emit("switchform");
         })
         .catch((err) => {
           console.log(err);
-          if (err.response.status == 401 || err.response.status == 403) {
+          if (err.response?.status == 401 || err.response?.status == 403) {
             alert("Please Login again");
             this.$router.push("/home");
           } else {
