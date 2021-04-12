@@ -17,7 +17,9 @@ exports.getProfile = async (req, res) => {
 
 // editProfile function
 exports.editProfile = async (req, res) => {
+
   const {uid, firstname, lastname, gender, username} = req.body;
+
         User.findOne({ username: username }, (err, user) => {
             if (user)
                 res.status(400).json({ error: "User with this username already existed."});
@@ -32,9 +34,37 @@ exports.editProfile = async (req, res) => {
                     (err, doc) => {
                     if (err) 
                         res.status(400).json({ error: err.message });
-                    else {
-                        res.send(doc);
-                    }
+                    else {  
+                            const user = await User.findOne({ email }).populate({ path:'following', 
+                            select: '_id' }).lean();
+                        
+                            // If not exist, handle the error.
+                            if (!user) {
+                                return res.status(400).send({ status: 'error', error: 'Invalid email'});
+                            }
+
+                            else {
+                                // Generate a token if password is matched.
+                                const accessToken = jwt.sign({
+                                    uid: user._id
+                                },
+                                process.env.JWT_ACC_SECRET,
+                                {expiresIn: '20m'});
+
+                                res.status(200).send({
+                                    accessToken: accessToken,
+                                    uid: user._id,
+                                    lastname: user.lastname,
+                                    firstname: user.firstname,
+                                    username: user.username,
+                                    email: user.email,
+                                    gender: user.gender,
+                                    activation: user.activation,
+                                    following: user.following,
+                                    profileImage: user.profileImage
+                                });
+                            }
+                        }
                 });
             }
         })     
@@ -58,10 +88,9 @@ exports.follow = async (req, res) => {
 
 // unfollow function
 exports.unfollow = async (req, res) => {
+
     const { my_id, follow_id } = req.body;
 
-    console.log(my_id);
-    console.log(follow_id);
     User.findOneAndUpdate({ _id: my_id },
          { $pullAll: { following: [ObjectId(follow_id)] } }, 
          (doc, err) => {
