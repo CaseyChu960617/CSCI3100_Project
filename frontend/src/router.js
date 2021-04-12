@@ -13,6 +13,7 @@ import editProfile from "./views/editProfile.vue";
 import chatList from "./views/chatList.vue";
 import editTutorial from "./views/editTutorial.vue";
 import myTutorial from "./views/myTutorial.vue";
+import viewTutorial from "./views/viewTutorial.vue";
 //import { component } from "vue/types/umd";
 
 Vue.use(Router);
@@ -73,5 +74,10 @@ export const router = new Router({
       path: "/myTutorial",
       component: myTutorial,
     },
+    { 
+      name: "viewTutorial",
+      path: "/tutorial/:tutorial_id",
+      component: viewTutorial
+    }
   ],
 });

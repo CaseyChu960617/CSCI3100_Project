@@ -74,7 +74,9 @@
                   >{{ tutorial.description }}
                 </v-card-text>
                 <div>
-                  <v-btn class="view-btn">View</v-btn>
+                  <v-btn class="view-btn" @click="viewTutorial(tutorial._id)"
+                    >View</v-btn
+                  >
                   <!--<v-btn class="view-btn ml-3">View</v-btn>-->
                 </div>
               </div>
@@ -323,6 +325,13 @@ export default {
     goToMyTutorial() {
       this.$router.push({
         name: "myTutorial",
+      });
+    },
+
+    viewTutorial(tutorial_id) {
+      this.$router.push({
+        name: "viewTutorial",
+        params: { tutorial_id: tutorial_id },
       });
     },
   },

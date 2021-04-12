@@ -358,10 +358,6 @@ export default {
       this.dialog = bool;
     },
 
-    view(tutorialId) {
-      console.log(tutorialId);
-    },
-
     editTutorial(tutorialId) {
       this.$router.push({
         name: "editTutorial",
@@ -381,6 +377,13 @@ export default {
       this.tutorials.forEach((element, index, object) => {
         if (tutorialId === element._id) object.splice(index, 1);
         console.log(tutorialId);
+      });
+    },
+
+    viewTutorial(tutorial_id) {
+      this.$router.push({
+        name: "viewTutorial",
+        params: { tutorial_id: tutorial_id },
       });
     },
   },

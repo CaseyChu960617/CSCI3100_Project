@@ -27,7 +27,7 @@ router.get("/subjecty/:subject_id", getSubject);
 
 router.get("/getOneTutorial/:tutorial_id", getOneTutorial);
 
-router.get("/getChapter/:chapter_id", getOneChapter);
+router.get("/getOneChapter/:chapter_id", getOneChapter);
 
 router.get("/userTutorials/:user_id", getUserTutorials);
 
