@@ -6,7 +6,8 @@ const { getProfile,
         editProfile,
         follow,
         unfollow,
-        updateProPic } = require('../controllers/user');
+        updateProPic,
+        resetPassword } = require('../controllers/user');
 
 router.get('/getProfile/:uid', getProfile);
 
@@ -17,5 +18,7 @@ router.put('/follow', follow);
 router.put('/unfollow', unfollow);
 
 router.put('/updateProPic', updateProPic);
+
+route.put('/resetPassword', resetPassword);
 
 module.exports = router;

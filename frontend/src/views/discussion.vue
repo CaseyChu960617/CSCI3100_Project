@@ -29,9 +29,83 @@
       </v-col>
       <v-col md="9" sm="12" class="pa-5"><Thread :id="id"/></v-col>
     </v-row>
+
+    <v-speed-dial
+      v-model="fab"
+      :top="top"
+      :bottom="bottom"
+      :right="right"
+      :left="left"
+      :direction="direction"
+      :open-on-hover="hover"
+      :transition="transition"
+    >
+      <v-btn
+        id="main-btn"
+        slot="activator"
+        v-model="fab"
+        color="#99CFEA"
+        dark
+        fab
+        @click="toggle()"
+      >
+        <v-icon v-if="buttonClose == -1" color="black">mdi-menu</v-icon>
+        <v-icon v-if="buttonClose == 1" color="black">mdi-close</v-icon>
+      </v-btn>
+      <v-btn
+        class="extended mr-0"
+        fab
+        dark
+        small
+        color="#1F5A98"
+        width="185px"
+        @click.stop="dialog = true"
+      >
+        <!--<v-icon style="float:left">mdi-plus</v-icon>-->
+        Create thread
+      </v-btn>
+      <v-btn
+        class="extended mr-0"
+        fab
+        dark
+        small
+        color="#1F5A98"
+        width="185px"
+        @click="goToMyTutorial"
+      >
+        <!--<v-icon style="float:left">mdi-book-open-blank-variant</v-icon>-->View
+        My threads
+      </v-btn>
+    </v-speed-dial>
   </v-container>
 </template>
+<style>
+.v-speed-dial {
+  position: sticky !important;
+  right: 15vw;
+  bottom: 10vh;
+}
 
+#create .v-btn--floating {
+  position: relative;
+}
+
+#main-btn {
+  position: relative;
+  float: right;
+}
+
+.v-btn.extended {
+  width: 150px;
+  margin-right: 75px;
+  border-radius: 25px;
+  align-content: left;
+}
+
+.v-speed-dial__list {
+  align-items: flex-end !important;
+}
+</style>
 <script>
 import DataService from "../services/DataService";
 import authHeader from "../services/auth-header.js";
@@ -42,7 +116,12 @@ export default {
     Thread,
   },
   data() {
-    return { threads: [], loading: true, id: null };
+    return {
+      threads: [],
+      loading: true,
+      id: null,
+      buttonClose: -1,
+    };
   },
   created() {
     this.fetchThreadList();
@@ -83,6 +162,10 @@ export default {
     },
     selectThread(id) {
       this.id = id;
+    },
+
+    toggle() {
+      this.buttonClose *= -1;
     },
   },
 };
