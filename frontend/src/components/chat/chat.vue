@@ -268,7 +268,7 @@ export default {
           this.messages = response.data.messages;
           this.loading = false;
 
-          if (response.data.userA._id == this.currentUser.uid)
+          if (response.data.userA._id == this.currentUser.user_id)
             this.chatOpp = response.data.userB;
           else this.chatOpp = response.data.userA;
         })
