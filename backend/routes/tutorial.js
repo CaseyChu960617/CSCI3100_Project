@@ -25,7 +25,7 @@ router.get("/getOneTutorial/:tutorial_id", getOneTutorial);
 
 router.get("/getChapter/:chapter_id", getOneChapter);
 
-router.get('/userTutorials/:user_id', getUserTutorials);
+router.get('/userTutorials/:user _id', getUserTutorials);
 
 router.post("/followingTutorials", getFollowingTutorials);
 

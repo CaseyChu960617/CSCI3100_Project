@@ -28,17 +28,17 @@ export default {
     },
   },
   created() {
-    if (this.$route.params.uid === undefined)
+    if (this.$route.params.user_id === undefined)
       alert("User profile does not exist.");
     else this.fetchProfile();
   },
 
   methods: {
     fetchProfile() {
-      console.log(this.$route.params.uid);
+      console.log(this.$route.params.user_id);
       //this.uid = this.$route.params.uid;
 
-      DataService.get("user/getProfile", this.$route.params.uid)
+      DataService.get("user/getProfile", this.$route.params.user_id)
         .then((response) => {
           console.log(response.data[0]);
           this.user = response.data[0];
@@ -55,8 +55,8 @@ export default {
       var chatId = "";
       var oppUsername = this.user.username;
       DataService.post("chat/getOneChat", {
-        uid_1: this.currentUser.uid,
-        uid_2: id,
+        user_id_1: this.currentUser.user_id,
+        user_id_2: id,
       }).then((response) => {
         chatId = response.data._id;
         console.log("ChatId:" + chatId);
@@ -74,11 +74,11 @@ export default {
     checkFollowed() {
       this.followed = false;
       this.currentUser.following.forEach((element) => {
-        console.log("HI");
-        console.log(element);
+        //console.log("HI");
+        //console.log(element);
         if (element._id === this.user._id) {
           this.followed = true;
-          console.log("followed");
+          //console.log("followed");
         }
       });
       console.log(this.followed);

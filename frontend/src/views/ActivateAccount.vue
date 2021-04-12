@@ -27,7 +27,7 @@ export default {
 
   methods: {
     activateAccount() {
-      DataService.get("auth/activateAccount", this.$route.params.uid, {
+      DataService.get("auth/activateAccount", this.$route.params.user_id, {
         headers: authHeader(),
       }).then(() => {
         this.$router.push("/profile");

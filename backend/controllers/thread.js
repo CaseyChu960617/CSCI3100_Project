@@ -43,7 +43,7 @@ exports.getOneThread = async (req, res) => {
         }
       ];
     
-     Thread.findById(req.params["thread_id"])
+    Thread.findById(req.params["thread_id"])
     .select("author title content comments createdAt lastModifiedAt")
     .populate(populateQuery)
     .exec()
@@ -70,18 +70,18 @@ exports.getFollowingThreads = async (req, res) => {
 
     const { following } = req.body;
 
-      Thread.find({ author: { $in: following } })
-      .sort({ lastModifiedAt: -1})
-      .select('author category title createdAt lastModifiedAt')
-      .populate('author', '_id username')
-      .exec()
-      .then((err, docs) => {
+    Thread.find({ author: { $in: following } })
+    .sort({ lastModifiedAt: -1})
+    .select('author category title createdAt lastModifiedAt')
+    .populate('author', '_id username')
+    .exec()
+    .then((err, docs) => {
 
-        if (err) 
-          res.status(400).json({ error: err.message });
-        else
-          res.send(docs);
-      });
+      if (err) 
+        res.status(400).json({ error: err.message });
+      else
+        res.send(docs);
+    });
 
 }
 

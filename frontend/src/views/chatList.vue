@@ -103,13 +103,13 @@ export default {
   methods: {
     fetchChatList() {
       this.loading = true;
-      DataService.get("chat/getAllChats", this.currentUser.uid)
+      DataService.get("chat/getAllChats", this.currentUser.user_id)
         .then((response) => {
           console.log(response.data);
           const rawData = response.data;
 
           rawData.forEach((element) => {
-            if (element.userA._id == this.$store.state.auth.user.uid) {
+            if (element.userA._id == this.$store.state.auth.user.user_id) {
               this.chats.push({ user: element.userB, _id: element._id });
             } else {
               this.chats.push({ user: element.userA, _id: element._id });

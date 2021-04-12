@@ -223,6 +223,12 @@ export default {
       userA: null,
       userB: null,
       chatOpp: null,
+      options: {
+        weekday: "long",
+        year: "numeric",
+        month: "numberic",
+        day: "numeric",
+      },
     };
   },
 
@@ -235,12 +241,14 @@ export default {
           {
             chatId: this.chatId,
             sender: {
-              _id: this.currentUser.uid,
+              _id: this.currentUser.user_id,
               username: this.currentUser.username,
               profileImage: this.currentUser.profileImage,
             },
             message: this.newMessage,
-            timestamp: new Date(),
+            timestamp: new Date()
+              .getTime()
+              .toLocaleString("zh-HK", this.options),
           },
           this.chatId
         );

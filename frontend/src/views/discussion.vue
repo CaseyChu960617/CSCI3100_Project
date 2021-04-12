@@ -114,7 +114,8 @@ import Thread from "../components/discussion/thread.vue";
 export default {
   components: {
     Thread,
-  },
+  }, 
+
   data() {
     return {
       threads: [],
@@ -123,14 +124,16 @@ export default {
       buttonClose: -1,
     };
   },
+
   created() {
     this.fetchThreadList();
   },
-  computed: {
+  compute: {
     items() {
       return Array.from({ length: 20 }, (k, v) => v + 1);
     },
   },
+  
   methods: {
     fetchThreadList() {
       this.loading = true;

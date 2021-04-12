@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
 
         // If no error, hashed the password and create a new user.
         hashedPassword = await bcrypt.hash(password, 10)
-        var newUser = await users.create({
+        var newUser = await User.create({
             lastname: lastname,
             firstname: firstname,
             username: username,

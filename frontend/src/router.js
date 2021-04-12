@@ -47,7 +47,7 @@ export const router = new Router({
       component: chatList,
     },
     {
-      path: "/activateAccount/:uid",
+      path: "/activateAccount/:user_id",
       component: activateAccount,
     },
     {
@@ -56,7 +56,7 @@ export const router = new Router({
     },
     {
       name: "userProfile",
-      path: "/userProfile/:uid",
+      path: "/userProfile/:user_id",
       component: userProfile,
     },
     {
