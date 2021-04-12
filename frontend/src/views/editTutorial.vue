@@ -122,6 +122,7 @@ export default {
           (response) => {
             console.log(response.data);
             this.tutorial = response.data;
+            this.chapters = this.tutorial.chapters;
           }
         );
       });
