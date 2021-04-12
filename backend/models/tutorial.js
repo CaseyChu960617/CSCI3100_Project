@@ -22,7 +22,8 @@ const tutorialSchema = new mongoose.Schema(
     ],
     createdAt: { type: String, required: true },
     lastEditedAt: { type: String, required: true },
-    lastModifiedAt: { type: String, required: true },
+    lastModifiedAt: { type: String, require: true },
+    lastModifiedAtDate: { type: Date, required: true },
     published: { type: Boolean, required: true, default: false },
   },
   { collection: "tutorials" }
