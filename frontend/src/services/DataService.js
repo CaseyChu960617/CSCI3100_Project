@@ -2,7 +2,7 @@ import http from "../http-common";
 const Thread = "/thread/";
 const Tutorial = "/tutorial/";
 const Profile = "/user/";
-
+const Category = "category/";
 class DataService {
   getAll(table, header) {
     return http.get(`/${table}`, header);
@@ -28,6 +28,10 @@ class DataService {
   //discussions
   getAllThread() {
     return http.get(Thread);
+  }
+
+  getCatThread(id) {
+    return http.get(Thread + Category + id);
   }
 
   getOneThread(id) {
@@ -59,11 +63,11 @@ class DataService {
   }
 
   getLatestTutorials() {
-    return http.get(Tutorial + 'getLatestTutorials');
+    return http.get(Tutorial + "getLatestTutorials");
   }
 
   getLatestThreads() {
-    return http.get(Thread + 'getLatestThreads');
+    return http.get(Thread + "getLatestThreads");
   }
 
   // create(table, data, header) {
