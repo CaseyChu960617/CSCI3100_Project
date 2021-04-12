@@ -115,10 +115,15 @@ export default {
         content: "123",
       };
       //console.log(data);
-      DataService.post("tutorial/createChapter", data).then((response) => {
-        console.log("respone is ", response.data);
+      DataService.post("tutorial/createChapter", data).then(() => {
+        //console.log("respone is ", response.data);
 
-        this.tutorial = response.data;
+        DataService.get("tutorial/getOneTutorial", this.tutorial._id).then(
+          (response) => {
+            console.log(response.data);
+            this.tutorial = response.data;
+          }
+        );
       });
     },
   },
