@@ -89,8 +89,11 @@ exports.getUserTutorials = async (req, res) => {
     .select("author subject title description createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
-    .then((docs) => {
-      res.send(docs);
+    .then((err,docs) => {
+      if (err)
+        res.status(400).json({ error: err.message});
+      else
+        res.send(docs);
     });
 };
 
