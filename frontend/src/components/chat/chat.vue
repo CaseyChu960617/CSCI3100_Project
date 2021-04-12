@@ -3,7 +3,7 @@
     <v-card
       class="header pa-3"
       style="
-        height: 60px;
+        height: 65px;
         background: white;
         z-index: 5;
         border-bottom-left-radius: 0px;
@@ -12,10 +12,10 @@
     >
       <div>
         <span class="mr-2">
-          <v-avatar size="40" v-if="chatOpp.profileImage">
+          <v-avatar size="45" v-if="chatOpp.profileImage">
             <v-img :src="chatOpp.profileImage" height="100%" />
           </v-avatar>
-          <v-avatar v-else color="grey" size="40">
+          <v-avatar v-else color="grey" size="45">
             <span class="white--text headline"> {{ chatOpp.username[0] }}</span>
           </v-avatar> </span
         >{{ chatOpp.username }}
@@ -47,11 +47,11 @@
             v-if="message.sender.username.localeCompare(currentUser.username)"
             class="blue-grey lighten-5"
           >
-            <v-list-item-avatar class="align-self-start mr-2">
-              <v-avatar size="40" v-if="chatOpp.profileImage">
-                <img :src="chatOpp.profileImage" />
+            <v-list-item-avatar size="50" class="align-self-start mr-2">
+              <v-avatar size="50" v-if="chatOpp.profileImage">
+                <v-img :src="chatOpp.profileImage" height="100%" />
               </v-avatar>
-              <v-avatar v-else color="grey" size="40">
+              <v-avatar v-else color="grey" size="50">
                 <span class="white--text headline">
                   {{ chatOpp.username[0] }}</span
                 >
@@ -117,11 +117,11 @@
                 </v-card-text>
               </v-card>
             </div>
-            <v-list-item-avatar class="align-self-start ml-2">
-              <v-avatar size="40" v-if="currentUser.profileImage">
-                <img :src="currentUser.profileImage" />
+            <v-list-item-avatar size="50" class="align-self-start ml-2">
+              <v-avatar size="50" v-if="currentUser.profileImage">
+                <v-img :src="currentUser.profileImage" height="100%" />
               </v-avatar>
-              <v-avatar v-else color="grey" size="40">
+              <v-avatar v-else color="grey" size="50">
                 <span class="white--text headline">
                   {{ currentUser.username[0] }}</span
                 >

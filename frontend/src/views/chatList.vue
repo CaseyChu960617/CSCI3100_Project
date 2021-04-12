@@ -16,10 +16,10 @@
               <v-list-item @click="selectChat(item._id)">
                 <v-list-item-content>
                   <v-list-item-title class="text-wrap">
-                    <v-avatar size="40" v-if="item.user.profileImage">
-                      <img :src="item.user.profileImage" />
+                    <v-avatar size="50" v-if="item.user.profileImage">
+                      <v-img :src="item.user.profileImage" height="100%" />
                     </v-avatar>
-                    <v-avatar v-else color="grey" size="40">
+                    <v-avatar v-else color="grey" size="50">
                       <span class="white--text headline">
                         {{ item.user.username[0] }}</span
                       >
