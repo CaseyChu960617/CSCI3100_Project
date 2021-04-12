@@ -1,920 +1,926 @@
 [
-    {
-        "value": 1,
-        "code": "ACCT",
-        "text": "ACCT - Accountancy",
-        "name": "Accountancy"
-    },
-    {
-        "value": 2,
-        "code": "ACPY",
-        "text": "ACPY - Anatomical & Cellular Pathology",
-        "name": "Anatomical & Cellular Pathology"
-    },
-    {
-        "value": 3,
-        "code": "AENP",
-        "text": "AENP - Advanced Emergency Nursing Practice",
-        "name": "Advanced Emergency Nursing Practice"
-    },
-    {
-        "value": 4,
-        "code": "AEPT",
-        "text": "AEPT - Advanced Environmental Planning Technologies",
-        "name": "Advanced Environmental Planning Technologies"
-    },
-    {
-        "value": 5,
-        "code": "AIST",
-        "text": "AIST - Artificial Intelligence: Systems and Technologies",
-        "name": "Artificial Intelligence: Systems and Technologies"
-    },
-    {
-        "value": 6,
-        "code": "ANAT",
-        "text": "ANAT - Anatomy",
-        "name": "Anatomy"
-    },
-    {
-        "value": 7,
-        "code": "ANTH",
-        "text": "ANTH - Anthropology",
-        "name": "Anthropology"
-    },
-    {
-        "value": 8,
-        "code": "ARAB",
-        "text": "ARAB - Arabic",
-        "name": "Arabic"
-    },
-    {
-        "value": 9,
-        "code": "ARCH",
-        "text": "ARCH - Architectural Studies",
-        "name": "Architectural Studies"
-    },
-    {
-        "value": 10,
-        "code": "ARTS",
-        "text": "ARTS - Courses offered by Arts Faculty",
-        "name": "Courses offered by Arts Faculty"
-    },
-    {
-        "value": 11,
-        "code": "BASA",
-        "text": "BASA - General Business Administration",
-        "name": "General Business Administration"
-    },
-    {
-        "value": 12,
-        "code": "BBMS",
-        "text": "BBMS - Biochemical and Biomedical Sciences",
-        "name": "Biochemical and Biomedical Sciences"
-    },
-    {
-        "value": 13,
-        "code": "BCHE",
-        "text": "BCHE - Biochemistry",
-        "name": "Biochemistry"
-    },
-    {
-        "value": 14,
-        "code": "BCME",
-        "text": "BCME - Chinese Medicine",
-        "name": "Chinese Medicine"
-    },
-    {
-        "value": 15,
-        "code": "BECE",
-        "text": "BECE - Early Childhood Education",
-        "name": "Early Childhood Education"
-    },
-    {
-        "value": 16,
-        "code": "BIOL",
-        "text": "BIOL - Biology",
-        "name": "Biology"
-    },
-    {
-        "value": 17,
-        "code": "BMED",
-        "text": "BMED - Mathematics and Mathematics Educatioin",
-        "name": "Mathematics and Mathematics Educatioin"
-    },
-    {
-        "value": 18,
-        "code": "BMEG",
-        "text": "BMEG - Biomedical Engineering",
-        "name": "Biomedical Engineering"
-    },
-    {
-        "value": 19,
-        "code": "BUDS",
-        "text": "BUDS - Buddhist Studies",
-        "name": "Buddhist Studies"
-    },
-    {
-        "value": 20,
-        "code": "CCAN",
-        "text": "CCAN - Cantonese",
-        "name": "Cantonese"
-    },
-    {
-        "value": 21,
-        "code": "CENG",
-        "text": "CENG - Computer Engineering",
-        "name": "Computer Engineering"
-    },
-    {
-        "value": 22,
-        "code": "CHCU",
-        "text": "CHCU - Chinese Culture",
-        "name": "Chinese Culture"
-    },
-    {
-        "value": 23,
-        "code": "CHED",
-        "text": "CHED - Early Childhood Education",
-        "name": "Early Childhood Education"
-    },
-    {
-        "value": 24,
-        "code": "CHEM",
-        "text": "CHEM - Chemistry",
-        "name": "Chemistry"
-    },
-    {
-        "value": 25,
-        "code": "CHES",
-        "text": "CHES - Chinese Studies",
-        "name": "Chinese Studies"
-    },
-    {
-        "value": 26,
-        "code": "CHLL",
-        "text": "CHLL - Chinese Language & Literature",
-        "name": "Chinese Language & Literature"
-    },
-    {
-        "value": 27,
-        "code": "CHLT",
-        "text": "CHLT - Chinese Proficiency Courses",
-        "name": "Chinese Proficiency Courses"
-    },
-    {
-        "value": 28,
-        "code": "CHPR",
-        "text": "CHPR - Community Health Practice",
-        "name": "Community Health Practice"
-    },
-    {
-        "value": 29,
-        "code": "CHPY",
-        "text": "CHPY - Chemical Pathology",
-        "name": "Chemical Pathology"
-    },
-    {
-        "value": 30,
-        "code": "CLCC",
-        "text": "CLCC - Cantonese",
-        "name": "Cantonese"
-    },
-    {
-        "value": 31,
-        "code": "CLCP",
-        "text": "CLCP - Putonghua",
-        "name": "Putonghua"
-    },
-    {
-        "value": 32,
-        "code": "CLGY",
-        "text": "CLGY - Clinical Gerontology",
-        "name": "Clinical Gerontology"
-    },
-    {
-        "value": 33,
-        "code": "CMBI",
-        "text": "CMBI - Cell & Molecular Biology",
-        "name": "Cell & Molecular Biology"
-    },
-    {
-        "value": 34,
-        "code": "COMM",
-        "text": "COMM - Communication",
-        "name": "Communication"
-    },
-    {
-        "value": 35,
-        "code": "CSCI",
-        "text": "CSCI - Computer Science",
-        "name": "Computer Science"
-    },
-    {
-        "value": 36,
-        "code": "CULS",
-        "text": "CULS - Cultural Studies",
-        "name": "Cultural Studies"
-    },
-    {
-        "value": 37,
-        "code": "CUMT",
-        "text": "CUMT - Cultural Management",
-        "name": "Cultural Management"
-    },
-    {
-        "value": 38,
-        "code": "CURE",
-        "text": "CURE - Cultural & Religious Studies",
-        "name": "Cultural & Religious Studies"
-    },
-    {
-        "value": 39,
-        "code": "CVSM",
-        "text": "CVSM - Cardiology",
-        "name": "Cardiology"
-    },
-    {
-        "value": 40,
-        "code": "DIUS",
-        "text": "DIUS - Diagnostic Ultrasonography",
-        "name": "Diagnostic Ultrasonography"
-    },
-    {
-        "value": 41,
-        "code": "DROI",
-        "text": "DROI - Diagnostic Radiology & Organ Imaging",
-        "name": "Diagnostic Radiology & Organ Imaging"
-    },
-    {
-        "value": 42,
-        "code": "DSME",
-        "text": "DSME - Decision Sciences & Managerial Economics",
-        "name": "Decision Sciences & Managerial Economics"
-    },
-    {
-        "value": 43,
-        "code": "DSPS",
-        "text": "DSPS - Data Science and Policy Studies",
-        "name": "Data Science and Policy Studies"
-    },
-    {
-        "value": 44,
-        "code": "EASC",
-        "text": "EASC - Earth and Atmospheric Sciences",
-        "name": "Earth and Atmospheric Sciences"
-    },
-    {
-        "value": 45,
-        "code": "ECON",
-        "text": "ECON - Economics",
-        "name": "Economics"
-    },
-    {
-        "value": 46,
-        "code": "EDUC",
-        "text": "EDUC - Education",
-        "name": "Education"
-    },
-    {
-        "value": 47,
-        "code": "EEEN",
-        "text": "EEEN - Energy and Environmental Engineering",
-        "name": "Energy and Environmental Engineering"
-    },
-    {
-        "value": 48,
-        "code": "ELED",
-        "text": "ELED - English Studies & English Language Education",
-        "name": "English Studies & English Language Education"
-    },
-    {
-        "value": 49,
-        "code": "ELEG",
-        "text": "ELEG - Electronic Engineering",
-        "name": "Electronic Engineering"
-    },
-    {
-        "value": 50,
-        "code": "ELTU",
-        "text": "ELTU - English Language Teaching Unit",
-        "name": "English Language Teaching Unit"
-    },
-    {
-        "value": 51,
-        "code": "ENGE",
-        "text": "ENGE - English",
-        "name": "English"
-    },
-    {
-        "value": 52,
-        "code": "ENGG",
-        "text": "ENGG - Courses offered by Fac of Erg",
-        "name": "Courses offered by Fac of Erg"
-    },
-    {
-        "value": 53,
-        "code": "ENLT",
-        "text": "ENLT - English Language Teaching",
-        "name": "English Language Teaching"
-    },
-    {
-        "value": 54,
-        "code": "ENSC",
-        "text": "ENSC - Environmental Science",
-        "name": "Environmental Science"
-    },
-    {
-        "value": 55,
-        "code": "EPBI",
-        "text": "EPBI - Epidemiology & Biostatistics",
-        "name": "Epidemiology & Biostatistics"
-    },
-    {
-        "value": 56,
-        "code": "EPID",
-        "text": "EPID - Epidemiology of Infectious Diseases",
-        "name": "Epidemiology of Infectious Diseases"
-    },
-    {
-        "value": 57,
-        "code": "EPIN",
-        "text": "EPIN - Entrepreneurship and Innovation",
-        "name": "Entrepreneurship and Innovation"
-    },
-    {
-        "value": 58,
-        "code": "EPSY",
-        "text": "EPSY - Professional Educational Psychology",
-        "name": "Professional Educational Psychology"
-    },
-    {
-        "value": 59,
-        "code": "ESGS",
-        "text": "ESGS - Earth System and GeoInformation Science",
-        "name": "Earth System and GeoInformation Science"
-    },
-    {
-        "value": 60,
-        "code": "ESSC",
-        "text": "ESSC - Earth System Science-UG Major",
-        "name": "Earth System Science-UG Major"
-    },
-    {
-        "value": 61,
-        "code": "ESTR",
-        "text": "ESTR - Courses for ELITE Stream",
-        "name": "Courses for ELITE Stream"
-    },
-    {
-        "value": 62,
-        "code": "FAAS",
-        "text": "FAAS - Fine Arts",
-        "name": "Fine Arts"
-    },
-    {
-        "value": 63,
-        "code": "FAME",
-        "text": "FAME - Family Medicine",
-        "name": "Family Medicine"
-    },
-    {
-        "value": 64,
-        "code": "FINA",
-        "text": "FINA - Finance",
-        "name": "Finance"
-    },
-    {
-        "value": 65,
-        "code": "FNSC",
-        "text": "FNSC - Food & Nutritional Sciences",
-        "name": "Food & Nutritional Sciences"
-    },
-    {
-        "value": 66,
-        "code": "FREN",
-        "text": "FREN - French",
-        "name": "French"
-    },
-    {
-        "value": 67,
-        "code": "FTEC",
-        "text": "FTEC - Financial Technology",
-        "name": "Financial Technology"
-    },
-    {
-        "value": 68,
-        "code": "GDRS",
-        "text": "GDRS - Gender Studies",
-        "name": "Gender Studies"
-    },
-    {
-        "value": 69,
-        "code": "GECC",
-        "text": "GECC - General Education - Chung Chi College",
-        "name": "General Education - Chung Chi College"
-    },
-    {
-        "value": 70,
-        "code": "GECW",
-        "text": "GECW - General Education - CW Chu College",
-        "name": "General Education - CW Chu College"
-    },
-    {
-        "value": 71,
-        "code": "GEMC",
-        "text": "GEMC - General Education - Morningside College",
-        "name": "General Education - Morningside College"
-    },
-    {
-        "value": 72,
-        "code": "GENA",
-        "text": "GENA - General Education - New Asia College",
-        "name": "General Education - New Asia College"
-    },
-    {
-        "value": 73,
-        "code": "GERM",
-        "text": "GERM - German",
-        "name": "German"
-    },
-    {
-        "value": 74,
-        "code": "GESC",
-        "text": "GESC - General Education - Shaw College",
-        "name": "General Education - Shaw College"
-    },
-    {
-        "value": 75,
-        "code": "GESH",
-        "text": "GESH - General Education - S.H. Ho College",
-        "name": "General Education - S.H. Ho College"
-    },
-    {
-        "value": 76,
-        "code": "GEUC",
-        "text": "GEUC - General Education - United College",
-        "name": "General Education - United College"
-    },
-    {
-        "value": 77,
-        "code": "GEWS",
-        "text": "GEWS - General Education - Lee Woo Sing College",
-        "name": "General Education - Lee Woo Sing College"
-    },
-    {
-        "value": 78,
-        "code": "GEYS",
-        "text": "GEYS - General Education - Wu Yee Sun College",
-        "name": "General Education - Wu Yee Sun College"
-    },
-    {
-        "value": 79,
-        "code": "GLBS",
-        "text": "GLBS - Global Studies",
-        "name": "Global Studies"
-    },
-    {
-        "value": 80,
-        "code": "GLEF",
-        "text": "GLEF - Global Economics and Finance",
-        "name": "Global Economics and Finance"
-    },
-    {
-        "value": 81,
-        "code": "GLOF",
-        "text": "GLOF - Global Finance",
-        "name": "Global Finance"
-    },
-    {
-        "value": 82,
-        "code": "GNBF",
-        "text": "GNBF - Genomics and Bioinformatics",
-        "name": "Genomics and Bioinformatics"
-    },
-    {
-        "value": 83,
-        "code": "GNED",
-        "text": "GNED - General Education",
-        "name": "General Education"
-    },
-    {
-        "value": 84,
-        "code": "GPAD",
-        "text": "GPAD - Government & Public Administration",
-        "name": "Government & Public Administration"
-    },
-    {
-        "value": 85,
-        "code": "GPGC",
-        "text": "GPGC - Government and Politics (Greater China)",
-        "name": "Government and Politics (Greater China)"
-    },
-    {
-        "value": 86,
-        "code": "GRMD",
-        "text": "GRMD - Geography & Resource Management",
-        "name": "Geography & Resource Management"
-    },
-    {
-        "value": 87,
-        "code": "HIST",
-        "text": "HIST - History",
-        "name": "History"
-    },
-    {
-        "value": 88,
-        "code": "HKSL",
-        "text": "HKSL - Hong Kong Sign Language",
-        "name": "Hong Kong Sign Language"
-    },
-    {
-        "value": 89,
-        "code": "HSOC",
-        "text": "HSOC - Health Sociomedical Sciences",
-        "name": "Health Sociomedical Sciences"
-    },
-    {
-        "value": 90,
-        "code": "HTMG",
-        "text": "HTMG - Hotel And Tourism Management",
-        "name": "Hotel And Tourism Management"
-    },
-    {
-        "value": 91,
-        "code": "IBBA",
-        "text": "IBBA - Integrated BBA Programme",
-        "name": "Integrated BBA Programme"
-    },
-    {
-        "value": 92,
-        "code": "IERG",
-        "text": "IERG - Information Engineering",
-        "name": "Information Engineering"
-    },
-    {
-        "value": 93,
-        "code": "ITAL",
-        "text": "ITAL - Italian",
-        "name": "Italian"
-    },
-    {
-        "value": 94,
-        "code": "JASP",
-        "text": "JASP - Japanese Studies",
-        "name": "Japanese Studies"
-    },
-    {
-        "value": 95,
-        "code": "KORE",
-        "text": "KORE - Korean",
-        "name": "Korean"
-    },
-    {
-        "value": 96,
-        "code": "LAWS",
-        "text": "LAWS - Law",
-        "name": "Law"
-    },
-    {
-        "value": 97,
-        "code": "LING",
-        "text": "LING - Linguistics",
-        "name": "Linguistics"
-    },
-    {
-        "value": 98,
-        "code": "LSCI",
-        "text": "LSCI - Life Sciences Courses",
-        "name": "Life Sciences Courses"
-    },
-    {
-        "value": 99,
-        "code": "LSED",
-        "text": "LSED - Liberal Studies",
-        "name": "Liberal Studies"
-    },
-    {
-        "value": 100,
-        "code": "MAED",
-        "text": "MAED - Mathematics Education",
-        "name": "Mathematics Education"
-    },
-    {
-        "value": 101,
-        "code": "MAEG",
-        "text": "MAEG - Mechanical & Automation Engineering",
-        "name": "Mechanical & Automation Engineering"
-    },
-    {
-        "value": 102,
-        "code": "MATH",
-        "text": "MATH - Mathematics",
-        "name": "Mathematics"
-    },
-    {
-        "value": 103,
-        "code": "MBTE",
-        "text": "MBTE - Molecular Biotechnology",
-        "name": "Molecular Biotechnology"
-    },
-    {
-        "value": 104,
-        "code": "MECM",
-        "text": "MECM - Early Childhood Education",
-        "name": "Early Childhood Education"
-    },
-    {
-        "value": 105,
-        "code": "MEDF",
-        "text": "MEDF - Medicine Faculty Package",
-        "name": "Medicine Faculty Package"
-    },
-    {
-        "value": 106,
-        "code": "MEDP",
-        "text": "MEDP - Molecular Medicine and Biostatistics",
-        "name": "Molecular Medicine and Biostatistics"
-    },
-    {
-        "value": 107,
-        "code": "MEDS",
-        "text": "MEDS - Medical Sciences",
-        "name": "Medical Sciences"
-    },
-    {
-        "value": 108,
-        "code": "MEDU",
-        "text": "MEDU - Medicine",
-        "name": "Medicine"
-    },
-    {
-        "value": 109,
-        "code": "MGNT",
-        "text": "MGNT - Management",
-        "name": "Management"
-    },
-    {
-        "value": 110,
-        "code": "MHLS",
-        "text": "MHLS - Mental Health",
-        "name": "Mental Health"
-    },
-    {
-        "value": 111,
-        "code": "MIEG",
-        "text": "MIEG - Mathematics and Information Engineering",
-        "name": "Mathematics and Information Engineering"
-    },
-    {
-        "value": 112,
-        "code": "MITE",
-        "text": "MITE - Information Technology in Education",
-        "name": "Information Technology in Education"
-    },
-    {
-        "value": 113,
-        "code": "MKTG",
-        "text": "MKTG - Marketing",
-        "name": "Marketing"
-    },
-    {
-        "value": 114,
-        "code": "MPUP",
-        "text": "MPUP - Public Policy",
-        "name": "Public Policy"
-    },
-    {
-        "value": 115,
-        "code": "MRGO",
-        "text": "MRGO - Musculoskeletal Med, Rehab and Geriatric Orthopaed",
-        "name": "Musculoskeletal Med, Rehab and Geriatric Orthopaed"
-    },
-    {
-        "value": 116,
-        "code": "MSAE",
-        "text": "MSAE - Student Activities in Education",
-        "name": "Student Activities in Education"
-    },
-    {
-        "value": 117,
-        "code": "MSEG",
-        "text": "MSEG - Materials Science & Engineering",
-        "name": "Materials Science & Engineering"
-    },
-    {
-        "value": 118,
-        "code": "MSMR",
-        "text": "MSMR - Musculoskeletal Medicine and Rehabilitation",
-        "name": "Musculoskeletal Medicine and Rehabilitation"
-    },
-    {
-        "value": 119,
-        "code": "MTCI",
-        "text": "MTCI - Teaching Chinese as International Language",
-        "name": "Teaching Chinese as International Language"
-    },
-    {
-        "value": 120,
-        "code": "MUSC",
-        "text": "MUSC - Music",
-        "name": "Music"
-    },
-    {
-        "value": 121,
-        "code": "NSCI",
-        "text": "NSCI - Natural Sciences",
-        "name": "Natural Sciences"
-    },
-    {
-        "value": 122,
-        "code": "NSSC",
-        "text": "NSSC - Neurological Sciences",
-        "name": "Neurological Sciences"
-    },
-    {
-        "value": 123,
-        "code": "NURS",
-        "text": "NURS - Nursing",
-        "name": "Nursing"
-    },
-    {
-        "value": 124,
-        "code": "OENV",
-        "text": "OENV - Occupational & Environmental Health",
-        "name": "Occupational & Environmental Health"
-    },
-    {
-        "value": 125,
-        "code": "PHAR",
-        "text": "PHAR - Pharmacy",
-        "name": "Pharmacy"
-    },
-    {
-        "value": 126,
-        "code": "PHED",
-        "text": "PHED - Physical Education",
-        "name": "Physical Education"
-    },
-    {
-        "value": 127,
-        "code": "PHIL",
-        "text": "PHIL - Philosophy",
-        "name": "Philosophy"
-    },
-    {
-        "value": 128,
-        "code": "PHMA",
-        "text": "PHMA - Pharmacology",
-        "name": "Pharmacology"
-    },
-    {
-        "value": 129,
-        "code": "PHPC",
-        "text": "PHPC - Public Health",
-        "name": "Public Health"
-    },
-    {
-        "value": 130,
-        "code": "PHYS",
-        "text": "PHYS - Physics",
-        "name": "Physics"
-    },
-    {
-        "value": 131,
-        "code": "PHYY",
-        "text": "PHYY - Physiology",
-        "name": "Physiology"
-    },
-    {
-        "value": 132,
-        "code": "PSYC",
-        "text": "PSYC - Psychology",
-        "name": "Psychology"
-    },
-    {
-        "value": 133,
-        "code": "RELS",
-        "text": "RELS - Religious Studies & Theology",
-        "name": "Religious Studies & Theology"
-    },
-    {
-        "value": 134,
-        "code": "RMSC",
-        "text": "RMSC - Risk Management Science",
-        "name": "Risk Management Science"
-    },
-    {
-        "value": 135,
-        "code": "RUSS",
-        "text": "RUSS - Russian",
-        "name": "Russian"
-    },
-    {
-        "value": 136,
-        "code": "SBMS",
-        "text": "SBMS - Biomedical Sciences",
-        "name": "Biomedical Sciences"
-    },
-    {
-        "value": 137,
-        "code": "SEEM",
-        "text": "SEEM - Systems Engineering & Engineering Management",
-        "name": "Systems Engineering & Engineering Management"
-    },
-    {
-        "value": 138,
-        "code": "SOCI",
-        "text": "SOCI - Sociology",
-        "name": "Sociology"
-    },
-    {
-        "value": 139,
-        "code": "SOSC",
-        "text": "SOSC - Courses offered by Social Science Faculty",
-        "name": "Courses offered by Social Science Faculty"
-    },
-    {
-        "value": 140,
-        "code": "SOWK",
-        "text": "SOWK - Social Work",
-        "name": "Social Work"
-    },
-    {
-        "value": 141,
-        "code": "SPAN",
-        "text": "SPAN - Spanish",
-        "name": "Spanish"
-    },
-    {
-        "value": 142,
-        "code": "SPED",
-        "text": "SPED - Sports Science & Physical Education",
-        "name": "Sports Science & Physical Education"
-    },
-    {
-        "value": 143,
-        "code": "STAT",
-        "text": "STAT - Statistics",
-        "name": "Statistics"
-    },
-    {
-        "value": 144,
-        "code": "SURY",
-        "text": "SURY - Surgery",
-        "name": "Surgery"
-    },
-    {
-        "value": 145,
-        "code": "THAI",
-        "text": "THAI - Thai",
-        "name": "Thai"
-    },
-    {
-        "value": 146,
-        "code": "THEO",
-        "text": "THEO - Theology",
-        "name": "Theology"
-    },
-    {
-        "value": 147,
-        "code": "TRAN",
-        "text": "TRAN - Translation",
-        "name": "Translation"
-    },
-    {
-        "value": 148,
-        "code": "UGEA",
-        "text": "UGEA - UGEA: Chinese Cultural Heritage",
-        "name": "UGEA: Chinese Cultural Heritage"
-    },
-    {
-        "value": 149,
-        "code": "UGEB",
-        "text": "UGEB - UGEB: Nature, Science and Technology",
-        "name": "UGEB: Nature, Science and Technology"
-    },
-    {
-        "value": 150,
-        "code": "UGEC",
-        "text": "UGEC - UGEC: Society and Culture",
-        "name": "UGEC: Society and Culture"
-    },
-    {
-        "value": 151,
-        "code": "UGED",
-        "text": "UGED - UGED: Self and Humanity",
-        "name": "UGED: Self and Humanity"
-    },
-    {
-        "value": 152,
-        "code": "UGFH",
-        "text": "UGFH - UGFH: In Dialogue with Humanity",
-        "name": "UGFH: In Dialogue with Humanity"
-    },
-    {
-        "value": 153,
-        "code": "UGFN",
-        "text": "UGFN - UGFN: In Dialogue with Nature",
-        "name": "UGFN: In Dialogue with Nature"
-    }
+  {
+    "value": 1,
+    "code": "ACCT",
+    "text": "ACCT - Accountancy",
+    "name": "Accountancy"
+  },
+  {
+    "value": 2,
+    "code": "ACPY",
+    "text": "ACPY - Anatomical & Cellular Pathology",
+    "name": "Anatomical & Cellular Pathology"
+  },
+  {
+    "value": 3,
+    "code": "AENP",
+    "text": "AENP - Advanced Emergency Nursing Practice",
+    "name": "Advanced Emergency Nursing Practice"
+  },
+  {
+    "value": 4,
+    "code": "AEPT",
+    "text": "AEPT - Advanced Environmental Planning Technologies",
+    "name": "Advanced Environmental Planning Technologies"
+  },
+  {
+    "value": 5,
+    "code": "AIST",
+    "text": "AIST - Artificial Intelligence: Systems and Technologies",
+    "name": "Artificial Intelligence: Systems and Technologies"
+  },
+  {
+    "value": 6,
+    "code": "ANAT",
+    "text": "ANAT - Anatomy",
+    "name": "Anatomy"
+  },
+  {
+    "value": 7,
+    "code": "ANTH",
+    "text": "ANTH - Anthropology",
+    "name": "Anthropology"
+  },
+  {
+    "value": 8,
+    "code": "ARAB",
+    "text": "ARAB - Arabic",
+    "name": "Arabic"
+  },
+  {
+    "value": 9,
+    "code": "ARCH",
+    "text": "ARCH - Architectural Studies",
+    "name": "Architectural Studies"
+  },
+  {
+    "value": 10,
+    "code": "ARTS",
+    "text": "ARTS - Courses offered by Arts Faculty",
+    "name": "Courses offered by Arts Faculty"
+  },
+  {
+    "value": 11,
+    "code": "BASA",
+    "text": "BASA - General Business Administration",
+    "name": "General Business Administration"
+  },
+  {
+    "value": 12,
+    "code": "BBMS",
+    "text": "BBMS - Biochemical and Biomedical Sciences",
+    "name": "Biochemical and Biomedical Sciences"
+  },
+  {
+    "value": 13,
+    "code": "BCHE",
+    "text": "BCHE - Biochemistry",
+    "name": "Biochemistry"
+  },
+  {
+    "value": 14,
+    "code": "BCME",
+    "text": "BCME - Chinese Medicine",
+    "name": "Chinese Medicine"
+  },
+  {
+    "value": 15,
+    "code": "BECE",
+    "text": "BECE - Early Childhood Education",
+    "name": "Early Childhood Education"
+  },
+  {
+    "value": 16,
+    "code": "BIOL",
+    "text": "BIOL - Biology",
+    "name": "Biology"
+  },
+  {
+    "value": 17,
+    "code": "BMED",
+    "text": "BMED - Mathematics and Mathematics Educatioin",
+    "name": "Mathematics and Mathematics Educatioin"
+  },
+  {
+    "value": 18,
+    "code": "BMEG",
+    "text": "BMEG - Biomedical Engineering",
+    "name": "Biomedical Engineering"
+  },
+  {
+    "value": 19,
+    "code": "BUDS",
+    "text": "BUDS - Buddhist Studies",
+    "name": "Buddhist Studies"
+  },
+  {
+    "value": 20,
+    "code": "CCAN",
+    "text": "CCAN - Cantonese",
+    "name": "Cantonese"
+  },
+  {
+    "value": 21,
+    "code": "CENG",
+    "text": "CENG - Computer Engineering",
+    "name": "Computer Engineering"
+  },
+  {
+    "value": 22,
+    "code": "CHCU",
+    "text": "CHCU - Chinese Culture",
+    "name": "Chinese Culture"
+  },
+  {
+    "value": 23,
+    "code": "CHED",
+    "text": "CHED - Early Childhood Education",
+    "name": "Early Childhood Education"
+  },
+  {
+    "value": 24,
+    "code": "CHEM",
+    "text": "CHEM - Chemistry",
+    "name": "Chemistry"
+  },
+  {
+    "value": 25,
+    "code": "CHES",
+    "text": "CHES - Chinese Studies",
+    "name": "Chinese Studies"
+  },
+  {
+    "value": 26,
+    "code": "CHLL",
+    "text": "CHLL - Chinese Language & Literature",
+    "name": "Chinese Language & Literature"
+  },
+  {
+    "value": 27,
+    "code": "CHLT",
+    "text": "CHLT - Chinese Proficiency Courses",
+    "name": "Chinese Proficiency Courses"
+  },
+  {
+    "value": 28,
+    "code": "CHPR",
+    "text": "CHPR - Community Health Practice",
+    "name": "Community Health Practice"
+  },
+  {
+    "value": 29,
+    "code": "CHPY",
+    "text": "CHPY - Chemical Pathology",
+    "name": "Chemical Pathology"
+  },
+  {
+    "value": 30,
+    "code": "CLCC",
+    "text": "CLCC - Cantonese",
+    "name": "Cantonese"
+  },
+  {
+    "value": 31,
+    "code": "CLCP",
+    "text": "CLCP - Putonghua",
+    "name": "Putonghua"
+  },
+  {
+    "value": 32,
+    "code": "CLGY",
+    "text": "CLGY - Clinical Gerontology",
+    "name": "Clinical Gerontology"
+  },
+  {
+    "value": 33,
+    "code": "CMBI",
+    "text": "CMBI - Cell & Molecular Biology",
+    "name": "Cell & Molecular Biology"
+  },
+  {
+    "value": 34,
+    "code": "COMM",
+    "text": "COMM - Communication",
+    "name": "Communication"
+  },
+  {
+    "value": 35,
+    "code": "CSCI",
+    "text": "CSCI - Computer Science",
+    "name": "Computer Science"
+  },
+  {
+    "value": 36,
+    "code": "CULS",
+    "text": "CULS - Cultural Studies",
+    "name": "Cultural Studies"
+  },
+  {
+    "value": 37,
+    "code": "CUMT",
+    "text": "CUMT - Cultural Management",
+    "name": "Cultural Management"
+  },
+  {
+    "value": 38,
+    "code": "CURE",
+    "text": "CURE - Cultural & Religious Studies",
+    "name": "Cultural & Religious Studies"
+  },
+  {
+    "value": 39,
+    "code": "CVSM",
+    "text": "CVSM - Cardiology",
+    "name": "Cardiology"
+  },
+  {
+    "value": 40,
+    "code": "DIUS",
+    "text": "DIUS - Diagnostic Ultrasonography",
+    "name": "Diagnostic Ultrasonography"
+  },
+  {
+    "value": 41,
+    "code": "DROI",
+    "text": "DROI - Diagnostic Radiology & Organ Imaging",
+    "name": "Diagnostic Radiology & Organ Imaging"
+  },
+  {
+    "value": 42,
+    "code": "DSME",
+    "text": "DSME - Decision Sciences & Managerial Economics",
+    "name": "Decision Sciences & Managerial Economics"
+  },
+  {
+    "value": 43,
+    "code": "DSPS",
+    "text": "DSPS - Data Science and Policy Studies",
+    "name": "Data Science and Policy Studies"
+  },
+  {
+    "value": 44,
+    "code": "EASC",
+    "text": "EASC - Earth and Atmospheric Sciences",
+    "name": "Earth and Atmospheric Sciences"
+  },
+  {
+    "value": 45,
+    "code": "ECON",
+    "text": "ECON - Economics",
+    "name": "Economics"
+  },
+  {
+    "value": 46,
+    "code": "EDUC",
+    "text": "EDUC - Education",
+    "name": "Education"
+  },
+  {
+    "value": 47,
+    "code": "EEEN",
+    "text": "EEEN - Energy and Environmental Engineering",
+    "name": "Energy and Environmental Engineering"
+  },
+  {
+    "value": 48,
+    "code": "ELED",
+    "text": "ELED - English Studies & English Language Education",
+    "name": "English Studies & English Language Education"
+  },
+  {
+    "value": 49,
+    "code": "ELEG",
+    "text": "ELEG - Electronic Engineering",
+    "name": "Electronic Engineering"
+  },
+  {
+    "value": 50,
+    "code": "ELTU",
+    "text": "ELTU - English Language Teaching Unit",
+    "name": "English Language Teaching Unit"
+  },
+  {
+    "value": 51,
+    "code": "ENGE",
+    "text": "ENGE - English",
+    "name": "English"
+  },
+  {
+    "value": 52,
+    "code": "ENGG",
+    "text": "ENGG - Courses offered by Fac of Erg",
+    "name": "Courses offered by Fac of Erg"
+  },
+  {
+    "value": 53,
+    "code": "ENLT",
+    "text": "ENLT - English Language Teaching",
+    "name": "English Language Teaching"
+  },
+  {
+    "value": 54,
+    "code": "ENSC",
+    "text": "ENSC - Environmental Science",
+    "name": "Environmental Science"
+  },
+  {
+    "value": 55,
+    "code": "EPBI",
+    "text": "EPBI - Epidemiology & Biostatistics",
+    "name": "Epidemiology & Biostatistics"
+  },
+  {
+    "value": 56,
+    "code": "EPID",
+    "text": "EPID - Epidemiology of Infectious Diseases",
+    "name": "Epidemiology of Infectious Diseases"
+  },
+  {
+    "value": 57,
+    "code": "EPIN",
+    "text": "EPIN - Entrepreneurship and Innovation",
+    "name": "Entrepreneurship and Innovation"
+  },
+  {
+    "value": 58,
+    "code": "EPSY",
+    "text": "EPSY - Professional Educational Psychology",
+    "name": "Professional Educational Psychology"
+  },
+  {
+    "value": 59,
+    "code": "ESGS",
+    "text": "ESGS - Earth System and GeoInformation Science",
+    "name": "Earth System and GeoInformation Science"
+  },
+  {
+    "value": 60,
+    "code": "ESSC",
+    "text": "ESSC - Earth System Science-UG Major",
+    "name": "Earth System Science-UG Major"
+  },
+  {
+    "value": 61,
+    "code": "ESTR",
+    "text": "ESTR - Courses for ELITE Stream",
+    "name": "Courses for ELITE Stream"
+  },
+  {
+    "value": 62,
+    "code": "FAAS",
+    "text": "FAAS - Fine Arts",
+    "name": "Fine Arts"
+  },
+  {
+    "value": 63,
+    "code": "FAME",
+    "text": "FAME - Family Medicine",
+    "name": "Family Medicine"
+  },
+  {
+    "value": 64,
+    "code": "FINA",
+    "text": "FINA - Finance",
+    "name": "Finance"
+  },
+  {
+    "value": 65,
+    "code": "FNSC",
+    "text": "FNSC - Food & Nutritional Sciences",
+    "name": "Food & Nutritional Sciences"
+  },
+  {
+    "value": 66,
+    "code": "FREN",
+    "text": "FREN - French",
+    "name": "French"
+  },
+  {
+    "value": 67,
+    "code": "FTEC",
+    "text": "FTEC - Financial Technology",
+    "name": "Financial Technology"
+  },
+  {
+    "value": 68,
+    "code": "GDRS",
+    "text": "GDRS - Gender Studies",
+    "name": "Gender Studies"
+  },
+  {
+    "value": 69,
+    "code": "GECC",
+    "text": "GECC - General Education - Chung Chi College",
+    "name": "General Education - Chung Chi College"
+  },
+  {
+    "value": 70,
+    "code": "GECW",
+    "text": "GECW - General Education - CW Chu College",
+    "name": "General Education - CW Chu College"
+  },
+  {
+    "value": 71,
+    "code": "GEMC",
+    "text": "GEMC - General Education - Morningside College",
+    "name": "General Education - Morningside College"
+  },
+  {
+    "value": 72,
+    "code": "GENA",
+    "text": "GENA - General Education - New Asia College",
+    "name": "General Education - New Asia College"
+  },
+  {
+    "value": 73,
+    "code": "GERM",
+    "text": "GERM - German",
+    "name": "German"
+  },
+  {
+    "value": 74,
+    "code": "GESC",
+    "text": "GESC - General Education - Shaw College",
+    "name": "General Education - Shaw College"
+  },
+  {
+    "value": 75,
+    "code": "GESH",
+    "text": "GESH - General Education - S.H. Ho College",
+    "name": "General Education - S.H. Ho College"
+  },
+  {
+    "value": 76,
+    "code": "GEUC",
+    "text": "GEUC - General Education - United College",
+    "name": "General Education - United College"
+  },
+  {
+    "value": 77,
+    "code": "GEWS",
+    "text": "GEWS - General Education - Lee Woo Sing College",
+    "name": "General Education - Lee Woo Sing College"
+  },
+  {
+    "value": 78,
+    "code": "GEYS",
+    "text": "GEYS - General Education - Wu Yee Sun College",
+    "name": "General Education - Wu Yee Sun College"
+  },
+  {
+    "value": 79,
+    "code": "GLBS",
+    "text": "GLBS - Global Studies",
+    "name": "Global Studies"
+  },
+  {
+    "value": 80,
+    "code": "GLEF",
+    "text": "GLEF - Global Economics and Finance",
+    "name": "Global Economics and Finance"
+  },
+  {
+    "value": 81,
+    "code": "GLOF",
+    "text": "GLOF - Global Finance",
+    "name": "Global Finance"
+  },
+  {
+    "value": 82,
+    "code": "GNBF",
+    "text": "GNBF - Genomics and Bioinformatics",
+    "name": "Genomics and Bioinformatics"
+  },
+  {
+    "value": 83,
+    "code": "GNED",
+    "text": "GNED - General Education",
+    "name": "General Education"
+  },
+  {
+    "value": 84,
+    "code": "GPAD",
+    "text": "GPAD - Government & Public Administration",
+    "name": "Government & Public Administration"
+  },
+  {
+    "value": 85,
+    "code": "GPGC",
+    "text": "GPGC - Government and Politics (Greater China)",
+    "name": "Government and Politics (Greater China)"
+  },
+  {
+    "value": 86,
+    "code": "GRMD",
+    "text": "GRMD - Geography & Resource Management",
+    "name": "Geography & Resource Management"
+  },
+  {
+    "value": 87,
+    "code": "HIST",
+    "text": "HIST - History",
+    "name": "History"
+  },
+  {
+    "value": 88,
+    "code": "HKSL",
+    "text": "HKSL - Hong Kong Sign Language",
+    "name": "Hong Kong Sign Language"
+  },
+  {
+    "value": 89,
+    "code": "HSOC",
+    "text": "HSOC - Health Sociomedical Sciences",
+    "name": "Health Sociomedical Sciences"
+  },
+  {
+    "value": 90,
+    "code": "HTMG",
+    "text": "HTMG - Hotel And Tourism Management",
+    "name": "Hotel And Tourism Management"
+  },
+  {
+    "value": 91,
+    "code": "IBBA",
+    "text": "IBBA - Integrated BBA Programme",
+    "name": "Integrated BBA Programme"
+  },
+  {
+    "value": 92,
+    "code": "IERG",
+    "text": "IERG - Information Engineering",
+    "name": "Information Engineering"
+  },
+  {
+    "value": 93,
+    "code": "ITAL",
+    "text": "ITAL - Italian",
+    "name": "Italian"
+  },
+  {
+    "value": 94,
+    "code": "JASP",
+    "text": "JASP - Japanese Studies",
+    "name": "Japanese Studies"
+  },
+  {
+    "value": 95,
+    "code": "KORE",
+    "text": "KORE - Korean",
+    "name": "Korean"
+  },
+  {
+    "value": 96,
+    "code": "LAWS",
+    "text": "LAWS - Law",
+    "name": "Law"
+  },
+  {
+    "value": 97,
+    "code": "LING",
+    "text": "LING - Linguistics",
+    "name": "Linguistics"
+  },
+  {
+    "value": 98,
+    "code": "LSCI",
+    "text": "LSCI - Life Sciences Courses",
+    "name": "Life Sciences Courses"
+  },
+  {
+    "value": 99,
+    "code": "LSED",
+    "text": "LSED - Liberal Studies",
+    "name": "Liberal Studies"
+  },
+  {
+    "value": 100,
+    "code": "MAED",
+    "text": "MAED - Mathematics Education",
+    "name": "Mathematics Education"
+  },
+  {
+    "value": 101,
+    "code": "MAEG",
+    "text": "MAEG - Mechanical & Automation Engineering",
+    "name": "Mechanical & Automation Engineering"
+  },
+  {
+    "value": 102,
+    "code": "MATH",
+    "text": "MATH - Mathematics",
+    "name": "Mathematics"
+  },
+  {
+    "value": 103,
+    "code": "MBTE",
+    "text": "MBTE - Molecular Biotechnology",
+    "name": "Molecular Biotechnology"
+  },
+  {
+    "value": 104,
+    "code": "MECM",
+    "text": "MECM - Early Childhood Education",
+    "name": "Early Childhood Education"
+  },
+  {
+    "value": 105,
+    "code": "MEDF",
+    "text": "MEDF - Medicine Faculty Package",
+    "name": "Medicine Faculty Package"
+  },
+  {
+    "value": 106,
+    "code": "MEDP",
+    "text": "MEDP - Molecular Medicine and Biostatistics",
+    "name": "Molecular Medicine and Biostatistics"
+  },
+  {
+    "value": 107,
+    "code": "MEDS",
+    "text": "MEDS - Medical Sciences",
+    "name": "Medical Sciences"
+  },
+  {
+    "value": 108,
+    "code": "MEDU",
+    "text": "MEDU - Medicine",
+    "name": "Medicine"
+  },
+  {
+    "value": 109,
+    "code": "MGNT",
+    "text": "MGNT - Management",
+    "name": "Management"
+  },
+  {
+    "value": 110,
+    "code": "MHLS",
+    "text": "MHLS - Mental Health",
+    "name": "Mental Health"
+  },
+  {
+    "value": 111,
+    "code": "MIEG",
+    "text": "MIEG - Mathematics and Information Engineering",
+    "name": "Mathematics and Information Engineering"
+  },
+  {
+    "value": 112,
+    "code": "MITE",
+    "text": "MITE - Information Technology in Education",
+    "name": "Information Technology in Education"
+  },
+  {
+    "value": 113,
+    "code": "MKTG",
+    "text": "MKTG - Marketing",
+    "name": "Marketing"
+  },
+  {
+    "value": 114,
+    "code": "MPUP",
+    "text": "MPUP - Public Policy",
+    "name": "Public Policy"
+  },
+  {
+    "value": 115,
+    "code": "MRGO",
+    "text": "MRGO - Musculoskeletal Med, Rehab and Geriatric Orthopaed",
+    "name": "Musculoskeletal Med, Rehab and Geriatric Orthopaed"
+  },
+  {
+    "value": 116,
+    "code": "MSAE",
+    "text": "MSAE - Student Activities in Education",
+    "name": "Student Activities in Education"
+  },
+  {
+    "value": 117,
+    "code": "MSEG",
+    "text": "MSEG - Materials Science & Engineering",
+    "name": "Materials Science & Engineering"
+  },
+  {
+    "value": 118,
+    "code": "MSMR",
+    "text": "MSMR - Musculoskeletal Medicine and Rehabilitation",
+    "name": "Musculoskeletal Medicine and Rehabilitation"
+  },
+  {
+    "value": 119,
+    "code": "MTCI",
+    "text": "MTCI - Teaching Chinese as International Language",
+    "name": "Teaching Chinese as International Language"
+  },
+  {
+    "value": 120,
+    "code": "MUSC",
+    "text": "MUSC - Music",
+    "name": "Music"
+  },
+  {
+    "value": 121,
+    "code": "NSCI",
+    "text": "NSCI - Natural Sciences",
+    "name": "Natural Sciences"
+  },
+  {
+    "value": 122,
+    "code": "NSSC",
+    "text": "NSSC - Neurological Sciences",
+    "name": "Neurological Sciences"
+  },
+  {
+    "value": 123,
+    "code": "NURS",
+    "text": "NURS - Nursing",
+    "name": "Nursing"
+  },
+  {
+    "value": 124,
+    "code": "OENV",
+    "text": "OENV - Occupational & Environmental Health",
+    "name": "Occupational & Environmental Health"
+  },
+  {
+    "value": 125,
+    "code": "PHAR",
+    "text": "PHAR - Pharmacy",
+    "name": "Pharmacy"
+  },
+  {
+    "value": 126,
+    "code": "PHED",
+    "text": "PHED - Physical Education",
+    "name": "Physical Education"
+  },
+  {
+    "value": 127,
+    "code": "PHIL",
+    "text": "PHIL - Philosophy",
+    "name": "Philosophy"
+  },
+  {
+    "value": 128,
+    "code": "PHMA",
+    "text": "PHMA - Pharmacology",
+    "name": "Pharmacology"
+  },
+  {
+    "value": 129,
+    "code": "PHPC",
+    "text": "PHPC - Public Health",
+    "name": "Public Health"
+  },
+  {
+    "value": 130,
+    "code": "PHYS",
+    "text": "PHYS - Physics",
+    "name": "Physics"
+  },
+  {
+    "value": 131,
+    "code": "PHYY",
+    "text": "PHYY - Physiology",
+    "name": "Physiology"
+  },
+  {
+    "value": 132,
+    "code": "PSYC",
+    "text": "PSYC - Psychology",
+    "name": "Psychology"
+  },
+  {
+    "value": 133,
+    "code": "RELS",
+    "text": "RELS - Religious Studies & Theology",
+    "name": "Religious Studies & Theology"
+  },
+  {
+    "value": 134,
+    "code": "RMSC",
+    "text": "RMSC - Risk Management Science",
+    "name": "Risk Management Science"
+  },
+  {
+    "value": 135,
+    "code": "RUSS",
+    "text": "RUSS - Russian",
+    "name": "Russian"
+  },
+  {
+    "value": 136,
+    "code": "SBMS",
+    "text": "SBMS - Biomedical Sciences",
+    "name": "Biomedical Sciences"
+  },
+  {
+    "value": 137,
+    "code": "SEEM",
+    "text": "SEEM - Systems Engineering & Engineering Management",
+    "name": "Systems Engineering & Engineering Management"
+  },
+  {
+    "value": 138,
+    "code": "SOCI",
+    "text": "SOCI - Sociology",
+    "name": "Sociology"
+  },
+  {
+    "value": 139,
+    "code": "SOSC",
+    "text": "SOSC - Courses offered by Social Science Faculty",
+    "name": "Courses offered by Social Science Faculty"
+  },
+  {
+    "value": 140,
+    "code": "SOWK",
+    "text": "SOWK - Social Work",
+    "name": "Social Work"
+  },
+  {
+    "value": 141,
+    "code": "SPAN",
+    "text": "SPAN - Spanish",
+    "name": "Spanish"
+  },
+  {
+    "value": 142,
+    "code": "SPED",
+    "text": "SPED - Sports Science & Physical Education",
+    "name": "Sports Science & Physical Education"
+  },
+  {
+    "value": 143,
+    "code": "STAT",
+    "text": "STAT - Statistics",
+    "name": "Statistics"
+  },
+  {
+    "value": 144,
+    "code": "SURY",
+    "text": "SURY - Surgery",
+    "name": "Surgery"
+  },
+  {
+    "value": 145,
+    "code": "THAI",
+    "text": "THAI - Thai",
+    "name": "Thai"
+  },
+  {
+    "value": 146,
+    "code": "THEO",
+    "text": "THEO - Theology",
+    "name": "Theology"
+  },
+  {
+    "value": 147,
+    "code": "TRAN",
+    "text": "TRAN - Translation",
+    "name": "Translation"
+  },
+  {
+    "value": 148,
+    "code": "UGEA",
+    "text": "UGEA - UGEA: Chinese Cultural Heritage",
+    "name": "UGEA: Chinese Cultural Heritage"
+  },
+  {
+    "value": 149,
+    "code": "UGEB",
+    "text": "UGEB - UGEB: Nature, Science and Technology",
+    "name": "UGEB: Nature, Science and Technology"
+  },
+  {
+    "value": 150,
+    "code": "UGEC",
+    "text": "UGEC - UGEC: Society and Culture",
+    "name": "UGEC: Society and Culture"
+  },
+  {
+    "value": 151,
+    "code": "UGED",
+    "text": "UGED - UGED: Self and Humanity",
+    "name": "UGED: Self and Humanity"
+  },
+  {
+    "value": 152,
+    "code": "UGFH",
+    "text": "UGFH - UGFH: In Dialogue with Humanity",
+    "name": "UGFH: In Dialogue with Humanity"
+  },
+  {
+    "value": 153,
+    "code": "UGFN",
+    "text": "UGFN - UGFN: In Dialogue with Nature",
+    "name": "UGFN: In Dialogue with Nature"
+  },
+  {
+    "value": 154,
+    "code": "OTHERS",
+    "text": "Others",
+    "name": "Others"
+  }
 ]

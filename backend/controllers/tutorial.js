@@ -259,10 +259,9 @@ exports.postComment = async (req, res) => {
 exports.deleteTutorial = async (req, res) => {
   const { tutorial_id } = req.body;
 
-  Tutorial.findById(tutorial_id, (err, doc) => {
+  Tutorial.findById(tutorial_id, (doc) => {
     doc.remove();
     res.status(200).json({
-      discussionThread: doc,
       message: "Thread successfully deleted.",
     });
   });
@@ -272,10 +271,9 @@ exports.deleteTutorial = async (req, res) => {
 exports.deleteChapter = async (req, res) => {
   const { tutorial_id, chapter_id } = req.body;
 
-  Chapter.findById(chapter_id, (err, doc) => {
+  Chapter.findById(chapter_id, (doc) => {
     doc.remove();
     res.status(200).json({
-      discussionThread: doc,
       message: "Thread successfully deleted.",
     });
   });
