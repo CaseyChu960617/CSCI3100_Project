@@ -37,7 +37,12 @@
                 <v-row class="mt-1">
                   <v-btn text @click="back()">Edit Profile</v-btn>
                   <v-spacer />
-                  <v-btn text :disabled="!isValid" @click="changePassword()"
+                  <v-btn
+                    rounded
+                    color="#99CFEA"
+                    class="black--text"
+                    :disabled="!isValid"
+                    @click="changePassword()"
                     >Save</v-btn
                   ></v-row
                 ></v-container
@@ -79,7 +84,6 @@ export default {
       this.$emit("switchform");
     },
     changePassword() {
-      console.log(this.password.uid);
       DataService.changePassword(this.password, {
         headers: authHeader(),
       })

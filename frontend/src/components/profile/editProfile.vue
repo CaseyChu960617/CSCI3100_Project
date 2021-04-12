@@ -74,7 +74,13 @@
               <v-row class="mt-1">
                 <v-btn text @click="changePassword()">Change Password</v-btn>
                 <v-spacer />
-                <v-btn text @click="saveProfile()">Save</v-btn></v-row
+                <v-btn
+                  rounded
+                  color="#99CFEA"
+                  class="black--text"
+                  @click="saveProfile()"
+                  >Save</v-btn
+                ></v-row
               ></v-container
             ></v-col
           ></v-row
