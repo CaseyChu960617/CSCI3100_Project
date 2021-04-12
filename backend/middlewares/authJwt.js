@@ -9,7 +9,7 @@ const verifyToken = (req, res, next) => {
         return res.status(403).json({ error: "No token provided."})
     }
     const decodedToken = jwt.verify(accessToken, process.env.JWT_ACC_SECRET);
-    req.body['uid'] = decodedToken['uid'];
+    req.body['user_id'] = decodedToken['user_id']; //changed Name
     next();
 };
 

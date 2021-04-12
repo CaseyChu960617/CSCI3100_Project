@@ -5,10 +5,10 @@ const mongoose = require("mongoose");
 
 // getAllChatsfunction
 exports.getAllChats = async (req, res) => {
-  const uid = req.params["uid"];
-  console.log(uid);
+  const user_id = req.params["user_id"];
+  console.log(user_id);
 
-  await Chat.find({ $or: [{ userA: uid }, { userB: uid }] })
+  await Chat.find({ $or: [{ userA: user_id }, { userB: user_id }] })
     .sort({ createdAt: -1 })
     .select("_id userA userB")
     .populate("userA userB", "_id username profileImage")
@@ -45,8 +45,8 @@ exports.getOneChatById = async (req, res) => {
       if (!doc) {
         Chat.create(
           {
-            userA: uid_1,
-            userB: uid_2,
+            userA: user_id_1,
+            userB: user_id_2,
             messages: [],
           },
           (err, doc) => {
@@ -60,7 +60,7 @@ exports.getOneChatById = async (req, res) => {
 
 // getOneChatfunction
 exports.getOneChat = async (req, res) => {
-  const { uid_1, uid_2 } = req.body;
+  const { user_id_1, user_id_2 } = req.body;
 
   var populateQuery = [
     { path: "userA", select: "_id username" },
@@ -77,8 +77,8 @@ exports.getOneChat = async (req, res) => {
 
   await Chat.findOne({
     $or: [
-      { userA: uid_1, userB: uid_2 },
-      { userA: uid_2, userB: uid_1 },
+      { userA: user_id_1, userB: user_id_2 },
+      { userA: user_id_2, userB: user_id_1 },
     ],
   })
     .select("userA userB messages")
@@ -89,8 +89,8 @@ exports.getOneChat = async (req, res) => {
       if (!doc) {
         Chat.create(
           {
-            userA: uid_1,
-            userB: uid_2,
+            userA: user_id_1,
+            userB: user_id_2,
             messages: [],
           },
           (err, doc) => {

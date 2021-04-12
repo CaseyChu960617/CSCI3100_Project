@@ -7,6 +7,6 @@ router.post('/signup', signup);
 
 router.post('/signin', signin);
 
-router.get('/activateAccount/:uid', activateAccount)
+router.get('/activateAccount/:user_id', activateAccount)
 
 module.exports = router;

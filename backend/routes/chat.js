@@ -9,7 +9,7 @@ const { getAllChats,
       } = require('../controllers/chat');
 
 
-router.get('/getAllChats/:uid', getAllChats);
+router.get('/getAllChats/:user_id', getAllChats);
 
 router.get('/getOneChat/:chat_id', getOneChatById);
 

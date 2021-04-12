@@ -58,7 +58,7 @@ exports.signup = async (req, res) => {
 
          // Generate and sign a token
         const accessToken = jwt.sign({
-                uid: newUser._id },
+            user_id: newUser._id },
             process.env.JWT_ACC_SECRET,
             { expiresIn: '20m'});
 
@@ -67,7 +67,7 @@ exports.signup = async (req, res) => {
             status: "success",
             message: "Email has been sent. Please activate your account.",
             accessToken: accessToken,
-            uid: newUser._id,
+            user_id: newUser._id,
             lastname: newUser.lastname,
             firstname: newUser.firstname,
             username: newUser.username,
@@ -98,14 +98,14 @@ exports.signin = async (req, res) => {
 
             // Generate a token if password is matched.
             const accessToken = jwt.sign({
-                    uid: user._id
+                user_id: user._id
                 },
                 process.env.JWT_ACC_SECRET,
                 {expiresIn: '20m'});
 
             res.status(200).send({
                 accessToken: accessToken,
-                uid: user._id,
+                user_id: user._id,
                 lastname: user.lastname,
                 firstname: user.firstname,
                 username: user.username,
@@ -124,20 +124,20 @@ exports.signin = async (req, res) => {
 
 // activateAccount function.
 exports.activateAccount = async (req, res) => {
-    const uid  = req.params['uid'];
-    console.log(uid);
+    const user_id  = req.params['user_id'];
+    console.log(user_id);
 
-    // if uid is not null.
-    if (uid) {
+    // if user_id is not null.
+    if (user_id) {
 
-        // Search db for the user with this uid and update its status.
-        const user = await User.findByIdAndUpdate({ _id: uid } , {  activation: true }, { new: true, lean: true});
+        // Search db for the user with this user_id and update its status.
+        const user = await User.findByIdAndUpdate({ _id: user_id } , {  activation: true }, { new: true, lean: true});
 
         console.log(user);
 
         // Generate a token.
         const accessToken = jwt.sign({
-                uid: user._id },
+            user_id: user._id },
             process.env.JWT_ACC_SECRET,
             { expiresIn: '20m'});
 
@@ -145,7 +145,7 @@ exports.activateAccount = async (req, res) => {
         res.status(200).json({
             message: "Account is activated",
             accessToken: accessToken,
-            uid: user._id,
+            user_id: user._id,
             lastname: user.lastname,
             firstname: user.firstname,
             username: user.username,

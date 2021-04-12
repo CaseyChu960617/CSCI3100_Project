@@ -5,9 +5,9 @@ const bcrypt = require('bcrypt');
 
 // getProfile function
 exports.getProfile = async (req, res) => {
-    const uid = req.params['uid'];
+    const user_id = req.params['user_id'];
 
-    User.find({ _id: uid})
+    User.find({ _id: user_id})
     .select("username firstname lastname email")
     .exec()
     .then(doc => {
@@ -18,13 +18,13 @@ exports.getProfile = async (req, res) => {
 // editProfile function
 exports.editProfile = async (req, res) => {
 
-    const {uid, firstname, lastname, gender, username} = req.body;
+    const {user_id, firstname, lastname, gender, username} = req.body;
 
     User.findOne({ username: username }, (err, user) => {
         if (user)
             res.status(400).json({ error: "User with this username already existed."});
         else {
-            User.findOneAndUpdate({ _id: uid }, 
+            User.findOneAndUpdate({ _id: user_id }, 
                 { username: username, 
                     lastname: lastname, 
                     firstname: firstname, 
@@ -38,7 +38,7 @@ exports.editProfile = async (req, res) => {
         }
     }) 
     
-    const user = await User.findOne({ uid }).populate({ path:'following', 
+    const user = await User.findOne({ user_id }).populate({ path:'following', 
                         select: '_id' }).lean();
                     
     // If not exist, handle the error.
@@ -49,14 +49,14 @@ exports.editProfile = async (req, res) => {
     else {
         // Generate a token if password is matched.
         const accessToken = jwt.sign({
-            uid: user._id
+            user_id: user._id
         },
         process.env.JWT_ACC_SECRET,
         {expiresIn: '20m'});
 
         res.status(200).send({
             accessToken: accessToken,
-            uid: user._id,
+            user_id: user._id,
             lastname: user.lastname,
             firstname: user.firstname,
             username: user.username,
@@ -119,10 +119,10 @@ exports.updateProPic = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
 
-    const { uid, oldPassword, newPassword } = req.body;
+    const { user_id, oldPassword, newPassword } = req.body;
 
     const hashedOldPassword = await bcrypt.hash(oldPassword, 10)
-    const user = await User.findOne({ _id: uid },
+    const user = await User.findOne({ _id: user_id },
          (err) => {
             res.status(400).json({ error: err.message });
          });

@@ -9,7 +9,7 @@ const { getProfile,
         updateProPic,
         resetPassword } = require('../controllers/user');
 
-router.get('/getProfile/:uid', getProfile);
+router.get('/getProfile/:user_id', getProfile);
 
 router.put('/editProfile', editProfile);
 

@@ -3,6 +3,7 @@ const ThreadComment = require("../models/threadComment");
 const User = require("../models/user");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
+const options = { weekday: 'long', year: 'numeric', month: 'numberic', day: 'numeric' };
 
 // getAllThread function
 exports.getAllThreads = async (req, res) => {
@@ -87,9 +88,9 @@ exports.getFollowingThreads = async (req, res) => {
 // createThread function
 exports.createThread = async (req, res) => {
 
-    const { uid, category, title, content } = req.body;
+    const { user_id, category, title, content } = req.body;
 
-    User.findById(uid, { lean: true }, (err, user) => {
+    User.findById(user_id, { lean: true }, (err, user) => {
       if (err) 
           res.status(400).json({ error: "User not found!" });
 
@@ -101,9 +102,9 @@ exports.createThread = async (req, res) => {
             category: category,
             title: title,
             content: content,
-            createdAt: new Date().getTime().toLocaleString(),
-            lastEditedAt: new Date().getTime().toLocaleString(),
-            lastModifiedAt: new Date().getTime().toLocaleString(),
+            createdAt: new Date().getTime().toLocaleDateString('zh-HK', options),
+            lastEditedAt: new Date().getTime().toLocaleDateString('zh-HK', options),
+            lastModifiedAt: new Date().getTime().toLocaleDateString('zh-HK', options),
           },
           (err, data) => {
             if (err) {
@@ -125,8 +126,8 @@ exports.editThread = async (req, res) => {
     const update = {
       $set: { title: title, 
               content: content, 
-              lastEditedAt: new Date().getTime().toLocaleString(),
-              lastModifiedAt: new Date().getTime().toLocaleString() 
+              lastEditedAt: new Date().getTime().toLocaleDateString('zh-HK', options),
+              lastModifiedAt: new Date().getTime().toLocaleDateString('zh-HK', options)
       }
     }
 
@@ -140,16 +141,16 @@ exports.editThread = async (req, res) => {
 // postComment function
 exports.postComment = async (req, res) => {
   
-    const { uid, content, thread_id } = req.body;
+    const { user_id, content, thread_id } = req.body;
 
-    User.findById(uid, { lean: true }, (err, user) => {
+    User.findById(user_id, { lean: true }, (err, user) => {
       if (err) 
         res.status(400).json({ error: "User not found!" });
       if (user) {
           var newComment = new ThreadComment(
               {
-                  author: new ObjectId(uid),
-                  createdAt: new Date().getTime().toLocaleString(),
+                  author: new ObjectId(user_id),
+                  createdAt: new Date().getTime().toLocaleDateString('zh-HK', options),
                   content: content,
               },
               (err, data) => {
@@ -164,7 +165,7 @@ exports.postComment = async (req, res) => {
           
           const update = { 
             $push: { comments: newComment._id }, 
-            $set: { lastModifiedAt: new Date().getTime().toLocaleString() } 
+            $set: { lastModifiedAt: new Date().getTime().toLocaleDateString('zh-HK', options) } 
           }
 
           Thread.findOneAndUpdate({ _id: thread_id }, update,
