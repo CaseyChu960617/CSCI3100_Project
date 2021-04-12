@@ -19,6 +19,6 @@ router.put('/unfollow', unfollow);
 
 router.put('/updateProPic', updateProPic);
 
-route.put('/resetPassword', resetPassword);
+router.put('/resetPassword', resetPassword);
 
 module.exports = router;

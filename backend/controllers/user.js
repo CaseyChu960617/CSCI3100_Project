@@ -18,56 +18,55 @@ exports.getProfile = async (req, res) => {
 // editProfile function
 exports.editProfile = async (req, res) => {
 
-  const {uid, firstname, lastname, gender, username} = req.body;
+    const {uid, firstname, lastname, gender, username} = req.body;
 
-        User.findOne({ username: username }, (err, user) => {
-            if (user)
-                res.status(400).json({ error: "User with this username already existed."});
-            else {
-                User.findOneAndUpdate({ _id: uid }, 
-                    { username: username, 
-                      lastname: lastname, 
-                      firstname: firstname, 
-                      username: username,
-                      gender: gender
-                    }, {new : true},
-                    (err, doc) => {
-                    if (err) 
-                        res.status(400).json({ error: err.message });
-                    else {  
-                            const user = await User.findOne({ email }).populate({ path:'following', 
-                            select: '_id' }).lean();
-                        
-                            // If not exist, handle the error.
-                            if (!user) {
-                                return res.status(400).send({ status: 'error', error: 'Invalid email'});
-                            }
+    User.findOne({ username: username }, (err, user) => {
+        if (user)
+            res.status(400).json({ error: "User with this username already existed."});
+        else {
+            User.findOneAndUpdate({ _id: uid }, 
+                { username: username, 
+                    lastname: lastname, 
+                    firstname: firstname, 
+                    username: username,
+                    gender: gender
+                }, {new : true},
+                (err) => {
+                if (err) 
+                    res.status(400).json({ error: err.message });
+            });
+        }
+    }) 
+    
+    const user = await User.findOne({ uid }).populate({ path:'following', 
+                        select: '_id' }).lean();
+                    
+    // If not exist, handle the error.
+    if (!user) {
+        return res.status(400).send({ status: 'error', error: 'Invalid email'});
+    }
 
-                            else {
-                                // Generate a token if password is matched.
-                                const accessToken = jwt.sign({
-                                    uid: user._id
-                                },
-                                process.env.JWT_ACC_SECRET,
-                                {expiresIn: '20m'});
+    else {
+        // Generate a token if password is matched.
+        const accessToken = jwt.sign({
+            uid: user._id
+        },
+        process.env.JWT_ACC_SECRET,
+        {expiresIn: '20m'});
 
-                                res.status(200).send({
-                                    accessToken: accessToken,
-                                    uid: user._id,
-                                    lastname: user.lastname,
-                                    firstname: user.firstname,
-                                    username: user.username,
-                                    email: user.email,
-                                    gender: user.gender,
-                                    activation: user.activation,
-                                    following: user.following,
-                                    profileImage: user.profileImage
-                                });
-                            }
-                        }
-                });
-            }
-        })     
+        res.status(200).send({
+            accessToken: accessToken,
+            uid: user._id,
+            lastname: user.lastname,
+            firstname: user.firstname,
+            username: user.username,
+            email: user.email,
+            gender: user.gender,
+            activation: user.activation,
+            following: user.following,
+            profileImage: user.profileImage
+        });
+    }
 };
 
 // follow function
@@ -119,6 +118,7 @@ exports.updateProPic = async (req, res) => {
 };
 
 exports.resetPassword = async (req, res) => {
+
     const { uid, oldPassword, newPassword } = req.body;
 
     const hashedOldPassword = await bcrypt.hash(oldPassword, 10)
