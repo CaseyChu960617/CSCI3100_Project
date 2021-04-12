@@ -6,7 +6,6 @@ var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
 const { response } = require("express");
 
-
 // getAllTutorials function
 exports.getAllTutorials = async (req, res) => {
   Tutorial.find()
@@ -256,7 +255,7 @@ exports.postComment = async (req, res) => {
 // deleteTutorial function
 exports.deleteTutorial = async (req, res) => {
   const { tutorial_id } = req.body;
-
+  console.log(req.body);
   Tutorial.findById(tutorial_id, (err, doc) => {
     doc.remove();
     res.status(200).json({

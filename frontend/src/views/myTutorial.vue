@@ -62,9 +62,9 @@
               <v-img src="../assets/Homepage/1.jpg"></v-img>
               <v-card-title>{{ tutorial.title }}</v-card-title>
               <v-card-text class="sub">{{ tutorial.subject }} </v-card-text>
-              <v-card-text>
+              <!--  <v-card-text>
                 Instructor {{ tutorial.author.username }}
-              </v-card-text>
+              </v-card-text>-->
             </v-card>
 
             <v-card elevation="8" class="card__face card__face--back" ref="back"
@@ -81,17 +81,36 @@
                     >Edit</v-btn
                   >
                   <v-btn class="delete-btn ml-3">Delete</v-btn>-->
-                  <v-btn class="mx-2" fab dark small color="primary">
-                    <v-icon dark>
-                      mdi-eye
-                    </v-icon>
+                  <v-btn
+                    class="mx-2"
+                    fab
+                    dark
+                    small
+                    color="primary"
+                    @click="viewTutorial(tutorial._id)"
+                  >
+                    <v-icon dark> mdi-eye </v-icon>
                   </v-btn>
-                  <v-btn class="mx-2" fab dark small color="primary">
+                  <v-btn
+                    class="mx-2"
+                    fab
+                    dark
+                    small
+                    color="primary"
+                    @click="editTutorial(tutorial._id)"
+                  >
                     <v-icon dark>
                       mdi-pen
                     </v-icon>
                   </v-btn>
-                  <v-btn class="mx-2" fab dark small color="primary">
+                  <v-btn
+                    class="mx-2"
+                    fab
+                    dark
+                    small
+                    color="primary"
+                    @click="deleteTutorial(tutorial._id)"
+                  >
                     <v-icon dark>
                       mdi-delete
                     </v-icon>
@@ -280,10 +299,8 @@ export default {
 
   methods: {
     fetchMyTutorial() {
-      console.log("wtf");
       DataService.get("tutorial/userTutorials", this.currentUser.user_id).then(
         (response) => {
-          console.log("wtf");
           console.log("Data is ", response.data);
           let rawData = response.data;
           //mapping the subjects
@@ -302,7 +319,6 @@ export default {
           this.tutorials = rawData;
         }
       );
-      console.log("wtf");
     },
 
     flip(event, id) {
@@ -349,10 +365,21 @@ export default {
     show(bool) {
       this.dialog = bool;
     },
+    view(tutorialId) {
+      console.log(tutorialId);
+    },
+
     editTutorial(tutorialId) {
       this.$router.push({
         name: "editTutorial",
         params: { tutorialId: tutorialId },
+      });
+    },
+
+    deleteTutorial(tutorialId) {
+      console.log("delete ", tutorialId);
+      DataService.delete("tutorial/deleteTutorial", {
+        tutorial_id: tutorialId,
       });
     },
   },
