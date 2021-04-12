@@ -5,7 +5,12 @@ const User = require("../models/user");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
 const { response } = require("express");
-const options = { weekday: 'long', year: 'numeric', month: 'numberic', day: 'numeric' };
+const options = {
+  weekday: "long",
+  year: "numeric",
+  month: "numberic",
+  day: "numeric",
+};
 
 // getAllTutorials function
 exports.getAllTutorials = async (req, res) => {
@@ -32,7 +37,6 @@ exports.getLatestTutorials = async (req, res) => {
       console.log(docs);
     });
 };
-
 
 // getSubject function
 exports.getSubject = async (req, res) => {
@@ -89,11 +93,9 @@ exports.getUserTutorials = async (req, res) => {
     .select("author subject title description createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
-    .then((err,docs) => {
-      if (err)
-        res.status(400).json({ error: err.message});
-      else
-        res.send(docs);
+    .then((err, docs) => {
+      if (err) res.status(400).json({ error: err.message });
+      else res.send(docs);
     });
 };
 
@@ -125,9 +127,9 @@ exports.createTutorial = async (req, res) => {
           title: title,
           subject: subject,
           description: description,
-          createdAt: new Date().getTime().toLocaleDateString('zh-HK', options),
-          lastEditedAt: new Date().getTime().toLocaleDateString('zh-HK', options),
-          lastModifiedAt: new Date().getTime().toLocaleDateString('zh-HK', options),
+          createdAt: new Date().toLocaleString("zh-HK"),
+          lastEditedAt: new Date().toLocaleString("zh-HK"),
+          lastModifiedAt: new Date().toLocaleString("zh-HK"),
           published: false,
         },
         (err, doc) => {
@@ -147,8 +149,8 @@ exports.createChapter = async (req, res) => {
     {
       title: title,
       content: content,
-      createdAt: new Date().getTime().toLocaleDateString('zh-HK', options),
-      lastEditedAt:new Date().getTime().toLocaleDateString('zh-HK', options),
+      createdAt: new Date().getTime().toLocaleDateString("zh-HK", options),
+      lastEditedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
     },
     (err) => {
       if (err) {
@@ -164,7 +166,9 @@ exports.createChapter = async (req, res) => {
 
   const update = {
     $push: { chapers: newChapter._id },
-    $set: { lastModifiedAt: new Date().getTime().toLocaleDateString('zh-HK', options) },
+    $set: {
+      lastModifiedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
+    },
   };
 
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
@@ -181,8 +185,8 @@ exports.editTutorial = async (req, res) => {
     $set: {
       title: title,
       subject: subject,
-      lastEditedAt: new Date().getTime().toLocaleDateString('zh-HK', options),
-      lastModifiedAt: new Date().getTime().toLocaleDateString('zh-HK', options),
+      lastEditedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
+      lastModifiedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
       published: published,
     },
   };
@@ -201,7 +205,7 @@ exports.editChapter = async (req, res) => {
     $set: {
       title: title,
       content: content,
-      lastEditedAt: new Date().getTime().toLocaleDateString('zh-HK', options),
+      lastEditedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
     },
   };
 
@@ -221,7 +225,7 @@ exports.postComment = async (req, res) => {
       var newComment = new TutorialComment(
         {
           author: new ObjectId(user_id),
-          createdAt: new Date().getTime().toLocaleDateString('zh-HK', options),
+          createdAt: new Date().getTime().toLocaleDateString("zh-HK", options),
           content: content,
         },
         (err, data) => {
@@ -240,7 +244,11 @@ exports.postComment = async (req, res) => {
 
       const update = {
         $push: { comments: newComment._id },
-        $set: { lastModifiedAt: new Date().getTime().toLocaleDateString('zh-HK', options) },
+        $set: {
+          lastModifiedAt: new Date()
+            .getTime()
+            .toLocaleDateString("zh-HK", options),
+        },
       };
 
       Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {

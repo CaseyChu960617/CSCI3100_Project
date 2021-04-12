@@ -246,9 +246,7 @@ export default {
               profileImage: this.currentUser.profileImage,
             },
             message: this.newMessage,
-            timestamp: new Date()
-              .getTime()
-              .toLocaleString("zh-HK", this.options),
+            timestamp: new Date().toLocaleString("zh-HK"),
           },
           this.chatId
         );

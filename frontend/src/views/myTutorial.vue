@@ -13,7 +13,6 @@
           :editedItem="editedItem"
           :title="`${title}`"
           @show="show"
-          @submit="save()"
         ></modal>
 
         <!-- <v-divider />
@@ -222,8 +221,10 @@ export default {
 
   methods: {
     fetchMyTutorial() {
+      console.log("wtf");
       DataService.get("tutorial/userTutorials", this.currentUser.user_id).then(
         (response) => {
+          console.log("wtf");
           console.log("Data is ", response.data);
           let rawData = response.data;
           //mapping the subjects
@@ -234,6 +235,7 @@ export default {
           this.tutorials = rawData;
         }
       );
+      console.log("wtf");
     },
 
     flip(event, id) {
