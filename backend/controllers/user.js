@@ -18,82 +18,124 @@ exports.getProfile = async (req, res) => {
 
 // editProfile function
 exports.editProfile = async (req, res) => {
-  const { user_id, firstname, lastname, gender, username } = req.body;
 
-  User.findOne({ username: username }, (err, user) => {
-    if (user) res.status(400).json({ error: "User with this username already existed." });
-    else {
-      User.findOneAndUpdate({ _id: user_id }, { username: username, lastname: lastname, firstname: firstname, username: username, gender: gender }, { new: true }, (err) => {
-        if (err) res.status(400).json({ error: err.message });
-      });
+    const { user_id, firstname, lastname, gender, username } = req.body;
+
+    const user = await User.findOne({ _id: user_id }, (err) => {
+        if (err)
+            res.status(400).json({ error: err.message });
+    })
+
+    const otherUser = await User.findOne({ username: username }, (err) => {
+        if (err)
+            res.status(400).json({ error: err.message });
+    })
+
+    if (!otherUser)  {
+        user.username = username;
+        user.firstname = firstname;
+        user.lastname = lastname;
+        user.gender = gender;
+        user.save( err => {
+            if (err)
+                res.status(400).json({ error: err.message });
+        })
+        // Generate a token if password is matched.
+        const accessToken = jwt.sign({
+            user_id: user._id
+            },
+            process.env.JWT_ACC_SECRET,
+            {expiresIn: '20m'});
+        
+        res.status(200).send({
+            accessToken: accessToken,
+            user_id: user._id,
+            lastname: user.lastname,
+            firstname: user.firstname,
+            username: user.username,
+            email: user.email,
+            gender: user.gender,
+            activation: user.activation,
+            following: user.following,
+            profileImage: user.profileImage
+        });
     }
-  });
-
-  const user = await User.findOne({ user_id }).populate({ path: "following", select: "_id" }).lean();
-
-  // If not exist, handle the error.
-  if (!user) {
-    return res.status(400).send({ status: "error", error: "Invalid email" });
-  } else {
-    // Generate a token if password is matched.
-    const accessToken = jwt.sign(
-      {
-        user_id: user._id,
-      },
-      process.env.JWT_ACC_SECRET,
-      { expiresIn: "20m" }
-    );
-
-    res.status(200).send({
-      accessToken: accessToken,
-      user_id: user._id,
-      lastname: user.lastname,
-      firstname: user.firstname,
-      username: user.username,
-      email: user.email,
-      gender: user.gender,
-      activation: user.activation,
-      following: user.following,
-      profileImage: user.profileImage,
-    });
-  }
+    else {
+        if (otherUser._id === user._id) {
+            user.username = username;
+        user.firstname = firstname;
+        user.lastname = lastname;
+        user.gender = gender;
+        user.save( err => {
+            if (err)
+                res.status(400).json({ error: err.message });
+        })
+        // Generate a token if password is matched.
+        const accessToken = jwt.sign({
+            user_id: user._id
+            },
+            process.env.JWT_ACC_SECRET,
+            {expiresIn: '20m'});
+        
+        res.status(200).send({
+            accessToken: accessToken,
+            user_id: user._id,
+            lastname: user.lastname,
+            firstname: user.firstname,
+            username: user.username,
+            email: user.email,
+            gender: user.gender,
+            activation: user.activation,
+            following: user.following,
+            profileImage: user.profileImage
+        });
+        }
+        else
+        res.status(400).json({ error: "User with this username existed."});
+    }
 };
 
 // follow function
 exports.follow = async (req, res) => {
-  const { my_id, follow_id } = req.body;
 
-  User.findOneAndUpdate({ _id: my_id }, { $push: { following: follow_id } }, (err) => {
+  const { my_user_id, follow_id } = req.body;
+
+  console.log(my_user_id);
+  User.findOneAndUpdate({ _id: my_user_id }, 
+    { $push: { following: follow_id } }, 
+    (err) => {
     if (err) res.status(400).json({ error: err.message });
   });
 
-  const user = await User.findOne({ _id: my_id }).select("following");
-  console.log(user);
+  const user = await User.findOne({ _id: my_user_id }).select("following");
   res.send(user.following);
 };
 
 // unfollow function
 exports.unfollow = async (req, res) => {
-  const { my_id, follow_id } = req.body;
 
-  User.findOneAndUpdate({ _id: my_id }, { $pullAll: { following: [ObjectId(follow_id)] } }, (doc, err) => {
-    //if (err)
-    //res.status(400).json({ error: err.message });
+  const { my_user_id, follow_id } = req.body;
+  console.log(my_user_id);
+  User.findOneAndUpdate({ _id: my_user_id }, 
+    { $pullAll: { following: [ObjectId(follow_id)] } }
+    , (err) => {
+    if (err)
+      res.status(400).json({ error: err.message });
   });
 
-  const user = await User.findOne({ _id: my_id }).select("following");
+  const user = await User.findOne({ _id: my_user_id }).select("following");
   res.send(user.following);
 };
 
 // updateProPic function
 exports.updateProPic = async (req, res) => {
-  const { my_id, profileImage } = req.body;
+  const { my_user_id, profileImage } = req.body;
 
-  User.findOneAndUpdate({ _id: my_id }, { profileImage: profileImage }, (err) => {
+  User.findOneAndUpdate({ _id: my_user_id }, { profileImage: profileImage }, (err) => {
     if (err) res.status(400).json({ error: "User not exist" });
   });
 
-  const user = await User.findOne({ _id: my_id }).select("profileImage");
+  const user = await User.findOne({ _id: my_user_id }).select("profileImage");
   res.send(user.profileImage);
 };
 

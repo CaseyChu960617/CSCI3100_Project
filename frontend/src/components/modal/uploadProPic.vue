@@ -56,7 +56,7 @@ export default {
 
     save() {
       const data = {
-        my_id: this.currentUser.uid,
+        my_user_id: this.currentUser.user_id,
         profileImage: this.src,
       };
 
