@@ -9,4 +9,6 @@ router.post('/signin', signin);
 
 router.get('/activateAccount/:user_id', activateAccount)
 
+//router.get('/generateEmail/:user_id', generateEmail);
+
 module.exports = router;

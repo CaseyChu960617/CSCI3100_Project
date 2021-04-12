@@ -12,19 +12,29 @@
       ></v-img>
       <v-spacer></v-spacer>
       <div v-if="currentUser">
-        <v-btn to="/chat" class="text-capitalize headline white--text" plain
+        <v-btn
+          v-if="currentUser.activation"
+          to="/chat"
+          class="text-capitalize headline white--text"
+          plain
           >Chat</v-btn
         >
-        <v-btn to="/tutorial" class="text-capitalize headline white--text" plain
+        <v-btn
+          v-if="currentUser.activation"
+          to="/tutorial"
+          class="text-capitalize headline white--text"
+          plain
           >Tutorial</v-btn
         >
         <v-btn
+          v-if="currentUser.activation"
           to="/discussion"
           class="text-capitalize headline white--text"
           plain
           >Discussion</v-btn
         >
         <v-btn
+          v-if="currentUser.activation"
           to="/profile"
           class="mr-4 ml-2 text-capitalize white--text"
           color="#757575"

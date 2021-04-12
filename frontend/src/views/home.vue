@@ -2,7 +2,7 @@
   <div>
     <v-container v-if="currentUser">
       <News v-if="currentUser.activation" />
-      <v-card-title v-else> Please activate you account </v-card-title>
+      <GenerateEmail v-else />
     </v-container>
     <Sign v-else />
   </div>
@@ -11,11 +11,12 @@
 <script>
 import Sign from "../components/auth/sign.vue";
 import News from "./news.vue";
-
+import GenerateEmail from "./generateEmail.vue";
 export default {
   components: {
     Sign,
     News,
+    GenerateEmail,
   },
   data() {
     return {};
