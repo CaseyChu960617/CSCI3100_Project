@@ -97,33 +97,39 @@ exports.editProfile = async (req, res) => {
 
 // follow function
 exports.follow = async (req, res) => {
-  const { my_id, follow_id } = req.body;
 
-  User.findOneAndUpdate({ _id: my_id }, { $push: { following: follow_id } }, (err) => {
+  const { my_user_id, follow_id } = req.body;
+
+  console.log(my_user_id);
+  User.findOneAndUpdate({ _id: my_user_id }, 
+    { $push: { following: follow_id } }, 
+    (err) => {
     if (err) res.status(400).json({ error: err.message });
   });
 
-  const user = await User.findOne({ _id: my_id }).select("following");
-  console.log(user);
+  const user = await User.findOne({ _id: my_user_id }).select("following");
   res.send(user.following);
 };
 
 // unfollow function
 exports.unfollow = async (req, res) => {
-  const { my_id, follow_id } = req.body;
 
-  User.findOneAndUpdate({ _id: my_id }, { $pullAll: { following: [ObjectId(follow_id)] } }, (doc, err) => {
-    //if (err)
-    //res.status(400).json({ error: err.message });
+  const { my_user_id, follow_id } = req.body;
+  console.log(my_user_id);
+  User.findOneAndUpdate({ _id: my_user_id }, 
+    { $pullAll: { following: [ObjectId(follow_id)] } }
+    , (err) => {
+    if (err)
+      res.status(400).json({ error: err.message });
   });
 
-  const user = await User.findOne({ _id: my_id }).select("following");
+  const user = await User.findOne({ _id: my_user_id }).select("following");
   res.send(user.following);
 };
 
 // updateProPic function
 exports.updateProPic = async (req, res) => {
-  const { my_id, profileImage } = req.body;
+  const { my_user_id, profileImage } = req.body;
 
   User.findOneAndUpdate({ _id: my_id }, { profileImage: profileImage }, (err) => {
     if (err) res.status(400).json({ error: "User not exist" });

@@ -76,12 +76,13 @@ export default {
     selectProfile(uid) {
       const currentUser = this.$store.state.auth.user;
       console.log(currentUser);
-      this.uid = uid;
-      if (currentUser.uid == this.uid) this.$router.push({ path: "/profile" });
+      this.user_id = uid;
+      if (currentUser.user_id == this.user_id)
+        this.$router.push({ path: "/profile" });
       else
         this.$router.push({
           name: "userProfile",
-          params: { uid: this.uid },
+          params: { user_id: this.user_id },
         });
     },
   },

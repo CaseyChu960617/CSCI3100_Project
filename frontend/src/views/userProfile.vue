@@ -85,7 +85,10 @@ export default {
     },
 
     follow() {
-      const data = { my_id: this.currentUser.uid, follow_id: this.user._id };
+      const data = {
+        my_user_id: this.currentUser.user_id,
+        follow_id: this.user._id,
+      };
       DataService.put("user/follow", data).then((response) => {
         const following = [];
         response.data.forEach((element) => {
@@ -97,7 +100,10 @@ export default {
     },
 
     unfollow() {
-      const data = { my_id: this.currentUser.uid, follow_id: this.user._id };
+      const data = {
+        my_user_id: this.currentUser.user_id,
+        follow_id: this.user._id,
+      };
 
       DataService.put("user/unfollow", data).then((response) => {
         const following = [];
