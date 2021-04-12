@@ -31,7 +31,6 @@ exports.getLatestThreads = async (req, res) => {
 
 // getCategory function
 exports.getCategory = async (req, res) => {
-  console.log("sdsd");
   Thread.find({ category: req.params["category_id"] })
     .sort({ lastModifiedAt: -1 })
     .select("author category title createdAt lastModifiedAt")
