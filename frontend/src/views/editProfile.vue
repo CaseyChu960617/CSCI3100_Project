@@ -81,9 +81,10 @@ export default {
   data() {
     return {
       account: {
+        user_id: this.$store.state.auth.user.user_id,
         firstname: this.$store.state.auth.user.firstname,
-        lastname: this.$store.state.auth.user.firstname,
-        username: this.$store.state.auth.user.firstname,
+        lastname: this.$store.state.auth.user.lastname,
+        username: this.$store.state.auth.user.username,
         gender: this.$store.state.auth.user.gender,
       },
       genderlist: [
