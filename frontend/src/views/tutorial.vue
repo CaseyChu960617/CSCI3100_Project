@@ -41,42 +41,44 @@
           <v-card-text>content</v-card-text>
         </v-card></v-col
       ><v-spacer />-->
-        <v-container>
-          <v-row>
-            <v-col
-              cols="12"
-              sm="6"
-              md="4"
-              v-for="tutorial in tutorials"
-              :key="tutorial"
-              class="tutorial-card"
-              :ref="'' + tutorial.id"
-              @mouseover="flip($event, tutorial.id)"
-              @mouseleave="unflip($event, tutorial.id)"
-            >
-              <v-card
-                elevation="8"
-                class="card__face card__face--front"
-                :ref="'front-' + tutorial.id"
-              >
-                <v-img src="../assets/Homepage/1.jpg"></v-img>
-                <v-card-title>{{ tutorial.title }}</v-card-title>
-                <v-card-text>{{ tutorial.subject }} </v-card-text>
-                <v-card-text> Instructor </v-card-text>
-              </v-card>
 
-              <v-card
-                elevation="8"
-                class="card__face card__face--back"
-                ref="back"
-              >
-                <h3>Description</h3>
-                <v-card-text>{{ tutorial.description }} </v-card-text>
-                <v-btn class="testing"> wtf</v-btn>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
+        <v-row>
+          <v-col
+            cols="12"
+            sm="6"
+            md="4"
+            v-for="tutorial in tutorials"
+            :key="tutorial"
+            class="tutorial-card"
+            :ref="'' + tutorial.id"
+            @mouseover="flip($event, tutorial.id)"
+            @mouseleave="unflip($event, tutorial.id)"
+          >
+            <v-card
+              elevation="8"
+              class="card__face card__face--front"
+              :ref="'front-' + tutorial.id"
+            >
+              <v-img src="../assets/Homepage/1.jpg"></v-img>
+              <v-card-title>{{ tutorial.title }}</v-card-title>
+              <v-card-text class="sub">{{ tutorial.subject }} </v-card-text>
+              <v-card-text> Instructor </v-card-text>
+            </v-card>
+
+            <v-card elevation="8" class="card__face card__face--back" ref="back"
+              ><div>
+                <v-card-title class="des-title">Description</v-card-title>
+                <v-card-text class="des"
+                  >{{ tutorial.description }}
+                </v-card-text>
+                <div>
+                  <v-btn class="edit-btn">Edit</v-btn>
+                  <v-btn class="view-btn ml-3">View</v-btn>
+                </div>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
 
@@ -173,6 +175,7 @@
 
 .card__face--front {
   background: red;
+  height: 100%;
 }
 
 .card__face--back {
@@ -188,6 +191,22 @@
 .is-flipped > .card__face--front {
   transition: 0.25s;
   visibility: hidden;
+}
+.sub {
+  height: 60px;
+}
+.des {
+  overflow-y: scroll;
+  /*height: 250px;*/
+}
+.edit-btn {
+  position: absolute;
+  bottom: 10px;
+}
+.view-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 76px;
 }
 </style>
 <script>
@@ -218,6 +237,14 @@ export default {
 
   created() {
     this.fetchAllTutorials();
+    window.addEventListener("resize", this.setHeight);
+    this.setHeight();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.setDesHeight);
+  },
+  mounted() {
+    //window.removeEventListener("resize", this.setDesHeight);
   },
 
   methods: {
@@ -238,6 +265,8 @@ export default {
       }
 
       console.log(card);
+
+      this.setHeight();
     },
 
     unflip(event, id) {
@@ -248,6 +277,24 @@ export default {
         card.classList.remove("is-flipped");
       }
       console.log(card);
+    },
+
+    setHeight() {
+      let elements = document.querySelectorAll(".des");
+      let title_elements = document.querySelectorAll(".des-title");
+
+      elements.forEach(function(element) {
+        console.log(element.offsetHeight);
+        element.style.height =
+          element.parentElement.parentElement.offsetHeight * 0.68 + "px";
+
+        console.log(element.offsetHeight);
+      });
+      title_elements.forEach(function(element) {
+        console.log(element.offsetHeight);
+        element.style.height =
+          element.parentElement.parentElement.offsetHeight * 0.15 + "px";
+      });
     },
 
     fetchAllTutorials() {
