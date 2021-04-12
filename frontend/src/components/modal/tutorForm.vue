@@ -92,7 +92,7 @@ export default {
       const data = {
         user_id: this.currentUser.user_id,
         title: this.title,
-        subject: this.subjects[this.subject - 1]["code"],
+        subject: this.subject,
         description: this.description,
       };
       //console.log(this.subjects[this.subject - 1]["code"]);

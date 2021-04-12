@@ -50,14 +50,14 @@
             v-for="tutorial in tutorials"
             :key="tutorial"
             class="tutorial-card"
-            :ref="'' + tutorial.id"
-            @mouseover="flip($event, tutorial.id)"
-            @mouseleave="unflip($event, tutorial.id)"
+            :ref="'' + tutorial._id"
+            @mouseover="flip($event, tutorial._id)"
+            @mouseleave="unflip($event, tutorial._id)"
           >
             <v-card
               elevation="8"
               class="card__face card__face--front"
-              :ref="'front-' + tutorial.id"
+              :ref="'front-' + tutorial._id"
             >
               <v-img src="../assets/Homepage/1.jpg"></v-img>
               <v-card-title>{{ tutorial.title }}</v-card-title>
@@ -306,7 +306,6 @@ export default {
         //mapping the subjects
         rawData.forEach((element) => {
           element.subject = this.subjects[element.subject - 1]["text"];
-          element.id = element._id;
         });
         this.tutorials = rawData;
       });
