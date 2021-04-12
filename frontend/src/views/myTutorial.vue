@@ -72,7 +72,9 @@
               >
                 <h3>Description</h3>
                 <v-card-text>{{ tutorial.description }} </v-card-text>
-                <v-btn class="testing"> wtf</v-btn>
+                <v-btn class="testing" @click="editTutorial(tutorial._id)">
+                  edit</v-btn
+                >
               </v-card>
             </v-col>
           </v-row>
@@ -261,6 +263,13 @@ export default {
     },
     toggle() {
       this.buttonClose *= -1;
+    },
+
+    editTutorial(tutorialId) {
+      this.$router.push({
+        name: "editTutorial",
+        params: { tutorialId: tutorialId },
+      });
     },
   },
 };
