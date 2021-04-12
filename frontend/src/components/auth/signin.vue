@@ -73,7 +73,7 @@ export default {
             password: this.password,
           })
           .then(() => {
-            this.$router.push("/profile");
+            this.$router.push("/home");
           })
           .catch((err) => {
             this.message = err.response.data.error;
