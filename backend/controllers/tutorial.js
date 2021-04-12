@@ -5,12 +5,7 @@ const User = require("../models/user");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
 const { response } = require("express");
-const options = {
-  weekday: "long",
-  year: "numeric",
-  month: "numberic",
-  day: "numeric",
-};
+
 
 // getAllTutorials function
 exports.getAllTutorials = async (req, res) => {
@@ -148,8 +143,8 @@ exports.createChapter = async (req, res) => {
     {
       title: title,
       content: content,
-      createdAt: new Date().getTime().toLocaleDateString("zh-HK", options),
-      lastEditedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
+      createdAt: new Date().toLocaleDateString("zh-HK", options),
+      lastEditedAt: new Date().toLocaleDateString("zh-HK", options),
     },
     (err) => {
       if (err) {
@@ -184,8 +179,8 @@ exports.editTutorial = async (req, res) => {
     $set: {
       title: title,
       subject: subject,
-      lastEditedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
-      lastModifiedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
+      lastEditedAt: new Date().toLocaleDateString("zh-HK"),
+      lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
       published: published,
     },
   };
@@ -224,7 +219,7 @@ exports.postComment = async (req, res) => {
       var newComment = new TutorialComment(
         {
           author: new ObjectId(user_id),
-          createdAt: new Date().getTime().toLocaleDateString("zh-HK", options),
+          createdAt: new Date().toLocaleDateString("zh-HK"),
           content: content,
         },
         (err, data) => {

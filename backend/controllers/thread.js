@@ -3,13 +3,13 @@ const ThreadComment = require("../models/threadComment");
 const User = require("../models/user");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
-const options = { weekday: "long", year: "numeric", month: "numberic", day: "numeric" };
+
 
 // getAllThread function
 exports.getAllThreads = async (req, res) => {
   Thread.find()
     .sort({ lastModifiedAt: -1 })
-    .select("author category title createdAt lastEditedAt")
+    .select("author subject title createdAt lastEditedAt")
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
@@ -21,7 +21,7 @@ exports.getLatestThreads = async (req, res) => {
   Thread.find()
     .sort({ lastModifiedAt: -1 })
     .limit(3)
-    .select("author category title createdAt lastEditedAt")
+    .select("author subject title createdAt lastEditedAt")
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
@@ -29,11 +29,11 @@ exports.getLatestThreads = async (req, res) => {
     });
 };
 
-// getCategory function
-exports.getCategory = async (req, res) => {
-  Thread.find({ category: req.params["category_id"] })
+// getSubject function
+exports.getSubject = async (req, res) => {
+  Thread.find({ subject: req.params["subject_id"] })
     .sort({ lastModifiedAt: -1 })
-    .select("author category title createdAt lastModifiedAt")
+    .select("author subject title createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
@@ -66,9 +66,9 @@ exports.getOneThread = async (req, res) => {
 
 // getMyThreads function
 exports.getUserThreads = async (req, res) => {
-  Thread.find({ author: req.params["_id"] })
+  Thread.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAt: -1 })
-    .select("author category title createdAt lastModifiedAt")
+    .select("author subject title createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
@@ -82,7 +82,7 @@ exports.getFollowingThreads = async (req, res) => {
 
   Thread.find({ author: { $in: following } })
     .sort({ lastModifiedAt: -1 })
-    .select("author category title createdAt lastModifiedAt")
+    .select("author subject title createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((err, docs) => {
@@ -93,7 +93,7 @@ exports.getFollowingThreads = async (req, res) => {
 
 // createThread function
 exports.createThread = async (req, res) => {
-  const { user_id, category, title, content } = req.body;
+  const { user_id, subject, title, content } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
     if (err) res.status(400).json({ error: "User not found!" });
@@ -103,12 +103,12 @@ exports.createThread = async (req, res) => {
       Thread.create(
         {
           author: user._id,
-          category: category,
+          subject: subject,
           title: title,
           content: content,
-          createdAt: new Date().getTime().toLocaleDateString("zh-HK", options),
-          lastEditedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
-          lastModifiedAt: new Date().getTime().toLocaleDateString("zh-HK", options),
+          createdAt: new Date().toLocaleDateString("zh-HK"),
+          lastEditedAt: new Date().toLocaleDateString("zh-HK"),
+          lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
         },
         (err, data) => {
           if (err) {
@@ -126,7 +126,11 @@ exports.editThread = async (req, res) => {
   const { thread_id, title, content } = req.body;
 
   const update = {
-    $set: { title: title, content: content, lastEditedAt: new Date().getTime().toLocaleDateString("zh-HK", options), lastModifiedAt: new Date().getTime().toLocaleDateString("zh-HK", options) },
+    $set: { title: title, 
+            content: content, 
+            lastEditedAt: new Date().toLocaleDateString("zh-HK"), 
+            lastModifiedAt: new Date().toLocaleDateString("zh-HK") 
+          },
   };
 
   Thread.findOneAndUpdate({ _id: thread_id }, update, (err, doc) => {
@@ -145,7 +149,7 @@ exports.postComment = async (req, res) => {
       var newComment = new ThreadComment(
         {
           author: new ObjectId(user_id),
-          createdAt: new Date().getTime().toLocaleDateString("zh-HK", options),
+          createdAt: new Date().toLocaleDateString("zh-HK"),
           content: content,
         },
         (err, data) => {
@@ -161,7 +165,7 @@ exports.postComment = async (req, res) => {
 
       const update = {
         $push: { comments: newComment._id },
-        $set: { lastModifiedAt: new Date().getTime().toLocaleDateString("zh-HK", options) },
+        $set: { lastModifiedAt: new Date().toLocaleDateString("zh-HK") },
       };
 
       Thread.findOneAndUpdate({ _id: thread_id }, update, (err, doc) => {
