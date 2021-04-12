@@ -48,7 +48,7 @@
             fab
             @click="createChapter"
           >
-            <v-icon color="black" @click="createChapter()">mdi-plus</v-icon>
+            <v-icon color="black">mdi-plus</v-icon>
           </v-btn>
         </v-col>
         <v-col>
@@ -117,7 +117,7 @@ export default {
       //console.log(data);
       DataService.post("tutorial/createChapter", data).then((response) => {
         console.log(response.data);
-        console.log(this.chapter);
+        //console.log(this.chapter);
       });
     },
   },
