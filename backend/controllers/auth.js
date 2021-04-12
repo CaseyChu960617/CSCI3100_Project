@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 // signup function.
 exports.signup = async (req, res) => {
-    
+
         console.log(req.body);
 
         const { lastname, firstname, username, email, password, gender } = req.body;
@@ -157,5 +157,28 @@ exports.activateAccount = async (req, res) => {
         // If userId is null, handle the error.
         return res.status(400).json({ status: 'error', message: 'UserId is not existed.'});
     }
+};
+
+exports.generateEmail = async (req, res) => {
+    const user = await User.findOne({ _id: req.params['user_id'] });
+    activate_link= process.env.CLIENT_URL + "/activateAccount/" + user._id
+     const data = {
+            from: 'noreply@urge.org',
+            to: user.email ,
+            subject: "Account activiation",
+            template: "testing",
+            "h:X-Mailgun-Variables": '{"test": "test",  "firstname":"John"}',
+            "v:act":activate_link,
+            "v:fname":user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1),
+            inline: "../frontend/src/assets/Logo/urge.gif"
+     }
+     mg.messages().send(data, (err, body) => {
+         console.log(data);
+         console.log(process.env.MAILGUN_API_KEY)
+            console.log(process.env.MAILGUN_DOMAIN)
+         /*if (err) {
+             console.log(res.status)
+         }*/
+     });
 };
 
