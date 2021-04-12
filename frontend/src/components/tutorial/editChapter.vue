@@ -41,7 +41,7 @@ export default {
         "tutorial/getOneTutorial",
         this.$route.params.tutorialId
       ).then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         const rawData = response.data;
 
         this.title = rawData.title;

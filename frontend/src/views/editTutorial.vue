@@ -19,7 +19,7 @@
           <div class="pa-5">Edit tutorial information</div>
           <v-divider />
           <v-virtual-scroll
-            v-if="!chapters"
+            v-if="chapters.length != 0"
             bench="25"
             min-height="74vh"
             max-height="74vh"
@@ -39,7 +39,17 @@
             </template>
           </v-virtual-scroll>
           <v-card v-else> no tutorial fuck you</v-card>
-          <v-btn>Create chpater </v-btn>
+          <v-btn
+            id="main-btn"
+            slot="activator"
+            v-model="fab"
+            color="#99CFEA"
+            dark
+            fab
+            @click="createChapter"
+          >
+            <v-icon color="black" @click="createChapter()">mdi-plus</v-icon>
+          </v-btn>
         </v-col>
         <v-col>
           <editChapter />
@@ -59,8 +69,6 @@ import DataService from "../services/DataService";
 import editChapter from "../components/tutorial/editChapter.vue";
 export default {
   components: {
-    // Use the <ckeditor> component in this view.
-    //ckeditor: CKEditor.component,
     editChapter,
   },
   data() {
@@ -71,6 +79,13 @@ export default {
       editorData: "fuck",
     };
   },
+
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+
   created() {
     console.log(this.$route.params.tutorialId);
     this.fetchTutorial();
@@ -82,24 +97,27 @@ export default {
         "tutorial/getOneTutorial",
         this.$route.params.tutorialId
       ).then((response) => {
-        console.log(response.data);
+        console.log("fuck");
+        //console.log(response.data);
         const rawData = response.data;
         //this.title = rawData.title;
         this.tutorial = rawData;
-        this.chapters = ["1"];
         console.log("Chapter is ", this.chapters);
       });
     },
 
-    fetchChapter() {
-      DataService.get(
-        "tutorial/createChapter",
-        this.$route.params.tutorialId
-      ).then((response) => {
-        console.log(response.data);
-        const rawData = response.data;
+    fetchChapter() {},
 
-        this.title = rawData.title;
+    createChapter() {
+      const data = {
+        tutorial_id: this.tutorial._id,
+        title: "321",
+        content: "123",
+      };
+      //console.log(data);
+      DataService.post("tutorial/createChapter", data).then((response) => {
+        console.log(response.data);
+        console.log(this.chapter);
       });
     },
   },

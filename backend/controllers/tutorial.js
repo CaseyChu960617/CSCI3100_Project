@@ -137,14 +137,14 @@ exports.createTutorial = async (req, res) => {
 
 // createChapter function
 exports.createChapter = async (req, res) => {
-  const { user_id, tutorial_id, title, content } = req.body;
+  const { tutorial_id, title, content } = req.body;
 
   var newChapter = new Chapter(
     {
       title: title,
       content: content,
-      createdAt: new Date().toLocaleDateString("zh-HK", options),
-      lastEditedAt: new Date().toLocaleDateString("zh-HK", options),
+      createdAt: new Date().toLocaleDateString("zh-HK"),
+      lastEditedAt: new Date().toLocaleDateString("zh-HK"),
     },
     (err) => {
       if (err) {
@@ -161,10 +161,11 @@ exports.createChapter = async (req, res) => {
   const update = {
     $push: { chapers: newChapter._id },
     $set: {
-      lastModifiedAt: new Date().getTime().toLocaleDateString("zh-HK"),
+      lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
       lastModifiedAtDate: new Date().getTime(),
     },
   };
+  console.log(update);
 
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
     if (err) res.status(400).json({ error: err.message });
@@ -258,6 +259,7 @@ exports.postComment = async (req, res) => {
 exports.deleteTutorial = async (req, res) => {
   const { tutorial_id } = req.body;
 
+  console.log({ tutorial_id });
   Tutorial.findById(tutorial_id, (doc) => {
     doc.remove();
     res.status(200).json({
