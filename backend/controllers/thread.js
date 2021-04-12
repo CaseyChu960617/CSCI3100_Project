@@ -18,6 +18,19 @@ exports.getAllThreads = async (req, res) => {
     });
 };
 
+exports.getLatestThreads = async (req, res) => {
+
+  Thread.find()
+  .sort({ lastModifiedAt: -1 })
+  .limit(3)
+  .select('author category title createdAt lastEditedAt')
+  .populate('author', '_id username')
+  .exec()
+  .then((docs) => {
+    res.send(docs);
+  });
+};
+
 // getCategory function
 exports.getCategory = async (req, res) => {
     

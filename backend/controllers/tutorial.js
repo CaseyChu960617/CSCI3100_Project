@@ -20,6 +20,20 @@ exports.getAllTutorials = async (req, res) => {
     });
 };
 
+exports.getLatestTutorials = async (req, res) => {
+  Tutorial.find()
+    .sort({ lastModifiedAt: -1 })
+    .limit(3)
+    .select("_id author subject title description lastModifiedAt")
+    .populate("author", "_id username")
+    .exec()
+    .then((docs) => {
+      res.send(docs);
+      console.log(docs);
+    });
+};
+
+
 // getSubject function
 exports.getSubject = async (req, res) => {
   Tutorial.find({ subject: req.params["subject_id"] })

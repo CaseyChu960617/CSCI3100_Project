@@ -1,21 +1,21 @@
 <template>
   <div>
-    <v-container v-if="currentUser">Home {{ message }}</v-container>
+    <News v-if="currentUser" />
     <Sign v-else />
   </div>
 </template>
 
 <script>
 import Sign from "../components/auth/sign.vue";
+import News from "./news.vue";
 
 export default {
   components: {
     Sign,
+    News,
   },
   data() {
-    return {
-      message: "abc",
-    };
+    return {};
   },
   computed: {
     currentUser() {

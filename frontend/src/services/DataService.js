@@ -58,6 +58,14 @@ class DataService {
     return http.get(Tutorial);
   }
 
+  getLatestTutorials() {
+    return http.get(Tutorial + 'getLatestTutorials');
+  }
+
+  getLatestThreads() {
+    return http.get(Thread + 'getLatestThreads');
+  }
+
   // create(table, data, header) {
   //   return http.post(`/${table}`, data, header);
   // }

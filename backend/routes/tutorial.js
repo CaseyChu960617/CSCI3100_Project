@@ -3,6 +3,7 @@ const router = express.Router();
 const { authJwt } = require("../middlewares");
 
 const { getAllTutorials,
+        getLatestTutorials,
         getSubject,
         getOneTutorial,
         getOneChapter,
@@ -18,6 +19,9 @@ const { getAllTutorials,
     } = require('../controllers/tutorial');
 
 router.get("/", getAllTutorials);
+
+
+router.get('/getLatestTutorials', getLatestTutorials);
 
 router.get('/subjecty/:subject_id', getSubject);
 

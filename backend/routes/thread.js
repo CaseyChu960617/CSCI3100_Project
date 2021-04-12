@@ -3,6 +3,7 @@ const router = express.Router();
 const { authJwt } = require("../middlewares");
 
 const { getAllThreads,
+        getLatestThreads,
         getCategory,
         getOneThread,
         getUserThreads,
@@ -14,6 +15,8 @@ const { getAllThreads,
 
 
 router.get('/', getAllThreads);
+
+router.get('/getLatestThreads', getLatestThreads);
 
 router.get('/category/:category_id', getCategory);
 
@@ -30,6 +33,7 @@ router.put('/editThread',  editThread);
 router.put('/postComment',  postComment);
 
 router.delete('/deleteThread', deleteThread);
+
 
 
 module.exports = router;

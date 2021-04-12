@@ -34,7 +34,7 @@ const http = require("http").createServer(app);
 var socketID = "";
 const io = require("socket.io")(http, {
   cors: {
-    origin: "http://localhost:9000",
+    origin: process.env.DOMAIN_URL,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
