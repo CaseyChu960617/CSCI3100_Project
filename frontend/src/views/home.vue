@@ -1,6 +1,9 @@
 <template>
   <div>
-    <News v-if="currentUser" />
+    <v-container v-if="currentUser">
+      <News v-if="currentUser.activation" />
+      <v-card-title v-else> Please activate you account </v-card-title>
+    </v-container>
     <Sign v-else />
   </div>
 </template>
