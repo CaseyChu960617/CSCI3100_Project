@@ -9,7 +9,7 @@
           <v-btn @click="uploadProPic">Upload</v-btn>
         </v-form>
         <v-avatar size="200" v-if="src">
-          <img :src="src" max-width="100%" height="auto" />
+          <v-img :src="src" height="100%" />
         </v-avatar>
         <v-btn @click="save">Save</v-btn>
       </v-container>

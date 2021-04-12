@@ -2,12 +2,18 @@
   <v-container fluid class="pa-5">
     <v-card
       class="header pa-3"
-      style="  height: 60px;background: white;z-index: 5; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; "
+      style="
+        height: 60px;
+        background: white;
+        z-index: 5;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      "
     >
       <div>
-        <span class="mr-2 ">
+        <span class="mr-2">
           <v-avatar size="40" v-if="chatOpp.profileImage">
-            <img :src="chatOpp.profileImage" />
+            <v-img :src="chatOpp.profileImage" height="100%" />
           </v-avatar>
           <v-avatar v-else color="grey" size="40">
             <span class="white--text headline"> {{ chatOpp.username[0] }}</span>
@@ -18,7 +24,7 @@
     <v-card
       max-height="calc(70vh - 60px)"
       min-height="calc(70vh - 60px)"
-      style=" overflow-y: scroll; width: 100%; padding: 12px"
+      style="overflow-y: scroll; width: 100%; padding: 12px"
       class="scroll-bar blue-grey lighten-5 ml-auto mr-auto"
       elevation="16"
       v-bind:style="messages.length == 0 ? 'display:flex' : ''"
@@ -28,8 +34,7 @@
         v-if="messages.length == 0"
         align="center"
         justify="center"
-        style=" align-self: center;
-    text-align: center"
+        style="align-self: center; text-align: center"
         ;
       >
         展開激情對話
@@ -40,7 +45,7 @@
           <v-list-item
             :key="message.timestamp"
             v-if="message.sender.username.localeCompare(currentUser.username)"
-            class="blue-grey lighten-5 "
+            class="blue-grey lighten-5"
           >
             <v-list-item-avatar class="align-self-start mr-2">
               <v-avatar size="40" v-if="chatOpp.profileImage">
@@ -54,13 +59,15 @@
             </v-list-item-avatar>
             <div
               class="received-message"
-              style="align-items: center;
-    align-self: center;
-    display: flex;
-    flex-wrap: wrap;
-    flex: 1 1;
-    overflow: hidden;
-    padding: 12px 0;"
+              style="
+                align-items: center;
+                align-self: center;
+                display: flex;
+                flex-wrap: wrap;
+                flex: 1 1;
+                overflow: hidden;
+                padding: 12px 0;
+              "
             >
               <v-card color="#808080" class="flex-none">
                 <v-card-text class="white--text pa-2 d-flex flex-column">
@@ -69,7 +76,7 @@
                   </span>
                   <span
                     class="align-self-start text-subtitle-1"
-                    style="max-width: 100%;"
+                    style="max-width: 100%"
                     >{{ message.message }}</span
                   >
                   <span class="text-caption font-italic align-self-end">{{
@@ -82,17 +89,19 @@
           <v-list-item
             v-else
             :key="message.timestamp"
-            class="blue-grey lighten-5 "
+            class="blue-grey lighten-5"
           >
             <div
               class="sent-message justify-end"
-              style="align-items: center;
-    align-self: center;
-    display: flex;
-    flex-wrap: wrap;
-    flex: 1 1;
-    overflow: hidden;
-    padding: 12px 0;"
+              style="
+                align-items: center;
+                align-self: center;
+                display: flex;
+                flex-wrap: wrap;
+                flex: 1 1;
+                overflow: hidden;
+                padding: 12px 0;
+              "
             >
               <v-card color="primary" class="flex-none">
                 <v-card-text class="white--text pa-2 d-flex flex-column">
@@ -160,7 +169,7 @@
       </v-virtual-scroll>-->
 
     <v-card
-      style="width: 100%; padding: 12px;margin-right: auto;margin-left: auto; "
+      style="width: 100%; padding: 12px; margin-right: auto; margin-left: auto"
       class="scroll-bar blue-grey lighten-5 nl-auto mr-auto"
       elevation="16"
     >
@@ -176,14 +185,13 @@
               ></v-text-field>
             </v-col>
             <v-btn
-              class=" mr-4"
+              class="mr-4"
               elevation="2"
               color="primary"
               v-on:click="send"
               justify="center"
               align="center"
-              style="text-align:center;display:inline;    align-self: center;
-"
+              style="text-align: center; display: inline; align-self: center"
               >Send</v-btn
             >
           </v-row>

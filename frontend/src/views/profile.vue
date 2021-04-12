@@ -16,11 +16,7 @@
       <v-col md="6"
         ><div class="container mt-4">
           <v-avatar size="200" v-if="currentUser.profileImage">
-            <img
-              :src="currentUser.profileImage"
-              max-width="100%"
-              height="auto"
-            />
+            <v-img :src="currentUser.profileImage" height="100%" />
           </v-avatar>
           <v-avatar v-else color="grey" size="200">
             <span class="white--text headline">
