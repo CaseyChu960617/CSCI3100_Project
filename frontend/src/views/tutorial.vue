@@ -310,7 +310,7 @@ export default {
 
     fetchAllTutorials() {
       DataService.getAllTutorial().then((response) => {
-        console.log("Data is ", response.data);
+        console.log("all Data is ", response.data);
         let rawData = response.data;
         //mapping the subjects
         rawData.forEach((element) => {

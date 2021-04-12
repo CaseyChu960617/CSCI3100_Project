@@ -290,7 +290,6 @@ export default {
 
   created() {
     this.fetchMyTutorial();
-    this.fetchAllTutorials();
     window.addEventListener("resize", this.setHeight);
     this.setHeight();
   },
@@ -302,20 +301,12 @@ export default {
     fetchMyTutorial() {
       DataService.get("tutorial/userTutorials", this.currentUser.user_id).then(
         (response) => {
-          console.log("Data is ", response.data);
+          console.log("Fetch Data is ", response.data);
           let rawData = response.data;
           //mapping the subjects
           rawData.forEach((element) => {
+            console.log(element.author._id);
             element.subject = this.subjects[element.subject - 1]["text"];
-            DataService.getAllTutorial().then((response) => {
-              console.log("Data is ", response.data);
-              let rawData = response.data;
-              //mapping the subjects
-              rawData.forEach((element) => {
-                element.subject = this.subjects[element.subject - 1]["text"];
-              });
-              this.tutorials = rawData;
-            });
           });
           this.tutorials = rawData;
         }
