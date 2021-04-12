@@ -64,8 +64,8 @@
                     >{{ tutorial.description }}
                   </v-card-text>
                   <div>
-                    <v-btn class="edit-btn">Edit</v-btn>
-                    <v-btn class="view-btn ml-3">View</v-btn>
+                    <v-btn class="view-btn">View</v-btn>
+                    <!--<v-btn class="view-btn ml-3">View</v-btn>-->
                   </div>
                 </div>
               </v-card>
@@ -127,11 +127,20 @@
 .edit-btn {
   position: absolute;
   bottom: 10px;
+  left: 76px;
 }
 .view-btn {
   position: absolute;
   bottom: 10px;
-  left: 76px;
+}
+.des::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.des {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 </style>
 <script>

@@ -4,15 +4,16 @@
     <v-row justify="center">
       <v-col sm="11">
         <v-card-title
-          >My tutorials<v-spacer /><v-btn icon @click.stop="dialog = true"
+          >Tutorials<v-spacer /><!--<v-btn icon @click.stop="dialog = true"
             ><v-icon>mdi-plus</v-icon></v-btn
-          ></v-card-title
+          >--></v-card-title
         >
         <modal
           :dialog.sync="dialog"
           :editedItem="editedItem"
           :title="`${title}`"
           @show="show"
+          @submit="save()"
         ></modal>
 
         <!-- <v-divider />
@@ -40,44 +41,66 @@
           <v-card-text>content</v-card-text>
         </v-card></v-col
       ><v-spacer />-->
-        <v-container>
-          <v-row>
-            <v-col
-              cols="12"
-              sm="6"
-              md="4"
-              v-for="tutorial in tutorials"
-              :key="tutorial"
-              class="tutorial-card"
-              :ref="'' + tutorial._id"
-              @mouseover="flip($event, tutorial._id)"
-              @mouseleave="unflip($event, tutorial._id)"
-            >
-              <v-card
-                elevation="8"
-                class="card__face card__face--front"
-                :ref="'front-' + tutorial._id"
-              >
-                <v-img src="../assets/Homepage/1.jpg"></v-img>
-                <v-card-title>{{ tutorial.title }}</v-card-title>
-                <v-card-text>{{ tutorial.subject }} </v-card-text>
-                <v-card-text> Instructor </v-card-text>
-              </v-card>
 
-              <v-card
-                elevation="8"
-                class="card__face card__face--back"
-                ref="back"
-              >
-                <h3>Description</h3>
-                <v-card-text>{{ tutorial.description }} </v-card-text>
-                <v-btn class="testing" @click="editTutorial(tutorial._id)">
-                  edit</v-btn
-                >
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
+        <v-row>
+          <v-col
+            cols="12"
+            sm="6"
+            md="4"
+            v-for="tutorial in tutorials"
+            :key="tutorial"
+            class="tutorial-card"
+            :ref="'' + tutorial._id"
+            @mouseover="flip($event, tutorial._id)"
+            @mouseleave="unflip($event, tutorial._id)"
+          >
+            <v-card
+              elevation="8"
+              class="card__face card__face--front"
+              :ref="'front-' + tutorial._id"
+            >
+              <v-img src="../assets/Homepage/1.jpg"></v-img>
+              <v-card-title>{{ tutorial.title }}</v-card-title>
+              <v-card-text class="sub">{{ tutorial.subject }} </v-card-text>
+              <v-card-text>
+                Instructor {{ tutorial.author.username }}
+              </v-card-text>
+            </v-card>
+
+            <v-card elevation="8" class="card__face card__face--back" ref="back"
+              ><div>
+                <v-card-title class="des-title">Description</v-card-title>
+                <v-card-text class="des"
+                  >{{ tutorial.description }}
+                </v-card-text>
+                <div class="btn-container">
+                  <!-- <v-btn class="view-btn">View</v-btn>
+                  <v-btn
+                    class="edit-btn ml-3"
+                    @click="editTutorial(tutorial._id)"
+                    >Edit</v-btn
+                  >
+                  <v-btn class="delete-btn ml-3">Delete</v-btn>-->
+                  <v-btn class="mx-2" fab dark small color="primary">
+                    <v-icon dark>
+                      mdi-eye
+                    </v-icon>
+                  </v-btn>
+                  <v-btn class="mx-2" fab dark small color="primary">
+                    <v-icon dark>
+                      mdi-pen
+                    </v-icon>
+                  </v-btn>
+                  <v-btn class="mx-2" fab dark small color="primary">
+                    <v-icon dark>
+                      mdi-delete
+                    </v-icon>
+                  </v-btn>
+                </div>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
 
@@ -98,12 +121,11 @@
         color="#99CFEA"
         dark
         fab
-        @click="toggle()"
+        @click.stop="dialog = true"
       >
-        <v-icon v-if="buttonClose == -1" color="black">mdi-menu</v-icon>
-        <v-icon v-if="buttonClose == 1" color="black">mdi-close</v-icon>
+        <v-icon color="black">mdi-plus</v-icon>
       </v-btn>
-      <v-btn
+      <!--<v-btn
         class="extended mr-0"
         fab
         dark
@@ -111,14 +133,22 @@
         color="#1F5A98"
         width="185px"
         @click.stop="dialog = true"
+      >-->
+      <!--<v-icon style="float:left">mdi-plus</v-icon>-->
+      <!-- Create tutorial
+      </v-btn>
+        <v-btn
+        class="extended mr-0"
+        fab
+        dark
+        small
+        color="#1F5A98"
+        width="185px"
+        @click="goToMyTutorial"
       >
-        <!--<v-icon style="float:left">mdi-plus</v-icon>-->
-        Create tutorial
-      </v-btn>
-      <v-btn class="extended mr-0" fab dark small color="#1F5A98" width="185px">
-        <!--<v-icon style="float:left">mdi-book-open-blank-variant</v-icon>-->View
+       View
         my tutorials
-      </v-btn>
+      </v-btn>-->>
     </v-speed-dial>
   </v-container>
 </template>
@@ -166,6 +196,7 @@
 
 .card__face--front {
   background: red;
+  height: 100%;
 }
 
 .card__face--back {
@@ -181,6 +212,32 @@
 .is-flipped > .card__face--front {
   transition: 0.25s;
   visibility: hidden;
+}
+.sub {
+  height: 60px;
+}
+.des {
+  overflow-y: scroll;
+  /*height: 250px;*/
+}
+.btn-container {
+  position: absolute;
+  bottom: 10px;
+}
+.view-btn {
+}
+.edit-btn {
+}
+.delete-btn {
+}
+.des::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.des {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 </style>
 <script>
@@ -199,9 +256,6 @@ export default {
       title: "",
       dialog: false,
       load: true,
-      editedItem: {},
-      buttonClose: -1,
-      isActive: false,
     };
   },
   computed: {
@@ -216,6 +270,12 @@ export default {
 
   created() {
     this.fetchMyTutorial();
+    this.fetchAllTutorials();
+    window.addEventListener("resize", this.setHeight);
+    this.setHeight();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.setDesHeight);
   },
 
   methods: {
@@ -255,6 +315,7 @@ export default {
       }
 
       console.log(card);
+      this.setHeight();
     },
 
     unflip(event, id) {
@@ -267,13 +328,27 @@ export default {
       console.log(card);
     },
 
+    setHeight() {
+      let elements = document.querySelectorAll(".des");
+      let title_elements = document.querySelectorAll(".des-title");
+
+      elements.forEach(function(element) {
+        console.log(element.offsetHeight);
+        element.style.height =
+          element.parentElement.parentElement.offsetHeight * 0.62 + "px";
+
+        console.log(element.offsetHeight);
+      });
+      title_elements.forEach(function(element) {
+        console.log(element.offsetHeight);
+        element.style.height =
+          element.parentElement.parentElement.offsetHeight * 0.165 + "px";
+      });
+    },
+
     show(bool) {
       this.dialog = bool;
     },
-    toggle() {
-      this.buttonClose *= -1;
-    },
-
     editTutorial(tutorialId) {
       this.$router.push({
         name: "editTutorial",
