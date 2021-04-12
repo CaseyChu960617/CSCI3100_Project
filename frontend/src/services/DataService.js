@@ -1,13 +1,15 @@
 import http from "../http-common";
 const Thread = "/thread/";
 const Tutorial = "/tutorial/";
+const Profile = "/user/";
 
 class DataService {
   getAll(table, header) {
     return http.get(`/${table}`, header);
   }
 
-  get(table, id) { //header) {
+  get(table, id) {
+    //header) {
     return http.get(`/${table}/${id}`); //, header);
   }
 
@@ -72,11 +74,21 @@ class DataService {
   //   return http.delete(`/${table}/${id}`, header);
   // }
 
-  upload(table, formData) { //header) {
+  // Profile
+  updateProfile(data, header) {
+    return http.put(`${Profile}editProfile`, data, header);
+  }
+
+  changePassword(data, header) {
+    return http.put(`${Profile}resetPassword`, data, header);
+  }
+
+  upload(table, formData) {
+    //header) {
     //let formData = new FormData();
     //formData.append("file", file);
     //header.headers["Content-Type"]="text/csv";
-    return http.post(`/upload/${table}`, formData);// header);
+    return http.post(`/upload/${table}`, formData); // header);
   }
 }
 
