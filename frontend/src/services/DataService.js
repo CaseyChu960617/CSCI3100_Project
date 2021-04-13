@@ -27,6 +27,12 @@ class DataService {
     return http.delete(`/${table}/${id}`); //header);
   }
 
+  deleteChapter(tutorial_id, chapter_id) {
+    //, //id, header) {
+    return http.delete(Tutorial + `deleteChapter/${tutorial_id}/${chapter_id}`); //header);
+  }
+
+
   //discussions
   getAllThread() {
     return http.get(Thread);
