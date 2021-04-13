@@ -35,6 +35,7 @@ export const router = new Router({
       component: discussion,
     },
     {
+      name: "profile",
       path: "/profile/:user_id",
       component: profile,
     },
