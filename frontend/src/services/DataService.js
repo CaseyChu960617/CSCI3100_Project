@@ -2,7 +2,7 @@ import http from "../http-common";
 const Thread = "/thread/";
 const Tutorial = "/tutorial/";
 const Profile = "/user/";
-const Category = "category/";
+const Subject = "subject/";
 const Upload = "/upload/";
 const Chat = "/chat/";
 class DataService {
@@ -33,14 +33,13 @@ class DataService {
     return http.delete(Tutorial + `deleteChapter/${tutorial_id}/${chapter_id}`); //header);
   }
 
-
   //discussions
   getAllThread() {
     return http.get(Thread);
   }
 
-  getCatThread(id) {
-    return http.get(Thread + Category + id);
+  getSubThread(id) {
+    return http.get(Thread + Subject + id);
   }
 
   getOneThread(id) {
