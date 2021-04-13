@@ -1,23 +1,20 @@
 <template>
-  <v-container>
-    <v-container>
-      <v-title>
-        <v-text-field label="Title" v-model="chapter.title"></v-text-field>
-      </v-title>
-      Edit below:
-      <!-- <v-card class="pa-5" v-html="chapter.content"> </v-card>-->
+  <v-container
+    ><v-container>
+      Preview:
+      <v-card class="pa-5" v-html="editorData"> {{ this.content }}</v-card>
     </v-container>
     <v-container>
-
       <template
         ><ckeditor
           :editor="editor"
           v-model="chapter.content"
           :config="editorConfig"
         ></ckeditor
-      ></template> </v-container></v-container
-
-></template>
+      ></template>
+    </v-container>
+  </v-container>
+</template>
 
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -25,10 +22,9 @@ import CKEditor from "@ckeditor/ckeditor5-vue2";
 //import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
 import DataService from "../../services/DataService";
 
-import MathType from "@wiris/mathtype-ckeditor5";
+//import MathType from "@wiris/mathtype-ckeditor5";
 
 import UploadAdapter from "../../UploadAdapter";
-
 
 export default {
   props: ["chapterId"],
@@ -63,15 +59,12 @@ export default {
           "undo",
           "redo",
         ],
-        table: {
-          toolbar: ["tableColumn", "tableRow", "mergeTableCells"],
-        },
-        extraPlugins: [this.uploader],
       },
     };
   },
-
   created() {
+    //console.log(this.$route.params.tutorialId);
+    console.log("in editChapter, ", this.chapterId);
     this.fetchOneChapter();
   },
   methods: {
@@ -82,8 +75,8 @@ export default {
         (response) => {
           //console.log(response.data);
           const rawData = response.data;
-          console.log("Data is ", rawData);
-          this.chapter = rawData;
+          console.log("Data is ", rawData.content);
+          this.content = rawData.content;
         }
       );
     },
