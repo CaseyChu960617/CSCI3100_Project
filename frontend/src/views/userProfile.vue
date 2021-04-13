@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" sm="12" md="10">
     <v-card elevation="16" outlined>
-      <v-card-title class="display-1 pa-10">
+      <v-card-title class="display-1 pa-5">
         <v-icon class="pr-3" color="black" size="40">mdi-account-cog</v-icon
         >Profile</v-card-title
       >
@@ -61,15 +61,18 @@
                 v-model="genderlist[account.gender - 1]"
                 label="Gender"
               ></v-text-field>
-              <v-row class="mt-1">
-                <v-btn elevation="2" @click="startChat(account._id)"
-                  >Start chat</v-btn
+              <v-row class="my-3">
+                <v-btn text @click="startChat(account._id)"
+                  >Start chatting</v-btn
                 >
-                <v-spacer />
-                <v-btn v-if="followed" elevation="2" @click="unfollow()"
+                <v-btn text class="ml-4" @click="follow()">View Threads</v-btn>
+                <v-btn text class="ml-4" @click="viewUserTutorials()"
+                  >View Tutorials</v-btn
+                >
+                <v-btn text class="ml-4" v-if="followed" @click="unfollow()"
                   >Unfollow</v-btn
                 >
-                <v-btn v-else elevation="2" @click="follow()">Follow</v-btn>
+                <v-btn text class="ml-4" v-else @click="follow()">Follow</v-btn>
               </v-row></v-container
             ></v-col
           ></v-row
@@ -85,7 +88,7 @@ import DataService from "../services/DataService";
 export default {
   data() {
     return {
-      account: null,
+      account: "",
       followed: null,
       genderlist: ["Male", "Female", "Prefer not to disclose"],
     };
@@ -108,18 +111,16 @@ export default {
 
       DataService.get("user/getProfile", this.$route.params.user_id)
         .then((response) => {
-          console.log(response.data[0]);
-          this.account = response.data[0];
+          this.account = response.data;
+          console.log(response.data);
         })
         .then(() => {
-          console.log("This user following");
           console.log(this.currentUser.following);
           this.checkFollowed();
         });
     },
 
     startChat(id) {
-      console.log("oppId is ", id);
       var chatId = "";
       var oppUsername = this.account.username;
       DataService.post("chat/getOneChat", {
@@ -127,11 +128,6 @@ export default {
         user_id_2: id,
       }).then((response) => {
         chatId = response.data._id;
-        console.log("ChatId:" + chatId);
-        /*this.$router.push({
-          name: "chat",
-          params: { chatId: chat_id },
-        });*/
         this.$router.push({
           name: "chat",
           params: { chatId: chatId, oppUsername },
@@ -142,14 +138,10 @@ export default {
     checkFollowed() {
       this.followed = false;
       this.currentUser.following.forEach((element) => {
-        //console.log("HI");
-        //console.log(element);
-        if (element._id === this.user._id) {
+        if (element._id === this.account._id) {
           this.followed = true;
-          //console.log("followed");
         }
       });
-      console.log(this.followed);
     },
 
     follow() {
@@ -178,10 +170,17 @@ export default {
         response.data.forEach((element) => {
           following.push({ _id: element });
         });
-
-        console.log(following);
         this.currentUser.following = following;
         this.checkFollowed();
+      });
+    },
+
+    viewUserTutorials() {
+      this.$router.push({
+        name: "userTutorial",
+        params: {
+          user_id: this.account._id,
+        },
       });
     },
   },

@@ -8,6 +8,7 @@
       <!-- <v-card class="pa-5" v-html="chapter.content"> </v-card>-->
     </v-container>
     <v-container>
+
       <template
         ><ckeditor
           :editor="editor"
@@ -15,13 +16,20 @@
           :config="editorConfig"
         ></ckeditor
       ></template> </v-container></v-container
+
 ></template>
 
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import CKEditor from "@ckeditor/ckeditor5-vue2";
+//import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
 import DataService from "../../services/DataService";
+
 import MathType from "@wiris/mathtype-ckeditor5";
+
+import UploadAdapter from "../../UploadAdapter";
+
+
 export default {
   props: ["chapterId"],
   components: {
@@ -34,7 +42,32 @@ export default {
       title: null,
       chapter: [],
       editor: ClassicEditor,
-      editorConfig: {},
+
+      editorData: "fuck",
+      content: null,
+      editorConfig: {
+        toolbar: [
+          "heading",
+          "|",
+          "bold",
+          "italic",
+          "link",
+          "bulletedList",
+          "numberedList",
+          "|",
+          "insertTable",
+          "|",
+          "imageUpload",
+          "mediaEmbed",
+          "|",
+          "undo",
+          "redo",
+        ],
+        table: {
+          toolbar: ["tableColumn", "tableRow", "mergeTableCells"],
+        },
+        extraPlugins: [this.uploader],
+      },
     };
   },
 
@@ -62,6 +95,12 @@ export default {
   },
   destroyed() {
     //alert("fuck");
+  },
+
+  uploader(editor) {
+    editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+      return new UploadAdapter(loader);
+    };
   },
 };
 </script>

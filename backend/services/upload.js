@@ -10,7 +10,9 @@ aws.config.update({
   region: process.env.AWS_BUCKET_REGION
 });
 
-var s3 = new aws.S3();
+var s3 = new aws.S3(
+  
+);
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
@@ -45,9 +47,24 @@ const uploadThumbnail = multer({
       cb(null, { fieldName: "TESTING_METADATA" });
     },
     key: function (req, file, cb) {
-      cb(null, '/tutorial/thumbnail' + Date.now().toString() + file.originalname);
+      cb(null, '/tutorial/thumbnail/' + Date.now().toString() + file.originalname);
     },
   }),
 });
 
-module.exports = { uploadProPic, uploadThumbnail };
+const uploadTutorialPic = multer({
+  fileFilter,
+  storage: multerS3({
+    acl: "public-read",
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: "TESTING_METADATA" });
+    },
+    key: function (req, file, cb) {
+      cb(null, '/tutorial/content/' + Date.now().toString() + file.originalname);
+    },
+  }),
+});
+
+module.exports = { uploadProPic, uploadThumbnail, uploadTutorialPic };

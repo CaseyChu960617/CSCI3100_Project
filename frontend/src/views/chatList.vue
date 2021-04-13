@@ -107,7 +107,6 @@ export default {
       this.loading = true;
       DataService.get("chat/getAllChats", this.currentUser.user_id)
         .then((response) => {
-          console.log(response.data);
           const rawData = response.data;
 
           rawData.forEach((element) => {
@@ -117,7 +116,6 @@ export default {
               this.chats.push({ user: element.userA, _id: element._id });
             }
           });
-          console.log(this.chats[0]);
           this.loading = false;
         })
         .catch((err) => {
@@ -131,11 +129,6 @@ export default {
         });
     },
 
-    //mounted() {
-    //  console.log(this.$route.params.chatId);
-    //  this.chatId = this.$route.params.chatId;
-    //},
-    //
     selectChat(id) {
       let oldChatId = this.chatId;
       this.chatId = id;
@@ -146,7 +139,6 @@ export default {
           this.oppUsername = element.user.username;
         }
       });
-      //console.log(this.currentUser.username + " in room " + this.chatId);
       this.socket.emit("joinRoom", {
         chatId: this.chatId,
         oldChatId: oldChatId,

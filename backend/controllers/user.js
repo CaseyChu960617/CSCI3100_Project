@@ -7,13 +7,17 @@ const jwt = require("jsonwebtoken");
 // getProfile function
 exports.getProfile = async (req, res) => {
   const user_id = req.params["user_id"];
-
-  User.find({ _id: user_id })
-    .select("username firstname lastname email gender")
-    .exec()
-    .then((doc) => {
-      res.send(doc);
-    });
+  try {
+    User.findOne({ _id: user_id })
+      .select("username firstname lastname email gender")
+      .exec()
+      .then((doc) => {
+        res.send(doc);
+      });
+  }
+  catch(err) {
+    res.status(400).json({ error: err.message});
+  }
 };
 
 // editProfile function
@@ -61,8 +65,8 @@ exports.editProfile = async (req, res) => {
         });
     }
     else {
-        if (otherUser._id === user._id) {
-            user.username = username;
+        if (otherUser._id.equals(user._id)) {
+        user.username = username;
         user.firstname = firstname;
         user.lastname = lastname;
         user.gender = gender;

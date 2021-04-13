@@ -73,10 +73,10 @@ export default {
           }
         });
     },
-    selectProfile(uid) {
+    selectProfile(user_id) {
       const currentUser = this.$store.state.auth.user;
       console.log(currentUser);
-      this.user_id = uid;
+      this.user_id = user_id;
       if (currentUser.user_id == this.user_id)
         this.$router.push({ path: "/profile" });
       else

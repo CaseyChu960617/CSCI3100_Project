@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" sm="12" md="10">
     <v-card elevation="16" outlined>
-      <v-card-title class="display-1 pa-10">
+      <v-card-title class="display-1 pa-5">
         <v-icon class="pr-3" color="black" size="40">mdi-account-cog</v-icon
         >Profile</v-card-title
       >
@@ -78,7 +78,7 @@
                 label="Gender"
                 :rules="[rules.required]"
               ></v-select>
-              <v-row class="mt-1">
+              <v-row class="my-3">
                 <v-btn text @click="changePassword()">Change Password</v-btn>
                 <v-spacer />
                 <v-btn

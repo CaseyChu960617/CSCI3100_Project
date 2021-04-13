@@ -10,6 +10,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-basic-styles": "^27.0.0",
     "@ckeditor/ckeditor5-build-classic": "^27.0.0",
+
     "@ckeditor/ckeditor5-dev-utils": "^24.4.2",
     "@ckeditor/ckeditor5-dev-webpack-plugin": "^24.4.2",
     "@ckeditor/ckeditor5-editor-classic": "^27.0.0",
@@ -18,6 +19,9 @@
     "@ckeditor/ckeditor5-paragraph": "^27.0.0",
     "@ckeditor/ckeditor5-theme-lark": "^27.0.0",
     "@ckeditor/ckeditor5-vue": "^2.0.1",
+
+    "@ckeditor/ckeditor5-upload": "^27.0.0",
+
     "@ckeditor/ckeditor5-vue2": "^1.0.5",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@wiris/mathtype-ckeditor5": "^7.26.0",
