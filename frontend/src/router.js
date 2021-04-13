@@ -8,8 +8,6 @@ import profile from "./views/profile.vue";
 //import chat from "./components/chat/chat.vue";
 
 import activateAccount from "./views/activateAccount.vue";
-import userProfile from "./views/userProfile.vue";
-import editProfile from "./views/editProfile.vue";
 import chatList from "./views/chatList.vue";
 import editTutorial from "./views/editTutorial.vue";
 import myTutorial from "./views/myTutorial.vue";
@@ -56,15 +54,6 @@ export const router = new Router({
     {
       path: "*",
       redirect: "/home",
-    },
-    {
-      name: "userProfile",
-      path: "/userProfile/:user_id",
-      component: userProfile,
-    },
-    {
-      path: "/editProfile",
-      component: editProfile,
     },
     {
       name: "editTutorial",
