@@ -17,17 +17,33 @@
             <strong> {{ this.tutorial.title }} </strong>
           </div>
         </v-toolbar-title>
-        <v-toolbar-title class="author">
-          <v-btn
-            v-if="currentUser.activation"
-            :to="`/profile/` + currentUser.user_id"
-            class="mr-4 ml-2 text-capitalize black--text"
-            color="#757575"
-            text
+
+        <v-toolbar-title class="author pa-4">
+          <router-link
+            :to="{ name: 'profile', params: { user_id: this.author._id } }"
           >
-            Author: {{ this.author.username
-            }}<v-icon class="pl-3">mdi-account-cog</v-icon>
-          </v-btn>
+            <v-avatar
+              class="avatar mr-2"
+              v-if="this.author.profileImage"
+              style="cursor: pointer"
+            >
+              <v-img :src="this.author.profileImage" height="100%" />
+            </v-avatar>
+            <v-avatar
+              class="avatar mr-2"
+              v-else
+              color="grey"
+              size="45"
+              style="cursor: pointer"
+            >
+              <span class="white--text headline">
+                {{ this.author.username[0] }}</span
+              >
+            </v-avatar>
+
+            Author:
+            {{ this.author.username }}
+          </router-link>
         </v-toolbar-title>
       </v-layout>
     </v-toolbar>
@@ -96,7 +112,20 @@
 .author {
   position: absolute;
   right: 16px;
-  bottom: 36px;
+  bottom: 12px;
+  border: solid 0.5px 0.5px 0.5px 0.5px;
+  border-radius: 10px;
+}
+.avatar {
+  font-family: "Roboto", sans-serif;
+}
+
+.author:hover {
+  background: #dedbdb;
+}
+.author > a {
+  color: black !important;
+  text-decoration: none !important;
 }
 .meta {
   cursor: pointer;

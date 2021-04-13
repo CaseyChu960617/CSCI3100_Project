@@ -26,7 +26,6 @@
 //import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../../services/DataService";
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
 import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
 import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
@@ -66,7 +65,6 @@ export default {
 
   data() {
     return {
-      iframe_api: "48f28ce86bc9c78e94f884",
       chapter: null,
       testing: "<div class='v-card v-sheet theme--light><p>123</p></div>",
       editorData: "fuck",
@@ -216,23 +214,5 @@ export default {
     //  });
     //},
   },
-  mounted() {
-    const plugin = document.createElement("script");
-    plugin.setAttribute(
-      "src",
-      "//cdn.iframe.ly/embed.js?api_key=48f28ce86bc9c78e94f884"
-    );
-    plugin.async = true;
-    document.head.appendChild(plugin);
-    console.log("plugin is ", plugin);
-  },
-
-  //uploader(editor) {
-  //  this.editor.plugins.get("FileRepository").createUploadAdapter = (
-  //    loader
-  //  ) => {
-  //    return new UploadAdapter(loader);
-  //  };
-  //},
 };
 </script>
