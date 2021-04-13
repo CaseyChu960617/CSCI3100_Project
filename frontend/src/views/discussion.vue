@@ -9,7 +9,7 @@
             :loading="listLoading"
           /> </v-card
       ></v-col>
-      <v-col cols="0" md="6"
+      <v-col cols="0" md="7"
         ><Thread :thread="thread" :loading="threadLoading"
       /></v-col>
     </v-row>
