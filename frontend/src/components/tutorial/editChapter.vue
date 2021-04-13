@@ -3,19 +3,25 @@
     <v-container>
       <v-text-field v-model="chapter.title" label="Title" type="text" clearable>
       </v-text-field>
-      <template
-        ><ckeditor
-          :editor="editor"
-          v-model="chapter.content"
-          :config="editorConfig"
-        ></ckeditor
-      ></template>
+      <template>
+        <v-container max-height="500px">
+          <ckeditor
+            :editor="editor"
+            v-model="chapter.content"
+            :config="editorConfig"
+          ></ckeditor>
+        </v-container>
+      </template>
     </v-container>
     <!--<v-btn @click="hi()">dasdsa</v-btn>-->
     <v-btn @click="save">Save</v-btn>
   </v-container>
 </template>
-
+<style>
+.ck-editor__editable {
+  max-height: 500px;
+}
+</style>
 <script>
 //import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../../services/DataService";
@@ -123,6 +129,7 @@ export default {
             "insertImage",
           ],
         },
+        height: "400px",
         fontSize: {
           options: ["tiny", "default", "big"],
         },

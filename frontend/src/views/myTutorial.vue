@@ -308,7 +308,7 @@ export default {
 
   methods: {
     fetchMyTutorial() {
-      DataService.get("tutorial/userTutorials", this.currentUser.user_id).then(
+      DataService.get("tutorial/myTutorials", this.currentUser.user_id).then(
         (response) => {
           console.log("Fetch Data is ", response.data);
           let rawData = response.data;

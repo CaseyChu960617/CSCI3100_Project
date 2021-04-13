@@ -8,7 +8,7 @@ const { response } = require("express");
 
 // getAllTutorials function
 exports.getAllTutorials = async (req, res) => {
-  Tutorial.find()
+  Tutorial.find({ published: 1 })
     .sort({ lastModifiedAt: -1 })
     .select("_id author subject title description thumbnail lastModifiedAt")
     .populate("author", "_id username")
@@ -20,7 +20,7 @@ exports.getAllTutorials = async (req, res) => {
 };
 
 exports.getLatestTutorials = async (req, res) => {
-  Tutorial.find()
+  Tutorial.find({ published: 1 })
     .sort({ lastModifiedAtDate: -1 })
     .limit(3)
     .select("_id author subject title description  thumbnail lastModifiedAt")
@@ -34,7 +34,7 @@ exports.getLatestTutorials = async (req, res) => {
 
 // getSubject function
 exports.getSubject = async (req, res) => {
-  Tutorial.find({ subject: req.params["subject_id"] })
+  Tutorial.find({ $and: [{ subject: req.params["subject_id"]}, { published: 1}] })
     .sort({ lastModifiedAtDate: -1 })
     .select("author subject title lastModifiedAt")
     .populate("author", "_id username")
@@ -82,8 +82,20 @@ exports.getOneChapter = async (req, res) => {
 };
 
 // getUserTutorial function
-exports.getUserTutorials = async (req, res) => {
+exports.getMyTutorials = async (req, res) => {
   Tutorial.find({ author: req.params["user_id"] })
+    .sort({ lastModifiedAtDate: -1 })
+    .select("author subject title description thumbnail createdAt lastModifiedAt")
+    .populate("author", "_id username")
+    .exec()
+    .then((docs) => {
+      res.send(docs);
+    });
+};
+
+// getUserTutorial function
+exports.getUserTutorials = async (req, res) => {
+  Tutorial.find({ $and: [{ author: req.params["user_id"]}, { published: 1}] })
     .sort({ lastModifiedAtDate: -1 })
     .select("author subject title description thumbnail createdAt lastModifiedAt")
     .populate("author", "_id username")

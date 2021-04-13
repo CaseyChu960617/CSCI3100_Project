@@ -8,6 +8,7 @@ const {
   getSubject,
   getOneTutorial,
   getOneChapter,
+  getMyTutorials,
   getUserTutorials,
   getFollowingTutorials,
   createTutorial,
@@ -28,6 +29,9 @@ router.get("/subjecty/:subject_id", getSubject);
 router.get("/getOneTutorial/:tutorial_id", getOneTutorial);
 
 router.get("/getOneChapter/:chapter_id", getOneChapter);
+
+
+router.get("/myTutorials/:user_id", getMyTutorials);
 
 router.get("/userTutorials/:user_id", getUserTutorials);
 

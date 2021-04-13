@@ -143,9 +143,10 @@ export default {
     fetchChapter() {},
 
     createChapter() {
+      const chapterNum = this.chapters.length + 1;
       const data = {
         tutorial_id: this.tutorial._id,
-        title: "",
+        title: "Chapter " + chapterNum.toString(),
         content: "",
       };
       //console.log(data);
