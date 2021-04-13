@@ -286,6 +286,11 @@ export default {
     },
   },
 
+  updated() {
+    const scrollbar = document.querySelector(".scroll-bar");
+    scrollbar.scrollTo(0, scrollbar.scrollHeight);
+  },
+
   created() {
     this.getOneChat();
   },

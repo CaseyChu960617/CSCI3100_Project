@@ -17,6 +17,18 @@
             <strong> {{ this.tutorial.title }} </strong>
           </div>
         </v-toolbar-title>
+        <v-toolbar-title class="author">
+          <v-btn
+            v-if="currentUser.activation"
+            :to="`/profile/` + currentUser.user_id"
+            class="mr-4 ml-2 text-capitalize black--text"
+            color="#757575"
+            text
+          >
+            Author: {{ this.author.username
+            }}<v-icon class="pl-3">mdi-account-cog</v-icon>
+          </v-btn>
+        </v-toolbar-title>
       </v-layout>
     </v-toolbar>
     <v-row>
@@ -81,6 +93,11 @@
   </v-container>
 </template>
 <style>
+.author {
+  position: absolute;
+  right: 16px;
+  bottom: 36px;
+}
 .meta {
   cursor: pointer;
 }
@@ -118,6 +135,7 @@ export default {
   components: { viewChapter },
   data() {
     return {
+      author: null,
       subjects: subjectsList,
       tutorial: null, //the whole returned object from tutorial
       chapters: [],
@@ -144,9 +162,10 @@ export default {
       ).then((response) => {
         this.tutorial = response.data;
         this.chapters = response.data.chapters;
-        console.log(this.tutorial);
+        //console.log(this.tutorial);
         if (this.tutorial == "") this.noThumbnail = true;
-        console.log(this.chapters);
+        //console.log(this.chapters);
+        this.author = this.tutorial.author;
       });
     },
 
