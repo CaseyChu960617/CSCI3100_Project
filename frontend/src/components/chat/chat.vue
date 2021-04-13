@@ -291,18 +291,13 @@ export default {
   },
 
   mounted() {
-    //this.socket.emit("joinRoom", {
-    //  chatId: this.chatId,
-    //  sender: this.currentUser.username,
-    //});
-
-    console.log("Join " + this.chatId + " Room");
+    //console.log("Join " + this.chatId + " Room");
 
     this.socket.on("updateMessage", (data) => {
       //pushed to daatbsae
 
       this.messages = [...this.messages, data];
-      console.log(this.newMessage);
+      //console.log(this.newMessage);
       this.newMessage = null;
     });
   },

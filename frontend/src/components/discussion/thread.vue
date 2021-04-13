@@ -19,9 +19,12 @@
       :loading="loading"
       class="mb-4"
     >
-      <v-card-title @click="selectProfile(comment.author._id)">{{
-        comment.author.username
-      }}</v-card-title>
+      <v-card-title
+        ><router-link
+          :to="{ name: 'profile', params: { user_id: comment.author._id } }"
+          >{{ comment.author.username }}</router-link
+        ></v-card-title
+      >
       <v-card-text>{{ comment.content }}</v-card-text>
     </v-card>
   </v-container>
