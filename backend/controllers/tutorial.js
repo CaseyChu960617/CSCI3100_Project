@@ -47,7 +47,7 @@ exports.getSubject = async (req, res) => {
 // getOneTutorial function
 exports.getOneTutorial = async (req, res) => {
   var populateQuery = [
-    { path: "author", select: "_id username" },
+    { path: "author", select: "_id username profileImage" },
     {
       path: "comments",
       select: "content createdAt",
