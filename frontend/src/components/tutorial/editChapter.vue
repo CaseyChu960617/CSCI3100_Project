@@ -1,8 +1,8 @@
 <template>
-  <v-container
-    ><v-container>
-      Preview:
-      <v-card class="pa-5" v-html="editorData"> {{ this.content }}</v-card>
+  <v-container>
+    <v-card v-html="chapter.content">{{ chapter.content }} </v-card>
+    <v-container>
+      {{ this.chapter.title }}
     </v-container>
     <v-container>
       <template
@@ -13,52 +13,132 @@
         ></ckeditor
       ></template>
     </v-container>
+    <v-btn @click="hi()">dasdsa</v-btn>
   </v-container>
 </template>
-
+<script
+  charset="utf-8"
+  src="//cdn.iframe.ly/embed.js?api_key={API KEY}"
+></script>
 <script>
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import CKEditor from "@ckeditor/ckeditor5-vue2";
-//import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
+//import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../../services/DataService";
+import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 
-//import MathType from "@wiris/mathtype-ckeditor5";
-
-import UploadAdapter from "../../UploadAdapter";
-
+//import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
+import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
+import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
+import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
+import LinkPlugin from "@ckeditor/ckeditor5-link/src/link";
+import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph";
+import List from "@ckeditor/ckeditor5-list/src/list";
+import MathType from "@wiris/mathtype-ckeditor5";
+import Font from "@ckeditor/ckeditor5-font/src/font";
+import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline";
+import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough";
+import Code from "@ckeditor/ckeditor5-basic-styles/src/code";
+import Subscript from "@ckeditor/ckeditor5-basic-styles/src/subscript";
+import Superscript from "@ckeditor/ckeditor5-basic-styles/src/superscript";
+import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
+import HtmlEmbed from "@ckeditor/ckeditor5-html-embed/src/htmlembed";
+import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
+import Image from "@ckeditor/ckeditor5-image/src/image";
+import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar";
+import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption";
+import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle";
+import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize";
+import LinkImage from "@ckeditor/ckeditor5-link/src/linkimage";
+import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert";
+import Heading from "@ckeditor/ckeditor5-heading/src/heading";
+import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
+import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 export default {
   props: ["chapterId"],
   components: {
     // Use the <ckeditor> component in this view.
-    ckeditor: CKEditor.component,
+    // ckeditor: CKEditor.component,
     //editchapter,
   },
+
   data() {
     return {
-      title: null,
       chapter: [],
-      editor: ClassicEditor,
-
+      testing: "<div class='v-card v-sheet theme--light><p>123</p></div>",
       editorData: "fuck",
-      content: null,
+      editor: ClassicEditor,
       editorConfig: {
-        toolbar: [
-          "heading",
-          "|",
-          "bold",
-          "italic",
-          "link",
-          "bulletedList",
-          "numberedList",
-          "|",
-          "insertTable",
-          "|",
-          "imageUpload",
-          "mediaEmbed",
-          "|",
-          "undo",
-          "redo",
+        plugins: [
+          Heading,
+          EssentialsPlugin,
+          BoldPlugin,
+          ItalicPlugin,
+          Highlight,
+          LinkPlugin,
+          ParagraphPlugin,
+          List,
+          MathType,
+          Font,
+          Superscript,
+          Code,
+          Strikethrough,
+          Underline,
+          Subscript,
+          SimpleUploadAdapter,
+          HtmlEmbed,
+          MediaEmbed,
+          Image,
+          ImageToolbar,
+          ImageCaption,
+          ImageStyle,
+          ImageResize,
+          LinkImage,
+          ImageInsert,
+          PageBreak,
         ],
+
+        toolbar: {
+          items: [
+            "heading",
+            "bold",
+            "italic",
+            "fontSize",
+            "link",
+            "undo",
+            "redo",
+            "Highlight",
+            "bulletedList",
+            "numberedList",
+            "pagebreak",
+            "fontSize",
+            "code",
+            "subscript",
+            "superscript",
+            "HtmlEmbed",
+            "mediaEmbed",
+            "imageStyle:full",
+            "imageStyle:side",
+            "|",
+            "imageTextAlternative",
+            "|",
+            "linkImage",
+            "insertImage",
+          ],
+        },
+        fontSize: {
+          options: ["tiny", "default", "big"],
+        },
+        simpleUpload: {
+          // The URL that the images are uploaded to.
+          uploadUrl: "http://localhost:9000/upload/uploadTutorialPic",
+
+          // Enable the XMLHttpRequest.withCredentials property.
+          withCredentials: true,
+          // Headers sent along with the XMLHttpRequest to the upload server.
+          headers: {
+            "X-CSRF-TOKEN": "CSRF-Token",
+            Authorization: "Bearer <JSON Web Token>",
+          },
+        },
       },
     };
   },
@@ -66,6 +146,17 @@ export default {
     //console.log(this.$route.params.tutorialId);
     console.log("in editChapter, ", this.chapterId);
     this.fetchOneChapter();
+
+    ClassicEditor.create(document.querySelector("#editor"), {
+      plugins: [], // <--- MODIFIED
+      toolbar: ["bold", "italic"], // <--- MODIFIED
+    })
+      .then((editor) => {
+        console.log("Editor was initialized", editor);
+      })
+      .catch((error) => {
+        console.error(error.stack);
+      });
   },
   methods: {
     fetchOneChapter() {
@@ -73,12 +164,13 @@ export default {
       console.log(this.chapterId);
       DataService.get("tutorial/getOneChapter", this.chapterId).then(
         (response) => {
-          //console.log(response.data);
-          const rawData = response.data;
-          console.log("Data is ", rawData.content);
-          this.content = rawData.content;
+          this.chapter = response.data;
         }
       );
+    },
+    hi() {
+      alert(this.editor);
+      console.log(this.editor);
     },
   },
   watch: {
@@ -90,10 +182,10 @@ export default {
     //alert("fuck");
   },
 
-  uploader(editor) {
-    editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-      return new UploadAdapter(loader);
-    };
-  },
+  // uploader(editor) {
+  //   editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+  //     return new UploadAdapter(loader);
+  //   };
+  // },
 };
 </script>

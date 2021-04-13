@@ -66,6 +66,7 @@
 
 <script>
 import DataService from "../../services/DataService";
+
 import subjectsList from "../../assets/subjects.json";
 
 export default {

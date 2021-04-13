@@ -73,7 +73,7 @@ exports.getOneTutorial = async (req, res) => {
 // getOneChapter function
 exports.getOneChapter = async (req, res) => {
   Chapter.findOne({ _id: req.params["chapter_id"] })
-    .select("content lastEditedAt createdAt")
+    .select("title content lastEditedAt createdAt")
     .exec()
     .then((doc) => {
       console.log(doc);
