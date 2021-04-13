@@ -147,16 +147,18 @@ export default {
     console.log("in editChapter, ", this.chapterId);
     this.fetchOneChapter();
 
-    ClassicEditor.create(document.querySelector("#editor"), {
-      plugins: [], // <--- MODIFIED
-      toolbar: ["bold", "italic"], // <--- MODIFIED
-    })
-      .then((editor) => {
-        console.log("Editor was initialized", editor);
-      })
-      .catch((error) => {
-        console.error(error.stack);
-      });
+    //ClassicEditor.create(document.querySelector("#editor"), {
+    //  plugins: [], // <--- MODIFIED
+    //  toolbar: ["bold", "italic"], // <--- MODIFIED
+    //
+    //
+    //})
+    //  .then((editor) => {
+    //    console.log("Editor was initialized", editor);
+    //  })
+    //  .catch((error) => {
+    //    console.error(error.stack);
+    //  });
   },
   methods: {
     fetchOneChapter() {
