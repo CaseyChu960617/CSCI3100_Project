@@ -28,7 +28,7 @@
         >
         <v-btn
           v-if="currentUser.activation"
-          to="/discussion"
+          to="/discussion/0"
           class="text-capitalize headline white--text"
           plain
           >Discussion <v-icon class="pl-3">mdi-chat-question</v-icon></v-btn

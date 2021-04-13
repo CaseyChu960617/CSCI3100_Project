@@ -29,7 +29,8 @@ export const router = new Router({
       component: tutorial,
     },
     {
-      path: "/discussion",
+      name: "discussion",
+      path: "/discussion/:sub_id/:thread_id?",
       component: discussion,
     },
     {

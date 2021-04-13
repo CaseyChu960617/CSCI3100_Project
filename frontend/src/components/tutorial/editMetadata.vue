@@ -4,11 +4,11 @@
       Tutorial Information
       <v-card class="pa-5">
         <v-row>
-          <v-col col="9">
+          <v-col col="9" class="px-5 pt-5">
             <v-text-field v-model="title" label="Title" type="text" clearable>
             </v-text-field>
           </v-col>
-          <v-col col="3">
+          <v-col col="3" class="px-5 pt-5">
             <v-select
               v-model="published"
               :items="publishedlist"
@@ -20,7 +20,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col col="3">
+          <v-col col="3" class="px-5">
             <v-select
               v-model="subject"
               :items="subjects"
@@ -33,7 +33,7 @@
           <v-spacer />
         </v-row>
         <v-row>
-          <v-col col="9">
+          <v-col col="9" class="px-5">
             <v-textarea
               v-model="description"
               label="Description"
@@ -42,23 +42,46 @@
             ></v-textarea>
           </v-col>
         </v-row>
-
-        <v-form enctype="multipart/form-data">
-          <div>Upload Thumbnail</div>
-          <input name="file" single type="file" @change="fileChange" />
-
-          <!--<v-img src="../../assets/Homepage/2.jpg" v-else />-->
-          <v-btn @click="uploadThumbnail">Upload</v-btn>
-        </v-form>
+        <v-row>
+          <v-col col="3">
+            <v-form enctype="multipart/form-data">
+              <v-card-title>Upload Thumbnail</v-card-title>
+              <v-file-input
+                class="pl-4"
+                label="File input"
+                prepend-icon="mdi-camera"
+                accept="image/*"
+                @change="fileChange"
+              />
+            </v-form>
+          </v-col>
+        </v-row>
         <div>
           <v-card-title>Preview</v-card-title>
         </div>
-        <div>
-          <v-img max-width="500px" v-if="!noThumbnail" :src="thumbnail" />
-          <v-img max-width="500px" v-else src="../../assets/Homepage/1.jpg" />
-        </div>
-
-        <v-btn @click="save">Save</v-btn>
+        <v-row justify="center">
+          <v-col col="3" class="pl-6">
+            <div v-if="loading">
+              <v-progress-circular
+                indeterminate
+                color="primary"
+              ></v-progress-circular>
+            </div>
+            <div v-else>
+              <v-img max-width="500px" v-if="!noThumbnail" :src="thumbnail" />
+              <v-img
+                max-width="500px"
+                v-else
+                src="../../assets/Homepage/1.jpg"
+              />
+            </div>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
+          <v-btn rounded color="#99CFEA" class="black--text my-5" @click="save"
+            >Save</v-btn
+          ></v-row
+        >
       </v-card>
     </v-container>
     <v-container> </v-container></v-container
@@ -88,6 +111,8 @@ export default {
       rules: {
         required: (value) => !!value || "Required",
       },
+      loading: false,
+      tempsrc: null,
     };
   },
   created() {
@@ -112,15 +137,19 @@ export default {
       });
     },
 
-    fileChange(e) {
-      this.formData.append("file", e.target.files[0]);
-    },
-
-    uploadThumbnail() {
-      DataService.uploadThumbnail(this.formData).then((response) => {
-        this.thumbnail = response.data.location;
-        this.formData = new FormData();
-      });
+    fileChange(file) {
+      if (file != null) {
+        console.log(file);
+        this.loading = true;
+        this.formData.append("file", file);
+        DataService.uploadThumbnail(this.formData).then((response) => {
+          this.thumbnail = response.data.location;
+          this.formData = new FormData();
+          this.loading = false;
+        });
+      } else {
+        alert("No file selected!");
+      }
     },
 
     save() {
