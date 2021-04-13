@@ -52,17 +52,15 @@
           <v-divider class="mx-4"></v-divider>
           <div class="d-flex flex-column justify-space-between align-center">
             <v-img
-              v-if="!noThumbnail"
-              :src="thumbnail"
-              class="justify-center"
               max-height="300px"
-            />
+              v-if="tutorial.thumbnail"
+              :src="tutorial.thumbnail"
+            ></v-img>
             <v-img
+              max-height="300px"
               v-else
               src="../assets/Homepage/1.jpg"
-              class="justify-center"
-              max-height="300px"
-            />
+            ></v-img>
           </div>
           <v-card-title>
             Description
@@ -98,7 +96,7 @@
 <script>
 import DataService from "../services/DataService";
 import subjectsList from "../assets/subjects.json";
-import viewChapter from "..//viewChapter.vue";
+//import viewChapter from "..//viewChapter.vue";
 
 export default {
   components: {},
