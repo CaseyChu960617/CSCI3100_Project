@@ -1,4 +1,4 @@
-const { uploadProPic, uploadThumbnail, uploadTutorialPic }  = require("../services/upload");
+const { uploadProPic, uploadThumbnail, uploadTutorialPic, uploadDiscussionPic }  = require("../services/upload");
 const uploadSingleProPic = uploadProPic.single("file");
 const uploadSingleThumbnail = uploadThumbnail.single("file");
 const uploadSingleTutorialPic = uploadTutorialPic.single('upload');
