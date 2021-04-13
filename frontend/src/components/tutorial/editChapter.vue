@@ -5,6 +5,8 @@
       {{ this.chapter.title }}
     </v-container>
     <v-container>
+      <v-text-field v-model="chapter.title" label="Title" type="text" clearable>
+      </v-text-field>
       <template
         ><ckeditor
           :editor="editor"
@@ -13,7 +15,8 @@
         ></ckeditor
       ></template>
     </v-container>
-    <v-btn @click="hi()">dasdsa</v-btn>
+    <!--<v-btn @click="hi()">dasdsa</v-btn>-->
+    <v-btn @click="save">Save</v-btn>
   </v-container>
 </template>
 
@@ -133,10 +136,11 @@ export default {
 
           // Enable the XMLHttpRequest.withCredentials property.
           withCredentials: false,
+
           // Headers sent along with the XMLHttpRequest to the upload server.
           headers: {
-            "X-CSRF-TOKEN": "CSRF-Token",
-            Authorization: "Bearer <JSON Web Token>",
+            //    "X-CSRF-TOKEN": "CSRF-Token",
+            //    Authorization: "Bearer <JSON Web Token>",
           },
         },
       },
@@ -175,6 +179,25 @@ export default {
       //alert(this.editor);
       //console.log(this.editor);
     },
+
+    save() {
+      const data = {
+        chapter_id: this.chapterId,
+        title: this.chapter.title,
+        content: this.chapter.content,
+      };
+
+      DataService.put("tutorial/editChapter", data).then((response) => {
+        console.log(response);
+        DataService.get("tutorial/getOneChapter", this.chapterId).then(
+          (response) => {
+            this.chapter = response.data;
+            alert("Edit chapter successfully.");
+            this.$emit("fetchTutorial");
+          }
+        );
+      });
+    },
   },
   watch: {
     chapterId() {
@@ -199,5 +222,13 @@ export default {
     document.head.appendChild(plugin);
     console.log("plugin is ", plugin);
   },
+
+  //uploader(editor) {
+  //  this.editor.plugins.get("FileRepository").createUploadAdapter = (
+  //    loader
+  //  ) => {
+  //    return new UploadAdapter(loader);
+  //  };
+  //},
 };
 </script>

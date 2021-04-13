@@ -10,9 +10,7 @@ aws.config.update({
   region: process.env.AWS_BUCKET_REGION
 });
 
-var s3 = new aws.S3(
-  
-);
+var s3 = new aws.S3();
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
@@ -65,6 +63,6 @@ const uploadTutorialPic = multer({
       cb(null, '/tutorial/content/' + Date.now().toString() + file.originalname);
     },
   }),
-});
+})
 
 module.exports = { uploadProPic, uploadThumbnail, uploadTutorialPic };
