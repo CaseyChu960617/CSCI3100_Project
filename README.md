@@ -2,10 +2,10 @@
 - Group: A8
 - Project name: Urge
 
-Purpose: 
+## Purpose: 
 - To develop a multi-functional online learning platform for CUHK students to LEARN and SHARE KNOWLEDGE. 
 
-3 Key-functinos of the website:
+## 3 Key-functinos of the website:
 
 1. TUTORIAL POSTING AND SEARCHING SYSTEM
 - Urge allows all CUHK students and professors to upload their teaching materials online to share knowledge.
@@ -22,3 +22,21 @@ Purpose:
 - Urge believes real-time chatting systems provide a more flexible way for peers to discuss non-technical topics such as career path, self-learning materials, exchanges, etc.
 - This sytem allows an all-rounded service provision for peers to share their personal experiences.
 
+## Installation
+
+Urge requires [Node.js](https://nodejs.org/).
+
+- Start the frontend.
+   - Under the project folder.
+   ```sh
+   cd frontend
+   npm install
+   npm run serve
+   ```
+- Start the backend.
+   - Under the project folder.
+   ```sh
+   cd backend
+   npm install
+   npm run devStart
+   ```
