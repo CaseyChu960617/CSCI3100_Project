@@ -19,7 +19,7 @@
     </v-toolbar>
     <v-row>
       <v-col md="3">
-        <v-card elevation="8" class="ma-4" height="65vh">
+        <div class="show-chapters ma-4" elevation="8" min-height="65vh">
           <v-card-title> Chapters </v-card-title>
           <v-virtual-scroll
             v-if="chapters.length != 0"
@@ -39,7 +39,7 @@
               </v-list-item>
             </template>
           </v-virtual-scroll>
-        </v-card>
+        </div>
       </v-col>
       <v-col md="9">
         <v-card v-if="viewtutorial" elevation="8" class="ma-4" height="65vh">
@@ -70,6 +70,7 @@
             {{ this.tutorial.description }}
           </v-card-text>
         </v-card>
+        <viewChapter v-else :chapterId="selectedId" />
       </v-col>
     </v-row>
   </v-container>
@@ -89,6 +90,9 @@
 .course-code {
   float: right;
 }
+.v-virtual-scroll__item {
+  position: inherit !important;
+}
 .des {
   overflow-y: hidden;
 }
@@ -96,17 +100,16 @@
 <script>
 import DataService from "../services/DataService";
 import subjectsList from "../assets/subjects.json";
-//import viewChapter from "..//viewChapter.vue";
+import viewChapter from "../components/tutorial/viewChapter";
 
 export default {
-  components: {},
+  components: { viewChapter },
   data() {
     return {
       subjects: subjectsList,
       tutorial: null, //the whole returned object from tutorial
       chapters: [],
-      currentChapter: null,
-      currentChapterId: null,
+      selectedId: null,
       noThumbnail: true,
       viewtutorial: 1,
     };
@@ -136,7 +139,8 @@ export default {
     },
 
     selectChapter(chapter_id) {
-      this.fetchOneChapter(chapter_id);
+      (this.viewtutorial = 0), (this.selectedId = chapter_id);
+      //this.fetchOneChapter(chapter_id);
     },
 
     fetchOneChapter(chapter_id) {
