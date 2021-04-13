@@ -20,6 +20,19 @@
           </v-col>
         </v-row>
         <v-row>
+          <v-col col="3">
+            <v-select
+              v-model="subject"
+              :items="subjects"
+              item-text="text"
+              item-value="value"
+              label="Publish"
+              :rules="[rules.required]"
+            ></v-select>
+          </v-col>
+          <v-spacer />
+        </v-row>
+        <v-row>
           <v-col col="9">
             <v-textarea
               v-model="description"
@@ -41,7 +54,8 @@
           <v-card-title>Preview</v-card-title>
         </div>
         <div>
-          <v-img :src="thumbnail" />
+          <v-img max-width="500px" v-if="!fetched" :src="thumbnail" />
+          <v-img max-width="500px" v-else src="../../assets/Homepage/1.jpg" />
         </div>
 
         <v-btn @click="save">Save</v-btn>
@@ -52,17 +66,20 @@
 
 <script>
 import DataService from "../../services/DataService";
+import subjectsList from "../../assets/subjects.json";
 
 export default {
   components: {},
   data() {
     return {
       formData: new FormData(),
+      subjects: subjectsList,
       title: "",
       subject: "",
       description: "",
       thumbnail: "",
       published: 0,
+      fetched: "",
       publishedlist: [
         { text: "publish", value: 1 },
         { text: "not publish", value: 0 },
@@ -90,6 +107,7 @@ export default {
           (this.description = rawData.description);
         this.published = rawData.published;
         this.thumbnail = rawData.thumbnail;
+        if (this.thumbnail == "") this.fetched = true;
       });
     },
 

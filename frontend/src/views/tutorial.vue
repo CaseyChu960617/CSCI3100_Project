@@ -62,10 +62,15 @@
               :ref="'front-' + tutorial._id"
             >
               <v-img
+                height="250px"
                 v-if="tutorial.thumbnail"
                 :src="tutorial.thumbnail"
               ></v-img>
-              <v-img v-else src="../assets/Homepage/1.jpg"></v-img>
+              <v-img
+                height="250px"
+                v-else
+                src="../assets/Homepage/1.jpg"
+              ></v-img>
               <v-card-title>{{ tutorial.title }}</v-card-title>
               <v-card-text class="sub">{{ tutorial.subject }} </v-card-text>
               <v-card-text>
