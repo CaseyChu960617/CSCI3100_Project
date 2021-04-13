@@ -1,9 +1,5 @@
 <template>
   <v-container>
-    <v-card v-html="chapter.content">{{ chapter.content }} </v-card>
-    <v-container>
-      {{ this.chapter.title }}
-    </v-container>
     <v-container>
       <v-text-field v-model="chapter.title" label="Title" type="text" clearable>
       </v-text-field>

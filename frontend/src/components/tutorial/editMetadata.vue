@@ -117,7 +117,7 @@ export default {
     },
 
     uploadThumbnail() {
-      DataService.upload("uploadThumbnail", this.formData).then((response) => {
+      DataService.uploadThumbnail(this.formData).then((response) => {
         this.thumbnail = response.data.location;
         this.formData = new FormData();
       });
@@ -134,7 +134,7 @@ export default {
       };
       DataService.put("tutorial/editTutorial", data).then((response) => {
         console.log(response.data);
-        alert("success");
+        alert("Edited Tutorial information successfully!");
       });
     },
   },

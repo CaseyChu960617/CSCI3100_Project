@@ -125,6 +125,10 @@ class DataService {
     return http.put(Profile + "updateProPic", data, header);
   }
 
+  uploadThumbnail(formData) {
+    return http.post(Upload + "uploadThumbnail", formData);
+  }
+
   uploadProPic(formData) {
     return http.post(Upload + "uploadProPic", formData);
   }
