@@ -17,6 +17,7 @@ import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../../services/DataService";
 
 export default {
+  //props: ["chapterId"],
   components: {
     // Use the <ckeditor> component in this view.
     ckeditor: CKEditor.component,
@@ -32,6 +33,7 @@ export default {
   },
   created() {
     //console.log(this.$route.params.tutorialId);
+    this.$emit("testing");
     this.fetchTutorial();
   },
   methods: {
@@ -47,6 +49,9 @@ export default {
         this.title = rawData.title;
       });
     },
+  },
+  destroyed() {
+    //alert("fuck");
   },
 };
 </script>

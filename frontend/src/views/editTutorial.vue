@@ -33,6 +33,18 @@
                 <v-list-item-content>
                   <v-list-item-title class="text-wrap">
                     <strong>{{ item.title }}</strong>
+                    <v-btn
+                      id="main-btn"
+                      slot="activator"
+                      v-model="fab"
+                      color="#99CFEA"
+                      dark
+                      fab
+                      @click.stop="dialog = true"
+                      class="delete-btn"
+                    >
+                      <v-icon color="black">mdi-delete</v-icon>
+                    </v-btn>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -54,15 +66,23 @@
           </v-btn>
         </v-col>
         <v-col>
-          <editMetadata v-if="editMetadata" />
-          <editChapter v-else :ChapterId="selectedChapter_id" />
+          <editMetadata v-if="editMetadata" :ref="'' + selectedId" />
+          <editChapter v-else :ChapterId="selectedId" :ref="'' + selectedId" />
         </v-col>
       </v-row>
     </div>
   </v-container>
 </template>
 
-<style></style>
+<style>
+.delete-btn {
+  position: absolute !important;
+  height: 36px !important;
+  width: 36px !important;
+  right: 12px;
+  bottom: 6px;
+}
+</style>
 
 <script>
 //import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -82,8 +102,9 @@ export default {
       chapters: [],
       //editor: ClassicEditor,
       editorData: "fuck",
-      selectedChapter_id: null,
+      selectedId: null,
       editMetadata: 0,
+      currentId: null,
     };
   },
 
@@ -104,12 +125,11 @@ export default {
         "tutorial/getOneTutorial",
         this.$route.params.tutorialId
       ).then((response) => {
-        console.log("fuck");
-        //console.log(response.data);
         const rawData = response.data;
-        //this.title = rawData.title;
+
         this.tutorial = rawData;
-        console.log("Chapter is ", this.chapters);
+        this.chapters = rawData.chapters;
+        console.log("Chapter is ", this.tutorial);
       });
     },
 
@@ -138,14 +158,40 @@ export default {
     changeEdit(id, editMetadata) {
       if (editMetadata) {
         this.editMetadata = 1;
-        this.selectedChapter_id = null;
-        console.log(this.editMetadata);
-      } else {
-        this.editMetadata = 0;
-        this.selectedChapter_id = id;
         console.log(this.editMetadata);
       }
+      else {
+        this.editMetadata = 0;
+      }
+      this.selectedId = id;
+
+      if(this.currentId===null){
+          this.currentId=this.selectedId
+      }else{
+          if(this.currentId!==this.selectedId)
+          alert(this.currentId+" will be saved first")
+        }
+
+       //alert(this.selectedId)
+   // console.log(this.$refs[''+this.selectedId])
+
+
     },
+
+  },
+  updated(){
+    if(this.currentId!=null){
+     alert(this.selectedId+" will be loaded")
+     if(this.editMetadata === 0){
+        alert("editorData is ",this.$refs.[this.currentId].editorData);
+
+     }
+
+      this.currentId = this.selectedId
+
+
+      }
+
   },
 };
 </script>
