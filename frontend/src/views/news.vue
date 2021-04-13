@@ -203,7 +203,7 @@ export default {
         console.log(rawData);
         //mapping the subjects
         rawData.forEach((element) => {
-          element.subject = this.subjects[element.subject - 1]["code"];
+          element.subject = this.subjects[element.subject - 1]["text"];
         });
         this.tutorials = rawData;
       });
