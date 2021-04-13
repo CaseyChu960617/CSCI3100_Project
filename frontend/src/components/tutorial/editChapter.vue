@@ -132,11 +132,12 @@ export default {
           uploadUrl: "http://localhost:9000/upload/uploadTutorialPic",
 
           // Enable the XMLHttpRequest.withCredentials property.
-          withCredentials: true,
+          withCredentials: false,
+
           // Headers sent along with the XMLHttpRequest to the upload server.
           headers: {
-            "X-CSRF-TOKEN": "CSRF-Token",
-            Authorization: "Bearer <JSON Web Token>",
+            //    "X-CSRF-TOKEN": "CSRF-Token",
+            //    Authorization: "Bearer <JSON Web Token>",
           },
         },
       },
@@ -181,5 +182,13 @@ export default {
   destroyed() {
     //alert("fuck");
   },
+
+  //uploader(editor) {
+  //  this.editor.plugins.get("FileRepository").createUploadAdapter = (
+  //    loader
+  //  ) => {
+  //    return new UploadAdapter(loader);
+  //  };
+  //},
 };
 </script>
