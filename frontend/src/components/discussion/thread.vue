@@ -81,7 +81,7 @@ export default {
         this.$router.push({ path: "/profile" });
       else
         this.$router.push({
-          name: "userProfile",
+          name: "profile",
           params: { user_id: this.user_id },
         });
     },

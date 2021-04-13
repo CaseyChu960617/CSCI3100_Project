@@ -53,19 +53,12 @@
                 type="text"
               ></v-text-field>
               <v-row class="my-1">
-                <v-btn text @click="startChat(account._id)"
-                  >Start chatting</v-btn
-                >
-                <v-btn text class="ml-4" @click="follow()">View Threads</v-btn>
-                <v-btn text class="ml-4" @click="viewUserTutorials()"
-                  >View Tutorials</v-btn
-                >
-                <v-btn text class="ml-4" v-if="followed" @click="unfollow()"
-                  >Unfollow</v-btn
-                >
-                <v-btn text class="ml-4" v-else @click="follow()"
-                  >Follow</v-btn
-                ></v-row
+                <v-btn text @click="startChat()">Chat</v-btn><v-spacer />
+                <v-btn text @click="follow()">Threads</v-btn><v-spacer />
+                <v-btn text @click="viewUserTutorials()">Tutorials</v-btn
+                ><v-spacer />
+                <v-btn text v-if="followed" @click="unfollow()">Unfollow</v-btn>
+                <v-btn text v-else @click="follow()">Follow</v-btn></v-row
               ></v-container
             ></v-col
           ></v-row
@@ -83,6 +76,7 @@ export default {
   data() {
     return {
       genderlist: ["Male", "Female", "Prefer not to disclose"],
+      followed: false,
     };
   },
   computed: {
@@ -93,14 +87,17 @@ export default {
       var str = this.profile.username + "";
       return str.substring(0, 1);
     },
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
   methods: {
-    startChat(id) {
+    startChat() {
       var chatId = "";
-      var oppUsername = this.account.username;
+      var oppUsername = this.profile.username;
       DataService.post("chat/getOneChat", {
         user_id_1: this.currentUser.user_id,
-        user_id_2: id,
+        user_id_2: this.profile._id,
       }).then((response) => {
         chatId = response.data._id;
         this.$router.push({
@@ -113,7 +110,7 @@ export default {
     checkFollowed() {
       this.followed = false;
       this.currentUser.following.forEach((element) => {
-        if (element._id === this.account._id) {
+        if (element._id === this.profile._id) {
           this.followed = true;
         }
       });
@@ -122,7 +119,7 @@ export default {
     follow() {
       const data = {
         my_user_id: this.currentUser.user_id,
-        follow_id: this.account._id,
+        follow_id: this.profile._id,
       };
       DataService.put("user/follow", data).then((response) => {
         const following = [];
@@ -137,7 +134,7 @@ export default {
     unfollow() {
       const data = {
         my_user_id: this.currentUser.user_id,
-        follow_id: this.account._id,
+        follow_id: this.profile._id,
       };
 
       DataService.put("user/unfollow", data).then((response) => {
@@ -154,7 +151,7 @@ export default {
       this.$router.push({
         name: "userTutorial",
         params: {
-          user_id: this.account._id,
+          user_id: this.profile._id,
         },
       });
     },
