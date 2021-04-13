@@ -130,11 +130,6 @@ export default {
       return this.$store.state.auth.user;
     },
   },
-  mounted() {
-    if (!this.currentUser) {
-      this.$router.push("/home");
-    }
-  },
   methods: {
     changePassword() {
       this.$emit("switchform");
@@ -144,7 +139,7 @@ export default {
         headers: authHeader(),
       })
         .then((res) => {
-          alert("Success");
+          alert("Saved");
           localStorage.setItem("user", JSON.stringify(res.data));
           this.$store.dispatch("auth/editProfile", res.data);
         })
@@ -163,6 +158,9 @@ export default {
     },
     switchform() {
       this.edit = !this.edit;
+    },
+    refresh() {
+      this.$emit("refresh");
     },
   },
 };

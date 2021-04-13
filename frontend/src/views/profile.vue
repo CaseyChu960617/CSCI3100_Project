@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <EditProfile v-if="canEdit" />
+      <EditProfile v-if="canEdit" @refresh="refresh()" />
       <ViewProfile v-else :profile="profile" />
     </v-row>
   </v-container>
@@ -52,6 +52,9 @@ export default {
             alert(err.response.data.message);
           }
         });
+    },
+    refresh() {
+      this.fetchUser();
     },
   },
 };

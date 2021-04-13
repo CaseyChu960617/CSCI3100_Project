@@ -39,7 +39,7 @@ export default {
   methods: {
     close() {
       this.$emit("show", false);
-      this.$emit("fetchProfile");
+      //this.$emit("fetchProfile");
       this.formData = new FormData();
     },
 
@@ -61,6 +61,10 @@ export default {
         profileImage: this.src,
       };
       DataService.put("user/updateProPic", data).then((response) => {
+        var user = JSON.parse(localStorage.getItem("user"));
+        user.profileImage = response.data;
+        localStorage.setItem("user", JSON.stringify(user));
+        this.$store.dispatch("auth/uploadProPic", response.data);
         console.log(response.data);
         this.close();
       });

@@ -31,6 +31,10 @@ export const auth = {
       commit("signinSuccess", user);
       return Promise.resolve(user);
     },
+    uploadProPic({ commit }, image) {
+      commit("uploadProPicSuccess", image);
+      return Promise.resolve(image);
+    },
   },
   mutations: {
     signinSuccess(state, user) {
@@ -44,6 +48,9 @@ export const auth = {
     signout(state) {
       state.status.signedIn = false;
       state.user = null;
+    },
+    uploadProPicSuccess(state, image) {
+      state.user.profileImage = image;
     },
   },
 };
