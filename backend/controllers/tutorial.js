@@ -140,22 +140,21 @@ exports.createTutorial = async (req, res) => {
 exports.createChapter = async (req, res) => {
   const { tutorial_id, title, content } = req.body;
 
-  var newChapter = new Chapter(
-        {
+  var newChapter = new Chapter({
           title: title,
           content: content,
           createdAt: new Date().toLocaleDateString("zh-HK"),
           lastEditedAt: new Date().toLocaleDateString("zh-HK"),
-        },
-        (err) => {
+        },(err) => {
           if (err) {
             res.status(400).json({ error: err.message });
           }
         }
       );
+
       newChapter.save((err) => {
         if (err)
-          res.status(400).json({ error: "Comment cannot be posted successfully." });
+          res.status(400).json({ error: "Chapter cannot be posted successfully." });
       });
 
       const update = {
@@ -168,8 +167,9 @@ exports.createChapter = async (req, res) => {
 
     Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
       if (err) res.status(400).json({ error: err.message });
+      else    
+        res.send("Success");
     });
-    res.send(tutorial_id);
 };
 
 // editTutorial function
