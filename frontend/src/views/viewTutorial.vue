@@ -9,7 +9,7 @@
       <v-layout>
         <v-toolbar-title>
           <div>
-            {{ this.tutorial.subject }}
+            {{ this.subjects[this.tutorial.subject - 1]["text"] }}
           </div>
           <div class="navbar-item">
             <strong> {{ this.tutorial.title }} </strong>
@@ -42,13 +42,56 @@
         </v-card>
       </v-col>
       <v-col md="9">
-        <v-card elevation="8" class="ma-4" height="74vh">
-          {{ this.content }}
+        <v-card elevation="8" class="ma-4" height="65vh">
+          <div class="tutorial-header">
+            {{ this.tutorial.title }}
+            <span class="course-code">
+              {{ this.subjects[this.tutorial.subject - 1]["code"] }}
+            </span>
+          </div>
+          <v-divider class="mx-4"></v-divider>
+          <div class="d-flex flex-column justify-space-between align-center">
+            <v-img
+              v-if="!noThumbnail"
+              :src="thumbnail"
+              class="justify-center"
+              max-height="700px"
+            />
+            <v-img
+              v-else
+              src="../assets/Homepage/1.jpg"
+              class="justify-center"
+              max-height="300px"
+            />
+          </div>
+          <v-card-title>
+            Description
+          </v-card-title>
+          <v-divider class="mx-4"></v-divider>
+          <v-card-text>
+            {{ this.tutorial.description }}
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
+<style>
+.tutorial-header {
+  display: relative !important;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.0125em;
+  line-height: 2rem;
+  word-break: break-all;
+  padding: 16px;
+}
+.course-code {
+  float: right;
+}
+</style>
 <script>
 import DataService from "../services/DataService";
 import subjectsList from "../assets/subjects.json";
@@ -61,6 +104,7 @@ export default {
       tutorial: null, //the whole returned object from tutorial
       chapters: [],
       content: null,
+      noThumbnail: true,
     };
   },
 
@@ -81,10 +125,8 @@ export default {
       ).then((response) => {
         this.tutorial = response.data;
         this.chapters = response.data.chapters;
-        this.tutorial.subject = this.subjects[this.tutorial.subject - 1][
-          "text"
-        ];
         console.log(this.tutorial);
+        if (this.tutorial == "") this.noThumbnail = true;
         console.log(this.chapters);
       });
     },
