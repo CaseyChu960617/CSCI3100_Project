@@ -127,7 +127,7 @@ exports.createTutorial = async (req, res) => {
   const { user_id, subject, title, description } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
-    if (err) res.status(400).json({ error: "User not found!" });
+    if (err) res.status(400).json({ error: err.message });
     if (user) {
       Tutorial.create(
         {
@@ -142,8 +142,11 @@ exports.createTutorial = async (req, res) => {
           published: false,
         },
         (err, doc) => {
-          if (err) res.status(400).json({ error: "Bad request." });
-          else res.send(doc._id);
+          console.log(err);
+          if (err) 
+            res.status(400).json({ error: err.message });
+          else 
+            res.send(doc._id);
         }
       );
     } else res.status(400).json({ error: "User not found." });
