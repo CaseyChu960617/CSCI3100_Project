@@ -65,16 +65,16 @@ exports.signup = async (req, res) => {
 
         // Return json with user info when user is created successfully.
         res.status(201).json({
-            status: "success",
-            message: "Email has been sent. Please activate your account.",
             accessToken: accessToken,
-            user_id: newUser._id,
-            lastname: newUser.lastname,
-            firstname: newUser.firstname,
-            username: newUser.username,
-            email: newUser.email,
-            gender: newUser.gender,
-            activation: newUser.activation
+            user_id: user._id,
+            lastname: user.lastname,
+            firstname: user.firstname,
+            username: user.username,
+            email: user.email,
+            gender: user.gender,
+            activation: user.activation,
+            following: user.following,
+            profileImage: user.profileImage
         });
 };
 
@@ -144,14 +144,17 @@ exports.activateAccount = async (req, res) => {
 
         // Return the new data of the user.
         res.status(200).json({
-            message: "Account is activated",
             accessToken: accessToken,
             user_id: user._id,
             lastname: user.lastname,
             firstname: user.firstname,
             username: user.username,
             email: user.email,
-            gender: user.gender });
+            gender: user.gender,
+            activation: user.activation,
+            following: user.following,
+            profileImage: user.profileImage
+         });
     }
     else {
         // If userId is null, handle the error.
