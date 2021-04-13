@@ -99,7 +99,9 @@ exports.getFollowingTutorials = async (req, res) => {
 
   Tutorial.find({ author: { $in: following } })
     .sort({ lastModifiedAtDate: -1 })
-    .select("author subject title description thumbnail createdAt lastModifiedAt")
+    .select(
+      "author subject title description thumbnail createdAt lastModifiedAt"
+    )
     .populate("author", "_id username")
     .exec()
     .then((err, docs) => {
@@ -140,44 +142,52 @@ exports.createTutorial = async (req, res) => {
 exports.createChapter = async (req, res) => {
   const { tutorial_id, title, content } = req.body;
 
-  var newChapter = new Chapter({
-          title: title,
-          content: content,
-          createdAt: new Date().toLocaleDateString("zh-HK"),
-          lastEditedAt: new Date().toLocaleDateString("zh-HK"),
-        },(err) => {
-          if (err) {
-            res.status(400).json({ error: err.message });
-          }
-        }
-      );
+  var newChapter = new Chapter(
+    {
+      title: title,
+      content: content,
+      createdAt: new Date().toLocaleDateString("zh-HK"),
+      lastEditedAt: new Date().toLocaleDateString("zh-HK"),
+    },
+    (err) => {
+      if (err) {
+        res.status(400).json({ error: err.message });
+      }
+    }
+  );
 
-      newChapter.save();
+  newChapter.save();
 
-      const update = {
-        $push: { chapters: newChapter._id },
-        $set: {
-          lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
-          lastModifiedAtDate: new Date().getTime(),
-        },
-      };
-
-      Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
-        if (err) res.status(400).json({ error: err.message });
-        else    
-          res.send("Success");
-      });
+  const update = {
+    $push: { chapters: newChapter._id },
+    $set: {
+      lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
+      lastModifiedAtDate: new Date().getTime(),
+    },
   };
+
+  Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
+    if (err) res.status(400).json({ error: err.message });
+    else res.send("Success");
+  });
+};
 
 // editTutorial function
 exports.editTutorial = async (req, res) => {
-  const { tutorial_id, title, subject, description, published, thumbnail } = req.body;
+  const {
+    tutorial_id,
+    title,
+    subject,
+    description,
+    published,
+    thumbnail,
+  } = req.body;
 
   const update = {
     $set: {
       title: title,
       subject: subject,
-      description:  description,
+      description: description,
       lastEditedAt: new Date().toLocaleDateString("zh-HK"),
       lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
       lastModifiedAtDate: new Date().getTime(),
@@ -272,11 +282,11 @@ exports.deleteTutorial = async (req, res) => {
 
 // deleteChapter function
 exports.deleteChapter = async (req, res) => {
-  const tutorial_id = req.params['tutorial_id'];
-  const chapter_id = req.params['chapter_id'];
+  const tutorial_id = req.params["tutorial_id"];
+  const chapter_id = req.params["chapter_id"];
   console.log(tutorial_id);
   console.log(chapter_id);
-  const chapter = await Chapter.findOne({_id : chapter_id});
+  const chapter = await Chapter.findOne({ _id: chapter_id });
 
   if (chapter) {
     chapter.remove();
@@ -286,12 +296,10 @@ exports.deleteChapter = async (req, res) => {
       { $pullAll: { chapters: [ObjectId(chapter._id)] } },
       (err, doc) => {
         if (err) res.status(400).json({ error: err.message });
-        else 
-        res.send(doc);
+        else res.send(doc);
       }
     );
-  }
-  else {
-    res.status(400).json({ error: "Chapter not found."});
+  } else {
+    res.status(400).json({ error: "Chapter not found." });
   }
 };

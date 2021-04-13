@@ -72,6 +72,7 @@
             {{ this.tutorial.description }}
           </v-card-text>
         </v-card>
+        <viewChapter v-else />
       </v-col>
     </v-row>
   </v-container>
@@ -98,10 +99,10 @@
 <script>
 import DataService from "../services/DataService";
 import subjectsList from "../assets/subjects.json";
-import viewChapter from "..//viewChapter.vue";
+import viewChapter from "../components/tutorial/viewChapter";
 
 export default {
-  components: {},
+  components: { viewChapter },
   data() {
     return {
       subjects: subjectsList,

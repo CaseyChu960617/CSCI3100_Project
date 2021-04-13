@@ -244,9 +244,11 @@ export default {
           },
           this.chatId
         );
+      }
+      setTimeout(function() {
         const scrollbar = document.querySelector(".scroll-bar");
         scrollbar.scrollTo(0, scrollbar.scrollHeight);
-      }
+      }, 5);
     },
 
     getOneChat() {
