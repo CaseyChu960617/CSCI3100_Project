@@ -10,12 +10,12 @@
           ><v-col cols="12" sm="12" md="4" align-self="center"
             ><v-row justify="center"
               ><v-avatar
-                v-if="currentUser.profileImage"
+                v-if="account.profileImage"
                 size="200"
                 style="cursor: pointer"
                 @click.stop="dialog = true"
               >
-                <v-img :src="currentUser.profileImage" height="100%" />
+                <v-img :src="account.profileImage" height="100%" />
               </v-avatar>
               <v-avatar
                 v-else
@@ -25,7 +25,7 @@
                 @click.stop="dialog = true"
               >
                 <span class="white--text headline">
-                  {{ currentUser.username[0] }}</span
+                  {{ account.username[0] }}</span
                 >
               </v-avatar></v-row
             >

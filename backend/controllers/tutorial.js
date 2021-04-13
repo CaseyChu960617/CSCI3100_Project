@@ -10,7 +10,7 @@ const { response } = require("express");
 exports.getAllTutorials = async (req, res) => {
   Tutorial.find()
     .sort({ lastModifiedAt: -1 })
-    .select("_id author subject title description lastModifiedAt")
+    .select("_id author subject title description thumbnail lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
@@ -23,7 +23,7 @@ exports.getLatestTutorials = async (req, res) => {
   Tutorial.find()
     .sort({ lastModifiedAtDate: -1 })
     .limit(3)
-    .select("_id author subject title description lastModifiedAt")
+    .select("_id author subject title description  thumbnail lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
@@ -61,7 +61,7 @@ exports.getOneTutorial = async (req, res) => {
 
   Tutorial.findOne({ _id: req.params["tutorial_id"] })
     .select(
-      "_id title subject description chapters lastModified lastEditedAt createdAt"
+      "_id title subject description thumbnail chapters lastModified lastEditedAt createdAt"
     )
     .populate(populateQuery)
     .exec()
@@ -177,16 +177,18 @@ exports.createChapter = async (req, res) => {
 
 // editTutorial function
 exports.editTutorial = async (req, res) => {
-  const { tutorial_id, title, subject, published } = req.body;
+  const { tutorial_id, title, subject, description, published, thumbnail } = req.body;
 
   const update = {
     $set: {
       title: title,
       subject: subject,
+      description:  description,
       lastEditedAt: new Date().toLocaleDateString("zh-HK"),
       lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
       lastModifiedAtDate: new Date().getTime(),
       published: published,
+      thumbnail: thumbnail,
     },
   };
 
