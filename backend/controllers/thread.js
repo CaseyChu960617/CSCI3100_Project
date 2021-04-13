@@ -31,14 +31,30 @@ exports.getLatestThreads = async (req, res) => {
 
 // getSubject function
 exports.getSubject = async (req, res) => {
-  Thread.find({ subject: req.params["subject_id"] })
-    .sort({ lastModifiedAtDate: -1 })
-    .select("author subject title createdAt lastModifiedAt")
-    .populate("author", "_id username")
-    .exec()
-    .then((docs) => {
-      res.send(docs);
-    });
+  try {
+    if (req.params["subject_id"] == 0) {
+      Thread.find()
+      .sort({ lastModifiedAtDate: -1 })
+      .select("author subject title createdAt lastEditedAt")
+      .populate("author", "_id username")
+      .exec()
+      .then((docs) => {
+        res.send(docs);
+      });
+    }
+    else {
+    Thread.find({ subject: req.params["subject_id"] })
+      .sort({ lastModifiedAtDate: -1 })
+      .select("author subject title createdAt lastModifiedAt")
+      .populate("author", "_id username")
+      .exec()
+      .then((docs) => {
+        res.send(docs);
+      });
+    }
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 };
 
 // getOneThread function
