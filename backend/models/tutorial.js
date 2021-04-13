@@ -24,7 +24,8 @@ const tutorialSchema = new mongoose.Schema(
     lastEditedAt: { type: String, required: true },
     lastModifiedAt: { type: String, require: true },
     lastModifiedAtDate: { type: Date, required: true },
-    published: { type: Boolean, required: true, default: false },
+    published: { type: Number, required: true, default: 0 },
+    thumbnail: { type: String, required: true, default: "" },
   },
   { collection: "tutorials" }
 );
