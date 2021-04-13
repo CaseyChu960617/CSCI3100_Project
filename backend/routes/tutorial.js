@@ -45,6 +45,6 @@ router.put("/postComment", postComment);
 
 router.delete("/deleteTutorial/:tutorial_id", deleteTutorial);
 
-router.delete("/deleteChapter", deleteChapter);
+router.delete("/deleteChapter/:tutorial_id/:chapter_id", deleteChapter);
 
 module.exports = router;

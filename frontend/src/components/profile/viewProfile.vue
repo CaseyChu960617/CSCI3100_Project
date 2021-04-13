@@ -65,12 +65,12 @@
                 type="text"
               ></v-text-field>
               <v-row class="my-1">
-                <v-btn text @click="startChat()">Chat</v-btn><v-spacer />
-                <v-btn text @click="follow()">Threads</v-btn><v-spacer />
-                <v-btn text @click="viewUserTutorials()">Tutorials</v-btn
+                <v-btn text @click="startChat">Chat</v-btn><v-spacer />
+                <v-btn text @click="follow">Threads</v-btn><v-spacer />
+                <v-btn text @click="viewUserTutorials">Tutorials</v-btn
                 ><v-spacer />
-                <v-btn text v-if="followed" @click="unfollow()">Unfollow</v-btn>
-                <v-btn text v-else @click="follow()">Follow</v-btn></v-row
+                <v-btn text v-if="followed" @click="unfollow">Unfollow</v-btn>
+                <v-btn text v-else @click="follow">Follow</v-btn></v-row
               ></v-container
             ></v-col
           ></v-row
@@ -82,13 +82,13 @@
 
 <script>
 import DataService from "../../services/DataService";
+import authHeader from "../../services/auth-header.js";
 
 export default {
   props: ["profile", "loading"],
   data() {
     return {
       genderlist: ["Male", "Female", "Prefer not to disclose"],
-      followed: false,
     };
   },
   computed: {
@@ -102,29 +102,25 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
+    followed() {
+      return this.currentUser.following.includes(this.profile._id);
+    },
   },
   methods: {
     startChat() {
-      var chatId = "";
-      var oppUsername = this.profile.username;
-      DataService.post("chat/getOneChat", {
-        user_id_1: this.currentUser.user_id,
-        user_id_2: this.profile._id,
-      }).then((response) => {
-        chatId = response.data._id;
+      DataService.getOneChat(
+        {
+          user_id_1: this.currentUser.user_id,
+          user_id_2: this.profile._id,
+        },
+        {
+          headers: authHeader(),
+        }
+      ).then((response) => {
         this.$router.push({
           name: "chat",
-          params: { chatId: chatId, oppUsername },
+          params: { chatId: response.data._id },
         });
-      });
-    },
-
-    checkFollowed() {
-      this.followed = false;
-      this.currentUser.following.forEach((element) => {
-        if (element._id === this.profile._id) {
-          this.followed = true;
-        }
       });
     },
 
@@ -133,13 +129,13 @@ export default {
         my_user_id: this.currentUser.user_id,
         follow_id: this.profile._id,
       };
-      DataService.put("user/follow", data).then((response) => {
-        const following = [];
-        response.data.forEach((element) => {
-          following.push({ _id: element });
-        });
-        this.currentUser.following = following;
-        this.checkFollowed();
+      DataService.follow(data, {
+        headers: authHeader(),
+      }).then((response) => {
+        var user = JSON.parse(localStorage.getItem("user"));
+        user.following = Object.values(response.data);
+        localStorage.setItem("user", JSON.stringify(user));
+        this.$store.dispatch("auth/follow", this.profile._id);
       });
     },
 
@@ -149,13 +145,13 @@ export default {
         follow_id: this.profile._id,
       };
 
-      DataService.put("user/unfollow", data).then((response) => {
-        const following = [];
-        response.data.forEach((element) => {
-          following.push({ _id: element });
-        });
-        this.currentUser.following = following;
-        this.checkFollowed();
+      DataService.unfollow(data, {
+        headers: authHeader(),
+      }).then((response) => {
+        var user = JSON.parse(localStorage.getItem("user"));
+        user.following = Object.values(response.data);
+        localStorage.setItem("user", JSON.stringify(user));
+        this.$store.dispatch("auth/unfollow", this.profile._id);
       });
     },
 

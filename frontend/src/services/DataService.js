@@ -4,6 +4,7 @@ const Tutorial = "/tutorial/";
 const Profile = "/user/";
 const Category = "category/";
 const Upload = "/upload/";
+const Chat = "/chat/";
 class DataService {
   getAll(table, header) {
     return http.get(`/${table}`, header);
@@ -26,6 +27,12 @@ class DataService {
     //, //id, header) {
     return http.delete(`/${table}/${id}`); //header);
   }
+
+  deleteChapter(tutorial_id, chapter_id) {
+    //, //id, header) {
+    return http.delete(Tutorial + `deleteChapter/${tutorial_id}/${chapter_id}`); //header);
+  }
+
 
   //discussions
   getAllThread() {
@@ -88,6 +95,11 @@ class DataService {
   //   return http.delete(`/${table}/${id}`, header);
   // }
 
+  // Chat
+  getOneChat(data, header) {
+    return http.post(Chat + "getOneChat", data, header);
+  }
+
   // Profile
   getProfile(id) {
     return http.get(Profile + id);
@@ -95,6 +107,14 @@ class DataService {
 
   updateProfile(data, header) {
     return http.put(Profile + "editProfile", data, header);
+  }
+
+  follow(data, header) {
+    return http.put(Profile + "follow", data, header);
+  }
+
+  unfollow(data, header) {
+    return http.put(Profile + "unfollow", data, header);
   }
 
   changePassword(data, header) {

@@ -199,11 +199,5 @@ export default {
     document.head.appendChild(plugin);
     console.log("plugin is ", plugin);
   },
-
-  // uploader(editor) {
-  //   editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-  //     return new UploadAdapter(loader);
-  //   };
-  // },
 };
 </script>

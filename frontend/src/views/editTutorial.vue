@@ -43,7 +43,9 @@
                       @click.stop="dialog = true"
                       class="delete-btn"
                     >
-                      <v-icon color="black">mdi-delete</v-icon>
+                      <v-icon color="black" @click="deleteChapter(item._id)"
+                        >mdi-delete</v-icon
+                      >
                     </v-btn>
                   </v-list-item-title>
                 </v-list-item-content>
@@ -153,6 +155,20 @@ export default {
             this.chapters = this.tutorial.chapters;
           }
         );
+      });
+    },
+
+    deleteChapter(chapter_id) {
+      console.log("delete", chapter_id);
+      DataService.deleteChapter(this.tutorial._id, chapter_id).then(
+        (response) => {
+          console.log(response);
+        }
+      );
+
+      this.chapters.forEach((element, index, object) => {
+        if (chapter_id === element._id) object.splice(index, 1);
+        console.log(chapter_id);
       });
     },
 

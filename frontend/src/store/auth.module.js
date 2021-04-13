@@ -35,6 +35,14 @@ export const auth = {
       commit("uploadProPicSuccess", image);
       return Promise.resolve(image);
     },
+    follow({ commit }, id) {
+      commit("followSuccess", id);
+      return Promise.resolve(id);
+    },
+    unfollow({ commit }, id) {
+      commit("unfollowSuccess", id);
+      return Promise.resolve(id);
+    },
   },
   mutations: {
     signinSuccess(state, user) {
@@ -51,6 +59,12 @@ export const auth = {
     },
     uploadProPicSuccess(state, image) {
       state.user.profileImage = image;
+    },
+    followSuccess(state, id) {
+      state.user.following.push(id);
+    },
+    unfollowSuccess(state, id) {
+      state.user.following = state.user.following.filter((item) => item !== id);
     },
   },
 };
