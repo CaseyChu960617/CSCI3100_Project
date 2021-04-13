@@ -1,18 +1,38 @@
 <template>
-  <v-dialog v-model="dialog" max-width="80%" @click:outside="close">
-    <v-card height="80vh">
-      <v-container>
-        <!--UPLOAD-->
-        <v-form enctype="multipart/form-data">
-          <h1>Upload images</h1>
-          <input name="file" single type="file" @change="fileChange" />
-          <v-btn @click="uploadProPic">Upload</v-btn>
-        </v-form>
-        <v-avatar size="200" v-if="src">
-          <v-img :src="src" height="100%" />
-        </v-avatar>
-        <v-btn @click="save">Save</v-btn>
+  <v-dialog v-model="dialog" max-width="500px" @click:outside="close">
+    <v-card>
+      <v-card-title>Upload Image</v-card-title>
+      <v-container
+        ><v-file-input
+          label="File input"
+          prepend-icon="mdi-camera"
+          accept="image/*"
+          @change="fileChange"
+        />
+        <v-card-text>Preview</v-card-text>
+        <v-row justify="center">
+          <div v-if="loading">
+            <v-progress-circular
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+          <div v-else>
+            <v-avatar v-if="tempsrc" size="200">
+              <v-img :src="tempsrc" height="100%" />
+            </v-avatar>
+            <v-avatar v-else color="grey" size="200">
+              <span class="white--text headline">
+                {{ currentUser.username[0] }}</span
+              >
+            </v-avatar>
+          </div></v-row
+        >
       </v-container>
+      <v-card-actions
+        ><v-spacer /><v-btn v-if="!tempsrc" text @click="close">Close</v-btn
+        ><v-btn v-else text @click="save">Save</v-btn></v-card-actions
+      >
     </v-card>
   </v-dialog>
 </template>
@@ -21,30 +41,34 @@
 import DataService from "../../services/DataService";
 
 export default {
-  props: ["dialog"],
+  props: ["dialog", "src"],
 
   data() {
     return {
-      src: null,
+      tempsrc: this.src,
       formData: new FormData(),
+      loading: false,
     };
   },
-
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     },
   },
-
   methods: {
     close() {
       this.$emit("show", false);
-      //this.$emit("fetchProfile");
       this.formData = new FormData();
     },
 
-    fileChange(e) {
-      this.formData.append("file", e.target.files[0]);
+    fileChange(file) {
+      this.loading = true;
+      this.formData.append("file", file);
+      DataService.upload("uploadProPic", this.formData).then((response) => {
+        this.tempsrc = response.data.location;
+        this.formData = new FormData();
+        this.loading = false;
+      });
     },
 
     uploadProPic() {
@@ -58,7 +82,7 @@ export default {
     save() {
       const data = {
         my_user_id: this.currentUser.user_id,
-        profileImage: this.src,
+        profileImage: this.tempsrc,
       };
       DataService.put("user/updateProPic", data).then((response) => {
         var user = JSON.parse(localStorage.getItem("user"));
