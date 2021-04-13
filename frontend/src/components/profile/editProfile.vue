@@ -119,7 +119,7 @@
 <script>
 import DataService from "../../services/DataService";
 import authHeader from "../../services/auth-header.js";
-import modal from "../../components/modal/uploadProPic.vue";
+import modal from "./uploadProPic.vue";
 import ChangePassword from "../../components/profile/changePassword.vue";
 
 export default {
