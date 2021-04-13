@@ -7,7 +7,7 @@
         :profile="profile"
         :loading="loading"
       />
-      <ViewProfile v-else :profile="profile" />
+      <ViewProfile v-else :profile="profile" :loading="loading" />
     </v-row>
   </v-container>
 </template>
@@ -27,6 +27,7 @@ export default {
       edit: true,
       canEdit: false,
       profile: {},
+      loading: false,
     };
   },
   watch: {
@@ -49,6 +50,7 @@ export default {
           this.loading = false;
         })
         .catch((err) => {
+          this.loading = false;
           console.log(err);
           if (err.response.status == 401 || err.response.status == 403) {
             alert("Please Login again");
