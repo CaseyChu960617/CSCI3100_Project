@@ -54,7 +54,11 @@
               <v-divider />
             </template>
           </v-virtual-scroll>
-          <v-card v-else> no tutorial fuck you</v-card>
+
+          <v-container v-else class="text-wrap">
+            <strong> No Chapters</strong>
+          </v-container>
+
           <v-btn
             id="main-btn"
             slot="activator"
@@ -70,6 +74,7 @@
         <v-col>
           <editMetadata v-if="editMetadata" />
           <editChapter
+            :tutorial_id="tutorial._id"
             @fetchTutorial="fetchTutorial"
             :chapterId="selectedId"
             v-else

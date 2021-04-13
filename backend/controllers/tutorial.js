@@ -9,7 +9,7 @@ const { response } = require("express");
 // getAllTutorials function
 exports.getAllTutorials = async (req, res) => {
   Tutorial.find({ published: 1 })
-    .sort({ lastModifiedAt: -1 })
+    .sort({ lastModifiedAtDate: -1 })
     .select("_id author subject title description thumbnail lastModifiedAt")
     .populate("author", "_id username")
     .exec()
@@ -127,7 +127,7 @@ exports.createTutorial = async (req, res) => {
   const { user_id, subject, title, description } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
-    if (err) res.status(400).json({ error: "User not found!" });
+    if (err) res.status(400).json({ error: err.message });
     if (user) {
       Tutorial.create(
         {
@@ -142,8 +142,11 @@ exports.createTutorial = async (req, res) => {
           published: false,
         },
         (err, doc) => {
-          if (err) res.status(400).json({ error: "Bad request." });
-          else res.send(doc._id);
+          console.log(err);
+          if (err) 
+            res.status(400).json({ error: err.message });
+          else 
+            res.send(doc._id);
         }
       );
     } else res.status(400).json({ error: "User not found." });
@@ -216,7 +219,7 @@ exports.editTutorial = async (req, res) => {
 
 // editChapter function
 exports.editChapter = async (req, res) => {
-  const { chapter_id, title, content } = req.body;
+  const { tutorial_id, chapter_id, title, content } = req.body;
 
   const update = {
     $set: {
@@ -230,8 +233,18 @@ exports.editChapter = async (req, res) => {
   console.log("content:", content);
   Chapter.findOneAndUpdate({ _id: chapter_id }, update, (err, doc) => {
     if (err) res.status(400).json({ error: "Bad request." });
-    else res.send(doc);
   });
+
+  Tutorial.findOneAndUpdate({ _id: tutorial_id }, 
+    { $set: { lastModifiedAtDate: new Date().getTime() } }, 
+    (err) => {
+      if (err)
+        res.status(400).send(err.message);
+      else
+        res.send("Edit chapter sucessfully");
+    });
+
+
 };
 
 // postComment function
