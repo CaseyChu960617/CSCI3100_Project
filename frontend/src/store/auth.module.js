@@ -1,9 +1,7 @@
 import AuthService from "../services/auth.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
-const initialState = user
-  ? { status: { signedIn: true }, user }
-  : { status: { signedIn: false }, user: null };
+const initialState = user ? { status: { signedIn: true }, user } : { status: { signedIn: false }, user: null };
 
 export const auth = {
   namespaced: true,
@@ -25,10 +23,14 @@ export const auth = {
       AuthService.signout();
       commit("signout");
     },
-    registered({commit}, user){
+    registered({ commit }, user) {
       commit("signinSuccess", user);
       return Promise.resolve(user);
-    }
+    },
+    editProfile({ commit }, user) {
+      commit("signinSuccess", user);
+      return Promise.resolve(user);
+    },
   },
   mutations: {
     signinSuccess(state, user) {

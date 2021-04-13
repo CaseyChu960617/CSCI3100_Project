@@ -21,7 +21,8 @@ class DataService {
     return http.put(`/${table}/${id}`, data, header);
   }
 
-  delete(table, id) {//, //id, header) {
+  delete(table, id) {
+    //, //id, header) {
     return http.delete(`/${table}/${id}`); //header);
   }
 
@@ -87,6 +88,10 @@ class DataService {
   // }
 
   // Profile
+  getProfile(id) {
+    return http.get(Profile + id);
+  }
+
   updateProfile(data, header) {
     return http.put(`${Profile}editProfile`, data, header);
   }

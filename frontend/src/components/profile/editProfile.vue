@@ -1,7 +1,7 @@
 <template>
-  <v-col cols="12" sm="12" md="10">
+  <v-col v-if="edit" cols="12" sm="12" md="10">
     <v-card elevation="16" outlined>
-      <v-card-title class="display-1 pa-5">
+      <v-card-title class="display-1 pa-10">
         <v-icon class="pr-3" color="black" size="40">mdi-account-cog</v-icon
         >Profile</v-card-title
       >
@@ -21,6 +21,7 @@
                 v-else
                 color="grey"
                 size="200"
+                style="cursor: pointer"
                 @click.stop="dialog = true"
               >
                 <span class="white--text headline">
@@ -78,8 +79,8 @@
                 label="Gender"
                 :rules="[rules.required]"
               ></v-select>
-              <v-row class="my-3">
-                <v-btn text @click="changePassword()">Change Password</v-btn>
+              <v-row class="mt-1">
+                <v-btn text @click="edit = false">Change Password</v-btn>
                 <v-spacer />
                 <v-btn
                   rounded
@@ -95,17 +96,24 @@
       </v-container>
     </v-card>
   </v-col>
+  <ChangePassword v-else @switchform="switchform" />
 </template>
 
 <script>
 import DataService from "../../services/DataService";
 import authHeader from "../../services/auth-header.js";
 import modal from "../../components/modal/uploadProPic.vue";
+import ChangePassword from "../../components/profile/changePassword.vue";
 
 export default {
+  components: {
+    modal,
+    ChangePassword,
+  },
   data() {
     return {
       dialog: false,
+      edit: true,
       account: this.$store.state.auth.user,
       genderlist: [
         { text: "Male", value: 1 },
@@ -116,9 +124,6 @@ export default {
         required: (value) => !!value || "Required",
       },
     };
-  },
-  components: {
-    modal,
   },
   computed: {
     currentUser() {
@@ -138,8 +143,10 @@ export default {
       DataService.updateProfile(this.account, {
         headers: authHeader(),
       })
-        .then((response) => {
-          console.log(response.data);
+        .then((res) => {
+          alert("Success");
+          localStorage.setItem("user", JSON.stringify(res.data));
+          this.$store.dispatch("auth/editProfile", res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -147,12 +154,15 @@ export default {
             alert("Please Login again");
             this.$router.push("/home");
           } else {
-            alert(err.response.data.message);
+            console.log(err.response.data);
           }
         });
     },
     show(bool) {
       this.dialog = bool;
+    },
+    switchform() {
+      this.edit = !this.edit;
     },
   },
 };

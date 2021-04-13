@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" sm="12" md="10">
     <v-card elevation="16" outlined>
-      <v-card-title class="display-1 pa-5">
+      <v-card-title class="display-1 pa-10">
         <v-icon class="pr-3" color="black" size="40">mdi-account-cog</v-icon
         >Profile</v-card-title
       >
@@ -9,59 +9,50 @@
         <v-row
           ><v-col cols="12" sm="12" md="4" align-self="center"
             ><v-row justify="center"
-              ><v-avatar
-                v-if="account.profileImage"
-                size="200"
-                style="cursor: pointer"
-                @click.stop="dialog = true"
-              >
-                <v-img :src="account.profileImage" height="100%" />
+              ><v-avatar v-if="profile.profileImage" size="200">
+                <v-img :src="profile.profileImage" height="100%" />
               </v-avatar>
-              <v-avatar
-                v-else
-                color="grey"
-                size="200"
-                @click.stop="dialog = true"
-              >
-                <span class="white--text headline">
-                  {{ account.username[0] }}</span
-                >
+              <v-avatar v-else color="grey" size="200">
+                <span class="white--text headline"> {{ firstChar }}</span>
               </v-avatar></v-row
-            >
-            <v-row justify="center"> </v-row></v-col
+            ></v-col
           ><v-col cols="12" sm="12" md="8">
             <v-container>
-              <v-text-field
+              <!-- <v-text-field
                 readonly
-                v-model="account.email"
+                v-model="profile.email"
                 label="Email"
-              ></v-text-field>
+              ></v-text-field> -->
               <v-text-field
                 readonly
-                v-model="account.username"
+                v-model="profile.username"
                 label="Username"
+                type="text"
               ></v-text-field>
               <v-row>
                 <v-col cols="6">
                   <v-text-field
                     readonly
-                    v-model="account.firstname"
-                    label="Firstname"
+                    v-model="profile.firstname"
+                    label="First Name"
+                    type="text"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field
                     readonly
-                    v-model="account.lastname"
-                    label="Lastname"
+                    v-model="profile.lastname"
+                    label="Last Name"
+                    type="text"
                   ></v-text-field> </v-col
               ></v-row>
               <v-text-field
                 readonly
-                v-model="genderlist[account.gender - 1]"
+                v-model="gender"
                 label="Gender"
+                type="text"
               ></v-text-field>
-              <v-row class="my-3">
+              <v-row class="my-1">
                 <v-btn text @click="startChat(account._id)"
                   >Start chatting</v-btn
                 >
@@ -72,8 +63,10 @@
                 <v-btn text class="ml-4" v-if="followed" @click="unfollow()"
                   >Unfollow</v-btn
                 >
-                <v-btn text class="ml-4" v-else @click="follow()">Follow</v-btn>
-              </v-row></v-container
+                <v-btn text class="ml-4" v-else @click="follow()"
+                  >Follow</v-btn
+                ></v-row
+              ></v-container
             ></v-col
           ></v-row
         >
@@ -83,43 +76,25 @@
 </template>
 
 <script>
-import DataService from "../services/DataService";
-//import authHeader from "../services/auth-header.js";
+import DataService from "../../services/DataService";
+
 export default {
+  props: ["profile"],
   data() {
     return {
-      account: "",
-      followed: null,
       genderlist: ["Male", "Female", "Prefer not to disclose"],
     };
   },
   computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
+    gender() {
+      return this.genderlist[this.profile.gender - 1];
+    },
+    firstChar() {
+      var str = this.profile.username + "";
+      return str.substring(0, 1);
     },
   },
-  created() {
-    if (this.$route.params.user_id === undefined)
-      alert("User profile does not exist.");
-    else this.fetchProfile();
-  },
-
   methods: {
-    fetchProfile() {
-      console.log(this.$route.params.user_id);
-      //this.uid = this.$route.params.uid;
-
-      DataService.get("user/", this.$route.params.user_id)
-        .then((response) => {
-          this.account = response.data;
-          console.log(response.data);
-        })
-        .then(() => {
-          console.log(this.currentUser.following);
-          this.checkFollowed();
-        });
-    },
-
     startChat(id) {
       var chatId = "";
       var oppUsername = this.account.username;

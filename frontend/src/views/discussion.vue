@@ -10,9 +10,6 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon>
-              <v-icon>mdi-refresh</v-icon>
-            </v-btn>
             <v-btn icon @click="dialog = true">
               <v-icon>mdi-plus</v-icon>
             </v-btn>
