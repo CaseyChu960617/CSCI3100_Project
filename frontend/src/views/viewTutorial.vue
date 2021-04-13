@@ -19,8 +19,7 @@
         </v-toolbar-title>
         <v-toolbar-title class="author">
           <v-btn
-            v-if="currentUser.activation"
-            :to="`/profile/` + currentUser.user_id"
+            :to="`/profile/` + tutorial.author._id"
             class="mr-4 ml-2 text-capitalize black--text"
             color="#757575"
             text
