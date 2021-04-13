@@ -35,7 +35,7 @@
         >
         <v-btn
           v-if="currentUser.activation"
-          to="/profile"
+          :to="`/profile/` + currentUser.user_id"
           class="mr-4 ml-2 text-capitalize white--text"
           color="#757575"
           text

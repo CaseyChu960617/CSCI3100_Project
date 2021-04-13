@@ -35,7 +35,7 @@ export const router = new Router({
       component: discussion,
     },
     {
-      path: "/profile",
+      path: "/profile/:user_id",
       component: profile,
     },
     {
@@ -82,10 +82,10 @@ export const router = new Router({
       component: userTutorial,
     },
 
-    { 
+    {
       name: "viewTutorial",
       path: "/tutorial/:tutorial_id",
-      component: viewTutorial
-    }
+      component: viewTutorial,
+    },
   ],
 });
