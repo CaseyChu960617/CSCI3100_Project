@@ -192,7 +192,7 @@ exports.editTutorial = async (req, res) => {
 
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
     if (err) res.status(400).json({ error: "Bad request." });
-    else res.send(doc);
+    else res.status(200).send("Sucess");
   });
 };
 

@@ -2,31 +2,67 @@
   <v-container
     ><v-container>
       Tutorial metaData:
-      <v-card class="pa-5" v-html="editorData"> {{ editorData }}</v-card>
+      <v-card class="pa-5">
+        <v-row>
+          <v-col col="9">
+            <v-text-field v-model="title" label="title" type="text" clearable>
+            </v-text-field>
+          </v-col>
+          <v-col col="3">
+            <v-select
+              v-model="published"
+              :items="publishedlist"
+              item-text="text"
+              item-value="value"
+              label="publish?"
+              clearable
+              :rules="[rules.required]"
+            ></v-select>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col col="9">
+            <v-textarea
+              v-model="description"
+              label="description"
+              type="text"
+              clearable
+            ></v-textarea>
+          </v-col>
+        </v-row>
+
+        <v-form enctype="multipart/form-data">
+          Upload thumbnail
+          <input name="file" single type="file" @change="fileChange" />
+          <v-btn @click="uploadProPic">Upload</v-btn>
+        </v-form>
+        <v-avatar size="200" v-if="src">
+          <v-img :src="src" height="100%" />
+        </v-avatar>
+        <v-btn @click="save">Save</v-btn>
+      </v-card>
     </v-container>
-    <v-container>
-      <ckeditor
-        :editor="editor"
-        v-model="editorData"
-      ></ckeditor> </v-container></v-container
+    <v-container> </v-container></v-container
 ></template>
 
 <script>
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../../services/DataService";
 
 export default {
-  components: {
-    // Use the <ckeditor> component in this view.
-    ckeditor: CKEditor.component,
-    //editchapter,
-  },
+  components: {},
   data() {
     return {
-      title: null,
-      editor: ClassicEditor,
-      editorData: "fuck",
+      title: "",
+      description: "",
+      thumbnail: "",
+      published: "",
+      publishedlist: [
+        { text: "publish", value: true },
+        { text: "not publish", value: false },
+      ],
+      rules: {
+        required: (value) => !!value || "Required",
+      },
     };
   },
   created() {
