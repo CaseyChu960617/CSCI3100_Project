@@ -7,7 +7,7 @@
           >{{ thread.author.username }}</router-link
         ></v-card-title
       >
-      <v-card-text>{{ thread.content }}</v-card-text>
+      <v-card-text v-html="thread.content"></v-card-text>
     </v-card>
     <v-card
       v-for="comment in thread.comments"
