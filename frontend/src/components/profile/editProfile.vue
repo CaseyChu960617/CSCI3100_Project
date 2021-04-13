@@ -9,25 +9,33 @@
         <v-row
           ><v-col cols="12" sm="12" md="4" align-self="center"
             ><v-row justify="center"
-              ><v-avatar
-                v-if="account.profileImage"
-                size="200"
-                style="cursor: pointer"
-                @click.stop="dialog = true"
-              >
-                <v-img :src="account.profileImage" height="100%" />
-              </v-avatar>
-              <v-avatar
-                v-else
-                color="grey"
-                size="200"
-                style="cursor: pointer"
-                @click.stop="dialog = true"
-              >
-                <span class="white--text headline">
-                  {{ account.username[0] }}</span
+              ><div v-if="loading">
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
+              </div>
+              <div v-else>
+                <v-avatar
+                  v-if="account.profileImage"
+                  size="200"
+                  style="cursor: pointer"
+                  @click.stop="dialog = true"
                 >
-              </v-avatar></v-row
+                  <v-img :src="account.profileImage" height="100%" />
+                </v-avatar>
+                <v-avatar
+                  v-else
+                  color="grey"
+                  size="200"
+                  style="cursor: pointer"
+                  @click.stop="dialog = true"
+                >
+                  <span class="white--text headline">
+                    {{ account.username[0] }}</span
+                  >
+                </v-avatar>
+              </div></v-row
             >
             <v-row justify="center"
               ><v-btn
@@ -45,11 +53,13 @@
           ><v-col cols="12" sm="12" md="8">
             <v-container>
               <v-text-field
+                :loading="loading"
                 readonly
                 v-model="account.email"
                 label="Email"
               ></v-text-field>
               <v-text-field
+                :loading="loading"
                 v-model="account.username"
                 label="Username"
                 type="text"
@@ -59,6 +69,7 @@
               <v-row>
                 <v-col cols="6">
                   <v-text-field
+                    :loading="loading"
                     v-model="account.firstname"
                     label="First Name"
                     type="text"
@@ -68,6 +79,7 @@
                 </v-col>
                 <v-col cols="6">
                   <v-text-field
+                    :loading="loading"
                     v-model="account.lastname"
                     label="Last Name"
                     type="text"
@@ -76,6 +88,7 @@
                   ></v-text-field> </v-col
               ></v-row>
               <v-select
+                :loading="loading"
                 v-model="account.gender"
                 :items="genderlist"
                 item-text="text"
@@ -114,6 +127,7 @@ export default {
     modal,
     ChangePassword,
   },
+  props: ["loading"],
   data() {
     return {
       dialog: false,
