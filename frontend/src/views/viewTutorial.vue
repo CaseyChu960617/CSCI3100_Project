@@ -5,6 +5,8 @@
       :scroll-target="'#scrolling-techniques'"
       style="background:#eee;"
       height="100px"
+      class="meta"
+      @click="selectChapter('null', 1)"
     >
       <v-layout>
         <v-toolbar-title>
@@ -30,7 +32,7 @@
             :items="this.tutorial.chapters"
           >
             <template v-slot:default="{ item }">
-              <v-list-item @click="selectChapter(item._id)">
+              <v-list-item @click="selectChapter(item._id, 0)">
                 <v-list-item-content>
                   <v-list-item-title class="text-wrap">
                     <strong>{{ item.title }}</strong>
@@ -42,7 +44,7 @@
         </div>
       </v-col>
       <v-col md="9">
-        <v-card v-if="viewtutorial" elevation="8" class="ma-4" height="65vh">
+        <v-card v-if="viewTutorial" elevation="8" class="ma-4">
           <div class="tutorial-header">
             {{ this.tutorial.title }}
             <span class="course-code">
@@ -50,24 +52,27 @@
             </span>
           </div>
           <v-divider class="mx-4"></v-divider>
-          <div class="d-flex flex-column justify-space-between align-center">
-            <v-img
-              max-height="300px"
-              v-if="tutorial.thumbnail"
-              :src="tutorial.thumbnail"
-            ></v-img>
-            <v-img
-              max-height="300px"
-              v-else
-              src="../assets/Homepage/1.jpg"
-            ></v-img>
-          </div>
-          <v-card-title>
-            Description
-          </v-card-title>
-          <v-divider class="mx-4"></v-divider>
-          <v-card-text class="des">
-            {{ this.tutorial.description }}
+          <v-card-text class="tutorial-content">
+            <div class="d-flex flex-column justify-space-between align-center">
+              <v-img
+                max-height="300px"
+                v-if="tutorial.thumbnail"
+                :src="tutorial.thumbnail"
+              ></v-img>
+              <v-img
+                max-height="300px"
+                v-else
+                src="../assets/Homepage/1.jpg"
+              ></v-img>
+            </div>
+
+            <v-card-title>
+              Description
+            </v-card-title>
+            <v-divider class="mx-4"></v-divider>
+            <v-card-text class="des">
+              {{ this.tutorial.description }}
+            </v-card-text>
           </v-card-text>
         </v-card>
         <viewChapter v-else :chapterId="selectedId" />
@@ -76,6 +81,9 @@
   </v-container>
 </template>
 <style>
+.meta {
+  cursor: pointer;
+}
 .tutorial-header {
   display: relative !important;
   align-items: center;
@@ -87,8 +95,12 @@
   word-break: break-all;
   padding: 16px;
 }
+
 .course-code {
   float: right;
+}
+.tutorial-content {
+  height: 78vh;
 }
 .v-virtual-scroll__item {
   position: inherit !important;
@@ -111,7 +123,7 @@ export default {
       chapters: [],
       selectedId: null,
       noThumbnail: true,
-      viewtutorial: 1,
+      viewTutorial: 1,
     };
   },
 
@@ -138,9 +150,13 @@ export default {
       });
     },
 
-    selectChapter(chapter_id) {
-      (this.viewtutorial = 0), (this.selectedId = chapter_id);
-      //this.fetchOneChapter(chapter_id);
+    selectChapter(chapter_id, viewTutorial) {
+      if (viewTutorial === 0) {
+        this.viewTutorial = 0;
+        this.selectedId = chapter_id;
+      } else {
+        this.viewTutorial = 1;
+      }
     },
 
     fetchOneChapter(chapter_id) {

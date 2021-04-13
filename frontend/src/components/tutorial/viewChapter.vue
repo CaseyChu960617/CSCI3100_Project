@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card elevation="8" class="ma-4" min-height="65vh">
+    <v-card elevation="8" class="ma-4" m>
       <v-card-title>{{ this.chapter.title }}</v-card-title>
       <v-divider class="mx-4"></v-divider>
       <v-card-text
@@ -13,6 +13,9 @@
 <style>
 .chapter-content {
   overflow-y: scroll;
+  height: 78vh;
+  /*min-height: 65vh;
+  max-height: 500px;*/
 }
 </style>
 <script>
