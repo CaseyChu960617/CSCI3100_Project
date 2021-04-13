@@ -1,7 +1,10 @@
 <template>
   <v-col cols="12" sm="12" md="10">
     <v-card elevation="16" outlined>
-      <v-card-title class="display-1 pa-10">Profile</v-card-title>
+      <v-card-title class="display-1 pa-10">
+        <v-icon class="pr-3" color="black" size="40">mdi-account-cog</v-icon
+        >Profile</v-card-title
+      >
       <v-container>
         <v-row
           ><v-col cols="12" sm="12" md="4" align-self="center"

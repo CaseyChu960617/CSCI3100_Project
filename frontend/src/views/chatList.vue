@@ -3,7 +3,9 @@
     <v-row no-gutters>
       <v-col mt="5" md="3" class="hidden-sm-and-down my-5 px-5">
         <v-card elevation="16">
-          <v-card-title>Chat list</v-card-title>
+          <v-card-title>
+            <v-icon class="pr-3" color="black" size="40">mdi-chat</v-icon> Chats
+          </v-card-title>
           <v-divider />
           <v-virtual-scroll
             bench="25"

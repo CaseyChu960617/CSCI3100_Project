@@ -17,21 +17,21 @@
           to="/chat"
           class="text-capitalize headline white--text"
           plain
-          >Chat</v-btn
+          >Chat <v-icon class="pl-3">mdi-chat</v-icon></v-btn
         >
         <v-btn
           v-if="currentUser.activation"
           to="/tutorial"
           class="text-capitalize headline white--text"
           plain
-          >Tutorial</v-btn
+          >Tutorial <v-icon class="pl-3">mdi-book-account</v-icon></v-btn
         >
         <v-btn
           v-if="currentUser.activation"
           to="/discussion"
           class="text-capitalize headline white--text"
           plain
-          >Discussion</v-btn
+          >Discussion <v-icon class="pl-3">mdi-chat-question</v-icon></v-btn
         >
         <v-btn
           v-if="currentUser.activation"
@@ -39,8 +39,9 @@
           class="mr-4 ml-2 text-capitalize white--text"
           color="#757575"
           text
-          >{{ currentUser.username }}</v-btn
-        >
+          >{{ currentUser.username
+          }}<v-icon class="pl-3">mdi-account-cog</v-icon>
+        </v-btn>
 
         <v-btn @click="signout" rounded
           ><v-icon>mdi-logout</v-icon>Sign out</v-btn

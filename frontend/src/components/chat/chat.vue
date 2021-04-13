@@ -37,7 +37,7 @@
         style="align-self: center; text-align: center"
         ;
       >
-        展開激情對話
+        Starting Chatting !
       </v-container>
 
       <v-row justify="space-around d-flex flex-column">
@@ -181,7 +181,7 @@
                 type="text"
                 class="form control mx-2"
                 v-model="newMessage"
-                label="展開激情對話"
+                label="Starting Chatting !"
               ></v-text-field>
             </v-col>
             <v-btn

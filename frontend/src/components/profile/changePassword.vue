@@ -1,7 +1,10 @@
 <template>
   <v-col cols="12" sm="8" md="6">
     <v-card elevation="16" outlined>
-      <v-card-title class="display-1 pa-10">Change Password</v-card-title>
+      <v-card-title class="display-1 pa-10">
+        <v-icon class="pr-3" color="black" size="40">mdi-account-key</v-icon
+        >Change Password</v-card-title
+      >
       <v-container>
         <v-row
           ><v-col>
