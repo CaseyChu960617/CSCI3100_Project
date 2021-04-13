@@ -65,7 +65,7 @@ exports.editProfile = async (req, res) => {
         });
     }
     else {
-        if (otherUser._id == user._id) {
+        if (otherUser._id.equals(user._id)) {
         user.username = username;
         user.firstname = firstname;
         user.lastname = lastname;
