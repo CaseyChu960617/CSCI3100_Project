@@ -85,7 +85,7 @@ exports.getOneChapter = async (req, res) => {
 exports.getUserTutorials = async (req, res) => {
   Tutorial.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAtDate: -1 })
-    .select("author subject title description createdAt lastModifiedAt")
+    .select("author subject title description thumbnail createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
