@@ -1,9 +1,20 @@
 <template>
-  <v-card elevation="8" class="ma-4" height="65vh">
-    <v-card-title>{{ this.chapter.title }}</v-card-title>
-    <v-card-text> {{ this.chapter.content }}</v-card-text>
-  </v-card>
+  <div>
+    <v-card elevation="8" class="ma-4" min-height="65vh">
+      <v-card-title>{{ this.chapter.title }}</v-card-title>
+      <v-divider class="mx-4"></v-divider>
+      <v-card-text
+        class="chapter-content pa-5"
+        v-html="chapter.content"
+      ></v-card-text>
+    </v-card>
+  </div>
 </template>
+<style>
+.chapter-content {
+  overflow-y: scroll;
+}
+</style>
 <script>
 import DataService from "../../services/DataService";
 export default {
@@ -26,7 +37,7 @@ export default {
         }
       );
     },
-    EnableVideo() {
+    enableVideo() {
       document.querySelectorAll("oembed[url]").forEach((element) => {
         window.iframely.load(element, element.attributes.url.value);
       });
@@ -46,6 +57,9 @@ export default {
     plugin.async = true;
     document.head.appendChild(plugin);
     console.log("plugin is ", plugin);
+  },
+  updated() {
+    this.enableVideo();
   },
 };
 </script>
