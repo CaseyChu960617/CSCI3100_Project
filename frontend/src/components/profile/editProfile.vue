@@ -127,12 +127,12 @@ export default {
     modal,
     ChangePassword,
   },
-  props: ["loading"],
+  props: ["loading", "profile"],
   data() {
     return {
       dialog: false,
       edit: true,
-      account: this.$store.state.auth.user,
+      account: this.profile,
       genderlist: [
         { text: "Male", value: 1 },
         { text: "Female", value: 2 },

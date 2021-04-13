@@ -127,11 +127,12 @@ exports.createThread = async (req, res) => {
           lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
           lastModifiedAtDate: new Date().getTime()
         },
-        (err, data) => {
+        (err, doc) => {
           if (err) {
             console.log(err);
             res.status(400).json({ error: "Bad request." });
-          } else console.log(data);
+          } else 
+            res.send(doc._id);
         }
       );
     } else res.status(400).json({ error: "User not found." });

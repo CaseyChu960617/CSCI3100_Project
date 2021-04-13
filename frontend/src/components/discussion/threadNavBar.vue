@@ -9,6 +9,7 @@
       <v-btn icon @click="dialog = true">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+      <NewThread :dialog="dialog" @show="show" />
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary width="80%">
       <v-list nav>
@@ -28,8 +29,12 @@
 
 <script>
 import subjectlist from "../../assets/subjects.json";
+import NewThread from "./newThread.vue";
 
 export default {
+  components: {
+    NewThread,
+  },
   data() {
     return {
       drawer: false,
@@ -53,6 +58,9 @@ export default {
           },
         })
         .catch(() => {});
+    },
+    show(bool) {
+      this.dialog = bool;
     },
   },
 };

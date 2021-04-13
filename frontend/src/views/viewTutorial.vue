@@ -17,6 +17,7 @@
             <strong> {{ this.tutorial.title }} </strong>
           </div>
         </v-toolbar-title>
+
         <v-toolbar-title class="author pa-4">
           <router-link
             :to="{ name: 'profile', params: { user_id: this.author._id } }"
