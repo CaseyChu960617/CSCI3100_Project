@@ -6,17 +6,19 @@
       style="background:#eee;"
     >
       <v-layout>
-        <v-toolbar-title>
+        <v-title>
           <a class="navbar-item">
             Your are editing {{ this.tutorial.title }}
           </a>
-        </v-toolbar-title>
+        </v-title>
       </v-layout>
     </v-toolbar>
     <div>
       <v-row class="ml-2 mt-2">
         <v-col mt="5" md="3" class="hidden-sm-and-down mt-5">
-          <div class="pa-5">Edit tutorial information</div>
+          <div class="pa-5" @click="changeEdit(tutorial._id, 1)">
+            Edit tutorial information
+          </div>
           <v-divider />
           <v-virtual-scroll
             v-if="chapters.length != 0"
@@ -27,7 +29,7 @@
             :items="tutorial.chapters"
           >
             <template v-slot:default="{ item }">
-              <v-list-item @click="selectChat(item._id)">
+              <v-list-item @click="changeEdit(item._id, 0)">
                 <v-list-item-content>
                   <v-list-item-title class="text-wrap">
                     <strong>{{ item.title }}</strong>
@@ -52,7 +54,8 @@
           </v-btn>
         </v-col>
         <v-col>
-          <editChapter />
+          <editMetadata v-if="editMetadata" />
+          <editChapter v-else :ChapterId="selectedChapter_id" />
         </v-col>
       </v-row>
     </div>
@@ -67,9 +70,11 @@
 import DataService from "../services/DataService";
 //import editChapter from "../components/tutorial/editChapter.vue";
 import editChapter from "../components/tutorial/editChapter.vue";
+import editMetadata from "../components/tutorial/editMetadata.vue";
 export default {
   components: {
     editChapter,
+    editMetadata,
   },
   data() {
     return {
@@ -77,6 +82,8 @@ export default {
       chapters: [],
       //editor: ClassicEditor,
       editorData: "fuck",
+      selectedChapter_id: null,
+      editMetadata: 0,
     };
   },
 
@@ -127,6 +134,17 @@ export default {
           }
         );
       });
+    },
+    changeEdit(id, editMetadata) {
+      if (editMetadata) {
+        this.editMetadata = 1;
+        this.selectedChapter_id = null;
+        console.log(this.editMetadata);
+      } else {
+        this.editMetadata = 0;
+        this.selectedChapter_id = id;
+        console.log(this.editMetadata);
+      }
     },
   },
 };
