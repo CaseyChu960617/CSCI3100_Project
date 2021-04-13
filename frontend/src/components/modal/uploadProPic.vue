@@ -50,6 +50,7 @@ export default {
       console.log(this.formData);
       DataService.upload("uploadProPic", this.formData).then((response) => {
         this.src = response.data.location;
+        console.log(this.src);
         this.formData = new FormData();
       });
     },
