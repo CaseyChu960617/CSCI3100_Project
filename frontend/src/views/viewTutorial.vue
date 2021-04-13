@@ -19,7 +19,7 @@
     </v-toolbar>
     <v-row>
       <v-col md="3">
-        <v-card elevation="8" class="ma-4">
+        <v-card elevation="8" class="ma-4" height="65vh">
           <v-card-title> Chapters </v-card-title>
           <v-virtual-scroll
             v-if="chapters.length != 0"
@@ -42,7 +42,7 @@
         </v-card>
       </v-col>
       <v-col md="9">
-        <v-card elevation="8" class="ma-4" height="65vh">
+        <v-card v-if="viewtutorial" elevation="8" class="ma-4" height="65vh">
           <div class="tutorial-header">
             {{ this.tutorial.title }}
             <span class="course-code">
@@ -55,7 +55,7 @@
               v-if="!noThumbnail"
               :src="thumbnail"
               class="justify-center"
-              max-height="700px"
+              max-height="300px"
             />
             <v-img
               v-else
@@ -68,7 +68,7 @@
             Description
           </v-card-title>
           <v-divider class="mx-4"></v-divider>
-          <v-card-text>
+          <v-card-text class="des">
             {{ this.tutorial.description }}
           </v-card-text>
         </v-card>
@@ -91,10 +91,14 @@
 .course-code {
   float: right;
 }
+.des {
+  overflow-y: hidden;
+}
 </style>
 <script>
 import DataService from "../services/DataService";
 import subjectsList from "../assets/subjects.json";
+import viewChapter from "..//viewChapter.vue";
 
 export default {
   components: {},
@@ -103,8 +107,10 @@ export default {
       subjects: subjectsList,
       tutorial: null, //the whole returned object from tutorial
       chapters: [],
-      content: null,
+      currentChapter: null,
+      currentChapterId: null,
       noThumbnail: true,
+      viewtutorial: 1,
     };
   },
 
@@ -136,6 +142,12 @@ export default {
     },
 
     fetchOneChapter(chapter_id) {
+      DataService.get("tutorial/getOneChapter", chapter_id).then((response) => {
+        this.content = response.data.content;
+      });
+    },
+
+    fetchAllChapter(chapter_id) {
       DataService.get("tutorial/getOneChapter", chapter_id).then((response) => {
         this.content = response.data.content;
       });
