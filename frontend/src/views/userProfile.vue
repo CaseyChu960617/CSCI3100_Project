@@ -66,7 +66,7 @@
                   >Start chatting</v-btn
                 >
                 <v-btn text class="ml-4" @click="follow()">View Threads</v-btn>
-                <v-btn text class="ml-4" @click="follow()"
+                <v-btn text class="ml-4" @click="viewUserTutorials()"
                   >View Tutorials</v-btn
                 >
                 <v-btn text class="ml-4" v-if="followed" @click="unfollow()"
@@ -88,7 +88,7 @@ import DataService from "../services/DataService";
 export default {
   data() {
     return {
-      account: null,
+      account: "",
       followed: null,
       genderlist: ["Male", "Female", "Prefer not to disclose"],
     };
@@ -111,7 +111,8 @@ export default {
 
       DataService.get("user/getProfile", this.$route.params.user_id)
         .then((response) => {
-          this.account = response.data[0];
+          this.account = response.data;
+          console.log(response.data);
         })
         .then(() => {
           console.log(this.currentUser.following);
@@ -171,6 +172,15 @@ export default {
         });
         this.currentUser.following = following;
         this.checkFollowed();
+      });
+    },
+
+    viewUserTutorials() {
+      this.$router.push({
+        name: "userTutorial",
+        params: {
+          user_id: this.account._id,
+        },
       });
     },
   },
