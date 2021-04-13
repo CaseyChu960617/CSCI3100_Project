@@ -9,7 +9,7 @@ exports.getProfile = async (req, res) => {
   const user_id = req.params["user_id"];
   try {
     User.findOne({ _id: user_id })
-      .select("username firstname lastname email gender")
+      .select("username firstname lastname email gender following")
       .exec()
       .then((doc) => {
         res.send(doc);
