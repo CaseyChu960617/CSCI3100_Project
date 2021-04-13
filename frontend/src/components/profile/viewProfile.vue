@@ -65,12 +65,12 @@
                 type="text"
               ></v-text-field>
               <v-row class="my-1">
-                <v-btn text @click="startChat()">Chat</v-btn><v-spacer />
-                <v-btn text @click="follow()">Threads</v-btn><v-spacer />
-                <v-btn text @click="viewUserTutorials()">Tutorials</v-btn
+                <v-btn text @click="startChat">Chat</v-btn><v-spacer />
+                <v-btn text @click="follow">Threads</v-btn><v-spacer />
+                <v-btn text @click="viewUserTutorials">Tutorials</v-btn
                 ><v-spacer />
-                <v-btn text v-if="followed" @click="unfollow()">Unfollow</v-btn>
-                <v-btn text v-else @click="follow()">Follow</v-btn></v-row
+                <v-btn text v-if="followed" @click="unfollow">Unfollow</v-btn>
+                <v-btn text v-else @click="follow">Follow</v-btn></v-row
               ></v-container
             ></v-col
           ></v-row
@@ -82,6 +82,7 @@
 
 <script>
 import DataService from "../../services/DataService";
+import authHeader from "../../services/auth-header.js";
 
 export default {
   props: ["profile", "loading"],
@@ -105,16 +106,18 @@ export default {
   },
   methods: {
     startChat() {
-      var chatId = "";
-      var oppUsername = this.profile.username;
-      DataService.post("chat/getOneChat", {
-        user_id_1: this.currentUser.user_id,
-        user_id_2: this.profile._id,
-      }).then((response) => {
-        chatId = response.data._id;
+      DataService.getOneChat(
+        {
+          user_id_1: this.currentUser.user_id,
+          user_id_2: this.profile._id,
+        },
+        {
+          headers: authHeader(),
+        }
+      ).then((response) => {
         this.$router.push({
           name: "chat",
-          params: { chatId: chatId, oppUsername },
+          params: { chatId: response.data._id },
         });
       });
     },
@@ -133,7 +136,9 @@ export default {
         my_user_id: this.currentUser.user_id,
         follow_id: this.profile._id,
       };
-      DataService.put("user/follow", data).then((response) => {
+      DataService.follow(data, {
+        headers: authHeader(),
+      }).then((response) => {
         const following = [];
         response.data.forEach((element) => {
           following.push({ _id: element });
@@ -149,7 +154,9 @@ export default {
         follow_id: this.profile._id,
       };
 
-      DataService.put("user/unfollow", data).then((response) => {
+      DataService.unfollow(data, {
+        headers: authHeader(),
+      }).then((response) => {
         const following = [];
         response.data.forEach((element) => {
           following.push({ _id: element });
