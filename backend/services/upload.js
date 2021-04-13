@@ -65,4 +65,19 @@ const uploadTutorialPic = multer({
   }),
 })
 
-module.exports = { uploadProPic, uploadThumbnail, uploadTutorialPic };
+const uploadDiscussionPic = multer({
+  fileFilter,
+  storage: multerS3({
+    acl: "public-read",
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: "TESTING_METADATA" });
+    },
+    key: function (req, file, cb) {
+      cb(null, '/discussion/content/' + Date.now().toString() + file.originalname);
+    },
+  }),
+})
+
+module.exports = { uploadProPic, uploadThumbnail, uploadTutorialPic, uploadDiscussionPic };
