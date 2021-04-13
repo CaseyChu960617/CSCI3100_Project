@@ -5,7 +5,7 @@ const uploadSingleTutorialPic = uploadTutorialPic.single("file");
 
 // uploadProPic function
 exports.uploadProPic = async (req, res) => {
-    if (req.file) {
+    try {
     uploadSingleProPic(req, res, (err) => {
       if (err) {
         return res.json({
@@ -28,10 +28,13 @@ exports.uploadProPic = async (req, res) => {
     }
   });
   } 
+  catch(err) {
+    res.status(400).json({ err: err.message });
+  }
 }
 
 exports.uploadThumbnail = async (req, res) => {
-  if (req.file) {
+  try {
   uploadSingleThumbnail(req, res, (err) => {
         if (err) {
           return res.json({
@@ -54,10 +57,13 @@ exports.uploadThumbnail = async (req, res) => {
       }
     });
   }   
+  catch(err) {
+    res.status(400).json({ message: err.message });
+  }
 }
 
 exports.uploadTutorialPic = async (req, res) => {
-  if (req.file) {
+  try {
     uploadSingleTutorialPic(req, res, (err) => {
         if (err) {
           return res.json({
@@ -79,5 +85,7 @@ exports.uploadTutorialPic = async (req, res) => {
         } );
       }
     });
+  } catch(err) {
+    res.status(400).json({ message: err.message });
   }
 }
