@@ -99,7 +99,7 @@ exports.getFollowingTutorials = async (req, res) => {
 
   Tutorial.find({ author: { $in: following } })
     .sort({ lastModifiedAtDate: -1 })
-    .select("author subject title createdAt lastModifiedAt")
+    .select("author subject title description thumbnail createdAt lastModifiedAt")
     .populate("author", "_id username")
     .exec()
     .then((err, docs) => {
@@ -140,39 +140,36 @@ exports.createTutorial = async (req, res) => {
 exports.createChapter = async (req, res) => {
   const { tutorial_id, title, content } = req.body;
 
-  var newChapter = new Chapter(
-    {
-      title: title,
-      content: content,
-      createdAt: new Date().toLocaleDateString("zh-HK"),
-      lastEditedAt: new Date().toLocaleDateString("zh-HK"),
-    },
-    (err) => {
-      if (err) {
-        res.status(400).json({ error: err.message });
-      }
-    }
-  );
+  var newChapter = new Chapter({
+          title: title,
+          content: content,
+          createdAt: new Date().toLocaleDateString("zh-HK"),
+          lastEditedAt: new Date().toLocaleDateString("zh-HK"),
+        },(err) => {
+          if (err) {
+            res.status(400).json({ error: err.message });
+          }
+        }
+      );
 
-  newChapter.save((err) => {
-    if (err)
-      res.status(400).json({ error: "Comment cannot be posted successfully." });
-  });
+      newChapter.save((err) => {
+        if (err)
+          res.status(400).json({ error: "Chapter cannot be posted successfully." });
+      });
 
-  const update = {
-    $push: { chapters: newChapter._id },
-    $set: {
-      lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
-      lastModifiedAtDate: new Date().getTime(),
-    },
-  };
-  console.log(update);
+      const update = {
+        $push: { chapters: newChapter._id },
+        $set: {
+          lastModifiedAt: new Date().toLocaleDateString("zh-HK"),
+          lastModifiedAtDate: new Date().getTime(),
+        },
+      };
 
-  Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
-    if (err) res.status(400).json({ error: err.message });
-  });
-
-  res.send(tutorial_id);
+    Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
+      if (err) res.status(400).json({ error: err.message });
+      else    
+        res.send("Success");
+    });
 };
 
 // editTutorial function

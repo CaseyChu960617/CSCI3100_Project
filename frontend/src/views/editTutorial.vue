@@ -138,8 +138,8 @@ export default {
     createChapter() {
       const data = {
         tutorial_id: this.tutorial._id,
-        title: "321",
-        content: "123",
+        title: "",
+        content: "",
       };
       //console.log(data);
       DataService.post("tutorial/createChapter", data).then((response) => {
@@ -155,6 +155,7 @@ export default {
         );
       });
     },
+    
     changeEdit(id, editMetadata) {
       if (editMetadata) {
         this.editMetadata = 1;

@@ -37,7 +37,11 @@
                 @click.stop="dialog = true"
                 >Change Profile Photo</v-btn
               >
-              <modal :dialog.sync="dialog" @show="show"></modal></v-row></v-col
+              <modal
+                :dialog.sync="dialog"
+                :src="account.profileImage"
+                @show="show"
+              ></modal></v-row></v-col
           ><v-col cols="12" sm="12" md="8">
             <v-container>
               <v-text-field

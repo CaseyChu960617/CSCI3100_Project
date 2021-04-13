@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <EditProfile v-if="canEdit" @refresh="refresh()" />
-      <ViewProfile v-else :profile="profile" />
+      <EditProfile v-if="canEdit" @refresh="refresh()" :loading="loading" />
+      <ViewProfile v-else :profile="profile" :loading="loading" />
     </v-row>
   </v-container>
 </template>
@@ -22,6 +22,7 @@ export default {
       edit: true,
       canEdit: false,
       profile: {},
+      loading: false,
     };
   },
   watch: {

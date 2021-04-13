@@ -20,6 +20,19 @@
           </v-col>
         </v-row>
         <v-row>
+          <v-col col="3">
+            <v-select
+              v-model="subject"
+              :items="subjects"
+              item-text="text"
+              item-value="value"
+              label="Publish"
+              :rules="[rules.required]"
+            ></v-select>
+          </v-col>
+          <v-spacer />
+        </v-row>
+        <v-row>
           <v-col col="9">
             <v-textarea
               v-model="description"
@@ -41,7 +54,8 @@
           <v-card-title>Preview</v-card-title>
         </div>
         <div>
-          <v-img :src="thumbnail" />
+          <v-img max-width="500px" v-if="!noThumbnail" :src="thumbnail" />
+          <v-img max-width="500px" v-else src="../../assets/Homepage/1.jpg" />
         </div>
 
         <v-btn @click="save">Save</v-btn>
@@ -52,19 +66,24 @@
 
 <script>
 import DataService from "../../services/DataService";
+
+import subjectsList from "../../assets/subjects.json";
+
 export default {
   components: {},
   data() {
     return {
       formData: new FormData(),
+      subjects: subjectsList,
       title: "",
       subject: "",
       description: "",
       thumbnail: "",
-      published: 0,
+      published: "",
+      noThumbnail: "",
       publishedlist: [
-        { text: "publish", value: 1 },
-        { text: "not publish", value: 0 },
+        { text: "published", value: 1 },
+        { text: "not published", value: 2 },
       ],
       rules: {
         required: (value) => !!value || "Required",
@@ -85,10 +104,11 @@ export default {
         //console.log(response.data);
         const rawData = response.data;
         this.title = rawData.title;
-        (this.subject = rawData.subject),
-          (this.description = rawData.description);
+        this.subject = rawData.subject;
+        this.description = rawData.description;
         this.published = rawData.published;
         this.thumbnail = rawData.thumbnail;
+        if (this.thumbnail == "") this.noThumbnail = true;
       });
     },
 
@@ -114,6 +134,7 @@ export default {
       };
       DataService.put("tutorial/editTutorial", data).then((response) => {
         console.log(response.data);
+        alert("success");
       });
     },
   },
