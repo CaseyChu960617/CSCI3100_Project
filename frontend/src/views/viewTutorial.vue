@@ -20,12 +20,13 @@
     <v-row>
       <v-col md="3">
         <v-card elevation="8" class="ma-4">
+          <v-card-title> Chapters </v-card-title>
           <v-virtual-scroll
             v-if="chapters.length != 0"
             bench="25"
             min-height="74vh"
             max-height="74vh"
-            item-height="70"
+            item-height="80px"
             :items="this.tutorial.chapters"
           >
             <template v-slot:default="{ item }">
@@ -89,8 +90,6 @@ export default {
     },
 
     selectChapter(chapter_id) {
-      //this.content =
-      console.log(chapter_id);
       this.fetchOneChapter(chapter_id);
     },
 

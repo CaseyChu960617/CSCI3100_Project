@@ -4,7 +4,9 @@
     <v-row justify="center">
       <v-col sm="11">
         <v-card-title
-          >Tutorials<v-spacer /><v-btn icon @click.stop="dialog = true"
+          >Check out for latest tutorials !<v-spacer /><v-btn
+            icon
+            @click.stop="dialog = true"
             ><v-icon>mdi-plus</v-icon></v-btn
           ></v-card-title
         >
@@ -73,11 +75,18 @@
                 <v-card-text class="des"
                   >{{ tutorial.description }}
                 </v-card-text>
-                <div>
-                  <v-btn class="view-btn" @click="viewTutorial(tutorial._id)"
-                    >View</v-btn
+
+                <div class="btn-container">
+                  <v-btn
+                    class="mx-2"
+                    fab
+                    dark
+                    small
+                    color="primary"
+                    @click="viewTutorial(tutorial._id)"
                   >
-                  <!--<v-btn class="view-btn ml-3">View</v-btn>-->
+                    <v-icon dark> mdi-eye </v-icon>
+                  </v-btn>
                 </div>
               </div>
             </v-card>
@@ -220,6 +229,11 @@
 .des {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.btn-container {
+  position: absolute;
+  bottom: 10px;
 }
 </style>
 <script>
