@@ -83,7 +83,7 @@ export default {
       noThumbnail: "",
       publishedlist: [
         { text: "published", value: 1 },
-        { text: "not published", value: 2 },
+        { text: "not published", value: 0 },
       ],
       rules: {
         required: (value) => !!value || "Required",

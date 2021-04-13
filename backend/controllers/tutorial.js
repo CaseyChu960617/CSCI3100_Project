@@ -61,7 +61,7 @@ exports.getOneTutorial = async (req, res) => {
 
   Tutorial.findOne({ _id: req.params["tutorial_id"] })
     .select(
-      "_id title subject description thumbnail chapters lastModified lastEditedAt createdAt"
+      "_id title subject description thumbnail chapters published lastModified lastEditedAt createdAt"
     )
     .populate(populateQuery)
     .exec()
@@ -152,10 +152,7 @@ exports.createChapter = async (req, res) => {
         }
       );
 
-      newChapter.save((err) => {
-        if (err)
-          res.status(400).json({ error: "Chapter cannot be posted successfully." });
-      });
+      newChapter.save();
 
       const update = {
         $push: { chapters: newChapter._id },
@@ -165,12 +162,12 @@ exports.createChapter = async (req, res) => {
         },
       };
 
-    Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
-      if (err) res.status(400).json({ error: err.message });
-      else    
-        res.send("Success");
-    });
-};
+      Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
+        if (err) res.status(400).json({ error: err.message });
+        else    
+          res.send("Success");
+      });
+  };
 
 // editTutorial function
 exports.editTutorial = async (req, res) => {
