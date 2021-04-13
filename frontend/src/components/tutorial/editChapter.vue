@@ -1,20 +1,25 @@
 <template>
-  <v-container
-    ><v-container>
+  <v-container>
+    <v-card v-html="chapter.content">{{ chapter.content }} </v-card>
+    <v-container>
       {{ this.chapter.title }}
     </v-container>
     <v-container>
       <template
         ><ckeditor
           :editor="editor"
-          v-model="this.chapter.content"
+          v-model="chapter.content"
           :config="editorConfig"
         ></ckeditor
       ></template>
     </v-container>
+    <v-btn @click="hi()">dasdsa</v-btn>
   </v-container>
 </template>
-
+<script
+  charset="utf-8"
+  src="//cdn.iframe.ly/embed.js?api_key={API KEY}"
+></script>
 <script>
 //import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../../services/DataService";
@@ -44,6 +49,9 @@ import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle";
 import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize";
 import LinkImage from "@ckeditor/ckeditor5-link/src/linkimage";
 import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert";
+import Heading from "@ckeditor/ckeditor5-heading/src/heading";
+import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
+import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 export default {
   props: ["chapterId"],
   components: {
@@ -55,14 +63,16 @@ export default {
   data() {
     return {
       chapter: [],
-
+      testing: "<div class='v-card v-sheet theme--light><p>123</p></div>",
       editorData: "fuck",
       editor: ClassicEditor,
       editorConfig: {
         plugins: [
+          Heading,
           EssentialsPlugin,
           BoldPlugin,
           ItalicPlugin,
+          Highlight,
           LinkPlugin,
           ParagraphPlugin,
           List,
@@ -83,18 +93,22 @@ export default {
           ImageResize,
           LinkImage,
           ImageInsert,
+          PageBreak,
         ],
 
         toolbar: {
           items: [
+            "heading",
             "bold",
             "italic",
+            "fontSize",
             "link",
             "undo",
             "redo",
-            "heading",
+            "Highlight",
             "bulletedList",
             "numberedList",
+            "pagebreak",
             "fontSize",
             "code",
             "subscript",
@@ -114,12 +128,11 @@ export default {
           options: ["tiny", "default", "big"],
         },
         simpleUpload: {
-          withCredentials: true,
           // The URL that the images are uploaded to.
           uploadUrl: "http://localhost:9000/upload/uploadTutorialPic",
 
           // Enable the XMLHttpRequest.withCredentials property.
-
+          withCredentials: true,
           // Headers sent along with the XMLHttpRequest to the upload server.
           headers: {
             "X-CSRF-TOKEN": "CSRF-Token",
@@ -134,16 +147,16 @@ export default {
     console.log("in editChapter, ", this.chapterId);
     this.fetchOneChapter();
 
-    //ClassicEditor.create(document.querySelector("#editor"), {
-    //  plugins: [], // <--- MODIFIED
-    //  toolbar: ["bold", "italic"], // <--- MODIFIED
-    //})
-    //  .then((editor) => {
-    //    console.log("Editor was initialized", editor);
-    //  })
-    //  .catch((error) => {
-    //    console.error(error.stack);
-    //  });
+    ClassicEditor.create(document.querySelector("#editor"), {
+      plugins: [], // <--- MODIFIED
+      toolbar: ["bold", "italic"], // <--- MODIFIED
+    })
+      .then((editor) => {
+        console.log("Editor was initialized", editor);
+      })
+      .catch((error) => {
+        console.error(error.stack);
+      });
   },
   methods: {
     fetchOneChapter() {
@@ -154,6 +167,10 @@ export default {
           this.chapter = response.data;
         }
       );
+    },
+    hi() {
+      alert(this.editor);
+      console.log(this.editor);
     },
   },
   watch: {
