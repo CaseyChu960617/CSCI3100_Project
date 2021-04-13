@@ -131,7 +131,8 @@ exports.createThread = async (req, res) => {
           if (err) {
             console.log(err);
             res.status(400).json({ error: "Bad request." });
-          } else console.log(data);
+          } else 
+            res.send("Thread created sucessfully.");
         }
       );
     } else res.status(400).json({ error: "User not found." });
