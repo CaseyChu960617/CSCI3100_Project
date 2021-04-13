@@ -155,7 +155,7 @@ export default {
         );
       });
     },
-    
+
     changeEdit(id, editMetadata) {
       if (editMetadata) {
         this.editMetadata = 1;
