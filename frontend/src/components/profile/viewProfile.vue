@@ -89,7 +89,6 @@ export default {
   data() {
     return {
       genderlist: ["Male", "Female", "Prefer not to disclose"],
-      followed: false,
     };
   },
   computed: {
@@ -102,6 +101,9 @@ export default {
     },
     currentUser() {
       return this.$store.state.auth.user;
+    },
+    followed() {
+      return this.currentUser.following.includes(this.profile._id);
     },
   },
   methods: {
@@ -122,15 +124,6 @@ export default {
       });
     },
 
-    checkFollowed() {
-      this.followed = false;
-      this.currentUser.following.forEach((element) => {
-        if (element._id === this.profile._id) {
-          this.followed = true;
-        }
-      });
-    },
-
     follow() {
       const data = {
         my_user_id: this.currentUser.user_id,
@@ -139,12 +132,10 @@ export default {
       DataService.follow(data, {
         headers: authHeader(),
       }).then((response) => {
-        const following = [];
-        response.data.forEach((element) => {
-          following.push({ _id: element });
-        });
-        this.currentUser.following = following;
-        this.checkFollowed();
+        var user = JSON.parse(localStorage.getItem("user"));
+        user.following = Object.values(response.data);
+        localStorage.setItem("user", JSON.stringify(user));
+        this.$store.dispatch("auth/follow", this.profile._id);
       });
     },
 
@@ -157,12 +148,10 @@ export default {
       DataService.unfollow(data, {
         headers: authHeader(),
       }).then((response) => {
-        const following = [];
-        response.data.forEach((element) => {
-          following.push({ _id: element });
-        });
-        this.currentUser.following = following;
-        this.checkFollowed();
+        var user = JSON.parse(localStorage.getItem("user"));
+        user.following = Object.values(response.data);
+        localStorage.setItem("user", JSON.stringify(user));
+        this.$store.dispatch("auth/unfollow", this.profile._id);
       });
     },
 
