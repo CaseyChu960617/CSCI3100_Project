@@ -1,50 +1,168 @@
 <template>
-  <v-container
-    ><v-container>
-      Tutorial metaData:
-      <v-card class="pa-5" v-html="editorData"> {{ editorData }}</v-card>
-    </v-container>
-    <v-container>
-      <ckeditor
-        :editor="editor"
-        v-model="editorData"
-      ></ckeditor> </v-container></v-container
-></template>
+  <v-col v-if="edit" cols="12" sm="12" md="10">
+    <v-card elevation="16" outlined>
+      <v-card-title class="display-1 pa-10">
+        <v-icon class="pr-3" color="black" size="40">mdi-account-cog</v-icon
+        >Profile</v-card-title
+      >
+      <v-container>
+        <v-row
+          ><v-col cols="12" sm="12" md="4" align-self="center"
+            ><v-row justify="center"
+              ><v-avatar
+                v-if="currentUser.profileImage"
+                size="200"
+                style="cursor: pointer"
+                @click.stop="dialog = true"
+              >
+                <v-img :src="currentUser.profileImage" height="100%" />
+              </v-avatar>
+              <v-avatar
+                v-else
+                color="grey"
+                size="200"
+                style="cursor: pointer"
+                @click.stop="dialog = true"
+              >
+                <span class="white--text headline">
+                  {{ currentUser.username[0] }}</span
+                >
+              </v-avatar></v-row
+            >
+            <v-row justify="center"
+              ><v-btn
+                class="mt-4"
+                text
+                color="primary"
+                @click.stop="dialog = true"
+                >Change Profile Photo</v-btn
+              >
+              <modal :dialog.sync="dialog" @show="show"></modal></v-row></v-col
+          ><v-col cols="12" sm="12" md="8">
+            <v-container>
+              <v-text-field
+                readonly
+                v-model="account.email"
+                label="Email"
+              ></v-text-field>
+              <v-text-field
+                v-model="account.username"
+                label="Username"
+                type="text"
+                clearable
+                :rules="[rules.required]"
+              ></v-text-field>
+              <v-row>
+                <v-col cols="6">
+                  <v-text-field
+                    v-model="account.firstname"
+                    label="First Name"
+                    type="text"
+                    clearable
+                    :rules="[rules.required]"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6">
+                  <v-text-field
+                    v-model="account.lastname"
+                    label="Last Name"
+                    type="text"
+                    clearable
+                    :rules="[rules.required]"
+                  ></v-text-field> </v-col
+              ></v-row>
+              <v-select
+                v-model="account.gender"
+                :items="genderlist"
+                item-text="text"
+                item-value="value"
+                label="Gender"
+                :rules="[rules.required]"
+              ></v-select>
+              <v-row class="mt-1">
+                <v-btn text @click="edit = false">Change Password</v-btn>
+                <v-spacer />
+                <v-btn
+                  rounded
+                  color="#99CFEA"
+                  class="black--text"
+                  @click="saveProfile()"
+                  >Save</v-btn
+                ></v-row
+              ></v-container
+            ></v-col
+          ></v-row
+        >
+      </v-container>
+    </v-card>
+  </v-col>
+  <ChangePassword v-else @switchform="switchform" />
+</template>
 
 <script>
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../../services/DataService";
+import authHeader from "../../services/auth-header.js";
+import modal from "../../components/modal/uploadProPic.vue";
+import ChangePassword from "../../components/profile/changePassword.vue";
 
 export default {
   components: {
-    // Use the <ckeditor> component in this view.
-    ckeditor: CKEditor.component,
-    //editchapter,
+    modal,
+    ChangePassword,
   },
   data() {
     return {
-      title: null,
-      editor: ClassicEditor,
-      editorData: "fuck",
+      dialog: false,
+      edit: true,
+      account: this.$store.state.auth.user,
+      genderlist: [
+        { text: "Male", value: 1 },
+        { text: "Female", value: 2 },
+        { text: "Prefer not to disclose", value: 3 },
+      ],
+      rules: {
+        required: (value) => !!value || "Required",
+      },
     };
   },
-  created() {
-    //console.log(this.$route.params.tutorialId);
-    this.fetchTutorial();
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+  mounted() {
+    if (!this.currentUser) {
+      this.$router.push("/home");
+    }
   },
   methods: {
-    fetchTutorial() {
-      //console.log(this.$route.params.tutorialId);
-      DataService.get(
-        "tutorial/getOneTutorial",
-        this.$route.params.tutorialId
-      ).then((response) => {
-        //console.log(response.data);
-        const rawData = response.data;
-
-        this.title = rawData.title;
-      });
+    changePassword() {
+      this.$emit("switchform");
+    },
+    saveProfile() {
+      DataService.updateProfile(this.account, {
+        headers: authHeader(),
+      })
+        .then((res) => {
+          alert("Success");
+          localStorage.setItem("user", JSON.stringify(res.data));
+          this.$store.dispatch("auth/editProfile", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$router.push("/home");
+          } else {
+            console.log(err.response.data);
+          }
+        });
+    },
+    show(bool) {
+      this.dialog = bool;
+    },
+    switchform() {
+      this.edit = !this.edit;
     },
   },
 };
