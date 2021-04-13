@@ -57,7 +57,7 @@ import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 
 //import iframely from "//cdn.iframe.ly/embed.js?api_key=48f28ce86bc9c78e94f884";
 export default {
-  props: ["chapterId"],
+  props: ["chapterId", "tutorial_id"],
   components: {
     // Use the <ckeditor> component in this view.
     // ckeditor: CKEditor.component,
@@ -185,6 +185,7 @@ export default {
 
     save() {
       const data = {
+        tutorial_id: this.tutorial_id,
         chapter_id: this.chapterId,
         title: this.chapter.title,
         content: this.chapter.content,
