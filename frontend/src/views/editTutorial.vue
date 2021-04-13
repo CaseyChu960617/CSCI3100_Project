@@ -66,8 +66,8 @@
           </v-btn>
         </v-col>
         <v-col>
-          <editMetadata v-if="editMetadata" :ref="'' + selectedId" />
-          <editChapter v-else :ChapterId="selectedId" :ref="'' + selectedId" />
+          <editMetadata v-if="editMetadata" />
+          <editChapter :chapterId="selectedId" v-else :ref="'' + selectedId" />
         </v-col>
       </v-row>
     </div>
@@ -103,7 +103,7 @@ export default {
       //editor: ClassicEditor,
       editorData: "fuck",
       selectedId: null,
-      editMetadata: 0,
+      editMetadata: 1,
       currentId: null,
     };
   },
@@ -159,39 +159,34 @@ export default {
       if (editMetadata) {
         this.editMetadata = 1;
         console.log(this.editMetadata);
-      }
-      else {
+      } else {
         this.editMetadata = 0;
       }
       this.selectedId = id;
+      console.log("this.editMetadata ", this.editMetadata);
+      console.log("this.selectedId ", this.selectedId);
 
-      if(this.currentId===null){
-          this.currentId=this.selectedId
-      }else{
-          if(this.currentId!==this.selectedId)
-          alert(this.currentId+" will be saved first")
-        }
+      //  if (this.currentId === null) {
+      //    this.currentId = this.selectedId;
+      //  } else {
+      //    if (this.currentId !== this.selectedId)
+      //      alert(this.currentId + " will be saved first");
+      //  }
 
-       //alert(this.selectedId)
-   // console.log(this.$refs[''+this.selectedId])
-
-
+      //alert(this.selectedId)
+      // console.log(this.$refs[''+this.selectedId])
     },
-
   },
-  updated(){
-    if(this.currentId!=null){
-     alert(this.selectedId+" will be loaded")
-     if(this.editMetadata === 0){
-        alert("editorData is ",this.$refs.[this.currentId].editorData);
-
-     }
-
-      this.currentId = this.selectedId
-
-
-      }
-
+  updated() {
+    // if (this.currentId != null) {
+    //   alert(this.selectedId + " will be loaded");
+    //   console.log(this.$refs[this.currentId]);
+    //   console.log(this.$refs[this.selectedId]);
+    //   alert(this.currentId);
+    //   console.log(this.$refs[this.currentId].editorData);
+    //   alert(this.currentId);
+    //   alert(this.selectedId);
+    //   this.currentId = this.selectedId;
   },
 };
 </script>

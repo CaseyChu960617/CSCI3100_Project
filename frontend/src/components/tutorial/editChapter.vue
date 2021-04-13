@@ -2,7 +2,7 @@
   <v-container
     ><v-container>
       Preview:
-      <v-card class="pa-5" v-html="editorData"> {{ editorData }}</v-card>
+      <v-card class="pa-5" v-html="editorData"> {{ this.content }}</v-card>
     </v-container>
     <v-container>
       <ckeditor
@@ -17,7 +17,7 @@ import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../../services/DataService";
 
 export default {
-  //props: ["chapterId"],
+  props: ["chapterId"],
   components: {
     // Use the <ckeditor> component in this view.
     ckeditor: CKEditor.component,
@@ -29,25 +29,31 @@ export default {
       chapter: [],
       editor: ClassicEditor,
       editorData: "fuck",
+      content: null,
     };
   },
   created() {
     //console.log(this.$route.params.tutorialId);
-    this.$emit("testing");
-    this.fetchTutorial();
+    console.log("in editChapter, ", this.chapterId);
+    this.fetchOneChapter();
   },
   methods: {
-    fetchTutorial() {
+    fetchOneChapter() {
       //console.log(this.$route.params.tutorialId);
-      DataService.get(
-        "tutorial/getOneTutorial",
-        this.$route.params.tutorialId
-      ).then((response) => {
-        //console.log(response.data);
-        const rawData = response.data;
-
-        this.title = rawData.title;
-      });
+      console.log(this.chapterId);
+      DataService.get("tutorial/getOneChapter", this.chapterId).then(
+        (response) => {
+          //console.log(response.data);
+          const rawData = response.data;
+          console.log("Data is ", rawData.content);
+          this.content = rawData.content;
+        }
+      );
+    },
+  },
+  watch: {
+    chapterId() {
+      this.fetchOneChapter();
     },
   },
   destroyed() {
