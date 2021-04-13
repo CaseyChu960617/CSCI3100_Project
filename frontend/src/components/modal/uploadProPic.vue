@@ -39,6 +39,7 @@
 
 <script>
 import DataService from "../../services/DataService";
+import authHeader from "../../services/auth-header.js";
 
 export default {
   props: ["dialog", "src"],
@@ -64,18 +65,10 @@ export default {
     fileChange(file) {
       this.loading = true;
       this.formData.append("file", file);
-      DataService.upload("uploadProPic", this.formData).then((response) => {
+      DataService.uploadProPic(this.formData).then((response) => {
         this.tempsrc = response.data.location;
         this.formData = new FormData();
         this.loading = false;
-      });
-    },
-
-    uploadProPic() {
-      console.log(this.formData);
-      DataService.upload("uploadProPic", this.formData).then((response) => {
-        this.src = response.data.location;
-        this.formData = new FormData();
       });
     },
 
@@ -84,7 +77,9 @@ export default {
         my_user_id: this.currentUser.user_id,
         profileImage: this.tempsrc,
       };
-      DataService.put("user/updateProPic", data).then((response) => {
+      DataService.updateProPic(data, {
+        headers: authHeader(),
+      }).then((response) => {
         var user = JSON.parse(localStorage.getItem("user"));
         user.profileImage = response.data;
         localStorage.setItem("user", JSON.stringify(user));

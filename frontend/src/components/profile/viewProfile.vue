@@ -8,13 +8,21 @@
       <v-container>
         <v-row
           ><v-col cols="12" sm="12" md="4" align-self="center"
-            ><v-row justify="center"
-              ><v-avatar v-if="profile.profileImage" size="200">
-                <v-img :src="profile.profileImage" height="100%" />
-              </v-avatar>
-              <v-avatar v-else color="grey" size="200">
-                <span class="white--text headline"> {{ firstChar }}</span>
-              </v-avatar></v-row
+            ><v-row justify="center">
+              <div v-if="loading">
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
+              </div>
+              <div v-else>
+                <v-avatar v-if="profile.profileImage" size="200">
+                  <v-img :src="profile.profileImage" height="100%" />
+                </v-avatar>
+                <v-avatar v-else color="grey" size="200">
+                  <span class="white--text headline"> {{ firstChar }}</span>
+                </v-avatar>
+              </div></v-row
             ></v-col
           ><v-col cols="12" sm="12" md="8">
             <v-container>
@@ -24,6 +32,7 @@
                 label="Email"
               ></v-text-field> -->
               <v-text-field
+                :loading="loading"
                 readonly
                 v-model="profile.username"
                 label="Username"
@@ -32,6 +41,7 @@
               <v-row>
                 <v-col cols="6">
                   <v-text-field
+                    :loading="loading"
                     readonly
                     v-model="profile.firstname"
                     label="First Name"
@@ -40,6 +50,7 @@
                 </v-col>
                 <v-col cols="6">
                   <v-text-field
+                    :loading="loading"
                     readonly
                     v-model="profile.lastname"
                     label="Last Name"
@@ -47,6 +58,7 @@
                   ></v-text-field> </v-col
               ></v-row>
               <v-text-field
+                :loading="loading"
                 readonly
                 v-model="gender"
                 label="Gender"
@@ -72,7 +84,7 @@
 import DataService from "../../services/DataService";
 
 export default {
-  props: ["profile"],
+  props: ["profile", "loading"],
   data() {
     return {
       genderlist: ["Male", "Female", "Prefer not to disclose"],

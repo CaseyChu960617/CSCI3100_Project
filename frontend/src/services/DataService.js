@@ -3,6 +3,7 @@ const Thread = "/thread/";
 const Tutorial = "/tutorial/";
 const Profile = "/user/";
 const Category = "category/";
+const Upload = "/upload/";
 class DataService {
   getAll(table, header) {
     return http.get(`/${table}`, header);
@@ -93,19 +94,19 @@ class DataService {
   }
 
   updateProfile(data, header) {
-    return http.put(`${Profile}editProfile`, data, header);
+    return http.put(Profile + "editProfile", data, header);
   }
 
   changePassword(data, header) {
-    return http.put(`${Profile}resetPassword`, data, header);
+    return http.put(Profile + "resetPassword", data, header);
   }
 
-  upload(table, formData) {
-    //header) {
-    //let formData = new FormData();
-    //formData.append("file", file);
-    //header.headers["Content-Type"]="text/csv";
-    return http.post(`/upload/${table}`, formData); // header);
+  updateProPic(data, header) {
+    return http.put(Profile + "updateProPic", data, header);
+  }
+
+  uploadProPic(formData) {
+    return http.post(Upload + "uploadProPic", formData);
   }
 }
 
