@@ -69,7 +69,12 @@
         </v-col>
         <v-col>
           <editMetadata v-if="editMetadata" />
-          <editChapter :chapterId="selectedId" v-else :ref="'' + selectedId" />
+          <editChapter
+            @fetchTutorial="fetchTutorial"
+            :chapterId="selectedId"
+            v-else
+            :ref="'' + selectedId"
+          />
         </v-col>
       </v-row>
     </div>
@@ -170,6 +175,11 @@ export default {
         if (chapter_id === element._id) object.splice(index, 1);
         console.log(chapter_id);
       });
+
+      console.log(this.chapters);
+      if (this.chapters.length == 0) {
+        this.editMetadata = 1;
+      }
     },
 
     changeEdit(id, editMetadata) {

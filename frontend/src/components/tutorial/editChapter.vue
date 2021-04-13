@@ -5,6 +5,8 @@
       {{ this.chapter.title }}
     </v-container>
     <v-container>
+      <v-text-field v-model="chapter.title" label="Title" type="text" clearable>
+      </v-text-field>
       <template
         ><ckeditor
           :editor="editor"
@@ -13,7 +15,8 @@
         ></ckeditor
       ></template>
     </v-container>
-    <v-btn @click="hi()">dasdsa</v-btn>
+    <!--<v-btn @click="hi()">dasdsa</v-btn>-->
+    <v-btn @click="save">Save</v-btn>
   </v-container>
 </template>
 
@@ -175,6 +178,25 @@ export default {
       });
       //alert(this.editor);
       //console.log(this.editor);
+    },
+
+    save() {
+      const data = {
+        chapter_id: this.chapterId,
+        title: this.chapter.title,
+        content: this.chapter.content,
+      };
+
+      DataService.put("tutorial/editChapter", data).then((response) => {
+        console.log(response);
+        DataService.get("tutorial/getOneChapter", this.chapterId).then(
+          (response) => {
+            this.chapter = response.data;
+            alert("Edit chapter successfully.");
+            this.$emit("fetchTutorial");
+          }
+        );
+      });
     },
   },
   watch: {
