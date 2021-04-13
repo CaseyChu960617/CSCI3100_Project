@@ -5,7 +5,7 @@ const uploadSingleTutorialPic = uploadTutorialPic.single('upload');
 
 // uploadProPic function
 exports.uploadProPic = async (req, res) => {
-    try {
+    try { 
           uploadSingleProPic(req, res, (err) => {
             if (err) {
               return res.json({
@@ -35,7 +35,7 @@ exports.uploadProPic = async (req, res) => {
 
 exports.uploadThumbnail = async (req, res) => {
   try {
-      uploadSingleThumbnail(req, res, (err) => {
+          uploadSingleThumbnail(req, res, (err) => {
             if (err) {
               return res.json({
                 success: false,
@@ -64,7 +64,7 @@ exports.uploadThumbnail = async (req, res) => {
 
 exports.uploadTutorialPic = async (req, res) => {
   try {
-    uploadSingleTutorialPic(req, res, (err) => {
+       uploadSingleTutorialPic(req, res, (err) => {
           if (err) {
             return res.json({
               success: false,
