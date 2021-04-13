@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const chapterSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    content: { type: String, required: true },
+    title: { type: String },
+    content: { type: String },
     createdAt: { type: String, required: true },
     lastEditedAt: { type: String, required: true },
   },
