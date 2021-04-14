@@ -43,7 +43,8 @@
             label="Username"
             type="text"
             clearable
-            :rules="[rules.required]"
+            :counter="10"
+            maxlength="10"
           ></v-text-field>
           <v-text-field
             v-model="account.email"
@@ -59,11 +60,12 @@
                 v-model="account.password"
                 label="Password"
                 clearable
-                :rules="[rules.required]"
+                :rules="[rules.required, , rules.min]"
                 @keypress.enter="signin"
                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="show1 ? 'text' : 'password'"
                 @click:append="show1 = !show1"
+                hint="At least 8 characters"
               ></v-text-field
             ></v-col>
             <v-spacer />
@@ -131,6 +133,7 @@ export default {
       isValid: false,
       show1: false,
       rules: {
+        min: (v) => v.length >= 8 || "Min 8 characters",
         required: (value) => !!value || "Required",
         repeat: (value) =>
           value == this.account.password || "Password doesn't match",

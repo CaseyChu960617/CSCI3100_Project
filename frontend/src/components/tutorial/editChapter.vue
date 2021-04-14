@@ -58,6 +58,7 @@ import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters";
 import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials";
+import Mathematics from "ckeditor5-math/src/math";
 import authHeader from "../../services/auth-header.js";
 import dotenv from "dotenv";
 dotenv.config();
@@ -106,6 +107,7 @@ export default {
           PageBreak,
           SpecialCharacters,
           SpecialCharactersEssentials,
+          Mathematics,
         ],
 
         toolbar: {
@@ -122,6 +124,7 @@ export default {
             "Highlight",
             "bulletedList",
             "numberedList",
+
             "|",
             "mediaEmbed",
             "linkImage",
@@ -138,10 +141,18 @@ export default {
             "pagebreak",
           ],
         },
+        math: {
+          engine: "mathjax", // or katex or function. E.g. (equation, element, display) => { ... }
+          lazyLoad: undefined, // async () => { ... }, called once before rendering first equation if engine doesn't exist. After resolving promise, plugin renders equations.
+          outputType: "script", // or span
+          forceOutputType: false, // forces output to use outputType
+          enablePreview: true, // Enable preview view
+        },
         height: "400px",
         fontSize: {
           options: ["tiny", "default", "big"],
         },
+
         simpleUpload: {
           // The URL that the images are uploaded to.
           uploadUrl:
@@ -228,6 +239,17 @@ export default {
     //    window.iframely.load(element, element.attributes.url.value);
     //  });
     //},
+  },
+  mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute("type", "text/javascript");
+    plugin.setAttribute(
+      "src",
+      "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML"
+    );
+
+    plugin.async = true;
+    document.head.appendChild(plugin);
   },
 };
 </script>

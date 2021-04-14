@@ -1,7 +1,7 @@
 <template>
   <v-container v-if="thread" fluid class="pa-0">
     <v-app-bar>
-      <v-app-bar-title>
+      <v-app-bar-title class="thread-header">
         {{ thread.title }}
       </v-app-bar-title>
     </v-app-bar>
@@ -73,6 +73,10 @@ img {
   max-height: 350px;
   position: absolute;
   border: 0;
+}
+.thread-header > div.v-app-bar-title__content {
+  width: 100% !important;
+  padding-right: 20px;
 }
 </style>
 
