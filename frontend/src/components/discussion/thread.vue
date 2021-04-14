@@ -2,7 +2,14 @@
   <v-container v-if="thread" fluid class="pa-0">
     <v-app-bar>
       <v-app-bar-title class="thread-header">
-        {{ thread.title }}
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <div v-bind="attrs" v-on="on">
+              {{ thread.title }}
+            </div>
+          </template>
+          <span>{{ thread.title }}</span>
+        </v-tooltip>
       </v-app-bar-title>
     </v-app-bar>
 
@@ -74,9 +81,16 @@ img {
   position: absolute;
   border: 0;
 }
-.thread-header > div.v-app-bar-title__content {
+.thread-header > div.v-app-bar-title__content > div {
   width: 100% !important;
-  padding-right: 20px;
+  padding-right: 25px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.thread-header > div.v-app-bar-title__content {
+  width: 59vw !important;
+  padding-right: 25px !important;
 }
 </style>
 
@@ -112,6 +126,10 @@ import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters";
 import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials";
+import Indent from "@ckeditor/ckeditor5-indent/src/indent";
+import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock";
+import CodeBlock from "@ckeditor/ckeditor5-code-block/src/codeblock";
+import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import dotenv from "dotenv";
 dotenv.config();
 export default {
@@ -129,8 +147,11 @@ export default {
           BoldPlugin,
           ItalicPlugin,
           Highlight,
+          Alignment,
           LinkPlugin,
           ParagraphPlugin,
+          Indent,
+          IndentBlock,
           List,
           MathType,
           Font,
@@ -145,6 +166,7 @@ export default {
           Image,
           ImageToolbar,
           ImageCaption,
+          CodeBlock,
           ImageStyle,
           ImageResize,
           LinkImage,
@@ -162,6 +184,9 @@ export default {
             "fontSize",
             "undo",
             "redo",
+            "alignment",
+            "outdent",
+            "indent",
             "subscript",
             "superscript",
             "specialCharacters",
@@ -173,6 +198,7 @@ export default {
             "linkImage",
             "insertImage",
             "code",
+            "codeBlock",
             "subscript",
             "superscript",
             "HtmlEmbed",
@@ -181,7 +207,6 @@ export default {
             "imageStyle:side",
             "|",
             "imageTextAlternative",
-            "pagebreak",
           ],
         },
         fontSize: {

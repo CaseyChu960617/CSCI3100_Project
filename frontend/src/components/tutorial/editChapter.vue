@@ -58,8 +58,13 @@ import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters";
 import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials";
+import RemoveFormat from "@ckeditor/ckeditor5-remove-format/src/removeformat";
+import CodeBlock from "@ckeditor/ckeditor5-code-block/src/codeblock";
 import Mathematics from "ckeditor5-math/src/math";
+import Indent from "@ckeditor/ckeditor5-indent/src/indent";
+import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock";
 import authHeader from "../../services/auth-header.js";
+import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import dotenv from "dotenv";
 dotenv.config();
 //import iframely from "//cdn.iframe.ly/embed.js?api_key=48f28ce86bc9c78e94f884";
@@ -82,6 +87,7 @@ export default {
           Heading,
           EssentialsPlugin,
           BoldPlugin,
+          Alignment,
           ItalicPlugin,
           Highlight,
           LinkPlugin,
@@ -97,9 +103,13 @@ export default {
           SimpleUploadAdapter,
           HtmlEmbed,
           MediaEmbed,
+          Indent,
+          IndentBlock,
           Image,
+          RemoveFormat,
           ImageToolbar,
           ImageCaption,
+          CodeBlock,
           ImageStyle,
           ImageResize,
           LinkImage,
@@ -118,18 +128,22 @@ export default {
             "fontSize",
             "undo",
             "redo",
+            "alignment",
+            "outdent",
+            "indent",
             "subscript",
             "superscript",
             "specialCharacters",
             "Highlight",
             "bulletedList",
             "numberedList",
-
+            "removeFormat",
             "|",
             "mediaEmbed",
             "linkImage",
             "insertImage",
             "code",
+            "codeBlock",
             "subscript",
             "superscript",
             "HtmlEmbed",
@@ -138,7 +152,6 @@ export default {
             "imageStyle:side",
             "|",
             "imageTextAlternative",
-            "pagebreak",
           ],
         },
         math: {
