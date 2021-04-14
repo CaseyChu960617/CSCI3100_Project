@@ -27,7 +27,15 @@
             v-model="content"
             :config="editorConfig"
           ></ckeditor>
-          <v-btn text block @click="post()">Post</v-btn>
+          <v-row justify="center">
+            <v-btn
+              rounded
+              color="#99CFEA"
+              class="black--text my-5"
+              @click="post()"
+              >Post</v-btn
+            ></v-row
+          >
         </v-card>
         <v-card v-else outlined elevation="8" height="100%" class="ma-2 pt-4">
           <router-link

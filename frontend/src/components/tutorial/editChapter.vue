@@ -14,7 +14,11 @@
       </template>
     </v-container>
     <!--<v-btn @click="hi()">dasdsa</v-btn>-->
-    <v-btn @click="save">Save</v-btn>
+    <v-row justify="center">
+      <v-btn rounded color="#99CFEA" class="black--text my-5" @click="save"
+        >Save</v-btn
+      ></v-row
+    >
   </v-container>
 </template>
 <style>
