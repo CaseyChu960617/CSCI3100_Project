@@ -96,6 +96,19 @@
                   >
                     <v-icon dark> mdi-eye </v-icon>
                   </v-btn>
+                  <v-btn
+                    v-if="tutorial.author._id === currentUser.user_id"
+                    class="mx-2"
+                    fab
+                    dark
+                    small
+                    color="primary"
+                    @click="editTutorial(tutorial._id)"
+                  >
+                    <v-icon dark>
+                      mdi-pen
+                    </v-icon>
+                  </v-btn>
                 </div>
               </div>
             </v-card>
@@ -266,6 +279,9 @@ export default {
     };
   },
   computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
     items() {
       return Array.from({ length: 20 }, (k, v) => v + 1);
     },
@@ -294,25 +310,25 @@ export default {
     flip(event, id) {
       let card = this.$refs[id][0];
       //let frontcard = this.$ref["front-" + id][0];
-      console.log(card.classList);
+      //console.log(card.classList);
 
       if (!card.classList.contains("is-flipped")) {
         card.classList.add("is-flipped");
       }
 
-      console.log(card);
+      //console.log(card);
 
       this.setHeight();
     },
 
     unflip(event, id) {
       let card = this.$refs[id][0];
-      console.log(card.classList);
+      //console.log(card.classList);
 
       if (card.classList.contains("is-flipped")) {
         card.classList.remove("is-flipped");
       }
-      console.log(card);
+      //console.log(card);
     },
 
     setHeight() {
@@ -320,14 +336,14 @@ export default {
       let title_elements = document.querySelectorAll(".des-title");
 
       elements.forEach(function(element) {
-        console.log(element.offsetHeight);
+        //console.log(element.offsetHeight);
         element.style.height =
           element.parentElement.parentElement.offsetHeight * 0.68 + "px";
 
-        console.log(element.offsetHeight);
+        //console.log(element.offsetHeight);
       });
       title_elements.forEach(function(element) {
-        console.log(element.offsetHeight);
+        //console.log(element.offsetHeight);
         element.style.height =
           element.parentElement.parentElement.offsetHeight * 0.15 + "px";
       });
@@ -355,6 +371,13 @@ export default {
       this.$router.push({
         name: "viewTutorial",
         params: { tutorial_id: tutorial_id },
+      });
+    },
+
+    editTutorial(tutorialId) {
+      this.$router.push({
+        name: "editTutorial",
+        params: { tutorialId: tutorialId },
       });
     },
   },

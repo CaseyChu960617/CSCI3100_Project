@@ -16,7 +16,7 @@
     <div>
       <v-row class="ml-2 mt-2">
         <v-col mt="5" md="3" class="hidden-sm-and-down mt-5">
-          <div class="pa-5" @click="changeEdit(tutorial._id, 1)">
+          <div class="pa-5 edit-tutorial" @click="changeEdit(tutorial._id, 1)">
             Edit tutorial information
           </div>
           <v-divider />
@@ -72,7 +72,7 @@
           </v-btn>
         </v-col>
         <v-col>
-          <editMetadata v-if="editMetadata" />
+          <editMetadata v-if="editMetadata" :ref="'' + selectedId" />
           <editChapter
             :tutorial_id="tutorial._id"
             @fetchTutorial="fetchTutorial"
@@ -87,6 +87,9 @@
 </template>
 
 <style>
+.edit-tutorial {
+  cursor: pointer;
+}
 .delete-btn {
   position: absolute !important;
   height: 36px !important;
@@ -97,10 +100,7 @@
 </style>
 
 <script>
-//import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-//import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../services/DataService";
-//import editChapter from "../components/tutorial/editChapter.vue";
 import editChapter from "../components/tutorial/editChapter.vue";
 import editMetadata from "../components/tutorial/editMetadata.vue";
 export default {
@@ -117,6 +117,9 @@ export default {
       selectedId: null,
       editMetadata: 1,
       currentId: null,
+
+      //childMetaData : null
+      // childChapter: null
     };
   },
 
@@ -189,25 +192,37 @@ export default {
     },
 
     changeEdit(id, editMetadata) {
+      this.selectedId = id;
+      //console.log("this.editMetadata ", this.editMetadata);
+      //console.log("this.selectedId ", this.selectedId);
+
+      // if (this.currentId !== this.selectedId && this.currentId !== null) {
+      //   alert(this.currentId + " will be saved first");
+      //
+      // }
+      //
+      this.saveWhenChange(this.editMetadata, this.currentId, this.selectedId);
+      this.currentId = this.selectedId;
+
       if (editMetadata) {
         this.editMetadata = 1;
         console.log(this.editMetadata);
       } else {
         this.editMetadata = 0;
       }
-      this.selectedId = id;
-      console.log("this.editMetadata ", this.editMetadata);
-      console.log("this.selectedId ", this.selectedId);
-
-      //  if (this.currentId === null) {
-      //    this.currentId = this.selectedId;
-      //  } else {
-      //    if (this.currentId !== this.selectedId)
-      //      alert(this.currentId + " will be saved first");
-      //  }
-
-      //alert(this.selectedId)
-      // console.log(this.$refs[''+this.selectedId])
+    },
+    saveWhenChange(editMetadata, currentId, selectedId) {
+      if (currentId !== selectedId && currentId !== null) {
+        if (editMetadata === 0) {
+          //save tutorial
+          alert("Editing chpater will be saved");
+          this.$refs[currentId].save();
+        } else {
+          //save chapter
+          alert("Editing tutorial data will be saved");
+          this.$refs[currentId].save();
+        }
+      }
     },
   },
   updated() {
