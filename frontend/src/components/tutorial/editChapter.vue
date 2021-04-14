@@ -69,7 +69,7 @@ export default {
     return {
       chapter: null,
       testing: "<div class='v-card v-sheet theme--light><p>123</p></div>",
-      editorData: "fuck",
+      editorData: "ch",
       editor: ClassicEditor,
       editorConfig: {
         plugins: [
@@ -201,8 +201,9 @@ export default {
         DataService.get("tutorial/getOneChapter", this.chapterId).then(
           (response) => {
             this.chapter = response.data;
-            //alert("Edit chapter successfully.");
+            alert("Saved successfully!");
             this.$emit("fetchTutorial");
+            // this.$emit("changeID");
           }
         );
       });

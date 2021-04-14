@@ -83,12 +83,12 @@
         </v-col>
       </v-row>
     </div>
-    <autosave
+    <!--<autosave
       :dialog.sync="dialog"
       @show="show"
       @autosave="autosave"
       :currentId="currentId"
-    />
+    />-->
   </v-container>
 </template>
 
@@ -109,12 +109,12 @@
 import DataService from "../services/DataService";
 import editChapter from "../components/tutorial/editChapter.vue";
 import editMetadata from "../components/tutorial/editMetadata.vue";
-import autosave from "../components/modal/autosave";
+//import autosave from "../components/modal/autosave";
 export default {
   components: {
     editChapter,
     editMetadata,
-    autosave,
+    // autosave,
   },
   data() {
     return {
@@ -209,9 +209,10 @@ export default {
       //
       // }
       //
-      this.saveWhenChange(this.editMetadata, this.currentId, this.selectedId);
-      this.currentId = this.selectedId;
 
+      this.saveWhenChange(this.editMetadata, this.currentId, this.selectedId);
+      this.currentId = this.selectedId; //need to be emmited
+      //alert("changed id");
       if (editMetadata) {
         this.editMetadata = 1;
         console.log(this.editMetadata);
@@ -224,25 +225,27 @@ export default {
       if (currentId !== selectedId && currentId !== null) {
         if (editMetadata === 0) {
           //save tutorial
-          //alert("Editing chpater will be saved");
-          this.show(true);
+          alert("Current change of tutorial data will be saved.");
+          //this.show(true);
         } else {
           //save chapter
-          //alert("Editing tutorial data will be saved");
-          this.show(true);
+          alert("Current change of chapter will be saved.");
+          //this.show(true);
         }
+        this.$refs[currentId].save();
       }
     },
-    show(bool) {
-      this.dialog = bool;
-      console.log(bool);
-      console.log(this.dialog);
-    },
-
-    autosave(currentId) {
-      this.$refs[currentId].save();
-      this.show(false);
-    },
+    // show(bool) {
+    //   this.dialog = bool;
+    //   console.log(bool);
+    //   console.log(this.dialog);
+    // },
+    //
+    // autosave(currentId) {
+    //   this.$refs[currentId].save();
+    //   alert(this.$refs[currentId].editorData + " is saved");
+    //   this.show(false);
+    // },
   },
 
   updated() {
