@@ -83,12 +83,12 @@
           <v-card-text class="tutorial-content">
             <div class="d-flex flex-column justify-space-between align-center">
               <v-img
-                max-height="300px"
+                width="600px"
                 v-if="tutorial.thumbnail"
                 :src="tutorial.thumbnail"
               ></v-img>
               <v-img
-                max-height="300px"
+                width="600px"
                 v-else
                 src="../assets/Homepage/1.jpg"
               ></v-img>
