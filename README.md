@@ -7,7 +7,7 @@
 
 ## 3 Key-functinos of the website:
 
-1. TUTORIAL POSTING AND SEARCHING SYSTEM
+1. TUTORIAL POSTING AND BROSWERING SYSTEM
 - Urge allows all CUHK students and professors to upload their teaching materials online to share knowledge.
 - The main difference between normal teaching and Urge is we encourage a bottom to top knowledge sharing.
 - Urge believes enhancing creativity and knowledge is not limited by teaching but by sharing no matter you are a expert or not.
