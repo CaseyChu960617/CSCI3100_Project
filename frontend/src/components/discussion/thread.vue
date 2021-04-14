@@ -7,7 +7,6 @@
     </v-app-bar>
 
     <v-virtual-scroll
-      v-if="thread"
       bench="100"
       :height="height"
       item-height="65"
@@ -19,16 +18,16 @@
             class="pl-4"
             :to="{ name: 'profile', params: { user_id: item._id } }"
             >{{ item.author.username }}</router-link
-          >
+          ><v-divider class="mt-2" />
           <v-card-text v-html="item.content"></v-card-text>
         </v-card>
       </template>
     </v-virtual-scroll>
   </v-container>
   <v-container v-else fluid class="pa-0">
-    <v-card tile elevation="16" outlined :height="height">
-      <v-card-text>have not selected any thread</v-card-text>
-    </v-card>
+    <v-card-text class="title text-center"
+      >Have not selected any thread</v-card-text
+    >
   </v-container>
 </template>
 <style>
@@ -60,10 +59,12 @@ dotenv.config();
 export default {
   props: ["thread", "loading"],
   data() {
-    return { tmpThread: null };
+    return { tmpThread: { commnets: [] } };
   },
   created() {
-    this.appendThread();
+    if (this.thread) {
+      this.appendThread();
+    }
   },
   watch: {
     thread() {
