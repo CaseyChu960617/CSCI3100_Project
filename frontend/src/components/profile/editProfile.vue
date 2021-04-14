@@ -170,7 +170,7 @@ export default {
         headers: authHeader(),
       })
         .then((res) => {
-          alert("Saved");
+          alert("Profile saved.");
           localStorage.setItem("user", JSON.stringify(res.data));
           this.$store.dispatch("auth/editProfile", res.data);
           this.refreshProfile();

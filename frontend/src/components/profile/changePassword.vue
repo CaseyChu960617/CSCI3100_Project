@@ -91,7 +91,7 @@ export default {
         headers: authHeader(),
       })
         .then((response) => {
-          alert(response.data.message);
+          alert("Password has been reset successfully.");
           this.$emit("switchform");
         })
         .catch((err) => {
