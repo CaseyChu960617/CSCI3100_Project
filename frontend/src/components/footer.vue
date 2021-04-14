@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="#1F5A98" class="white--text" flat height="100">
+    <v-app-bar color="#1F5A98" class="white--text foot" flat height="100">
       <v-card-text
         style="overflow-y: auto; height:100px; maxWidth: 500px;"
         max-width="500"

@@ -253,9 +253,6 @@
   bottom: -98px !important;
   padding-right: 68px !important;
 }
-header {
-  margin-top: calc(10vh - 50px) !important;
-}
 </style>
 <script>
 import modal from "../components/modal/tutorForm.vue";
