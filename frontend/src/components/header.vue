@@ -10,9 +10,7 @@
         style="cursor: pointer"
         @click="$router.push('/home').catch(() => {})"
       ></v-img>
-      <v-app-bar-text v-if="!currentUser.activation" class="sign-header-text"
-        >Urge to learn, Path to wisdom</v-app-bar-text
-      >
+
       <v-spacer></v-spacer>
       <div v-if="currentUser">
         <v-btn
@@ -50,6 +48,9 @@
           ><v-icon>mdi-logout</v-icon>Sign out</v-btn
         >
       </div>
+      <v-app-bar-text v-else class="sign-header-text"
+        >Urge to learn, Path to wisdom</v-app-bar-text
+      >
     </v-app-bar>
 
     <!-- <v-navigation-drawer v-if="currentUser" v-model="drawer" absolute temporary>
