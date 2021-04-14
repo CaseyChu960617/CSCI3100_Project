@@ -51,7 +51,7 @@ exports.getOneChatById = async (req, res) => {
             messages: [],
           },
           (err, doc) => {
-            if (err) res.status(400).json({ error: "Bad request." });
+            if (err) res.status(400).send(err.message);
             else res.send(doc);
           }
         );
@@ -96,7 +96,7 @@ exports.getOneChat = async (req, res) => {
             createdAtDate: new Date().getTime(),
           },
           (err, doc) => {
-            if (err) res.status(400).json({ error: "Bad request." });
+            if (err) res.status(400).send(err.message);
             else res.send(doc);
           }
         );

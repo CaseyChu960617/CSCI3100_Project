@@ -14,9 +14,7 @@ exports.signup = async (req, res) => {
         // Search the database to see if the email and username is already existed.
         User.findOne({ username, email }).exec((err, user) => {
             if (user) {
-                return res.status(400).json({
-                    error: "User with this username/email already existed."
-                })
+                return res.status(400).send(err.message);
             }
         });
         
@@ -93,7 +91,7 @@ exports.signin = async (req, res) => {
 
     // If not exist, handle the error.
     if (!user) {
-        return res.status(400).send({ status: 'error', error: 'Invalid email'});
+        return res.status(400).send(err.message);
     }
 
     else {
@@ -123,7 +121,7 @@ exports.signin = async (req, res) => {
         }
     else
         // If password is not matched, handle the error.
-        res.status(400).send({status: 'error', error: 'Invalid password'});
+        res.status(400).send(err.message);
     }
 };
 
@@ -162,7 +160,7 @@ exports.activateAccount = async (req, res) => {
     }
     else {
         // If userId is null, handle the error.
-        return res.status(400).json({ status: 'error', message: 'UserId is not existed.'});
+        return res.status(400).send(err.message);
     }
 };
 

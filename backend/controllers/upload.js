@@ -30,7 +30,7 @@ exports.uploadProPic = async (req, res) => {
         });
       }
   catch(err) {
-    res.status(400).json({ err: err.message });
+    res.status(400).send(err.message);
   }
 }
 
@@ -59,7 +59,7 @@ exports.uploadThumbnail = async (req, res) => {
         });
   }  
   catch(err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).send(err.message);
   }
 }
 
@@ -85,7 +85,7 @@ exports.uploadTutorialPic = async (req, res) => {
         }
       });
   }  catch(err) {
-      res.status(400).json({ message: err.message });
+    res.status(400).send(err.message);
   }
 }
 
@@ -111,6 +111,6 @@ exports.uploadDiscussionPic = async (req, res) => {
         }
       });
   }  catch(err) {
-      res.status(400).json({ message: err.message });
+    res.status(400).send(err.message);
   }
 }

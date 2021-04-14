@@ -117,7 +117,7 @@ exports.getFollowingTutorials = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((err, docs) => {
-      if (err) res.status(400).json({ error: err.message });
+      if (err) res.status(400).send(err.message);
       else res.send(docs);
     });
 };
@@ -144,12 +144,12 @@ exports.createTutorial = async (req, res) => {
         (err, doc) => {
           console.log(err);
           if (err) 
-            res.status(400).json({ error: err.message });
+          res.status(400).send(err.message);
           else 
             res.send(doc._id);
         }
       );
-    } else res.status(400).json({ error: "User not found." });
+    } else res.status(400).send(err.message);
   });
 };
 
@@ -166,7 +166,7 @@ exports.createChapter = async (req, res) => {
     },
     (err) => {
       if (err) {
-        res.status(400).json({ error: err.message });
+        res.status(400).send(err.message);
       }
     }
   );
@@ -182,7 +182,7 @@ exports.createChapter = async (req, res) => {
   };
 
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
-    if (err) res.status(400).json({ error: err.message });
+    if (err) res.status(400).send(err.message);
     else res.send("Success");
   });
 };
@@ -212,7 +212,7 @@ exports.editTutorial = async (req, res) => {
   };
 
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
-    if (err) res.status(400).json({ error: "Bad request." });
+    if (err) res.status(400).send(err.message);
     else res.status(200).send("Sucess");
   });
 };
@@ -262,16 +262,14 @@ exports.postComment = async (req, res) => {
         },
         (err, data) => {
           if (err) {
-            res.status(400).json({ error: err.message });
+            res.status(400).send(err.message);
           }
         }
       );
 
       newComment.save((err) => {
         if (err)
-          res
-            .status(400)
-            .json({ error: "Comment cannot be posted successfully." });
+          res.status(400).send(err.message);
       });
 
       const update = {
@@ -283,7 +281,7 @@ exports.postComment = async (req, res) => {
       };
 
       Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
-        if (err) res.status(400).json({ error: err.message });
+        if (err) res.status(400).send(err.message);
         else res.send(doc);
       });
     }
@@ -301,7 +299,7 @@ exports.deleteTutorial = async (req, res) => {
       message: "Thread successfully deleted.",
     });
   } else {
-    res.status(400).json({ error: "Tutorial not found." });
+    res.status(400).send(err.message);
   }
 };
 
@@ -325,6 +323,6 @@ exports.deleteChapter = async (req, res) => {
       }
     );
   } else {
-    res.status(400).json({ error: "Chapter not found." });
+    res.status(400).send(err.message);
   }
 };
