@@ -6,7 +6,7 @@ const { getProfile, getFollower, editProfile, follow, unfollow, updateProPic, re
 
 router.get("/:user_id", getProfile);
 
-router.get("/getFollower/user_id", getFollower);
+router.get("/getFollower/:user_id", getFollower);
 
 router.put("/editProfile", editProfile);
 
