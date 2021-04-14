@@ -32,7 +32,7 @@ import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
 import LinkPlugin from "@ckeditor/ckeditor5-link/src/link";
 import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 import List from "@ckeditor/ckeditor5-list/src/list";
-import MathType from "@wiris/mathtype-ckeditor5";
+import MathType from "@wiris/mathtype-ckeditor5/src/plugin";
 import Font from "@ckeditor/ckeditor5-font/src/font";
 import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline";
 import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough";
@@ -52,7 +52,8 @@ import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert";
 import Heading from "@ckeditor/ckeditor5-heading/src/heading";
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
-//import iframely from "../../embed.js";
+import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters";
+import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials";
 
 //import iframely from "//cdn.iframe.ly/embed.js?api_key=48f28ce86bc9c78e94f884";
 export default {
@@ -97,6 +98,8 @@ export default {
           LinkImage,
           ImageInsert,
           PageBreak,
+          SpecialCharacters,
+          SpecialCharactersEssentials,
         ],
 
         toolbar: {
@@ -105,26 +108,28 @@ export default {
             "bold",
             "italic",
             "fontSize",
-            "link",
             "undo",
             "redo",
+            "subscript",
+            "superscript",
+            "specialCharacters",
             "Highlight",
             "bulletedList",
             "numberedList",
-            "pagebreak",
-            "fontSize",
+            "|",
+            "mediaEmbed",
+            "linkImage",
+            "insertImage",
             "code",
             "subscript",
             "superscript",
             "HtmlEmbed",
-            "mediaEmbed",
+
             "imageStyle:full",
             "imageStyle:side",
             "|",
             "imageTextAlternative",
-            "|",
-            "linkImage",
-            "insertImage",
+            "pagebreak",
           ],
         },
         height: "400px",

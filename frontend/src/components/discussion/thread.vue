@@ -1,5 +1,8 @@
 <template>
   <v-container v-if="thread" fluid class="pa-0">
+    <v-app-bar>
+      <v-app-bar-title> {{ thread.title }} </v-app-bar-title>
+    </v-app-bar>
     <v-card tile elevation="16" outlined :height="height" :loading="loading">
       <v-card-title
         ><router-link
