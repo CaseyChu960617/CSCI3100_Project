@@ -84,6 +84,7 @@
       </v-row>
     </div>
   </v-container>
+  <autosave :dialog.sync="dialog" @show="show" @submit="save()" />
 </template>
 
 <style>
@@ -108,7 +109,7 @@ export default {
   components: {
     editChapter,
     editMetadata,
-    //autosave,
+    autosave,
   },
   data() {
     return {
@@ -238,6 +239,10 @@ export default {
     //   alert(this.currentId);
     //   alert(this.selectedId);
     //   this.currentId = this.selectedId;
+  },
+
+  show(bool) {
+    this.dialog = bool;
   },
 };
 </script>

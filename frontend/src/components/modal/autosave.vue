@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import subjectsList from "../../assets/subjects.json";
-import DataService from "../../services/DataService";
 
 export default {
   props: ["dialog"],
