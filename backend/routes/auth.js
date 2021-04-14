@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { signup, signin, activateAccount, generateEmail} = require('../controllers/auth');
+const { signup, signin, activateAccount, generateEmail } = require('../controllers/auth');
 
 
-router.post('/signup',  authJwt,signup);
+router.post('/signup',  signup);
 
-router.post('/signin', authJwt, signin);
+router.post('/signin', signin);
 
 router.get('/activateAccount/:user_id', activateAccount)
 

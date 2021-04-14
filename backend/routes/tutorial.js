@@ -30,25 +30,24 @@ router.get("/getOneTutorial/:tutorial_id", getOneTutorial);
 
 router.get("/getOneChapter/:chapter_id", getOneChapter);
 
-
 router.get("/myTutorials/:user_id", getMyTutorials);
 
 router.get("/userTutorials/:user_id", getUserTutorials);
 
-router.post("/followingTutorials", authJwt, getFollowingTutorials);
+router.post("/followingTutorials", authJwt.verifyToken, getFollowingTutorials);
 
-router.post("/createTutorial", authJwt, createTutorial);
+router.post("/createTutorial", authJwt.verifyToken, createTutorial);
 
-router.post("/createChapter", authJwt, createChapter);
+router.post("/createChapter", authJwt.verifyToken, createChapter);
 
-router.put("/editTutorial", authJwt, editTutorial);
+router.put("/editTutorial", authJwt.verifyToken, editTutorial);
 
-router.put("/editChapter",  authJwt,editChapter);
+router.put("/editChapter",  authJwt.verifyToken,editChapter);
 
-router.put("/postComment", authJwt, postComment);
+router.put("/postComment", authJwt.verifyToken, postComment);
 
-router.delete("/deleteTutorial/:tutorial_id", authJwt, deleteTutorial);
+router.delete("/deleteTutorial/:tutorial_id", authJwt.verifyToken, deleteTutorial);
 
-router.delete("/deleteChapter/:tutorial_id/:chapter_id", authJwt, deleteChapter);
+router.delete("/deleteChapter/:tutorial_id/:chapter_id", authJwt.verifyToken, deleteChapter);
 
 module.exports = router;
