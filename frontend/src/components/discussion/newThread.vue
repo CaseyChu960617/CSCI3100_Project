@@ -219,6 +219,7 @@ export default {
           name: "discussion",
           params: { thread_id: thread_id },
         });
+        this.$emit("selectCat");
       });
     },
     EnableVideo() {

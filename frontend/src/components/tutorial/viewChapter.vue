@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card elevation="8" class="ma-4" m>
+    <v-card elevation="8" class="ma-4">
       <v-card-title>{{ this.chapter.title }}</v-card-title>
       <v-divider class="mx-4"></v-divider>
       <v-card-text
@@ -16,6 +16,27 @@
   height: 78vh;
   /*min-height: 65vh;
   max-height: 500px;*/
+}
+
+img {
+  max-width: 600px;
+}
+
+.iframely-responsive {
+  top: 0;
+  left: 0;
+  max-width: 622.2px;
+  max-height: 350px;
+  position: relative;
+  padding-bottom: 56.25%;
+}
+.iframely-responsive > * {
+  top: 0;
+  left: 0;
+  max-width: 622.2px;
+  max-height: 350px;
+  position: absolute;
+  border: 0;
 }
 </style>
 <script>

@@ -7,7 +7,10 @@
           >{{ thread.author.username }}</router-link
         ></v-card-title
       >
-      <v-card-text v-html="thread.content"></v-card-text>
+      <v-card-text
+        class="thread-content pa-5"
+        v-html="thread.content"
+      ></v-card-text>
     </v-card>
     <v-card
       v-for="comment in thread.comments"
@@ -34,7 +37,27 @@
     </v-card>
   </v-container>
 </template>
+<style>
+.thread-content {
+  overflow-y: scroll;
+  height: 78vh;
+  /* min-height: 65vh; */
+  max-height: 500px;
+}
 
+img {
+  max-width: 600px;
+}
+
+.iframely-responsive > * {
+  top: 0;
+  left: 0;
+  max-width: 622.2px;
+  max-height: 350px;
+  position: absolute;
+  border: 0;
+}
+</style>
 <script>
 //import DataService from "../../services/DataService";
 

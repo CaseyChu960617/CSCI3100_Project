@@ -9,7 +9,7 @@
       <v-btn icon @click="dialog = true">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
-      <NewThread :dialog="dialog" @show="show" />
+      <NewThread :dialog="dialog" @show="show" @selectCat="selectCat(0)" />
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary width="80%">
       <v-list nav>
@@ -50,6 +50,7 @@ export default {
   },
   methods: {
     selectCat(sub_id) {
+      console.log(sub_id);
       this.drawer = false;
       this.$router
         .push({
