@@ -89,7 +89,7 @@
 
 <script>
 import DataService from "../../services/DataService";
-
+import authHeader from "../../services/auth-header.js";
 import subjectsList from "../../assets/subjects.json";
 
 export default {
@@ -162,7 +162,9 @@ export default {
         published: this.published,
         thumbnail: this.thumbnail,
       };
-      DataService.put("tutorial/editTutorial", data).then((response) => {
+      DataService.put("tutorial/editTutorial", data, {
+        headers: authHeader(),
+      }).then((response) => {
         console.log(response.data);
         alert("Saved successfully!");
         // this.$emit("changeID");

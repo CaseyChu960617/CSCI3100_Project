@@ -109,7 +109,7 @@
 
 <script>
 import DataService from "../../services/DataService";
-
+import authHeader from "../../services/auth-header.js";
 export default {
   data() {
     return {
@@ -141,7 +141,9 @@ export default {
     signup() {
       var temp = this.account.email;
       this.account.email = this.account.email + "@link.cuhk.edu.hk";
-      DataService.post("auth/signup", this.account)
+      DataService.post("auth/signup", this.account, {
+        headers: authHeader(),
+      })
         .then((res) => {
           alert(res.data.message);
           if (res.data.accessToken) {

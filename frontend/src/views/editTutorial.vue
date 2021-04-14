@@ -109,6 +109,7 @@
 import DataService from "../services/DataService";
 import editChapter from "../components/tutorial/editChapter.vue";
 import editMetadata from "../components/tutorial/editMetadata.vue";
+import authHeader from "../services/auth-header.js";
 //import autosave from "../components/modal/autosave";
 export default {
   components: {
@@ -166,7 +167,9 @@ export default {
         content: "",
       };
       //console.log(data);
-      DataService.post("tutorial/createChapter", data).then((response) => {
+      DataService.post("tutorial/createChapter", data, {
+        header: authHeader(),
+      }).then((response) => {
         //console.log("respone is ", response.data);
         console.log("this.tutorial._id :", response.data);
         DataService.get("tutorial/getOneTutorial", this.tutorial._id).then(
@@ -182,11 +185,11 @@ export default {
 
     deleteChapter(chapter_id) {
       console.log("delete", chapter_id);
-      DataService.deleteChapter(this.tutorial._id, chapter_id).then(
-        (response) => {
-          console.log(response);
-        }
-      );
+      DataService.deleteChapter(this.tutorial._id, chapter_id, {
+        headers: authHeader(),
+      }).then((response) => {
+        console.log(response);
+      });
 
       this.chapters.forEach((element, index, object) => {
         if (chapter_id === element._id) object.splice(index, 1);

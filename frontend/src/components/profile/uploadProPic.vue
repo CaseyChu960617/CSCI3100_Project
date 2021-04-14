@@ -66,7 +66,9 @@ export default {
       if (file) {
         this.loading = true;
         this.formData.append("file", file);
-        DataService.uploadProPic(this.formData).then((response) => {
+        DataService.uploadProPic(this.formData, {
+          headers: authHeader(),
+        }).then((response) => {
           this.tempsrc = response.data.location;
           this.formData = new FormData();
           this.loading = false;

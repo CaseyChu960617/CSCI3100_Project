@@ -72,7 +72,7 @@
         </div>
       </v-col>
       <v-col md="9">
-        <v-card v-if="viewTutorial" elevation="8" class="ma-4">
+        <v-card v-if="viewTutorial" elevation="8" class="ma-4 view-tut-card">
           <div class="tutorial-header">
             {{ this.tutorial.title }}
             <span class="course-code">
@@ -98,7 +98,7 @@
               Description
             </v-card-title>
             <v-divider class="mx-4"></v-divider>
-            <v-card-text class="des">
+            <v-card-text class="des tut-des">
               {{ this.tutorial.description }}
             </v-card-text>
           </v-card-text>
@@ -118,6 +118,9 @@
 }
 .avatar {
   font-family: "Roboto", sans-serif;
+}
+.v-virtual-scroll::-webkit-scrollbar {
+  display: none !important;
 }
 
 .author:hover {
@@ -140,6 +143,12 @@
   line-height: 2rem;
   word-break: break-all;
   padding: 16px;
+}
+.view-tut-card {
+  overflow-y: scroll;
+}
+.view-tut-card::-webkit-scrollbar {
+  display: none !important;
 }
 
 .course-code {
