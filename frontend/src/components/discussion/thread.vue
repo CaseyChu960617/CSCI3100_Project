@@ -32,7 +32,7 @@
         <v-card v-else outlined elevation="8" height="100%" class="ma-2 pt-4">
           <router-link
             class="pl-4"
-            :to="{ name: 'profile', params: { user_id: item._id } }"
+            :to="{ name: 'profile', params: { user_id: item.author._id } }"
             >{{ item.author.username }}</router-link
           ><v-divider class="mt-2" />
           <v-card-text v-html="item.content"></v-card-text>
@@ -55,7 +55,7 @@
 /* } */
 
 img {
-  max-width: 600px;
+  width: 400px;
 }
 
 .iframely-responsive > * {
@@ -178,7 +178,7 @@ export default {
         simpleUpload: {
           // The URL that the images are uploaded to.
           uploadUrl:
-            process.env.VUE_APP_DOMAIN_URL + "/upload/uploadTutorialPic",
+            process.env.VUE_APP_DOMAIN_URL + "/upload/uploadDiscussionPic",
 
           // Enable the XMLHttpRequest.withCredentials property.
           withCredentials: false,

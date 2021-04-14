@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const { authJwt } = require("../middlewares");
 
-const { getProfile, editProfile, follow, unfollow, updateProPic, resetPassword } = require("../controllers/user");
+const { getProfile, getFollower, editProfile, follow, unfollow, updateProPic, resetPassword } = require("../controllers/user");
 
 router.get("/:user_id", getProfile);
+
+router.get("/getFollower/:user_id", getFollower);
 
 router.put("/editProfile", editProfile);
 
