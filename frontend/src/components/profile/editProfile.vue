@@ -149,6 +149,11 @@ export default {
       return this.$store.state.auth.user;
     },
   },
+  watch: {
+    profile() {
+      this.account = this.profile;
+    },
+  },
   methods: {
     changePassword() {
       this.$emit("switchform");
