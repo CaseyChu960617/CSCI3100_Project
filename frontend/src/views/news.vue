@@ -57,7 +57,7 @@
                   src="../assets/Homepage/1.jpg"
                 ></v-img>
                 <v-card-title>{{ tutorial.title }}</v-card-title>
-                <v-card-text>{{ tutorial.subject }} </v-card-text>
+                <v-card-text class="sub">{{ tutorial.subject }} </v-card-text>
                 <v-card-text>
                   Instructor {{ tutorial.author.username }}
                 </v-card-text>
