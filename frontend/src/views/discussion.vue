@@ -9,7 +9,10 @@
       ></v-col>
       <v-col cols="0" md="7"
         ><v-card tile elevation="16" outlined :height="height"
-          ><Thread :thread="thread" :loading="threadLoading" /></v-card
+          ><Thread
+            :thread="thread"
+            :loading="threadLoading"
+            @refreshThread="fetchOneThread($route.params.thread_id)" /></v-card
       ></v-col>
     </v-row>
 

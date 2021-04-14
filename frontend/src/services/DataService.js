@@ -58,6 +58,10 @@ class DataService {
     return http.delete(Thread + id, header);
   }
 
+  postComment(data, header) {
+    return http.put(Thread + "postComment", data, header);
+  }
+
   post(table, data) {
     return http.post(`/${table}`, data);
   }
