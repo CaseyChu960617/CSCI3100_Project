@@ -172,7 +172,7 @@ exports.getFollower = async (req, res) => {
   const user_id = req.params['user_id'];
 
   var populateQuery = [
-    { path: "following", select: "_id username profileImage",},
+    { path: "following", select: "_id username profileImage"},
   ];
   User.findOne({ _id: user_id })
   .select("following")
