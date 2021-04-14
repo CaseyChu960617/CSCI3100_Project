@@ -24,15 +24,15 @@ router.get('/:thread_id', getOneThread);
 
 router.get('/userThreads/:user_id', getUserThreads);
 
-router.post('/followingThreads', getFollowingThreads);
+router.post('/followingThreads', authJwt, getFollowingThreads);
 
-router.post('/',  createThread);
+router.post('/',  authJwt,createThread);
 
-router.put('/editThread',  editThread);
+router.put('/editThread',  authJwt, editThread);
 
-router.put('/postComment',  postComment);
+router.put('/postComment',  authJwt, postComment);
 
-router.delete('/deleteThread', deleteThread);
+router.delete('/deleteThread', authJwt, deleteThread);
 
 
 

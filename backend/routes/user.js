@@ -8,14 +8,14 @@ router.get("/:user_id", getProfile);
 
 router.get("/getFollower/:user_id", getFollower);
 
-router.put("/editProfile", editProfile);
+router.put("/editProfile",  authJwt,editProfile);
 
-router.put("/follow", follow);
+router.put("/follow",  authJwt,follow);
 
-router.put("/unfollow", unfollow);
+router.put("/unfollow",  authJwt,unfollow);
 
-router.put("/updateProPic", updateProPic);
+router.put("/updateProPic",  authJwt,updateProPic);
 
-router.put("/resetPassword", resetPassword);
+router.put("/resetPassword",  authJwt,resetPassword);
 
 module.exports = router;

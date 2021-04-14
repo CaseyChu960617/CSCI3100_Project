@@ -13,7 +13,7 @@ router.get('/getAllChats/:user_id', getAllChats);
 
 router.get('/getOneChat/:chat_id', getOneChatById);
 
-router.post('/getOneChat', getOneChat);
+router.post('/getOneChat', authJwt, getOneChat);
 
 // router.put('/sendMessage/:chat_id', sendMessage);
 

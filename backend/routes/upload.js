@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { uploadProPic, uploadThumbnail, uploadTutorialPic, uploadDiscussionPic } = require('../controllers/upload');
 
-router.post("/uploadProPic", uploadProPic);
+router.post("/uploadProPic",  authJwt,uploadProPic);
 
-router.post("/uploadThumbnail", uploadThumbnail);
+router.post("/uploadThumbnail",  authJwt,uploadThumbnail);
 
-router.post("/uploadTutorialPic", uploadTutorialPic);
+router.post("/uploadTutorialPic",  authJwt,uploadTutorialPic);
 
-router.post("/uploadDiscussionPic", uploadDiscussionPic);
+router.post("/uploadDiscussionPic",  authJwt,uploadDiscussionPic);
 
 
 module.exports = router;
