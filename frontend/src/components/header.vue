@@ -10,6 +10,9 @@
         style="cursor: pointer"
         @click="$router.push('/home').catch(() => {})"
       ></v-img>
+      <v-app-bar-text class="sign-header-text"
+        >Urge to learn, Path to wisdom</v-app-bar-text
+      >
       <v-spacer></v-spacer>
       <div v-if="currentUser">
         <v-btn
@@ -77,7 +80,14 @@
     </v-navigation-drawer> -->
   </div>
 </template>
-
+<style>
+.sign-header-text {
+  font-family: "Segoe Script";
+  font-size: 20px;
+  right: 30px;
+  position: absolute;
+}
+</style>
 <script>
 export default {
   data: () => ({
