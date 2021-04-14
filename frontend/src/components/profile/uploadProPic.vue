@@ -86,6 +86,7 @@ export default {
         this.$store.dispatch("auth/uploadProPic", response.data);
         console.log(response.data);
         this.close();
+        this.$emit("refreshProfile");
       });
     },
   },

@@ -49,6 +49,7 @@
                 :dialog.sync="dialog"
                 :src="account.profileImage"
                 @show="show"
+                @refreshProfile="refreshProfile"
               ></modal></v-row></v-col
           ><v-col cols="12" sm="12" md="8">
             <v-container>
@@ -167,6 +168,7 @@ export default {
           alert("Saved");
           localStorage.setItem("user", JSON.stringify(res.data));
           this.$store.dispatch("auth/editProfile", res.data);
+          this.refreshProfile();
         })
         .catch((err) => {
           console.log(err);
@@ -184,8 +186,8 @@ export default {
     switchform() {
       this.edit = !this.edit;
     },
-    refresh() {
-      this.$emit("refresh");
+    refreshProfile() {
+      this.$emit("refreshProfile");
     },
   },
 };
