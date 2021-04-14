@@ -58,6 +58,7 @@ import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters";
 import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials";
+import authHeader from "../../services/auth-header.js";
 import dotenv from "dotenv";
 dotenv.config();
 //import iframely from "//cdn.iframe.ly/embed.js?api_key=48f28ce86bc9c78e94f884";
@@ -200,7 +201,9 @@ export default {
         content: this.chapter.content,
       };
 
-      DataService.put("tutorial/editChapter", data).then((response) => {
+      DataService.put("tutorial/editChapter", data, {
+        headers: authHeader(),
+      }).then((response) => {
         console.log(response);
         DataService.get("tutorial/getOneChapter", this.chapterId).then(
           (response) => {

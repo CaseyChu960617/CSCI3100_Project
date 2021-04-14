@@ -56,8 +56,6 @@
 <script>
 import subjectsList from "../../assets/subjects.json";
 import DataService from "../../services/DataService";
-import authHeader from "../../services/auth-header.js";
-
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
 import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
@@ -86,6 +84,7 @@ import Heading from "@ckeditor/ckeditor5-heading/src/heading";
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 import dotenv from "dotenv";
+import authHeader from "../../services/auth-header.js";
 dotenv.config();
 export default {
   props: ["dialog"],

@@ -90,7 +90,7 @@ export default {
       DataService.changePassword(this.password, {
         headers: authHeader(),
       })
-        .then((response) => {
+        .then(() => {
           alert("Password has been reset successfully.");
           this.$emit("switchform");
         })

@@ -23,14 +23,17 @@ class DataService {
     return http.put(`/${table}/${id}`, data, header);
   }
 
-  delete(table, id) {
+  delete(table, id, header) {
     //, //id, header) {
-    return http.delete(`/${table}/${id}`); //header);
+    return http.delete(`/${table}/${id}`, header); //header);
   }
 
-  deleteChapter(tutorial_id, chapter_id) {
+  deleteChapter(tutorial_id, chapter_id, header) {
     //, //id, header) {
-    return http.delete(Tutorial + `deleteChapter/${tutorial_id}/${chapter_id}`); //header);
+    return http.delete(
+      Tutorial + `deleteChapter/${tutorial_id}/${chapter_id}`,
+      header
+    ); //header);
   }
 
   //discussions
@@ -62,12 +65,12 @@ class DataService {
     return http.put(Thread + "postComment", data, header);
   }
 
-  post(table, data) {
-    return http.post(`/${table}`, data);
+  post(table, data, header) {
+    return http.post(`/${table}`, data, header);
   }
 
-  put(table, data) {
-    return http.put(`/${table}`, data);
+  put(table, data, header) {
+    return http.put(`/${table}`, data, header);
   }
 
   getAllTutorial() {
@@ -128,12 +131,12 @@ class DataService {
     return http.put(Profile + "updateProPic", data, header);
   }
 
-  uploadThumbnail(formData) {
-    return http.post(Upload + "uploadThumbnail", formData);
+  uploadThumbnail(formData, header) {
+    return http.post(Upload + "uploadThumbnail", formData, header);
   }
 
-  uploadProPic(formData) {
-    return http.post(Upload + "uploadProPic", formData);
+  uploadProPic(formData, header) {
+    return http.post(Upload + "uploadProPic", formData, header);
   }
 }
 

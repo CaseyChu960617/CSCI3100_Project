@@ -57,7 +57,7 @@
                   src="../assets/Homepage/1.jpg"
                 ></v-img>
                 <v-card-title>{{ tutorial.title }}</v-card-title>
-                <v-card-text>{{ tutorial.subject }} </v-card-text>
+                <v-card-text class="sub">{{ tutorial.subject }} </v-card-text>
                 <v-card-text>
                   Instructor {{ tutorial.author.username }}
                 </v-card-text>
@@ -90,9 +90,9 @@
           </v-row>
         </v-container>
       </v-col>
-      <!--<v-col sm="11">
+      <!--  <v-col sm="11">
         <v-card-title>What's new in Discussion form ? </v-card-title>
-      </v-col> -->
+      </v-col>-->
     </v-row>
   </v-container>
 </template>

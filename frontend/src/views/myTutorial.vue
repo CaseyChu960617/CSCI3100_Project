@@ -272,6 +272,7 @@
 import modal from "../components/modal/tutorForm.vue";
 import DataService from "../services/DataService";
 import subjectsList from "../assets/subjects.json";
+import authHeader from "../services/auth-header.js";
 
 export default {
   components: {
@@ -310,11 +311,11 @@ export default {
     fetchMyTutorial() {
       DataService.get("tutorial/myTutorials", this.currentUser.user_id).then(
         (response) => {
-          console.log("Fetch Data is ", response.data);
+          //  console.log("Fetch Data is ", response.data);
           let rawData = response.data;
           //mapping the subjects
           rawData.forEach((element) => {
-            console.log(element.author._id);
+            //  console.log(element.author._id);
             element.subject = this.subjects[element.subject - 1]["text"];
           });
           this.tutorials = rawData;
@@ -325,24 +326,24 @@ export default {
     flip(event, id) {
       let card = this.$refs[id][0];
       //let frontcard = this.$ref["front-" + id][0];
-      console.log(card.classList);
+      // console.log(card.classList);
 
       if (!card.classList.contains("is-flipped")) {
         card.classList.add("is-flipped");
       }
 
-      console.log(card);
+      // console.log(card);
       this.setHeight();
     },
 
     unflip(event, id) {
       let card = this.$refs[id][0];
-      console.log(card.classList);
+      //console.log(card.classList);
 
       if (card.classList.contains("is-flipped")) {
         card.classList.remove("is-flipped");
       }
-      console.log(card);
+      // console.log(card);
     },
 
     setHeight() {
@@ -350,14 +351,14 @@ export default {
       let title_elements = document.querySelectorAll(".des-title");
 
       elements.forEach((element) => {
-        console.log(element.offsetHeight);
+        //  console.log(element.offsetHeight);
         element.style.height =
           element.parentElement.parentElement.offsetHeight * 0.62 + "px";
 
-        console.log(element.offsetHeight);
+        // console.log(element.offsetHeight);
       });
       title_elements.forEach(function(element) {
-        console.log(element.offsetHeight);
+        //  console.log(element.offsetHeight);
         element.style.height =
           element.parentElement.parentElement.offsetHeight * 0.165 + "px";
       });
@@ -375,17 +376,17 @@ export default {
     },
 
     deleteTutorial(tutorialId) {
-      console.log("delete", tutorialId);
+      // console.log("delete", tutorialId);
 
-      DataService.delete("tutorial/deleteTutorial", tutorialId).then(
-        (response) => {
-          console.log(response);
-        }
-      );
+      DataService.delete("tutorial/deleteTutorial", tutorialId, {
+        header: authHeader(),
+      }).then((response) => {
+        console.log(response);
+      });
 
       this.tutorials.forEach((element, index, object) => {
         if (tutorialId === element._id) object.splice(index, 1);
-        console.log(tutorialId);
+        //console.log(tutorialId);
       });
     },
 
