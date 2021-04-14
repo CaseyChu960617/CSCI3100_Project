@@ -62,7 +62,7 @@ exports.signup = async (req, res) => {
         const accessToken = jwt.sign({
             user_id: newUser._id },
             process.env.JWT_ACC_SECRET,
-            { expiresIn: '24h'});
+            { expiresIn: '300m'});
 
         // Return json with user info when user is created successfully.
         res.status(201).json({
@@ -104,7 +104,7 @@ exports.signin = async (req, res) => {
                 user_id: user._id
                 },
                 process.env.JWT_ACC_SECRET,
-                {expiresIn: '24h'});
+                {expiresIn: '300m'});
 
             res.status(200).send({
                 accessToken: accessToken,
@@ -142,7 +142,7 @@ exports.activateAccount = async (req, res) => {
         const accessToken = jwt.sign({
             user_id: user._id },
             process.env.JWT_ACC_SECRET,
-            { expiresIn: '24h'});
+            { expiresIn: '300m'});
 
         // Return the new data of the user.
         res.status(200).json({
