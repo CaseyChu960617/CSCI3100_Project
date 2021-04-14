@@ -120,6 +120,7 @@
     <v-speed-dial v-model="fab"
       ><template v-slot:activator>
         <v-btn
+          class="tut-toggle-btn"
           id="main-btn"
           slot="activator"
           v-model="fab"
@@ -171,6 +172,9 @@
 #main-btn {
   position: relative;
   float: right;
+}
+.tut-toggle-btn {
+  margin-bottom: 30px;
 }
 .v-btn.extended {
   width: 150px;
