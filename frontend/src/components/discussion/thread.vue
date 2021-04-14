@@ -8,7 +8,7 @@
 
     <v-virtual-scroll
       v-if="thread"
-      :bench="tmpThread.comments.length"
+      bench="100"
       :height="height"
       item-height="65"
       :items="tmpThread.comments"
