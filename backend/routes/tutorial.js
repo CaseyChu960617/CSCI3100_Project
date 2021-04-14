@@ -34,20 +34,20 @@ router.get("/myTutorials/:user_id", getMyTutorials);
 
 router.get("/userTutorials/:user_id", getUserTutorials);
 
-router.post("/followingTutorials", authJwt.verifyToken, getFollowingTutorials);
+router.post("/followingTutorials", getFollowingTutorials);
 
-router.post("/createTutorial", authJwt.verifyToken, createTutorial);
+router.post("/createTutorial", createTutorial);
 
-router.post("/createChapter", authJwt.verifyToken, createChapter);
+router.post("/createChapter", createChapter);
 
-router.put("/editTutorial", authJwt.verifyToken, editTutorial);
+router.put("/editTutorial", editTutorial);
 
-router.put("/editChapter",  authJwt.verifyToken,editChapter);
+router.put("/editChapter",editChapter);
 
-router.put("/postComment", authJwt.verifyToken, postComment);
+router.put("/postComment", postComment);
 
-router.delete("/deleteTutorial/:tutorial_id", authJwt.verifyToken, deleteTutorial);
+router.delete("/deleteTutorial/:tutorial_id", deleteTutorial);
 
-router.delete("/deleteChapter/:tutorial_id/:chapter_id", authJwt.verifyToken, deleteChapter);
+router.delete("/deleteChapter/:tutorial_id/:chapter_id", deleteChapter);
 
 module.exports = router;
