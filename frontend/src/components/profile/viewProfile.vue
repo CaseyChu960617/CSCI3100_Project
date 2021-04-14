@@ -66,7 +66,7 @@
               ></v-text-field>
               <v-row class="my-1">
                 <v-btn text @click="startChat">Chat</v-btn><v-spacer />
-                <v-btn text @click="follow">Threads</v-btn><v-spacer />
+                <!-- <v-btn text @click="follow">Threads</v-btn><v-spacer /> -->
                 <v-btn text @click="viewUserTutorials">Tutorials</v-btn
                 ><v-spacer />
                 <v-btn text v-if="followed" @click="unfollow">Unfollow</v-btn>

@@ -90,9 +90,9 @@
           </v-row>
         </v-container>
       </v-col>
-      <v-col sm="11">
+      <!--<v-col sm="11">
         <v-card-title>What's new in Discussion form ? </v-card-title>
-      </v-col>
+      </v-col> -->
     </v-row>
   </v-container>
 </template>
