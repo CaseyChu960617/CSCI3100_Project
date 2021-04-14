@@ -110,7 +110,7 @@ export default {
           const rawData = response.data;
 
           rawData.forEach((element) => {
-            if (element.userA._id == this.$store.state.auth.user.user_id) {
+            if (element.userA._id == this.currentUser.user_id) {
               this.chats.push({ user: element.userB, _id: element._id });
             } else {
               this.chats.push({ user: element.userA, _id: element._id });

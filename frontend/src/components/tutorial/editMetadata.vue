@@ -68,7 +68,7 @@
               ></v-progress-circular>
             </div>
             <div v-else>
-              <v-img max-width="500px" v-if="!noThumbnail" :src="thumbnail" />
+              <v-img max-width="500px" v-if="thumbnail" :src="thumbnail" />
               <v-img
                 max-width="500px"
                 v-else
@@ -103,7 +103,7 @@ export default {
       description: "",
       thumbnail: "",
       published: "",
-      noThumbnail: "",
+      //noThumbnail: "",
       publishedlist: [
         { text: "published", value: 1 },
         { text: "not published", value: 0 },
@@ -133,7 +133,8 @@ export default {
         this.description = rawData.description;
         this.published = rawData.published;
         this.thumbnail = rawData.thumbnail;
-        if (this.thumbnail == "") this.noThumbnail = true;
+        //if (this.thumbnail == "") this.noThumbnail = true;
+        //console.log(this.noThumbnail);
       });
     },
 

@@ -19,7 +19,8 @@ exports.signup = async (req, res) => {
                 })
             }
         });
-
+        
+    try {
         // If no error, hashed the password and create a new user.
         hashedPassword = await bcrypt.hash(password, 10)
         var newUser = await User.create({
@@ -31,7 +32,9 @@ exports.signup = async (req, res) => {
             gender: gender,
             profileImage: "",
         });
-       
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
         // For debugging
         console.log(newUser);
 
@@ -66,15 +69,16 @@ exports.signup = async (req, res) => {
         // Return json with user info when user is created successfully.
         res.status(201).json({
             accessToken: accessToken,
-            user_id: user._id,
-            lastname: user.lastname,
-            firstname: user.firstname,
-            username: user.username,
-            email: user.email,
-            gender: user.gender,
-            activation: user.activation,
-            following: user.following,
-            profileImage: user.profileImage
+            user_id: newUser._id,
+            lastname: newUser.lastname,
+            firstname: newUser.firstname,
+            username: newUser.username,
+            email: newUser.email,
+            gender: newUser.gender,
+            activation: newUser.activation,
+            following: newUser.following,
+            profileImage: newUser.profileImage,
+            message: "Registered successfully"
         });
 };
 

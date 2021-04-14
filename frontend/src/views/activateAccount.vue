@@ -21,6 +21,11 @@ export default {
       message: "abc",
     };
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
   created() {
     this.activateAccount();
   },
