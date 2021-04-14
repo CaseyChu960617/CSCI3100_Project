@@ -8,13 +8,14 @@ exports.getAllChats = async (req, res) => {
   const user_id = req.params["user_id"];
   console.log(user_id);
 
-  await Chat.find({ $or: [{ userA: user_id }, { userB: user_id }] })
+     Chat.find({ $or: [{ userA: user_id }, { userB: user_id }] })
     .sort({ createdAt: -1 })
     .select("_id userA userB")
     .populate("userA userB", "_id username profileImage")
     .exec()
     .then((docs) => {
-      //console.log(docs);
+      
+      console.log(docs);
       res.send(docs);
     });
 };
@@ -92,6 +93,7 @@ exports.getOneChat = async (req, res) => {
             userA: user_id_1,
             userB: user_id_2,
             messages: [],
+            createdAtDate: new Date().getTime(),
           },
           (err, doc) => {
             if (err) res.status(400).json({ error: "Bad request." });

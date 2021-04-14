@@ -2,17 +2,33 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="6">
-        <v-card elevation="16" height="50vh">
-          <v-card-title> Activate your account </v-card-title>
-          <v-btn
-            rounded
-            block
-            @click="generateEmail"
-            class="my-4 black--text"
-            color="#1F5A98"
-            width="30%"
-            >Generate Email</v-btn
-          >
+        <v-card class="my-4" elevation="16">
+          <div class="pa-5">
+            <v-card-title> Email Activation </v-card-title>
+            <v-card-text class="pa-5">
+              <div>Dear {{ currentUser.username }},</div>
+              <br />
+              <div>
+                If you cannot receive the activation email, please click to
+                generate the email again.
+              </div>
+
+              <v-row justify="center">
+                <v-spacer />
+                <v-col col="3">
+                  <v-btn
+                    rounded
+                    block
+                    @click="generateEmail"
+                    class="my-4 black--text"
+                    color="#99CFEA"
+                    max-width="50px"
+                    >Generate Email</v-btn
+                  >
+                </v-col>
+                <v-spacer /> </v-row
+            ></v-card-text>
+          </div>
         </v-card>
       </v-col>
     </v-row>
