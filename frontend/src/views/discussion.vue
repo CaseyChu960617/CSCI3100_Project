@@ -89,6 +89,9 @@ export default {
   },
   created() {
     this.fetchThreadList(0);
+    if (this.$route.params.thread_id) {
+      this.fetchOneThread(this.$route.params.thread_id);
+    }
   },
   computed: {
     height() {
