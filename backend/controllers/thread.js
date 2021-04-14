@@ -13,7 +13,7 @@ exports.getAllThreads = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.send(docs);
+      res.status(200).send(docs);
     });
 };
 
@@ -25,7 +25,7 @@ exports.getLatestThreads = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.send(docs);
+      res.status(200).send(docs);
     });
 };
 
@@ -39,7 +39,7 @@ exports.getSubject = async (req, res) => {
       .populate("author", "_id username")
       .exec()
       .then((docs) => {
-        res.send(docs);
+        res.status(200).send(docs);
       });
     }
     else {
@@ -49,7 +49,7 @@ exports.getSubject = async (req, res) => {
       .populate("author", "_id username")
       .exec()
       .then((docs) => {
-        res.send(docs);
+        res.status(200).send(docs);
       });
     }
   } catch (err) {
@@ -76,7 +76,7 @@ exports.getOneThread = async (req, res) => {
     .populate(populateQuery)
     .exec()
     .then((doc) => {
-      res.send(doc);
+      res.status(200).send(doc);
     });
 };
 
@@ -88,7 +88,7 @@ exports.getUserThreads = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.send(docs);
+      res.status(200).send(docs);
     });
 };
 
@@ -103,7 +103,7 @@ exports.getFollowingThreads = async (req, res) => {
     .exec()
     .then((err, docs) => {
       if (err) res.status(400).send(err.message);
-      else res.send(docs);
+      else res.status(200).send(docs);
     });
 };
 
@@ -132,7 +132,7 @@ exports.createThread = async (req, res) => {
             console.log(err);
             res.status(400).send(err.message);
           } else 
-            res.send(doc._id);
+            res.status(200).send(doc._id);
         }
       );
     } else res.status(400).send(err.message);
@@ -154,7 +154,7 @@ exports.editThread = async (req, res) => {
 
   Thread.findOneAndUpdate({ _id: thread_id }, update, (err, doc) => {
     if (err) res.status(400).send(err.message);
-    else res.send(doc);
+    else res.status(200).send(doc);
   });
 };
 
@@ -178,9 +178,7 @@ exports.postComment = async (req, res) => {
         }
       );
 
-      newComment.save((err) => {
-        if (err) res.status(400).send(err.message);
-      });
+      newComment.save();
 
       const update = {
         $push: { comments: newComment._id },
@@ -192,7 +190,7 @@ exports.postComment = async (req, res) => {
 
       Thread.findOneAndUpdate({ _id: thread_id }, update, (err, doc) => {
         if (err) res.status(400).send(err.message);
-        else res.send(doc);
+        else res.status(200).send(doc);
       });
     }
   });

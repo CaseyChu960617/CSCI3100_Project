@@ -14,7 +14,7 @@ exports.getProfile = async (req, res) => {
       .exec()
       .then((doc) => {
         console.log(doc);
-        res.send(doc);
+        res.status(200).send(doc);
       });
   }
   catch(err) {
@@ -119,7 +119,7 @@ exports.follow = async (req, res) => {
   });
 
   const user = await User.findOne({ _id: my_user_id }).select("following");
-  res.send(user.following);
+  res.status(200).send(user.following);
 };
 
 // unfollow function
@@ -135,7 +135,7 @@ exports.unfollow = async (req, res) => {
   });
 
   const user = await User.findOne({ _id: my_user_id }).select("following");
-  res.send(user.following);
+  res.status(200).send(user.following);
 };
 
 // updateProPic function
@@ -147,7 +147,7 @@ exports.updateProPic = async (req, res) => {
   });
 
   const user = await User.findOne({ _id: my_user_id }).select("profileImage");
-  res.send(user.profileImage);
+  res.status(200).send(user.profileImage);
 };
 
 exports.resetPassword = async (req, res) => {

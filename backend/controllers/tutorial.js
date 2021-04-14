@@ -14,7 +14,7 @@ exports.getAllTutorials = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.send(docs);
+      res.status(200).send(docs);
       console.log(docs);
     });
 };
@@ -27,7 +27,7 @@ exports.getLatestTutorials = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.send(docs);
+      res.status(200).send(docs);
       console.log(docs);
     });
 };
@@ -40,7 +40,7 @@ exports.getSubject = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.send(docs);
+      res.status(200).send(docs);
     });
 };
 
@@ -66,7 +66,7 @@ exports.getOneTutorial = async (req, res) => {
     .populate(populateQuery)
     .exec()
     .then((doc) => {
-      res.send(doc);
+      res.status(200).send(doc);
     });
 };
 
@@ -77,7 +77,7 @@ exports.getOneChapter = async (req, res) => {
     .exec()
     .then((doc) => {
       console.log(doc);
-      res.send(doc);
+      res.status(200).send(doc);
     });
 };
 
@@ -89,7 +89,7 @@ exports.getMyTutorials = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.send(docs);
+      res.status(200).send(docs);
     });
 };
 
@@ -101,7 +101,7 @@ exports.getUserTutorials = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.send(docs);
+      res.status(200).send(docs);
     });
 };
 
@@ -118,7 +118,7 @@ exports.getFollowingTutorials = async (req, res) => {
     .exec()
     .then((err, docs) => {
       if (err) res.status(400).send(err.message);
-      else res.send(docs);
+      else res.status(200).send(docs);
     });
 };
 
@@ -146,7 +146,7 @@ exports.createTutorial = async (req, res) => {
           if (err) 
           res.status(400).send(err.message);
           else 
-            res.send(doc._id);
+            res.status(200).send(doc._id);
         }
       );
     } else res.status(400).send(err.message);
@@ -183,7 +183,7 @@ exports.createChapter = async (req, res) => {
 
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
     if (err) res.status(400).send(err.message);
-    else res.send("Success");
+    else res.status(200).send("Success");
   });
 };
 
@@ -242,7 +242,7 @@ exports.editChapter = async (req, res) => {
       if (err)
         res.status(400).send(err.message);
       else
-        res.send("Edit chapter sucessfully");
+        res.status(200).send("Edit chapter sucessfully");
     });
 
 
@@ -285,7 +285,7 @@ exports.postComment = async (req, res) => {
 
       Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
         if (err) res.status(400).send(err.message);
-        else res.send(doc);
+        else res.status(200).send(doc);
       });
     }
   });
@@ -322,7 +322,7 @@ exports.deleteChapter = async (req, res) => {
       { $pullAll: { chapters: [ObjectId(chapter._id)] } },
       (err, doc) => {
         if (err) res.status(400).json({ error: err.message });
-        else res.send(doc);
+        else res.status(200).send(doc);
       }
     );
   } else {

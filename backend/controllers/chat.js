@@ -16,7 +16,7 @@ exports.getAllChats = async (req, res) => {
     .then((docs) => {
       
       console.log(docs);
-      res.send(docs);
+      res.status(200).send(docs);
     });
 };
 
@@ -52,10 +52,10 @@ exports.getOneChatById = async (req, res) => {
           },
           (err, doc) => {
             if (err) res.status(400).send(err.message);
-            else res.send(doc);
+            else res.status(200).send(doc);
           }
         );
-      } else res.send(doc);
+      } else res.status(200).send(doc);
     });
 };
 
@@ -97,10 +97,9 @@ exports.getOneChat = async (req, res) => {
           },
           (err, doc) => {
             if (err) res.status(400).send(err.message);
-            else res.send(doc);
-          }
-        );
-      } else res.send(doc);
+            else res.status(200).send(doc);
+          });
+      } else res.status(200).send(doc);
     });
 };
 
