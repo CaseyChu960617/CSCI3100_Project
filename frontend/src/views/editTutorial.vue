@@ -225,16 +225,5 @@ export default {
       }
     },
   },
-  updated() {
-    // if (this.currentId != null) {
-    //   alert(this.selectedId + " will be loaded");
-    //   console.log(this.$refs[this.currentId]);
-    //   console.log(this.$refs[this.selectedId]);
-    //   alert(this.currentId);
-    //   console.log(this.$refs[this.currentId].editorData);
-    //   alert(this.currentId);
-    //   alert(this.selectedId);
-    //   this.currentId = this.selectedId;
-  },
 };
 </script>

@@ -117,28 +117,20 @@
       </v-col>
     </v-row>
 
-    <v-speed-dial
-      v-model="fab"
-      :top="top"
-      :bottom="bottom"
-      :right="right"
-      :left="left"
-      :direction="direction"
-      :open-on-hover="hover"
-      :transition="transition"
-    >
-      <v-btn
-        id="main-btn"
-        slot="activator"
-        v-model="fab"
-        color="#99CFEA"
-        dark
-        fab
-        @click="toggle()"
-      >
-        <v-icon v-if="buttonClose == -1" color="black">mdi-menu</v-icon>
-        <v-icon v-if="buttonClose == 1" color="black">mdi-close</v-icon>
-      </v-btn>
+    <v-speed-dial v-model="fab"
+      ><template v-slot:activator>
+        <v-btn
+          id="main-btn"
+          slot="activator"
+          v-model="fab"
+          color="#99CFEA"
+          dark
+          fab
+        >
+          <v-icon v-if="fab" color="black">mdi-close</v-icon>
+          <v-icon v-else color="black">mdi-menu</v-icon>
+        </v-btn>
+      </template>
       <v-btn
         class="extended mr-0"
         fab
@@ -257,6 +249,13 @@
   position: absolute;
   bottom: 10px;
 }
+.v-speed-dial__list {
+  bottom: -98px !important;
+  padding-right: 68px !important;
+}
+header {
+  margin-top: calc(10vh - 50px) !important;
+}
 </style>
 <script>
 import modal from "../components/modal/tutorForm.vue";
@@ -295,16 +294,10 @@ export default {
   destroyed() {
     window.removeEventListener("resize", this.setDesHeight);
   },
-  mounted() {
-    //window.removeEventListener("resize", this.setDesHeight);
-  },
 
   methods: {
     show(bool) {
       this.dialog = bool;
-    },
-    toggle() {
-      this.buttonClose *= -1;
     },
 
     flip(event, id) {
