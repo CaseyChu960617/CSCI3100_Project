@@ -83,6 +83,7 @@
         </v-col>
       </v-row>
     </div>
+    <autosave :dialog.sync="dialog" @show="show" @submit="save()" />
   </v-container>
 </template>
 
@@ -103,10 +104,12 @@
 import DataService from "../services/DataService";
 import editChapter from "../components/tutorial/editChapter.vue";
 import editMetadata from "../components/tutorial/editMetadata.vue";
+import autosave from "../components/modal/autosave";
 export default {
   components: {
     editChapter,
     editMetadata,
+    autosave,
   },
   data() {
     return {
@@ -211,6 +214,7 @@ export default {
         this.editMetadata = 0;
       }
     },
+
     saveWhenChange(editMetadata, currentId, selectedId) {
       if (currentId !== selectedId && currentId !== null) {
         if (editMetadata === 0) {
@@ -224,6 +228,21 @@ export default {
         }
       }
     },
+    show(bool) {
+      this.dialog = bool;
+    },
+  },
+
+  updated() {
+    // if (this.currentId != null) {
+    //   alert(this.selectedId + " will be loaded");
+    //   console.log(this.$refs[this.currentId]);
+    //   console.log(this.$refs[this.selectedId]);
+    //   alert(this.currentId);
+    //   console.log(this.$refs[this.currentId].editorData);
+    //   alert(this.currentId);
+    //   alert(this.selectedId);
+    //   this.currentId = this.selectedId;
   },
 };
 </script>
