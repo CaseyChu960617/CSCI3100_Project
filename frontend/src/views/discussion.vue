@@ -2,17 +2,15 @@
   <v-container fluid class="pa-0">
     <v-row no-gutters justify="center">
       <!-- class="hidden-sm-and-down" -->
-      <v-col cols="12" md="3" align-items="stretch"
+      <v-col cols="12" md="3"
         ><v-card tile elevation="16" outlined :height="height"
           ><ThreadNavBar @refreshList="fetchThreadList(0)" />
-          <v-divider /><ThreadList
-            :threadList="threadList"
-            :loading="listLoading"
-          /> </v-card
+          <ThreadList :threadList="threadList" :loading="listLoading" /></v-card
       ></v-col>
       <v-col cols="0" md="7"
-        ><Thread :thread="thread" :loading="threadLoading"
-      /></v-col>
+        ><v-card tile elevation="16" outlined :height="height"
+          ><Thread :thread="thread" :loading="threadLoading" /></v-card
+      ></v-col>
     </v-row>
 
     <!-- <v-speed-dial

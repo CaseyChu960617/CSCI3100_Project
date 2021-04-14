@@ -10,9 +10,9 @@
     <span v-else>
       <v-virtual-scroll
         v-if="haveList"
-        bench="25"
-        height="100%"
-        item-height="70"
+        :bench="threadList.length"
+        :height="height"
+        item-height="65"
         :items="threadList"
       >
         <template v-slot:default="{ item }">
@@ -54,6 +54,9 @@ export default {
       if (!this.threadList) return false;
       if (this.threadList.length > 0) return true;
       return false;
+    },
+    height() {
+      return window.innerHeight - 200 - 65;
     },
   },
 };

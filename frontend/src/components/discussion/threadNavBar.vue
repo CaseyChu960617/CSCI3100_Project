@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-app-bar>
+    <v-app-bar height="65">
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-app-bar-title>Discussion</v-app-bar-title>
 
