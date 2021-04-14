@@ -4,12 +4,8 @@
     <v-row justify="center">
       <v-col sm="11">
         <v-card-title
-          >Check out for latest tutorials !<v-spacer /><v-btn
-            icon
-            @click.stop="dialog = true"
-            ><v-icon>mdi-plus</v-icon></v-btn
-          ></v-card-title
-        >
+          >Check out for latest tutorials !<v-spacer
+        /></v-card-title>
         <modal
           :dialog.sync="dialog"
           :editedItem="editedItem"

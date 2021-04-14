@@ -10,7 +10,7 @@
         style="cursor: pointer"
         @click="$router.push('/home').catch(() => {})"
       ></v-img>
-      <v-app-bar-text class="sign-header-text"
+      <v-app-bar-text v-if="!currentUser.activation" class="sign-header-text"
         >Urge to learn, Path to wisdom</v-app-bar-text
       >
       <v-spacer></v-spacer>
