@@ -4,7 +4,8 @@
       <!-- class="hidden-sm-and-down" -->
       <v-col cols="12" md="3" align-items="stretch"
         ><v-card tile elevation="16" outlined :height="height"
-          ><ThreadNavBar /> <v-divider /><ThreadList
+          ><ThreadNavBar @refreshList="fetchThreadList(0)" />
+          <v-divider /><ThreadList
             :threadList="threadList"
             :loading="listLoading"
           /> </v-card
