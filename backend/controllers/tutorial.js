@@ -15,7 +15,7 @@ exports.getAllTutorials = async (req, res) => {
     .exec()
     .then((docs) => {
       res.status(200).send(docs);
-      console.log(docs);
+      //console.log(docs);
     });
 };
 
@@ -28,7 +28,7 @@ exports.getLatestTutorials = async (req, res) => {
     .exec()
     .then((docs) => {
       res.status(200).send(docs);
-      console.log(docs);
+      //console.log(docs);
     });
 };
 
@@ -76,7 +76,7 @@ exports.getOneChapter = async (req, res) => {
     .select("title content lastEditedAt createdAt")
     .exec()
     .then((doc) => {
-      console.log(doc);
+      //console.log(doc);
       res.status(200).send(doc);
     });
 };
@@ -142,7 +142,7 @@ exports.createTutorial = async (req, res) => {
           published: false,
         },
         (err, doc) => {
-          console.log(err);
+          //console.log(err);
           if (err) 
           res.status(400).send(err.message);
           else 
@@ -229,8 +229,8 @@ exports.editChapter = async (req, res) => {
     },
   };
 
-  console.log("title:", title);
-  console.log("content:", content);
+  //console.log("title:", title);
+  //console.log("content:", content);
   Chapter.findOneAndUpdate({ _id: chapter_id }, update, (err, doc) => {
     if (err) res.status(400).json({ error: "Bad request." });
   });
@@ -238,7 +238,7 @@ exports.editChapter = async (req, res) => {
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, 
     { $set: { lastModifiedAtDate: new Date().getTime() } }, 
     (err) => {
-      console.log(err)
+      //console.log(err)
       if (err)
         res.status(400).send(err.message);
       else
@@ -253,7 +253,7 @@ exports.postComment = async (req, res) => {
   const { user_id, content, tutorial_id } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
-    console.log(err);
+    //console.log(err);
     if (err) res.status(400).json({ error: "User not found!" });
     if (user) {
       var newComment = new TutorialComment(
@@ -263,7 +263,7 @@ exports.postComment = async (req, res) => {
           content: content,
         },
         (err) => {
-          console.log(err)
+          //console.log(err)
           if (err) {
             res.status(400).send(err.message);
           }
@@ -310,8 +310,8 @@ exports.deleteTutorial = async (req, res) => {
 exports.deleteChapter = async (req, res) => {
   const tutorial_id = req.params["tutorial_id"];
   const chapter_id = req.params["chapter_id"];
-  console.log(tutorial_id);
-  console.log(chapter_id);
+  //console.log(tutorial_id);
+  //console.log(chapter_id);
   const chapter = await Chapter.findOne({ _id: chapter_id });
 
   if (chapter) {

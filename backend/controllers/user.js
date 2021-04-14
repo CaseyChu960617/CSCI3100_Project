@@ -7,13 +7,13 @@ const jwt = require("jsonwebtoken");
 // getProfile function
 exports.getProfile = async (req, res) => {
   const user_id = req.params["user_id"];
-  console.log(user_id);
+ // console.log(user_id);
   try {
     User.findOne({ _id: user_id })
       .select("username firstname lastname email gender following profileImage activation")
       .exec()
       .then((doc) => {
-        console.log(doc);
+       // console.log(doc);
         res.status(200).send(doc);
       });
   }
@@ -26,8 +26,8 @@ exports.getProfile = async (req, res) => {
 exports.editProfile = async (req, res) => {
 
     const { user_id, firstname, lastname, gender, username } = req.body;
-    console.log(user_id)
-    console.log(username);
+   // console.log(user_id)
+   // console.log(username);
 
     const user = await User.findOne({ _id: user_id }, (err) => {
         if (err)
@@ -37,7 +37,7 @@ exports.editProfile = async (req, res) => {
     if (!user) {
       res.status(400).send(err.message);
     } else {
-    console.log(user);
+   // console.log(user);
     const otherUser = await User.findOne({ username: username }, (err) => {
         if (err)
           res.status(400).send(err.message);
@@ -111,7 +111,7 @@ exports.follow = async (req, res) => {
 
   const { my_user_id, follow_id } = req.body;
 
-  console.log(my_user_id);
+ // console.log(my_user_id);
   User.findOneAndUpdate({ _id: my_user_id }, 
     { $push: { following: follow_id } }, 
     (err) => {
@@ -126,7 +126,7 @@ exports.follow = async (req, res) => {
 exports.unfollow = async (req, res) => {
 
   const { my_user_id, follow_id } = req.body;
-  console.log(my_user_id);
+//  console.log(my_user_id);
   User.findOneAndUpdate({ _id: my_user_id }, 
     { $pullAll: { following: [ObjectId(follow_id)] } }
     , (err) => {
