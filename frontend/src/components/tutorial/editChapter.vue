@@ -138,7 +138,7 @@ export default {
         },
         simpleUpload: {
           // The URL that the images are uploaded to.
-          uploadUrl: "http://localhost:9000/upload/uploadTutorialPic",
+          uploadUrl: process.env.DOMAIN_URL + "/upload/uploadTutorialPic",
 
           // Enable the XMLHttpRequest.withCredentials property.
           withCredentials: false,

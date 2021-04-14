@@ -103,10 +103,12 @@
 import DataService from "../services/DataService";
 import editChapter from "../components/tutorial/editChapter.vue";
 import editMetadata from "../components/tutorial/editMetadata.vue";
+import autosave from "../components/modal/autosave";
 export default {
   components: {
     editChapter,
     editMetadata,
+    //autosave,
   },
   data() {
     return {
@@ -211,6 +213,7 @@ export default {
         this.editMetadata = 0;
       }
     },
+
     saveWhenChange(editMetadata, currentId, selectedId) {
       if (currentId !== selectedId && currentId !== null) {
         if (editMetadata === 0) {

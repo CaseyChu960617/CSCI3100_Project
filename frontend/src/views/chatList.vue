@@ -53,6 +53,8 @@ import DataService from "../services/DataService";
 import chat from "../components/chat/chat.vue";
 import io from "socket.io-client";
 //import authHeader from "../services/auth-header.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 export default {
   components: { chat },
@@ -68,7 +70,7 @@ export default {
       // newMessage: null,
       // messages: [],
       //make connection to socket io
-      socket: io("http://localhost:9000", {
+      socket: io(process.env.DOMAIN_URL, {
         transports: ["websocket", "polling", "flashsocket"],
         withCredentials: true,
         extraHeaders: {
