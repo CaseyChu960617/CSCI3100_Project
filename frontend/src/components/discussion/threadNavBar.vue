@@ -49,6 +49,16 @@ export default {
     }
   },
   methods: {
+    selectCat(sub_id) {
+      this.drawer = false;
+      this.$router
+        .push({
+          params: {
+            sub_id: sub_id,
+          },
+        })
+        .catch(() => {});
+    },
     refreshList() {
       this.$emit("refreshList");
     },

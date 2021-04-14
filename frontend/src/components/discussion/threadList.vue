@@ -7,25 +7,30 @@
         color="primary"
       ></v-progress-circular>
     </v-row>
-    <v-virtual-scroll
-      v-else
-      bench="25"
-      height="100%"
-      item-height="70"
-      :items="threadList"
-    >
-      <template v-slot:default="{ item }">
-        <v-list-item @click="selectThread(item._id)">
-          <v-list-item-content>
-            {{ item.author.username }}
-            <v-list-item-title class="text-wrap">
-              <strong>{{ item.title }}</strong>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-divider />
-      </template>
-    </v-virtual-scroll>
+    <span v-else>
+      <v-virtual-scroll
+        v-if="haveList"
+        bench="25"
+        height="100%"
+        item-height="70"
+        :items="threadList"
+      >
+        <template v-slot:default="{ item }">
+          <v-list-item @click="selectThread(item._id)">
+            <v-list-item-content>
+              {{ item.author.username }}
+              <v-list-item-title class="text-wrap">
+                <strong>{{ item.title }}</strong>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider />
+        </template>
+      </v-virtual-scroll>
+      <v-card v-else height="100%"
+        ><p class="pt-4 headline text-center">No Thread</p></v-card
+      >
+    </span>
   </span>
 </template>
 
@@ -42,6 +47,13 @@ export default {
           },
         })
         .catch(() => {});
+    },
+  },
+  computed: {
+    haveList() {
+      if (!this.threadList) return false;
+      if (this.threadList.length > 0) return true;
+      return false;
     },
   },
 };
