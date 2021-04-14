@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 // getAllChatsfunction
 exports.getAllChats = async (req, res) => {
   const user_id = req.params["user_id"];
-  console.log(user_id);
+  //console.log(user_id);
 
      Chat.find({ $or: [{ userA: user_id }, { userB: user_id }] })
     .sort({ createdAt: -1 })
@@ -15,7 +15,7 @@ exports.getAllChats = async (req, res) => {
     .exec()
     .then((docs) => {
       
-      console.log(docs);
+    //  console.log(docs);
       res.status(200).send(docs);
     });
 };
@@ -42,7 +42,7 @@ exports.getOneChatById = async (req, res) => {
     .populate(populateQuery)
     .exec()
     .then((doc) => {
-      console.log(doc);
+     // console.log(doc);
       if (!doc) {
         Chat.create(
           {
@@ -86,7 +86,7 @@ exports.getOneChat = async (req, res) => {
     .populate(populateQuery)
     .exec()
     .then((doc) => {
-      console.log(doc);
+      //console.log(doc);
       if (!doc) {
         Chat.create(
           {

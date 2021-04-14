@@ -115,7 +115,7 @@ exports.createThread = async (req, res) => {
     if (err) res.status(400).send(err.message);
 
     if (user) {
-      console.log(user);
+      //console.log(user);
       Thread.create(
         {
           author: user._id,
@@ -129,7 +129,7 @@ exports.createThread = async (req, res) => {
         },
         (err, doc) => {
           if (err) {
-            console.log(err);
+            //console.log(err);
             res.status(400).send(err.message);
           } else 
             res.status(200).send(doc._id);

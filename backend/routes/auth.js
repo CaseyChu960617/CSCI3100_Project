@@ -3,9 +3,9 @@ const router = express.Router();
 const { signup, signin, activateAccount, generateEmail} = require('../controllers/auth');
 
 
-router.post('/signup', signup);
+router.post('/signup',  authJwt,signup);
 
-router.post('/signin', signin);
+router.post('/signin', authJwt, signin);
 
 router.get('/activateAccount/:user_id', activateAccount)
 

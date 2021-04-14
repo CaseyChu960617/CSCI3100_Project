@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 // signup function.
 exports.signup = async (req, res) => {
 
-        console.log(req.body);
+        //console.log(req.body);
 
         const { lastname, firstname, username, email, password, gender } = req.body;
 
@@ -34,7 +34,7 @@ exports.signup = async (req, res) => {
         res.status(400).send(err.message);
     }
         // For debugging
-        console.log(newUser);
+        //console.log(newUser);
 
         // Generate activation email with mailgun.
          activate_link= process.env.CLIENT_URL + "/activateAccount/" + newUser._id
@@ -50,9 +50,9 @@ exports.signup = async (req, res) => {
          }
 
          mg.messages().send(data, (err, body) => {
-             console.log(data);
-             console.log(process.env.MAILGUN_API_KEY)
-                console.log(process.env.MAILGUN_DOMAIN)
+             //console.log(data);
+             //console.log(process.env.MAILGUN_API_KEY)
+              //  console.log(process.env.MAILGUN_DOMAIN)
              /*if (err) {
                  console.log(res.status)
              }*/
@@ -128,7 +128,7 @@ exports.signin = async (req, res) => {
 // activateAccount function.
 exports.activateAccount = async (req, res) => {
     const user_id  = req.params['user_id'];
-    console.log(user_id);
+    //console.log(user_id);
 
     // if user_id is not null.
     if (user_id) {
@@ -136,7 +136,7 @@ exports.activateAccount = async (req, res) => {
         // Search db for the user with this user_id and update its status.
         const user = await User.findByIdAndUpdate({ _id: user_id } , {  activation: true }, { new: true, lean: true});
 
-        console.log(user);
+        //console.log(user);
 
         // Generate a token.
         const accessToken = jwt.sign({
@@ -178,9 +178,9 @@ exports.generateEmail = async (req, res) => {
             inline: "../frontend/src/assets/Logo/urge.gif"
      }
      mg.messages().send(data, (err, body) => {
-         console.log(data);
-         console.log(process.env.MAILGUN_API_KEY)
-            console.log(process.env.MAILGUN_DOMAIN)
+        // console.log(data);
+        // console.log(process.env.MAILGUN_API_KEY)
+        //    console.log(process.env.MAILGUN_DOMAIN)
          /*if (err) {
              console.log(res.status)
          }*/
