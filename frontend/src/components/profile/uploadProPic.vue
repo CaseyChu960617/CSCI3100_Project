@@ -63,13 +63,15 @@ export default {
     },
 
     fileChange(file) {
-      this.loading = true;
-      this.formData.append("file", file);
-      DataService.uploadProPic(this.formData).then((response) => {
-        this.tempsrc = response.data.location;
-        this.formData = new FormData();
-        this.loading = false;
-      });
+      if (file) {
+        this.loading = true;
+        this.formData.append("file", file);
+        DataService.uploadProPic(this.formData).then((response) => {
+          this.tempsrc = response.data.location;
+          this.formData = new FormData();
+          this.loading = false;
+        });
+      }
     },
 
     save() {
@@ -86,6 +88,7 @@ export default {
         this.$store.dispatch("auth/uploadProPic", response.data);
         console.log(response.data);
         this.close();
+        this.$emit("refreshProfile");
       });
     },
   },

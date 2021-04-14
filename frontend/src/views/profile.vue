@@ -3,7 +3,7 @@
     <v-row justify="center">
       <EditProfile
         v-if="canEdit"
-        @refresh="refresh()"
+        @refreshProfile="fetchUser"
         :profile="profile"
         :loading="loading"
       />
@@ -59,9 +59,6 @@ export default {
             alert(err.response.data.message);
           }
         });
-    },
-    refresh() {
-      this.fetchUser();
     },
   },
 };
