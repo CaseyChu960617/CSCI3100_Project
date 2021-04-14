@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="dialog" width="900px" @click:outside="close">
-    <v-card :height="height">
+  <v-dialog v-model="dialog" width="800px" @click:outside="close">
+    <v-card height="750px">
       <v-card-title class="headline">
         New Thread<v-spacer /><v-btn icon @click="close"
           ><v-icon>mdi-close</v-icon></v-btn
@@ -11,6 +11,7 @@
           <v-form v-model="isValid">
             <v-row>
               <v-text-field
+                class="mx-5"
                 v-model="title"
                 label="Title"
                 clearable
@@ -18,6 +19,7 @@
               ></v-text-field> </v-row
             ><v-row>
               <v-autocomplete
+                class="mx-5"
                 v-model="subject"
                 :items="subjects"
                 label="Subject"
@@ -25,7 +27,7 @@
                 :rules="[rules.required]"
               ></v-autocomplete> </v-row
             ><v-row
-              ><v-container>
+              ><v-container class="mx-15">
                 <ckeditor
                   :editor="editor"
                   v-model="content"
@@ -46,7 +48,11 @@
     </v-card>
   </v-dialog>
 </template>
-
+<style>
+.ck-editor__editable {
+  height: 150px;
+}
+</style>
 <script>
 import subjectsList from "../../assets/subjects.json";
 import DataService from "../../services/DataService";

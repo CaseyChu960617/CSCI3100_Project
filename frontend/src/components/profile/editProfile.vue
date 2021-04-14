@@ -153,7 +153,14 @@ export default {
       this.$emit("switchform");
     },
     saveProfile() {
-      DataService.updateProfile(this.account, {
+      const data = {
+        user_id: this.account._id,
+        firstname: this.account.firstname,
+        lastname: this.account.lastname,
+        username: this.account.username,
+        gender: this.account.gender,
+      };
+      DataService.updateProfile(data, {
         headers: authHeader(),
       })
         .then((res) => {

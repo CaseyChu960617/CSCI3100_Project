@@ -25,12 +25,18 @@ exports.getProfile = async (req, res) => {
 exports.editProfile = async (req, res) => {
 
     const { user_id, firstname, lastname, gender, username } = req.body;
+    console.log(user_id)
+    console.log(username);
 
     const user = await User.findOne({ _id: user_id }, (err) => {
         if (err)
             res.status(400).json({ error: err.message });
     })
 
+    if (!user) {
+      res.status(400).json({ error: "User not found."});
+    } else {
+    console.log(user);
     const otherUser = await User.findOne({ username: username }, (err) => {
         if (err)
             res.status(400).json({ error: err.message });
@@ -41,10 +47,10 @@ exports.editProfile = async (req, res) => {
         user.firstname = firstname;
         user.lastname = lastname;
         user.gender = gender;
-        user.save( err => {
-            if (err)
-                res.status(400).json({ error: err.message });
-        })
+        user.save((err) => {
+          if (err)
+            res.status(400).json({ error: err.message });
+        });
         // Generate a token if password is matched.
         const accessToken = jwt.sign({
             user_id: user._id
@@ -64,17 +70,16 @@ exports.editProfile = async (req, res) => {
             following: user.following,
             profileImage: user.profileImage
         });
-    }
-    else {
+    } else {
         if (otherUser._id.equals(user._id)) {
         user.username = username;
         user.firstname = firstname;
         user.lastname = lastname;
         user.gender = gender;
-        user.save( err => {
-            if (err)
-                res.status(400).json({ error: err.message });
-        })
+        user.save((err) => {
+          if (err)
+            res.status(400).json({ error: err.message });
+        });
         // Generate a token if password is matched.
         const accessToken = jwt.sign({
             user_id: user._id
@@ -94,10 +99,10 @@ exports.editProfile = async (req, res) => {
             following: user.following,
             profileImage: user.profileImage
         });
-        }
-        else
+        } else
         res.status(400).json({ error: "User with this username existed."});
     }
+  }
 };
 
 // follow function
