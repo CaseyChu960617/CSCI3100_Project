@@ -238,6 +238,7 @@ exports.editChapter = async (req, res) => {
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, 
     { $set: { lastModifiedAtDate: new Date().getTime() } }, 
     (err) => {
+      console.log(err)
       if (err)
         res.status(400).send(err.message);
       else
@@ -252,6 +253,7 @@ exports.postComment = async (req, res) => {
   const { user_id, content, tutorial_id } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
+    console.log(err);
     if (err) res.status(400).json({ error: "User not found!" });
     if (user) {
       var newComment = new TutorialComment(
@@ -260,19 +262,15 @@ exports.postComment = async (req, res) => {
           createdAt: new Date().toLocaleDateString("zh-HK"),
           content: content,
         },
-        (err, data) => {
+        (err) => {
+          console.log(err)
           if (err) {
             res.status(400).json({ error: err.message });
           }
         }
       );
 
-      newComment.save((err) => {
-        if (err)
-          res
-            .status(400)
-            .json({ error: "Comment cannot be posted successfully." });
-      });
+      newComment.save();
 
       const update = {
         $push: { comments: newComment._id },

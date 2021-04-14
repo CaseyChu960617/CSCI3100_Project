@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 // getProfile function
 exports.getProfile = async (req, res) => {
   const user_id = req.params["user_id"];
+  console.log(user_id);
   try {
     User.findOne({ _id: user_id })
       .select("username firstname lastname email gender following profileImage activation")
@@ -17,7 +18,7 @@ exports.getProfile = async (req, res) => {
       });
   }
   catch(err) {
-    res.status(400).json({ error: err.message});
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -166,3 +167,22 @@ exports.resetPassword = async (req, res) => {
     }
   }
 };
+
+exports.getFollower = async (req, res) => {
+  const user_id = req.params['user_id'];
+
+  var populateQuery = [
+    { path: "following", select: "_id username profileImage",},
+  ];
+  User.findOne({ _id: user_id })
+  .select("following")
+  .populate(populateQuery)
+  .exec()
+  .then((err,doc) => {
+    if (err)
+      res.status(400).send(err.message);
+    else
+      res.status(200).send(doc);
+  })
+};
+

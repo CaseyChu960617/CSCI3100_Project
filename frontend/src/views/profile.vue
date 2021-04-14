@@ -41,8 +41,10 @@ export default {
   methods: {
     fetchUser() {
       this.loading = true;
+      console.log(this.$route.params.user_id);
       DataService.getProfile(this.$route.params.user_id)
         .then((response) => {
+          console.log(this.profile);
           this.profile = response.data;
           this.profile._id == this.$store.state.auth.user.user_id
             ? (this.canEdit = true)
