@@ -164,7 +164,7 @@ export default {
       };
       DataService.put("tutorial/editTutorial", data).then((response) => {
         console.log(response.data);
-        alert("Edited Tutorial information successfully!");
+        //alert("Edited Tutorial information successfully!");
       });
     },
   },

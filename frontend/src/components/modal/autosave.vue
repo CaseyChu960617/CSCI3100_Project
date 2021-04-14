@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="40%" @click:outside="close">
+  <v-dialog v-model="dialog" max-width="20%" @click:outside="close">
     <v-card>
       <v-card-title class="headline">
         Autosave
@@ -15,7 +15,8 @@
         <v-spacer />
         <div>
           <!--<v-btn color="blue darken-1" text @click="close">Preview</v-btn>-->
-          <v-btn color="blue darken-1" text>Save</v-btn>
+          <v-btn color="blue darken-1" text @click="close">Not Save</v-btn>
+          <v-btn color="blue darken-1" text @click="save">Save</v-btn>
         </div>
       </v-card-actions>
     </v-card>
@@ -23,9 +24,8 @@
 </template>
 
 <script>
-
 export default {
-  props: ["dialog"],
+  props: ["dialog", "currentId"],
   data() {
     return {};
   },
@@ -38,6 +38,11 @@ export default {
   methods: {
     close() {
       this.$emit("show", false);
+    },
+
+    save() {
+      console.log(this.currentId);
+      this.$emit("autosave", this.currentId);
     },
   },
 };

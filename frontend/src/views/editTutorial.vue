@@ -83,7 +83,12 @@
         </v-col>
       </v-row>
     </div>
-    <autosave :dialog.sync="dialog" @show="show" @submit="save()" />
+    <autosave
+      :dialog.sync="dialog"
+      @show="show"
+      @autosave="autosave"
+      :currentId="currentId"
+    />
   </v-container>
 </template>
 
@@ -219,17 +224,24 @@ export default {
       if (currentId !== selectedId && currentId !== null) {
         if (editMetadata === 0) {
           //save tutorial
-          alert("Editing chpater will be saved");
-          this.$refs[currentId].save();
+          //alert("Editing chpater will be saved");
+          this.show(true);
         } else {
           //save chapter
-          alert("Editing tutorial data will be saved");
-          this.$refs[currentId].save();
+          //alert("Editing tutorial data will be saved");
+          this.show(true);
         }
       }
     },
     show(bool) {
       this.dialog = bool;
+      console.log(bool);
+      console.log(this.dialog);
+    },
+
+    autosave(currentId) {
+      this.$refs[currentId].save();
+      this.show(false);
     },
   },
 

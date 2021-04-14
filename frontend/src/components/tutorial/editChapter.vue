@@ -138,7 +138,8 @@ export default {
         },
         simpleUpload: {
           // The URL that the images are uploaded to.
-          uploadUrl: process.env.DOMAIN_URL + "/upload/uploadTutorialPic",
+          uploadUrl:
+            process.env.VUE_APP_DOMAIN_URL + "/upload/uploadTutorialPic",
 
           // Enable the XMLHttpRequest.withCredentials property.
           withCredentials: false,
@@ -199,7 +200,7 @@ export default {
         DataService.get("tutorial/getOneChapter", this.chapterId).then(
           (response) => {
             this.chapter = response.data;
-            alert("Edit chapter successfully.");
+            //alert("Edit chapter successfully.");
             this.$emit("fetchTutorial");
           }
         );

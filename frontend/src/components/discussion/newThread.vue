@@ -134,6 +134,7 @@ export default {
         toolbar: {
           items: [
             "heading",
+            "mediaEmbed",
             "bold",
             "italic",
             "fontSize",
@@ -145,7 +146,6 @@ export default {
             "bulletedList",
             "numberedList",
             "|",
-            "mediaEmbed",
             "linkImage",
             "insertImage",
             "code",
@@ -167,7 +167,8 @@ export default {
         },
         simpleUpload: {
           // The URL that the images are uploaded to.
-          uploadUrl: process.env.DOMAIN_URL + "/upload/uploadDiscussionPic",
+          uploadUrl:
+            process.env.VUE_APP_DOMAIN_URL + "/upload/uploadDiscussionPic",
 
           // Enable the XMLHttpRequest.withCredentials property.
           withCredentials: false,

@@ -76,7 +76,7 @@ export default {
     const plugin = document.createElement("script");
     plugin.setAttribute(
       "src",
-      "//cdn.iframe.ly/embed.js?api_key=48f28ce86bc9c78e94f884"
+      `//cdn.iframe.ly/embed.js?api_key=${VUE_APP_IFRAMELY_API_KEY}`
     );
     plugin.async = true;
     document.head.appendChild(plugin);

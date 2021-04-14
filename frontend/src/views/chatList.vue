@@ -70,7 +70,7 @@ export default {
       // newMessage: null,
       // messages: [],
       //make connection to socket io
-      socket: io(process.env.DOMAIN_URL, {
+      socket: io(process.env.VUE_APP_DOMAIN_URL, {
         transports: ["websocket", "polling", "flashsocket"],
         withCredentials: true,
         extraHeaders: {
