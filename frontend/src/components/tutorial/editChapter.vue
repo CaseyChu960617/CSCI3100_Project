@@ -54,7 +54,8 @@ import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters";
 import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials";
-
+import dotenv from "dotenv";
+dotenv.config();
 //import iframely from "//cdn.iframe.ly/embed.js?api_key=48f28ce86bc9c78e94f884";
 export default {
   props: ["chapterId", "tutorial_id"],

@@ -40,6 +40,8 @@ img {
 }
 </style>
 <script>
+import dotenv from "dotenv";
+dotenv.config();
 import DataService from "../../services/DataService";
 export default {
   props: ["chapterId"],
@@ -76,7 +78,7 @@ export default {
     const plugin = document.createElement("script");
     plugin.setAttribute(
       "src",
-      `//cdn.iframe.ly/embed.js?api_key=${VUE_APP_IFRAMELY_API_KEY}`
+      `//cdn.iframe.ly/embed.js?api_key=${process.env.VUE_APP_IFRAMELY_API_KEY}`
     );
     plugin.async = true;
     document.head.appendChild(plugin);

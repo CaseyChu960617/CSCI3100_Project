@@ -85,7 +85,8 @@ import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert";
 import Heading from "@ckeditor/ckeditor5-heading/src/heading";
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
-
+import dotenv from "dotenv";
+dotenv.config();
 export default {
   props: ["dialog"],
   data() {

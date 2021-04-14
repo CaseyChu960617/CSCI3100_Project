@@ -55,7 +55,8 @@ img {
 
 <script>
 //import DataService from "../../services/DataService";
-
+import dotenv from "dotenv";
+dotenv.config();
 export default {
   props: ["thread", "loading"],
   data() {
@@ -87,6 +88,30 @@ export default {
         createdAt: this.thread.createdAt,
       });
     },
+
+    enableVideo() {
+      document.querySelectorAll("oembed[url]").forEach((element) => {
+        window.iframely.load(element, element.attributes.url.value);
+      });
+    },
+
+    updated() {
+      this.enableVideo();
+    },
+  },
+
+  mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute(
+      "src",
+      `//cdn.iframe.ly/embed.js?api_key=${process.env.VUE_APP_IFRAMELY_API_KEY}`
+    );
+    plugin.async = true;
+    document.head.appendChild(plugin);
+    console.log("plugin is ", plugin);
+  },
+  updated() {
+    this.enableVideo();
   },
 };
 </script>
