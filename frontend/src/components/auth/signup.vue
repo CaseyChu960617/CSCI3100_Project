@@ -47,7 +47,7 @@
             maxlength="10"
           ></v-text-field>
           <v-text-field
-            v-model="account.email"
+            v-model="email"
             label="Link Email"
             type="text"
             suffix="@link.cuhk.edu.hk"
@@ -123,6 +123,7 @@ export default {
         email: "",
         password: "",
       },
+      email: "",
       repeatpassword: "",
       genderlist: [
         { text: "Male", value: 1 },
@@ -142,8 +143,8 @@ export default {
   },
   methods: {
     signup() {
-      var temp = this.account.email;
-      this.account.email = this.account.email + "@link.cuhk.edu.hk";
+      //var temp = this.account.email;
+      this.account.email = this.email + "@link.cuhk.edu.hk";
       DataService.post("auth/signup", this.account, {
         headers: authHeader(),
       })
@@ -154,11 +155,9 @@ export default {
           }
           this.$store.dispatch("auth/registered", res.data);
           this.$router.push("/profile");
-          this.account.email = temp;
         })
-        .catch((err) => {
-          this.message = err;
-          this.account.email = temp;
+        .catch(() => {
+          this.message = "User with this email/username has already existed.";
         });
     },
     back() {

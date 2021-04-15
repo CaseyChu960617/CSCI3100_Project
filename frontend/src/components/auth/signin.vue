@@ -75,8 +75,8 @@ export default {
           .then(() => {
             this.$router.push("/home");
           })
-          .catch((err) => {
-            this.message = err.response.data.error;
+          .catch(() => {
+            this.message = "Invalid Username/Password";
             this.password = "";
           });
       } else {
