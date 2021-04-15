@@ -149,7 +149,7 @@ exports.createTutorial = async (req, res) => {
             res.status(200).send(doc._id);
         }
       );
-    } else res.status(400).send(err.message);
+    } else res.status(400).send("User not found.");
   });
 };
 
@@ -302,7 +302,7 @@ exports.deleteTutorial = async (req, res) => {
       message: "Thread successfully deleted.",
     });
   } else {
-    res.status(400).send(err.message);
+    res.status(400).send("Tutorial not found.");
   }
 };
 
@@ -326,6 +326,6 @@ exports.deleteChapter = async (req, res) => {
       }
     );
   } else {
-    res.status(400).send(err.message);
+    res.status(400).send("Chapter not found.");
   }
 };

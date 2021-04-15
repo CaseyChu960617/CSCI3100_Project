@@ -91,7 +91,7 @@ exports.signin = async (req, res) => {
 
     // If not exist, handle the error.
     if (!user) {
-        return res.status(400).send(err.message);
+        return res.status(400).send("User not found.");
     }
 
     else {
@@ -121,7 +121,7 @@ exports.signin = async (req, res) => {
         }
     else
         // If password is not matched, handle the error.
-        res.status(400).send(err.message);
+        res.status(400).send("Password not matched.");
     }
 };
 
@@ -160,7 +160,7 @@ exports.activateAccount = async (req, res) => {
     }
     else {
         // If userId is null, handle the error.
-        return res.status(400).send(err.message);
+        return res.status(400).send("Failed to activate.");
     }
 };
 

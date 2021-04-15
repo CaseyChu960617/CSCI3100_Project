@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 // getAllThread function
 exports.getAllThreads = async (req, res) => {
+
   Thread.find()
     .sort({ lastModifiedAtDate: -1 })
     .select("author subject title createdAt lastEditedAt")
@@ -171,12 +172,11 @@ exports.postComment = async (req, res) => {
           createdAt: new Date().toLocaleDateString("zh-HK"),
           content: content,
         },
-        (err, data) => {
+        (err, doc) => {
           if (err) {
             res.status(400).send(err.message);
           }
-        }
-      );
+        });
 
       newComment.save();
 
@@ -202,9 +202,6 @@ exports.deleteThread = async (req, res) => {
 
   Thread.findById(thread_id, (err, doc) => {
     doc.remove();
-    res.status(200).json({
-      discussionThread: doc,
-      message: "Thread successfully deleted.",
-    });
+    res.status(200).send("Thread successfully deleted");
   });
 };
