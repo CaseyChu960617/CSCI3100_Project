@@ -14,7 +14,7 @@ exports.signup = async (req, res) => {
         // Search the database to see if the email and username is already existed.
         User.findOne({ username, email }).exec((err, user) => {
             if (user) {
-                return res.status(400).send(err.message);
+                return res.status(400).json({ message: "User with this email/username has already existed." });
             }
         });
         
@@ -30,9 +30,7 @@ exports.signup = async (req, res) => {
             gender: gender,
             profileImage: "",
         });
-    } catch (err) {
-        res.status(400).send(err.message);
-    }
+   
         // For debugging
         //console.log(newUser);
 
@@ -78,6 +76,9 @@ exports.signup = async (req, res) => {
             profileImage: newUser.profileImage,
             message: "Registered successfully"
         });
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
 };
 
 // Signin function.
@@ -91,7 +92,7 @@ exports.signin = async (req, res) => {
 
     // If not exist, handle the error.
     if (!user) {
-        return res.status(400).send("User not found.");
+        return res.status(400).json({ message: "User not found." });
     }
 
     else {
