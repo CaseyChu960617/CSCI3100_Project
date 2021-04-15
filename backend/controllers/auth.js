@@ -12,7 +12,7 @@ exports.signup = async (req, res) => {
         const { lastname, firstname, username, email, password, gender } = req.body;
 
         // Search the database to see if the email and username is already existed.
-        User.findOne({ username, email }).exec((err, user) => {
+        User.findOne({$or: { username, email }}).exec((err, user) => {
             if (user) {
                 return res.status(400).json({ message: "User with this email/username has already existed." });
             }
