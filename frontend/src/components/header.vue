@@ -10,6 +10,7 @@
         style="cursor: pointer"
         @click="$router.push('/home').catch(() => {})"
       ></v-img>
+
       <v-spacer></v-spacer>
       <div v-if="currentUser">
         <v-btn
@@ -47,6 +48,9 @@
           ><v-icon>mdi-logout</v-icon>Sign out</v-btn
         >
       </div>
+      <v-app-bar-text v-else class="sign-header-text"
+        >Urge to learn, Path to wisdom</v-app-bar-text
+      >
     </v-app-bar>
 
     <!-- <v-navigation-drawer v-if="currentUser" v-model="drawer" absolute temporary>
@@ -77,7 +81,14 @@
     </v-navigation-drawer> -->
   </div>
 </template>
-
+<style>
+.sign-header-text {
+  font-family: "Segoe Script";
+  font-size: 20px;
+  right: 30px;
+  position: absolute;
+}
+</style>
 <script>
 export default {
   data: () => ({

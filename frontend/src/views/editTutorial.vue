@@ -67,6 +67,7 @@
             dark
             fab
             @click="createChapter"
+            class="edit-add-chatper"
           >
             <v-icon color="black">mdi-plus</v-icon>
           </v-btn>
@@ -102,6 +103,9 @@
   width: 36px !important;
   right: 12px;
   bottom: 6px;
+}
+.edit-add-chatper {
+  margin-bottom: 20px;
 }
 </style>
 
