@@ -27,14 +27,14 @@
 Urge requires [Node.js](https://nodejs.org/).
 
 - Start the frontend.
-   - Under the project folder.
+   - Under the project folder. (.env is not uploaded to the repo)
    ```sh
    cd frontend
    npm install
    npm run serve
    ```
 - Start the backend.
-   - Under the project folder.
+   - Under the project folder. (.env is not uploaded to the repo)
    ```sh
    cd backend
    npm install
