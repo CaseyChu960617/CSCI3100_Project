@@ -4,10 +4,8 @@ const mailgun = require('mailgun-js');
 const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN });
 const jwt = require("jsonwebtoken");
 
-// signup function.
-exports.signup = async (req, res) => {
-
-        //console.log(req.body);
+// signup function
+exports.signUp = async (req, res) => {
 
         const { lastname, firstname, username, email, password, gender } = req.body;
 
@@ -48,12 +46,8 @@ exports.signup = async (req, res) => {
          }
 
          mg.messages().send(data, (err, body) => {
-             //console.log(data);
-             //console.log(process.env.MAILGUN_API_KEY)
-              //  console.log(process.env.MAILGUN_DOMAIN)
-             /*if (err) {
-                 console.log(res.status)
-             }*/
+             if (err) 
+                 res.status(400).send(err.message);
          });
 
          // Generate and sign a token
@@ -81,8 +75,8 @@ exports.signup = async (req, res) => {
     }
 };
 
-// Signin function.
-exports.signin = async (req, res) => {
+// signIn function
+exports.signIn = async (req, res) => {
     const { email, password } = req.body;
 
     // Search db to  see if the user with this email exists.
@@ -126,8 +120,9 @@ exports.signin = async (req, res) => {
     }
 };
 
-// activateAccount function.
+// activateAccount function
 exports.activateAccount = async (req, res) => {
+   
     const user_id  = req.params['user_id'];
     //console.log(user_id);
 
@@ -166,7 +161,9 @@ exports.activateAccount = async (req, res) => {
 };
 
 exports.generateEmail = async (req, res) => {
+    
     const user = await User.findOne({ _id: req.params['user_id'] });
+    
     activate_link= process.env.CLIENT_URL + "/activateAccount/" + user._id
      const data = {
             from: 'noreply@urge.org',
@@ -178,6 +175,7 @@ exports.generateEmail = async (req, res) => {
             "v:fname":user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1),
             inline: "../frontend/src/assets/Logo/urge.gif"
      }
+
      mg.messages().send(data, (err, body) => {
         // console.log(data);
         // console.log(process.env.MAILGUN_API_KEY)

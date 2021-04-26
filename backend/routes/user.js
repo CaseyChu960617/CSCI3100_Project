@@ -1,21 +1,29 @@
 const express = require("express");
 const router = express.Router();
 const { authJwt } = require("../middlewares");
+const { 
+    getProfile, 
+    getFollower, 
+    editProfile, 
+    follow, 
+    unfollow, 
+    updateProPic, 
+    resetPassword 
+} = require("../controllers/user");
 
-const { getProfile, getFollower, editProfile, follow, unfollow, updateProPic, resetPassword } = require("../controllers/user");
+// All the routes for User module
+router.get("/:user_id", authJwt.verifyToken, getProfile);
 
-router.get("/:user_id", getProfile);
+router.get("/getFollower/:user_id", authJwt.verifyToken, getFollower);
 
-router.get("/getFollower/:user_id", getFollower);
+router.put("/editProfile", authJwt.verifyToken, editProfile);
 
-router.put("/editProfile", editProfile);
+router.put("/follow", authJwt.verifyToken, follow);
 
-router.put("/follow", follow);
+router.put("/unfollow", authJwt.verifyToken, unfollow);
 
-router.put("/unfollow", unfollow);
+router.put("/updateProPic", authJwt.verifyToken, updateProPic);
 
-router.put("/updateProPic", updateProPic);
-
-router.put("/resetPassword", resetPassword);
+router.put("/resetPassword", authJwt.verifyToken, resetPassword);
 
 module.exports = router;

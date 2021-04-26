@@ -32,6 +32,7 @@ exports.getLatestThreads = async (req, res) => {
 
 // getSubject function
 exports.getSubject = async (req, res) => {
+
   try {
     if (req.params["subject_id"] == 0) {
       Thread.find()
@@ -60,6 +61,7 @@ exports.getSubject = async (req, res) => {
 
 // getOneThread function
 exports.getOneThread = async (req, res) => {
+  
   var populateQuery = [
     { path: "author", select: "_id username" },
     {
@@ -83,6 +85,7 @@ exports.getOneThread = async (req, res) => {
 
 // getMyThreads function
 exports.getUserThreads = async (req, res) => {
+
   Thread.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAtDate: -1 })
     .select("author subject title createdAt lastModifiedAt")
@@ -110,6 +113,7 @@ exports.getFollowingThreads = async (req, res) => {
 
 // createThread function
 exports.createThread = async (req, res) => {
+
   const { user_id, subject, title, content } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
@@ -142,6 +146,7 @@ exports.createThread = async (req, res) => {
 
 // editThread function
 exports.editThread = async (req, res) => {
+
   const { thread_id, title, content } = req.body;
 
   const update = {
@@ -198,6 +203,7 @@ exports.postComment = async (req, res) => {
 
 // deleteThread function
 exports.deleteThread = async (req, res) => {
+
   const { thread_id } = req.body;
 
   Thread.findById(thread_id, (err, doc) => {

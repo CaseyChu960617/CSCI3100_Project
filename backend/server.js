@@ -18,7 +18,6 @@ const chatRoutes = require("./routes/chat");
 const uploadRoutes = require('./routes/upload');
 
 //App config
-global.baseURL = __dirname;
 var corsOptions = {
   origin: `${process.env.CLIENT_URL}`,
 };
@@ -76,6 +75,8 @@ io.on("connection", async (socket) => {
   socket.on("send", (data) => {
     //console.log(data.sender + " send in room " + data.chatId);
     console.log(data);
+
+    
     io.to(data.chatId).emit("updateMessage", data);
     //const { sender_id, message } = req.body;
 
@@ -104,7 +105,7 @@ io.on("connection", async (socket) => {
       { _id: data.chatId },
       { $push: { messages: newMessage._id } },
       (err) => {
-        if (err) res.status(400).json({ error: "Bad request." });
+        if (err) res.status(400).send(err.message);
       }
     );
   });
@@ -117,7 +118,7 @@ io.on("connection", async (socket) => {
 http.listen(port, () => {
   console.log("Listenting at localhost:" + port);
 
-  //API routes
+  // API routes
   app.use("/auth", authRoutes);
 
   app.use("/thread", threadRoutes);

@@ -8,6 +8,7 @@ const { response } = require("express");
 
 // getAllTutorials function
 exports.getAllTutorials = async (req, res) => {
+
   Tutorial.find({ published: 1 })
     .sort({ lastModifiedAtDate: -1 })
     .select("_id author subject title description thumbnail lastModifiedAt")
@@ -34,6 +35,7 @@ exports.getLatestTutorials = async (req, res) => {
 
 // getSubject function
 exports.getSubject = async (req, res) => {
+
   Tutorial.find({ $and: [{ subject: req.params["subject_id"]}, { published: 1}] })
     .sort({ lastModifiedAtDate: -1 })
     .select("author subject title lastModifiedAt")
@@ -72,6 +74,7 @@ exports.getOneTutorial = async (req, res) => {
 
 // getOneChapter function
 exports.getOneChapter = async (req, res) => {
+
   Chapter.findOne({ _id: req.params["chapter_id"] })
     .select("title content lastEditedAt createdAt")
     .exec()
@@ -95,6 +98,7 @@ exports.getMyTutorials = async (req, res) => {
 
 // getUserTutorial function
 exports.getUserTutorials = async (req, res) => {
+
   Tutorial.find({ $and: [{ author: req.params["user_id"]}, { published: 1}] })
     .sort({ lastModifiedAtDate: -1 })
     .select("author subject title description thumbnail createdAt lastModifiedAt")
@@ -124,6 +128,7 @@ exports.getFollowingTutorials = async (req, res) => {
 
 // createTutorial function
 exports.createTutorial = async (req, res) => {
+
   const { user_id, subject, title, description } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
@@ -155,6 +160,7 @@ exports.createTutorial = async (req, res) => {
 
 // createChapter function
 exports.createChapter = async (req, res) => {
+
   const { tutorial_id, title, content } = req.body;
 
   var newChapter = new Chapter(
@@ -189,6 +195,7 @@ exports.createChapter = async (req, res) => {
 
 // editTutorial function
 exports.editTutorial = async (req, res) => {
+
   const {
     tutorial_id,
     title,
@@ -219,6 +226,7 @@ exports.editTutorial = async (req, res) => {
 
 // editChapter function
 exports.editChapter = async (req, res) => {
+
   const { tutorial_id, chapter_id, title, content } = req.body;
 
   const update = {
@@ -250,6 +258,7 @@ exports.editChapter = async (req, res) => {
 
 // postComment function
 exports.postComment = async (req, res) => {
+
   const { user_id, content, tutorial_id } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
@@ -292,7 +301,9 @@ exports.postComment = async (req, res) => {
 };
 
 // deleteTutorial function
+
 exports.deleteTutorial = async (req, res) => {
+  
   const tutorial = await Tutorial.findOne({ _id: req.params["tutorial_id"] });
 
   if (tutorial) {
@@ -308,10 +319,10 @@ exports.deleteTutorial = async (req, res) => {
 
 // deleteChapter function
 exports.deleteChapter = async (req, res) => {
+  
   const tutorial_id = req.params["tutorial_id"];
   const chapter_id = req.params["chapter_id"];
-  //console.log(tutorial_id);
-  //console.log(chapter_id);
+
   const chapter = await Chapter.findOne({ _id: chapter_id });
 
   if (chapter) {

@@ -6,8 +6,9 @@ const jwt = require("jsonwebtoken");
 
 // getProfile function
 exports.getProfile = async (req, res) => {
+
   const user_id = req.params["user_id"];
- // console.log(user_id);
+
   try {
     User.findOne({ _id: user_id })
       .select("username firstname lastname email gender following profileImage activation")
@@ -26,8 +27,6 @@ exports.getProfile = async (req, res) => {
 exports.editProfile = async (req, res) => {
 
     const { user_id, firstname, lastname, gender, username } = req.body;
-   // console.log(user_id)
-   // console.log(username);
 
     const user = await User.findOne({ _id: user_id }, (err) => {
         if (err)
@@ -151,24 +150,31 @@ exports.updateProPic = async (req, res) => {
 };
 
 exports.resetPassword = async (req, res) => {
+
   const { user_id, oldPassword, newPassword } = req.body;
 
   const user = await User.findOne({ _id: user_id });
 
+  // If user is not found
   if (!user) res.status(400).send(err.message);
   else {
+
+    // compare the input with the old password
     if (await bcrypt.compare(oldPassword, user.password)) {
       const hashedNewPassword = await bcrypt.hash(newPassword, 10);
       user.password = hashedNewPassword;
       user.save((err) => {
-        if (err) res.status(400).json({ error: "Password cannot be reset successfully." });
+        if (err) res.status(400).send(err.message);
       });
       res.status(200).send({ message: "success" });
     }
+    else
+      res.status(400).send("Old password is not matched.")
   }
 };
 
 exports.getFollower = async (req, res) => {
+
   const user_id = req.params['user_id'];
 
   var populateQuery = [

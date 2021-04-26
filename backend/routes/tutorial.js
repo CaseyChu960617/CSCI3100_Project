@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { authJwt } = require("../middlewares");
-
 const {
   getAllTutorials,
   getLatestTutorials,
@@ -10,44 +9,42 @@ const {
   getOneChapter,
   getMyTutorials,
   getUserTutorials,
-  getFollowingTutorials,
   createTutorial,
   createChapter,
   editTutorial,
   editChapter,
-  postComment,
-  deleteTutorial,
   deleteChapter,
 } = require("../controllers/tutorial");
 
-router.get("/", getAllTutorials);
+// All the routes for Tutorial module
+router.get("/", authJwt.verifyToken, getAllTutorials);
 
-router.get("/getLatestTutorials", getLatestTutorials);
+router.get("/getLatestTutorials", authJwt.verifyToken, getLatestTutorials);
 
-router.get("/subjecty/:subject_id", getSubject);
+router.get("/subjecty/:subject_id", authJwt.verifyToken, getSubject);
 
-router.get("/getOneTutorial/:tutorial_id", getOneTutorial);
+router.get("/getOneTutorial/:tutorial_id", authJwt.verifyToken, getOneTutorial);
 
-router.get("/getOneChapter/:chapter_id", getOneChapter);
+router.get("/getOneChapter/:chapter_id", authJwt.verifyToken, getOneChapter);
 
-router.get("/myTutorials/:user_id", getMyTutorials);
+router.get("/myTutorials/:user_id", authJwt.verifyToken, getMyTutorials);
 
-router.get("/userTutorials/:user_id", getUserTutorials);
+router.get("/userTutorials/:user_id", authJwt.verifyToken, getUserTutorials);
 
-router.post("/followingTutorials", getFollowingTutorials);
+//router.post("/followingTutorials", authJwt.verifyToken, getFollowingTutorials);
 
-router.post("/createTutorial", createTutorial);
+router.post("/createTutorial", authJwt.verifyToken, createTutorial);
 
-router.post("/createChapter", createChapter);
+router.post("/createChapter", authJwt.verifyToken, createChapter);
 
-router.put("/editTutorial", editTutorial);
+router.put("/editTutorial", authJwt.verifyToken, editTutorial);
 
-router.put("/editChapter",editChapter);
+router.put("/editChapter", authJwt.verifyToken, editChapter);
 
-router.put("/postComment", postComment);
+//router.put("/postComment", authJwt.verifyToken, postComment);
 
-router.delete("/deleteTutorial/:tutorial_id", deleteTutorial);
+//router.delete("/deleteTutorial/:tutorial_id", authJwt.verifyToken, deleteTutorial);
 
-router.delete("/deleteChapter/:tutorial_id/:chapter_id", deleteChapter);
+router.delete("/deleteChapter/:tutorial_id/:chapter_id", authJwt.verifyToken, deleteChapter);
 
 module.exports = router;

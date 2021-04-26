@@ -3,25 +3,25 @@ const Message = require("../models/message");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
 
-// getAllChatsfunction
+// getAllChats function
 exports.getAllChats = async (req, res) => {
+  
   const user_id = req.params["user_id"];
-  //console.log(user_id);
 
-     Chat.find({ $or: [{ userA: user_id }, { userB: user_id }] })
-    .sort({ createdAt: -1 })
-    .select("_id userA userB")
-    .populate("userA userB", "_id username profileImage")
-    .exec()
-    .then((docs) => {
-      
-    //  console.log(docs);
+
+  Chat.find({ $or: [{ userA: user_id }, { userB: user_id }] })
+  .sort({ createdAt: -1 })
+  .select("_id userA userB")
+  .populate("userA userB", "_id username profileImage")
+  .exec()
+  .then((docs) => {
       res.status(200).send(docs);
-    });
+  });
 };
 
-// getOneChatByIdfunction
+// getOneChatById function
 exports.getOneChatById = async (req, res) => {
+
   const chat_id = req.params["chat_id"];
 
   var populateQuery = [
@@ -59,8 +59,9 @@ exports.getOneChatById = async (req, res) => {
     });
 };
 
-// getOneChatfunction
+// getOneChat function
 exports.getOneChat = async (req, res) => {
+
   const { user_id_1, user_id_2 } = req.body;
 
   var populateQuery = [
@@ -82,56 +83,22 @@ exports.getOneChat = async (req, res) => {
       { userA: user_id_2, userB: user_id_1 },
     ],
   })
-    .select("userA userB messages")
-    .populate(populateQuery)
-    .exec()
-    .then((doc) => {
-      //console.log(doc);
-      if (!doc) {
-        Chat.create(
-          {
-            userA: user_id_1,
-            userB: user_id_2,
-            messages: [],
-            createdAtDate: new Date().getTime(),
-          },
-          (err, doc) => {
-            if (err) res.status(400).send(err.message);
-            else res.status(200).send(doc);
-          });
-      } else res.status(200).send(doc);
-    });
-};
-
-/*exports.sendMessage = async (req, res) => {
-  const chat_id = req.params["chat_id"];
-  const { sender_id, message } = req.body;
-
-  const newMessage = new Message(
-    {
-      sender: new ObjectId(sender_id),
-      message: message,
-      timestamp: new Date().getTime(),
-    },
-    (err) => {
-      if (err) {
-        console.log(err);
-        res.status(400).json({ error: "Bad request." });
-      }
-    }
-  );
-
-  newMessage.save((err) => {
-    if (err)
-      res.status(400).json({ error: "message cannot be posted successfully." });
+  .select("userA userB messages")
+  .populate(populateQuery)
+  .exec()
+  .then((doc) => {
+    if (!doc) {
+      Chat.create(
+        {
+          userA: user_id_1,
+          userB: user_id_2,
+          messages: [],
+          createdAtDate: new Date().getTime(),
+        },
+        (err, doc) => {
+          if (err) res.status(400).send(err.message);
+          else res.status(200).send(doc);
+        });
+    } else res.status(200).send(doc);
   });
-
-  Chat.findOneAndUpdate(
-    { _id: chat_id },
-    { $push: { messages: newMessage._id } },
-    (err, doc) => {
-      if (err) res.status(400).json({ error: "Bad request." });
-      else res.send(doc);
-    }
-  );
-};*/
+};

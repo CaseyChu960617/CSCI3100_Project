@@ -58,7 +58,6 @@ dotenv.config();
 
 export default {
   components: { chat },
-  //props: ["chatId"],
   data() {
     return {
       chats: [],
@@ -66,10 +65,6 @@ export default {
       chatId: null,
       oppId: null,
       oppUsername: null,
-      //oppID: this.$route.params.oppId,
-      // newMessage: null,
-      // messages: [],
-      //make connection to socket io
       socket: io(process.env.VUE_APP_DOMAIN_URL, {
         transports: ["websocket", "polling", "flashsocket"],
         withCredentials: true,

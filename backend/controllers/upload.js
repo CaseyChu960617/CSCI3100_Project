@@ -6,6 +6,7 @@ const uploadSingleDiscussionPic = uploadDiscussionPic.single('upload');
 
 // uploadProPic function
 exports.uploadProPic = async (req, res) => {
+
     try { 
           uploadSingleProPic(req, res, (err) => {
             if (err) {
@@ -35,6 +36,7 @@ exports.uploadProPic = async (req, res) => {
 }
 
 exports.uploadThumbnail = async (req, res) => {
+
   try {
           uploadSingleThumbnail(req, res, (err) => {
             if (err) {
@@ -90,6 +92,7 @@ exports.uploadTutorialPic = async (req, res) => {
 }
 
 exports.uploadDiscussionPic = async (req, res) => {
+  
   try {
        uploadSingleDiscussionPic(req, res, (err) => {
           if (err) {
