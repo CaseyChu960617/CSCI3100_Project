@@ -32,7 +32,7 @@ router.put('/editThread', authJwt.verifyToken, editThread);
 
 router.put('/postComment', authJwt.verifyToken, postComment);
 
-router.delete('/deleteThread', authJwt.verifyToken, deleteThread);
+//router.delete('/deleteThread', authJwt.verifyToken, deleteThread);
 
 
 

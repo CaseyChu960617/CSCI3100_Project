@@ -5,9 +5,9 @@ var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
 
 
-// getAllThread function
+// getAllThread function.
 exports.getAllThreads = async (req, res) => {
-
+  // Get all threads without filtering and sort by last edited time.
   Thread.find()
     .sort({ lastModifiedAtDate: -1 })
     .select("author subject title createdAt lastEditedAt")
@@ -18,8 +18,9 @@ exports.getAllThreads = async (req, res) => {
     });
 };
 
+// getLatestThreads function.
 exports.getLatestThreads = async (req, res) => {
-
+  // Get 3 latest threads.
   Thread.find()
     .sort({ lastModifiedAtDate: -1 })
     .limit(3)
@@ -31,10 +32,11 @@ exports.getLatestThreads = async (req, res) => {
     });
 };
 
-// getSubject function
+// getSubject function.
 exports.getSubject = async (req, res) => {
 
   try {
+    // If no subject filter, get all threads.
     if (req.params["subject_id"] == 0) {
       Thread.find()
       .sort({ lastModifiedAtDate: -1 })
@@ -46,6 +48,7 @@ exports.getSubject = async (req, res) => {
       });
     }
     else {
+      // Get threads from certain subject with subject_id.
       Thread.find({ subject: req.params["subject_id"] })
         .sort({ lastModifiedAtDate: -1 })
         .select("author subject title createdAt lastModifiedAt")
@@ -60,7 +63,7 @@ exports.getSubject = async (req, res) => {
   }
 };
 
-// getOneThread function
+// getOneThread function.
 exports.getOneThread = async (req, res) => {
   
   var populateQuery = [
@@ -75,6 +78,7 @@ exports.getOneThread = async (req, res) => {
     },
   ];
 
+  // Get all data of certain thread with the thread_id.
   Thread.findById(req.params["thread_id"])
     .select("author title content comments createdAt lastModifiedAt")
     .populate(populateQuery)
@@ -84,9 +88,9 @@ exports.getOneThread = async (req, res) => {
     });
 };
 
-// getMyThreads function
+// getMyThreads function.
 exports.getUserThreads = async (req, res) => {
-
+  // Find all threads that created by current user.
   Thread.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAtDate: -1 })
     .select("author subject title createdAt lastModifiedAt")
@@ -97,11 +101,12 @@ exports.getUserThreads = async (req, res) => {
     });
 };
 
-// getFollowingThreads function
+// getFollowingThreads function.
 exports.getFollowingThreads = async (req, res) => {
 
   const { following } = req.body;
 
+  // get all threads created by the users that is followed by current user.
   Thread.find({ author: { $in: following } })
     .sort({ lastModifiedAtDate: -1 })
     .select("author subject title createdAt lastModifiedAt")
@@ -118,11 +123,14 @@ exports.createThread = async (req, res) => {
 
   const { user_id, subject, title, content } = req.body;
 
+  // Check if current user exists
   User.findById(user_id, { lean: true }, (err, user) => {
     if (err) res.status(400).send(err.message);
 
+    // If current user exists
     if (user) {
-      console.log(user);
+      
+      // Create a thread with request data
       Thread.create(
         {
           author: user._id,
@@ -141,11 +149,11 @@ exports.createThread = async (req, res) => {
             res.status(200).send(doc._id);
         }
       );
-    } else res.status(400).send({ message: err.message });
+    } else res.status(400).send({ message: "User not found."});
   });
 };
 
-// editThread function
+// editThread function.
 exports.editThread = async (req, res) => {
 
   const { thread_id, title, content } = req.body;
@@ -159,27 +167,30 @@ exports.editThread = async (req, res) => {
           },
   };
 
+  // Find one thread with the thread_id and update the content of the thread.
   Thread.findOneAndUpdate({ _id: thread_id }, update, (err, doc) => {
     if (err) res.status(400).send({ message: err.message });
     else res.status(200).send(doc);
   });
 };
 
-// postComment function
+// postComment function.
 exports.postComment = async (req, res) => {
 
   const { user_id, content, thread_id } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
-    if (err) res.status(400).json({ error: "User not found!" });
+    if (err) res.status(400).send({ message: "User not found." });
     if (user) {
+      
+      // Create a new comment with the request data.
       var newComment = new ThreadComment(
         {
           author: new ObjectId(user_id),
           createdAt: new Date().toLocaleDateString("zh-HK"),
           content: content,
         },
-        (err, doc) => {
+        (err) => {
           if (err) {
             res.status(400).send({ message: err.message });
           }
@@ -195,6 +206,7 @@ exports.postComment = async (req, res) => {
          },
       };
 
+      // Find one thread with thread_id and push the objectId to the comments list.
       Thread.findOneAndUpdate({ _id: thread_id }, update, (err, doc) => {
         if (err) res.status(400).send({ message: err.message });
         else res.status(200).send(doc);
@@ -208,11 +220,13 @@ exports.deleteThread = async (req, res) => {
 
   const { thread_id } = req.body;
 
+  // Find one thread with thread_id and remove it from collection.
   Thread.findById(thread_id, (err, doc) => {
     if (err)
       res.status(400).send({ message: err.message });
-    
-    doc.remove();
-    res.status(200).send("Thread successfully deleted");
+    else {
+      doc.remove();
+      res.status(200).send({ message: "Thread successfully deleted." });
+    }
   });
 };

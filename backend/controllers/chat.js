@@ -3,9 +3,10 @@ const Message = require("../models/message");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
 
-// getAllChats function
+// getAllChats function.
 exports.getAllChats = async (req, res) => {
   
+  // Find all existing chats with this user_id as one of participants
   Chat.find({ $or: [{ userA: req.params["user_id"] }, { userB: req.params["user_id"] }] })
   .sort({ createdAt: -1 })
   .select("_id userA userB")
@@ -32,11 +33,13 @@ exports.getOneChatById = async (req, res) => {
     },
   ];
 
+  // Find the chat and all the messages in the chat with this chat_id.
   await Chat.findOne({ _id: req.params["chat_id"] })
     .select("userA userB messages")
     .populate(populateQuery)
     .exec()
     .then((doc) => {
+      // If chat does no exist, create a chat.
       if (!doc) {
         Chat.create(
           {
@@ -71,6 +74,7 @@ exports.getOneChat = async (req, res) => {
     },
   ];
 
+  // Find one chat with two user_id.
   await Chat.findOne({
     $or: [
       { userA: user_id_1, userB: user_id_2 },
@@ -81,6 +85,7 @@ exports.getOneChat = async (req, res) => {
   .populate(populateQuery)
   .exec()
   .then((doc) => {
+    // If the chat does not exist, create a chat.
     if (!doc) {
       Chat.create(
         {

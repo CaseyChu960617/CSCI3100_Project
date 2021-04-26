@@ -4,7 +4,7 @@ const mailgun = require('mailgun-js');
 const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN });
 const jwt = require("jsonwebtoken");
 
-// signup function
+// signup function.
 exports.signUp = async (req, res) => {
 
     const { lastname, firstname, username, email, password, gender } = req.body;
@@ -22,9 +22,6 @@ exports.signUp = async (req, res) => {
             profileImage: "",
         });
    
-        // For debugging
-        //console.log(newUser);
-
         // Generate activation email with mailgun.
          activate_link= process.env.CLIENT_URL + "/activateAccount/" + newUser._id
          const data = {
@@ -37,8 +34,9 @@ exports.signUp = async (req, res) => {
                 "v:fname":newUser.firstname.charAt(0).toUpperCase() + newUser.firstname.slice(1),
                 inline: "../frontend/src/assets/Logo/urge.gif"
          }
-
-         mg.messages().send(data, (err, body) => {
+        
+         // Send email with predefined content and template。.
+         mg.messages().send(data, (err) => {
              if (err) 
                  res.status(400).send({ message: err.message });
          });
@@ -68,7 +66,7 @@ exports.signUp = async (req, res) => {
     }
 };
 
-// signIn function
+// signIn function.
 exports.signIn = async (req, res) => {
 
     const { email, password } = req.body;
@@ -114,7 +112,7 @@ exports.signIn = async (req, res) => {
     }
 };
 
-// activateAccount function
+// activateAccount function.
 exports.activateAccount = async (req, res) => {
    
     // if user_id is not null.
@@ -154,7 +152,11 @@ exports.activateAccount = async (req, res) => {
 exports.generateEmail = async (req, res) => {
     
     const user = await User.findOne({ _id: req.params['user_id'] });
+
+    if (!user) 
+        res.status(400).send({ message: "User not found."});
     
+    // Email data
     activate_link= process.env.CLIENT_URL + "/activateAccount/" + user._id
      const data = {
             from: 'noreply@urge.org',
@@ -167,6 +169,7 @@ exports.generateEmail = async (req, res) => {
             inline: "../frontend/src/assets/Logo/urge.gif"
      }
 
+     // Send Email.
      mg.messages().send(data, (err) => {
          if (err) 
             res.status(400).send({ message: err.message });
