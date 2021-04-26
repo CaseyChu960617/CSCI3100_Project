@@ -7,20 +7,20 @@ const jwt = require("jsonwebtoken");
 // getProfile function
 exports.getProfile = async (req, res) => {
 
-  const user_id = req.params["user_id"];
-
-  try {
-    User.findOne({ _id: user_id })
+  //try {
+    User.findOne({ _id: req.params["user_id"] })
       .select("username firstname lastname email gender following profileImage activation")
       .exec()
-      .then((doc) => {
-       // console.log(doc);
-        res.status(200).send(doc);
+      .then((err, doc) => {
+        if (err)
+          res.status(400).send(err.message);
+        else
+          res.status(200).send(doc);
       });
-  }
-  catch(err) {
-    res.status(400).send(err.message);
-  }
+  // }
+  //catch(err) {
+
+  //}
 };
 
 // editProfile function
@@ -30,16 +30,15 @@ exports.editProfile = async (req, res) => {
 
     const user = await User.findOne({ _id: user_id }, (err) => {
         if (err)
-        res.status(400).send(err.message);
+          res.status(400).send({ message: err.message });
     })
 
     if (!user) {
-      res.status(400).send(err.message);
+      res.status(400).send({ message: err.message });
     } else {
-   // console.log(user);
     const otherUser = await User.findOne({ username: username }, (err) => {
         if (err)
-          res.status(400).send(err.message);
+          res.status(400).send({ message: err.message });
     })
 
     if (!otherUser)  {
@@ -48,9 +47,10 @@ exports.editProfile = async (req, res) => {
         user.lastname = lastname;
         user.gender = gender;
         user.save((err) => {
-          if (err)
-            res.status(400).send(err.message);
+            if (err)
+              res.status(400).send({ message: err.message });
         });
+
         // Generate a token if password is matched.
         const accessToken = jwt.sign({
             user_id: user._id
@@ -78,7 +78,7 @@ exports.editProfile = async (req, res) => {
         user.gender = gender;
         user.save((err) => {
           if (err)
-            res.status(400).send(err.message);;
+            res.status(400).send({ message: err.message });;
         });
         // Generate a token if password is matched.
         const accessToken = jwt.sign({
@@ -100,7 +100,7 @@ exports.editProfile = async (req, res) => {
             profileImage: user.profileImage
         });
         } else
-        res.status(400).json({ error: "User with this username existed."});
+        res.status(400).send({ message: "User with this username existed."});
     }
   }
 };
@@ -110,11 +110,10 @@ exports.follow = async (req, res) => {
 
   const { my_user_id, follow_id } = req.body;
 
- // console.log(my_user_id);
   User.findOneAndUpdate({ _id: my_user_id }, 
     { $push: { following: follow_id } }, 
     (err) => {
-    if (err) res.status(400).send(err.message);
+    if (err) res.status(400).send({ message: err.message });
   });
 
   const user = await User.findOne({ _id: my_user_id }).select("following");
@@ -129,8 +128,7 @@ exports.unfollow = async (req, res) => {
   User.findOneAndUpdate({ _id: my_user_id }, 
     { $pullAll: { following: [ObjectId(follow_id)] } }
     , (err) => {
-    if (err)
-      res.status(400).send(err.message);
+    if (err) res.status(400).send({ message: err.message });
   });
 
   const user = await User.findOne({ _id: my_user_id }).select("following");
@@ -139,10 +137,13 @@ exports.unfollow = async (req, res) => {
 
 // updateProPic function
 exports.updateProPic = async (req, res) => {
+
   const { my_user_id, profileImage } = req.body;
 
-  User.findOneAndUpdate({ _id: my_user_id }, { profileImage: profileImage }, (err) => {
-    if (err) res.status(400).send(err.message);
+  User.findOneAndUpdate({ _id: my_user_id }, 
+    { profileImage: profileImage }, 
+    (err) => {
+    if (err) res.status(400).send({ message: err.message });
   });
 
   const user = await User.findOne({ _id: my_user_id }).select("profileImage");
@@ -156,7 +157,7 @@ exports.resetPassword = async (req, res) => {
   const user = await User.findOne({ _id: user_id });
 
   // If user is not found
-  if (!user) res.status(400).send(err.message);
+  if (!user) res.status(400).send({ message: err.message });
   else {
 
     // compare the input with the old password
@@ -164,29 +165,28 @@ exports.resetPassword = async (req, res) => {
       const hashedNewPassword = await bcrypt.hash(newPassword, 10);
       user.password = hashedNewPassword;
       user.save((err) => {
-        if (err) res.status(400).send(err.message);
+        if (err) res.status(400).send({ message: err.message });
       });
       res.status(200).send({ message: "success" });
     }
     else
-      res.status(400).send("Old password is not matched.")
+      res.status(400).send({ message: "Old password is not matched." })
   }
 };
 
 exports.getFollower = async (req, res) => {
 
-  const user_id = req.params['user_id'];
-
   var populateQuery = [
     { path: "following", select: "_id username profileImage"},
   ];
-  User.findOne({ _id: user_id })
+
+  User.findOne({ _id: req.params['user_id'] })
   .select("following")
   .populate(populateQuery)
   .exec()
   .then((err,doc) => {
     if (err)
-      res.status(400).send(err.message);
+      res.status(400).send({ message: err.message });
     else
       res.status(200).send(doc);
   })

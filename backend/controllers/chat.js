@@ -6,10 +6,7 @@ const mongoose = require("mongoose");
 // getAllChats function
 exports.getAllChats = async (req, res) => {
   
-  const user_id = req.params["user_id"];
-
-
-  Chat.find({ $or: [{ userA: user_id }, { userB: user_id }] })
+  Chat.find({ $or: [{ userA: req.params["user_id"] }, { userB: req.params["user_id"] }] })
   .sort({ createdAt: -1 })
   .select("_id userA userB")
   .populate("userA userB", "_id username profileImage")
@@ -21,8 +18,6 @@ exports.getAllChats = async (req, res) => {
 
 // getOneChatById function
 exports.getOneChatById = async (req, res) => {
-
-  const chat_id = req.params["chat_id"];
 
   var populateQuery = [
     { path: "userA", select: "_id username profileImage" },
@@ -37,12 +32,11 @@ exports.getOneChatById = async (req, res) => {
     },
   ];
 
-  await Chat.findOne({ _id: chat_id })
+  await Chat.findOne({ _id: req.params["chat_id"] })
     .select("userA userB messages")
     .populate(populateQuery)
     .exec()
     .then((doc) => {
-     // console.log(doc);
       if (!doc) {
         Chat.create(
           {
@@ -51,7 +45,7 @@ exports.getOneChatById = async (req, res) => {
             messages: [],
           },
           (err, doc) => {
-            if (err) res.status(400).send(err.message);
+            if (err) res.status(400).send({ message: err.message });
             else res.status(200).send(doc);
           }
         );
@@ -96,7 +90,7 @@ exports.getOneChat = async (req, res) => {
           createdAtDate: new Date().getTime(),
         },
         (err, doc) => {
-          if (err) res.status(400).send(err.message);
+          if (err) res.status(400).send({ message: err.message });
           else res.status(200).send(doc);
         });
     } else res.status(200).send(doc);

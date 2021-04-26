@@ -19,6 +19,7 @@ exports.getAllThreads = async (req, res) => {
 };
 
 exports.getLatestThreads = async (req, res) => {
+
   Thread.find()
     .sort({ lastModifiedAtDate: -1 })
     .limit(3)
@@ -45,17 +46,17 @@ exports.getSubject = async (req, res) => {
       });
     }
     else {
-    Thread.find({ subject: req.params["subject_id"] })
-      .sort({ lastModifiedAtDate: -1 })
-      .select("author subject title createdAt lastModifiedAt")
-      .populate("author", "_id username")
-      .exec()
-      .then((docs) => {
-        res.status(200).send(docs);
-      });
+      Thread.find({ subject: req.params["subject_id"] })
+        .sort({ lastModifiedAtDate: -1 })
+        .select("author subject title createdAt lastModifiedAt")
+        .populate("author", "_id username")
+        .exec()
+        .then((docs) => {
+          res.status(200).send(docs);
+        });
     }
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(400).send({ message: err.message });
   }
 };
 
@@ -98,6 +99,7 @@ exports.getUserThreads = async (req, res) => {
 
 // getFollowingThreads function
 exports.getFollowingThreads = async (req, res) => {
+
   const { following } = req.body;
 
   Thread.find({ author: { $in: following } })
@@ -106,7 +108,7 @@ exports.getFollowingThreads = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((err, docs) => {
-      if (err) res.status(400).send(err.message);
+      if (err) res.status(400).send({ message: err.message });
       else res.status(200).send(docs);
     });
 };
@@ -133,14 +135,13 @@ exports.createThread = async (req, res) => {
           lastModifiedAtDate: new Date().getTime()
         },
         (err, doc) => {
-          if (err) {
-            console.log(err);
-            res.status(400).send(err.message);
-          } else 
+          if (err) 
+            res.status(400).send({ message: err.message });
+          else 
             res.status(200).send(doc._id);
         }
       );
-    } else res.status(400).send(err.message);
+    } else res.status(400).send({ message: err.message });
   });
 };
 
@@ -159,13 +160,14 @@ exports.editThread = async (req, res) => {
   };
 
   Thread.findOneAndUpdate({ _id: thread_id }, update, (err, doc) => {
-    if (err) res.status(400).send(err.message);
+    if (err) res.status(400).send({ message: err.message });
     else res.status(200).send(doc);
   });
 };
 
 // postComment function
 exports.postComment = async (req, res) => {
+
   const { user_id, content, thread_id } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
@@ -179,7 +181,7 @@ exports.postComment = async (req, res) => {
         },
         (err, doc) => {
           if (err) {
-            res.status(400).send(err.message);
+            res.status(400).send({ message: err.message });
           }
         });
 
@@ -194,7 +196,7 @@ exports.postComment = async (req, res) => {
       };
 
       Thread.findOneAndUpdate({ _id: thread_id }, update, (err, doc) => {
-        if (err) res.status(400).send(err.message);
+        if (err) res.status(400).send({ message: err.message });
         else res.status(200).send(doc);
       });
     }
@@ -207,6 +209,9 @@ exports.deleteThread = async (req, res) => {
   const { thread_id } = req.body;
 
   Thread.findById(thread_id, (err, doc) => {
+    if (err)
+      res.status(400).send({ message: err.message });
+    
     doc.remove();
     res.status(200).send("Thread successfully deleted");
   });

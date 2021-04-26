@@ -7,14 +7,7 @@ const jwt = require("jsonwebtoken");
 // signup function
 exports.signUp = async (req, res) => {
 
-        const { lastname, firstname, username, email, password, gender } = req.body;
-
-        // Search the database to see if the email and username is already existed.
-        User.findOne({$or: { username, email }}).exec((err, user) => {
-            if (user) {
-                return res.status(400).json({ message: "User with this email/username has already existed." });
-            }
-        });
+    const { lastname, firstname, username, email, password, gender } = req.body;
         
     try {
         // If no error, hashed the password and create a new user.
@@ -47,7 +40,7 @@ exports.signUp = async (req, res) => {
 
          mg.messages().send(data, (err, body) => {
              if (err) 
-                 res.status(400).send(err.message);
+                 res.status(400).send({ message: err.message });
          });
 
          // Generate and sign a token
@@ -71,12 +64,13 @@ exports.signUp = async (req, res) => {
             message: "Registered successfully"
         });
     } catch (err) {
-        res.status(400).send(err.message);
+        res.status(400).send({ message: "User with this email/username has already existed." });
     }
 };
 
 // signIn function
 exports.signIn = async (req, res) => {
+
     const { email, password } = req.body;
 
     // Search db to  see if the user with this email exists.
@@ -86,7 +80,7 @@ exports.signIn = async (req, res) => {
 
     // If not exist, handle the error.
     if (!user) {
-        return res.status(400).json({ message: "User not found." });
+        res.status(400).send({ message: "User with this email is not found." });
     }
 
     else {
@@ -116,23 +110,20 @@ exports.signIn = async (req, res) => {
         }
     else
         // If password is not matched, handle the error.
-        res.status(400).send("Password not matched.");
+        res.status(400).send({ message: "Incorrect password." });
     }
 };
 
 // activateAccount function
 exports.activateAccount = async (req, res) => {
    
-    const user_id  = req.params['user_id'];
-    //console.log(user_id);
-
     // if user_id is not null.
-    if (user_id) {
+    if (req.params['user_id']) {
 
         // Search db for the user with this user_id and update its status.
-        const user = await User.findByIdAndUpdate({ _id: user_id } , {  activation: true }, { new: true, lean: true});
-
-        //console.log(user);
+        const user = await User.findByIdAndUpdate({ _id: user_id } , 
+            {  activation: true }, 
+            { new: true, lean: true});
 
         // Generate a token.
         const accessToken = jwt.sign({
@@ -156,7 +147,7 @@ exports.activateAccount = async (req, res) => {
     }
     else {
         // If userId is null, handle the error.
-        return res.status(400).send("Failed to activate.");
+        return res.status(400).send({ message: "Failed to activate account." });
     }
 };
 
@@ -176,13 +167,9 @@ exports.generateEmail = async (req, res) => {
             inline: "../frontend/src/assets/Logo/urge.gif"
      }
 
-     mg.messages().send(data, (err, body) => {
-        // console.log(data);
-        // console.log(process.env.MAILGUN_API_KEY)
-        //    console.log(process.env.MAILGUN_DOMAIN)
-         /*if (err) {
-             console.log(res.status)
-         }*/
+     mg.messages().send(data, (err) => {
+         if (err) 
+            res.status(400).send({ message: err.message });
      });
 };
 
