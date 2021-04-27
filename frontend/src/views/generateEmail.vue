@@ -37,8 +37,6 @@
 
 <script>
 import DataService from "../services/DataService";
-//import authHeader from "../services/auth-header.js";
-
 export default {
   data() {
     return {};
@@ -52,11 +50,7 @@ export default {
 
   methods: {
     generateEmail() {
-      DataService.get("auth/generateEmail", this.currentUser.user_id).then(
-        () => {
-          console.log("Email generated");
-        }
-      );
+      DataService.get("auth/generateEmail", this.currentUser.user_id);
     },
   },
 };
