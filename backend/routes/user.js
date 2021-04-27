@@ -12,9 +12,9 @@ const {
 } = require("../controllers/user");
 
 // All the routes for User module
-router.get("/:user_id", authJwt.verifyToken, getProfile);
+router.get("/:user_id", getProfile);
 
-router.get("/getFollower/:user_id", authJwt.verifyToken, getFollower);
+router.get("/getFollower/:user_id", getFollower);
 
 router.put("/editProfile", authJwt.verifyToken, editProfile);
 

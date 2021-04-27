@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 // getAllThread function.
 exports.getAllThreads = async (req, res) => {
+  
   // Get all threads without filtering and sort by last edited time.
   Thread.find()
     .sort({ lastModifiedAtDate: -1 })
@@ -20,6 +21,7 @@ exports.getAllThreads = async (req, res) => {
 
 // getLatestThreads function.
 exports.getLatestThreads = async (req, res) => {
+
   // Get 3 latest threads.
   Thread.find()
     .sort({ lastModifiedAtDate: -1 })
@@ -90,6 +92,7 @@ exports.getOneThread = async (req, res) => {
 
 // getMyThreads function.
 exports.getUserThreads = async (req, res) => {
+
   // Find all threads that created by current user.
   Thread.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAtDate: -1 })

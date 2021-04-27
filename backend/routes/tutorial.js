@@ -17,19 +17,19 @@ const {
 } = require("../controllers/tutorial");
 
 // All the routes for Tutorial module
-router.get("/", authJwt.verifyToken, getAllTutorials);
+router.get("/", getAllTutorials);
 
-router.get("/getLatestTutorials", authJwt.verifyToken, getLatestTutorials);
+router.get("/getLatestTutorials", getLatestTutorials);
 
-router.get("/subjecty/:subject_id", authJwt.verifyToken, getSubject);
+router.get("/subjecty/:subject_id", getSubject);
 
-router.get("/getOneTutorial/:tutorial_id", authJwt.verifyToken, getOneTutorial);
+router.get("/getOneTutorial/:tutorial_id", getOneTutorial);
 
-router.get("/getOneChapter/:chapter_id", authJwt.verifyToken, getOneChapter);
+router.get("/getOneChapter/:chapter_id", getOneChapter);
 
-router.get("/myTutorials/:user_id", authJwt.verifyToken, getMyTutorials);
+router.get("/myTutorials/:user_id", getMyTutorials);
 
-router.get("/userTutorials/:user_id", authJwt.verifyToken, getUserTutorials);
+router.get("/userTutorials/:user_id", getUserTutorials);
 
 //router.post("/followingTutorials", authJwt.verifyToken, getFollowingTutorials);
 

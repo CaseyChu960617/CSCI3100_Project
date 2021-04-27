@@ -14,15 +14,15 @@ const {
 } = require('../controllers/thread');
 
 // All the routes for Discussion forum module
-router.get('/', authJwt.verifyToken, getAllThreads);
+router.get('/',  getAllThreads);
 
-router.get('/getLatestThreads', authJwt.verifyToken, getLatestThreads);
+router.get('/getLatestThreads', getLatestThreads);
 
-router.get('/subject/:subject_id', authJwt.verifyToken, getSubject);
+router.get('/subject/:subject_id', getSubject);
 
-router.get('/:thread_id', authJwt.verifyToken,  getOneThread);
+router.get('/:thread_id', getOneThread);
 
-router.get('/userThreads/:user_id', authJwt.verifyToken, getUserThreads);
+router.get('/userThreads/:user_id', getUserThreads);
 
 //router.post('/followingThreads', authJwt, getFollowingThreads);
 
