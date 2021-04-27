@@ -49,35 +49,37 @@
 </template>
 
 <script>
-import DataService from "../services/DataService";
-import chat from "../components/chat/chat.vue";
-import io from "socket.io-client";
-//import authHeader from "../services/auth-header.js";
+import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
+import chat from "../components/chat/chat.vue"; //using a child component chat to render the render interface
+import io from "socket.io-client"; //import socketio for real-time chat
 import dotenv from "dotenv";
 dotenv.config();
 
 export default {
-  components: { chat },
+  components: { chat }, //declare chat component
   data() {
     return {
-      chats: [],
-      loading: true,
-      chatId: null,
-      oppId: null,
-      oppUsername: null,
+      chats: [], //array for rendering chatlist
+      chatId: null, //id for the chatroom
+      oppId: null, //opponent id
+      oppUsername: null, //oponent username
+      //socket object
       socket: io(process.env.VUE_APP_DOMAIN_URL, {
-        transports: ["websocket", "polling", "flashsocket"],
-        withCredentials: true,
+        transports: ["websocket", "polling", "flashsocket"], //allows CORS
+        withCredentials: true, //allows CORS
         extraHeaders: {
-          "my-custom-header": "abcd",
+          "my-custom-header": "urge", //customize the header
         },
       }),
     };
   },
 
   created() {
+    //fetching the chatlist
     this.fetchChatList();
+    //We enter this page with params (clicking the user to start chat instead of clicking the chat function)
     if (this.$route.params.chatId !== undefined) {
+      //get the chatId and the opponent username
       this.chatId = this.$route.params.chatId;
       this.oppUsername = this.$route.params.oppUsername;
     }
@@ -85,40 +87,40 @@ export default {
 
   computed: {
     currentUser() {
+      //store current user
       return this.$store.state.auth.user;
-    },
-    items() {
-      return Array.from({ length: 20 }, (k, v) => v + 1);
     },
   },
 
   watch: {
+    //watch/monitor the change of the chatID and condiotnal render different chat on the right
     chatId() {
-      console.log("Updated chatId: " + this.chatId);
       this.selectChat(this.chatId);
     },
   },
 
   methods: {
+    //fetch all chatlist to  be shown on the list on the left
     fetchChatList() {
-      this.loading = true;
+      //get all chat of the current users in the database
       DataService.get("chat/getAllChats", this.currentUser.user_id)
         .then((response) => {
           const rawData = response.data;
-
+          //put each chat info into chatlist array
           rawData.forEach((element) => {
+            //there are userA and userB, either one will be the opponent user
             if (element.userA._id == this.currentUser.user_id) {
               this.chats.push({ user: element.userB, _id: element._id });
             } else {
               this.chats.push({ user: element.userA, _id: element._id });
             }
           });
-          this.loading = false;
         })
         .catch((err) => {
-          console.log(err);
+          //catch error
           if (err.response.status == 401 || err.response.status == 403) {
             alert("Please Login again");
+            //redirect to homepage
             this.$router.push("/home");
           } else {
             alert(err.response.data.message);
@@ -126,16 +128,21 @@ export default {
         });
     },
 
+    //triggered when user select another chat
     selectChat(id) {
+      //old chatID become the current chatID
       let oldChatId = this.chatId;
+      //current chatID become the newly select chatID
       this.chatId = id;
 
       this.chats.forEach((element) => {
+        //match the corresponding chatID in the chatist for changing the chat view on the right
         if (element._id == this.chatId) {
           this.oppId = element.user._id;
           this.oppUsername = element.user.username;
         }
       });
+      //emit an event to backend to join the room
       this.socket.emit("joinRoom", {
         chatId: this.chatId,
         oldChatId: oldChatId,

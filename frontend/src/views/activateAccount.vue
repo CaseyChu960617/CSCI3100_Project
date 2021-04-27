@@ -12,36 +12,34 @@
 </template>
 
 <script>
-import DataService from "../services/DataService";
-//import authHeader from "../services/auth-header.js";
+import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
 
 export default {
   data() {
-    return {
-      message: "abc",
-    };
+    return {};
   },
   computed: {
     currentUser() {
+      //store current user
       return this.$store.state.auth.user;
     },
   },
   created() {
+    //trigger the actiavteaccount function when enter the page
     this.activateAccount();
   },
 
   methods: {
+    //function to activate the account
     activateAccount() {
-      DataService.get(
-        "auth/activateAccount",
-        this.$route.params.user_id
-        //{
-        //  headers: authHeader(),
-        //}
-      ).then(() => {
-        this.currentUser.activation = true;
-        this.$router.push("/home");
-      });
+      //get request sent to backend to actiavte the account
+      DataService.get("auth/activateAccount", this.$route.params.user_id).then(
+        () => {
+          //currents user is now activated and will be redirect the homepage
+          this.currentUser.activation = true;
+          this.$router.push("/home");
+        }
+      );
     },
   },
 };

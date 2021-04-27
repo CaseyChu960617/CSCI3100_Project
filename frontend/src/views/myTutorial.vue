@@ -322,14 +322,17 @@ export default {
       );
     },
 
+    //function triggered when hover the card for flipping
     flip(event, id) {
       let card = this.$refs[id][0];
       if (!card.classList.contains("is-flipped")) {
         card.classList.add("is-flipped");
       }
+      //set the height to prevent overflow
       this.setHeight();
     },
 
+    //function triggered when hover the card for unflipping
     unflip(event, id) {
       let card = this.$refs[id][0];
       if (card.classList.contains("is-flipped")) {
@@ -337,24 +340,30 @@ export default {
       }
     },
 
+    //function to dynamically set the height of the card to prevent overflow
     setHeight() {
       let elements = document.querySelectorAll(".des");
       let title_elements = document.querySelectorAll(".des-title");
 
+      //set card description height
       elements.forEach((element) => {
         element.style.height =
+          //reference to parent height in DOM tree
           element.parentElement.parentElement.offsetHeight * 0.62 + "px";
       });
       title_elements.forEach(function(element) {
         element.style.height =
+          //reference to parent height in DOM tree
           element.parentElement.parentElement.offsetHeight * 0.165 + "px";
       });
     },
 
     show(bool) {
+      //set boolean of showing the modal
       this.dialog = bool;
     },
 
+    //redirect to edittutorial
     editTutorial(tutorialId) {
       this.$router.push({
         name: "editTutorial",
@@ -362,15 +371,14 @@ export default {
       });
     },
 
+    //delete tutorial
     deleteTutorial(tutorialId) {
       DataService.deleteTutorial(
         tutorialId
         //{
         //  headers: authHeader(),
         //}
-      ).then((response) => {
-        console.log(response);
-      });
+      );
 
       this.tutorials.forEach((element, index, object) => {
         if (tutorialId === element._id) object.splice(index, 1);
@@ -378,6 +386,7 @@ export default {
       });
     },
 
+    //redirect to viewtutorial
     viewTutorial(tutorial_id) {
       this.$router.push({
         name: "viewTutorial",

@@ -36,8 +36,7 @@
 </template>
 
 <script>
-import DataService from "../services/DataService";
-//import authHeader from "../services/auth-header.js";
+import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
 
 export default {
   data() {
@@ -46,17 +45,18 @@ export default {
 
   computed: {
     currentUser() {
+      //store current user
       return this.$store.state.auth.user;
     },
   },
 
   methods: {
+    //function to generate email  when clicked
     generateEmail() {
-      DataService.get("auth/generateEmail", this.currentUser.user_id).then(
-        () => {
-          console.log("Email generated");
-        }
-      );
+      DataService.get(
+        "auth/generateEmail",
+        this.currentUser.user_id
+      ).then(() => {});
     },
   },
 };

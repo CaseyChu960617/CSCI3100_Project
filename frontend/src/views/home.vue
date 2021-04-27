@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import Sign from "../components/auth/sign.vue";
-import News from "./news.vue";
-import GenerateEmail from "./generateEmail.vue";
+import Sign from "../components/auth/sign.vue"; //using a child component to render sign component
+import News from "./news.vue"; //using a child component to render latest tutorials
+import GenerateEmail from "./generateEmail.vue"; //using a child component to render generate email component
 export default {
   components: {
     Sign,
@@ -23,6 +23,7 @@ export default {
   },
   computed: {
     currentUser() {
+      //store current users
       return this.$store.state.auth.user;
     },
   },

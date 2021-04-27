@@ -16,32 +16,6 @@
           @submit="save()"
         ></modal>
 
-        <!-- <v-divider />
-          <v-virtual-scroll
-            bench="25"
-            min-height="83vh"
-            max-height="83vh"
-            item-height="75"
-            :items="items"
-          >
-            <template v-slot:default="{ item }">
-              <v-list-item :key="item">
-                <v-list-item-content>
-                  <v-list-item-title class="text-wrap">
-                    <strong>ID {{ item }}</strong>
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider />
-            </template>
-          </v-virtual-scroll> -->
-
-        <!-- <v-col md="6" sm="12"
-        ><v-card tile elevation="16" outlined height="100%">
-          <v-card-text>content</v-card-text>
-        </v-card></v-col
-      ><v-spacer />-->
-
         <v-row>
           <v-col
             cols="12"

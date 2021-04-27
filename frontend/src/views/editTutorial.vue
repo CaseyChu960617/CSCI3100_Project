@@ -110,59 +110,52 @@
 </style>
 
 <script>
-import DataService from "../services/DataService";
-import editChapter from "../components/tutorial/editChapter.vue";
-import editMetadata from "../components/tutorial/editMetadata.vue";
-import authHeader from "../services/auth-header.js";
-//import autosave from "../components/modal/autosave";
+import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
+import editChapter from "../components/tutorial/editChapter.vue"; //using editChpater component as child component
+import editMetadata from "../components/tutorial/editMetadata.vue"; //using editMetadata component as child component
+import authHeader from "../services/auth-header.js"; //add authenication header to ensure token is not expire when making HTTP request
+
 export default {
   components: {
-    editChapter,
-    editMetadata,
-    // autosave,
+    editChapter, //delcare editChapter component
+    editMetadata, //declare editMetadata component
   },
   data() {
     return {
       tutorial: null, //the whole returned object from tutorial
-      chapters: [],
-      //editor: ClassicEditor,
-      editorData: "fuck",
-      selectedId: null,
-      editMetadata: 1,
-      currentId: null,
-
-      //childMetaData : null
-      // childChapter: null
+      chapters: [], //local chpaters array to store all chapter objects
+      selectedId: null, //the id of selected chapter or tutorials
+      editMetadata: 1, //set default view to be editing metadata when enter the page
+      currentId: null, //the id of current editing chapter or tutorials
     };
   },
 
   computed: {
     currentUser() {
+      //store the current user
       return this.$store.state.auth.user;
     },
   },
 
   created() {
-    console.log(this.$route.params.tutorialId);
+    //fetch tutorial when enter thae apge
     this.fetchTutorial();
   },
   methods: {
+    //function to fetch tutorial from database
     fetchTutorial() {
-      console.log(this.$route.params.tutorialId);
       DataService.get(
         "tutorial/getOneTutorial",
         this.$route.params.tutorialId
       ).then((response) => {
         const rawData = response.data;
-
         this.tutorial = rawData;
         this.chapters = rawData.chapters;
-        console.log("Chapter is ", this.tutorial);
+        //store the response data into local variable of vue
       });
     },
 
-    fetchChapter() {},
-
+    //function to create chapter
     createChapter() {
       const chapterNum = this.chapters.length + 1;
       const data = {
@@ -170,92 +163,67 @@ export default {
         title: "Chapter " + chapterNum.toString(),
         content: "",
       };
-      //console.log(data);
+      //post request to create new chapter
       DataService.post("tutorial/createChapter", data, {
         headers: authHeader(),
-      }).then((response) => {
-        //console.log("respone is ", response.data);
-        console.log("this.tutorial._id :", response.data);
+      }).then(() => {
         DataService.get("tutorial/getOneTutorial", this.tutorial._id).then(
           (response) => {
-            console.log("this.tutorial._id :", this.tutorial._id);
-            console.log("return :", response.data);
             this.tutorial = response.data;
             this.chapters = this.tutorial.chapters;
           }
         );
       });
     },
-
+    //function to delete chapter
     deleteChapter(chapter_id) {
-      console.log("delete", chapter_id);
+      //delete request to delete chapter
       DataService.deleteChapter(this.tutorial._id, chapter_id, {
         headers: authHeader(),
-      }).then((response) => {
-        console.log(response);
-      });
+      }).then(() => {});
 
+      //delte the corresponding eleemnt in chapters array in frontend so to immediately update without refreshing
       this.chapters.forEach((element, index, object) => {
+        //splice the array
         if (chapter_id === element._id) object.splice(index, 1);
-        console.log(chapter_id);
       });
 
-      console.log(this.chapters);
+      //if there is no chapter, user will only view the metatdata of the tutorial
       if (this.chapters.length == 0) {
         this.editMetadata = 1;
       }
     },
 
+    //triggered when editor change the current editing tutorial or chapters
     changeEdit(id, editMetadata) {
       this.selectedId = id;
-
+      //call savewhen cahnge function to save the current editing tutorial/chapter
       this.saveWhenChange(this.editMetadata, this.currentId, this.selectedId);
-      this.currentId = this.selectedId; //need to be emmited
+      this.currentId = this.selectedId; //need to be emitted
       if (editMetadata) {
+        //indicating editing metadata
         this.editMetadata = 1;
-        console.log(this.editMetadata);
       } else {
+        //indicating not editing metadata, but tutorial
         this.editMetadata = 0;
       }
     },
 
     saveWhenChange(editMetadata, currentId, selectedId) {
+      //check if currently tutorial/chapter is being editing and change from editing chapter/tutorial to ANOTHER chapter or from to metadata chapter
       if (currentId !== selectedId && currentId !== null) {
+        //if not editing Metadata, save tutorial
         if (editMetadata === 0) {
-          //save tutorial
+          //alert to user to save tutorial
           alert("Current change of tutorial data will be saved.");
-          //this.show(true);
         } else {
-          //save chapter
+          //alert to user to save chapter
           alert("Current change of chapter will be saved.");
-          //this.show(true);
         }
+        //call the save function in child component of either editmetadata or editchapter component
         this.$refs[currentId].save();
       }
     },
-    // show(bool) {
-    //   this.dialog = bool;
-    //   console.log(bool);
-    //   console.log(this.dialog);
-    // },
-    //
-    // autosave(currentId) {
-    //   this.$refs[currentId].save();
-    //   alert(this.$refs[currentId].editorData + " is saved");
-    //   this.show(false);
-    // },
-  },
-
-  updated() {
-    // if (this.currentId != null) {
-    //   alert(this.selectedId + " will be loaded");
-    //   console.log(this.$refs[this.currentId]);
-    //   console.log(this.$refs[this.selectedId]);
-    //   alert(this.currentId);
-    //   console.log(this.$refs[this.currentId].editorData);
-    //   alert(this.currentId);
-    //   alert(this.selectedId);
-    //   this.currentId = this.selectedId;
   },
 };
 </script>
