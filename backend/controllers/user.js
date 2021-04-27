@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 // getProfile function
 exports.getProfile = async (req, res) => {
 
-  console.log(req.params["user_id"]);
   try {
     User.findOne({ _id: req.params["user_id"] })
       .select("username firstname lastname email gender following profileImage activation")
@@ -32,13 +31,15 @@ exports.editProfile = async (req, res) => {
     })
 
     if (!user) {
-      res.status(400).send({ message: err.message });
+      res.status(400).send({ message: "User not found." });
     } else {
-    const otherUser = await User.findOne({ username: username }, (err) => {
-        if (err)
-          res.status(400).send({ message: err.message });
-    })
 
+        // Find if there are other user using the new username
+        const otherUser = await User.findOne({ username: username }, (err) => {
+          if (err)
+            res.status(400).send({ message: err.message });
+    })
+    
     if (!otherUser)  {
         user.username = username;
         user.firstname = firstname;
@@ -49,7 +50,7 @@ exports.editProfile = async (req, res) => {
               res.status(400).send({ message: err.message });
         });
 
-        // Generate a token if password is matched.
+        // Renew token when finish editing profile.
         const accessToken = jwt.sign({
             user_id: user._id
             },
@@ -103,7 +104,7 @@ exports.editProfile = async (req, res) => {
   }
 };
 
-// follow function
+// follow function.
 exports.follow = async (req, res) => {
 
   const { my_user_id, follow_id } = req.body;
@@ -118,7 +119,7 @@ exports.follow = async (req, res) => {
   res.status(200).send(user.following);
 };
 
-// unfollow function
+// unfollow function.
 exports.unfollow = async (req, res) => {
 
   const { my_user_id, follow_id } = req.body;
@@ -133,7 +134,7 @@ exports.unfollow = async (req, res) => {
   res.status(200).send(user.following);
 };
 
-// updateProPic function
+// updateProPic function.
 exports.updateProPic = async (req, res) => {
 
   const { my_user_id, profileImage } = req.body;
@@ -154,18 +155,18 @@ exports.resetPassword = async (req, res) => {
 
   const user = await User.findOne({ _id: user_id });
 
-  // If user is not found
+  // If user is not found.
   if (!user) res.status(400).send({ message: err.message });
   else {
 
-    // compare the input with the old password
+    // compare the input with the old password.
     if (await bcrypt.compare(oldPassword, user.password)) {
       const hashedNewPassword = await bcrypt.hash(newPassword, 10);
       user.password = hashedNewPassword;
       user.save((err) => {
         if (err) res.status(400).send({ message: err.message });
       });
-      res.status(200).send({ message: "success" });
+      res.status(200).send({ message: "Password has been reset successfully" });
     }
     else
       res.status(400).send({ message: "Old password is not matched." })

@@ -139,6 +139,7 @@
 </style>
 <script>
 import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
+import subjectsList from "../assets/subjects.json"; //import a json object from a json file stored CUHK subject list
 
 export default {
   components: {},
@@ -148,6 +149,7 @@ export default {
       threads: [],
       title: "",
       loading: true,
+      subjects: subjectsList,
     };
   },
   computed: {
@@ -176,6 +178,8 @@ export default {
         rawData.forEach((element) => {
           element.subject = this.subjects[element.subject - 1]["text"];
         });
+
+        console.log(this.tutorials);
         //get the data to the local variable/data vue
         this.tutorials = rawData;
       });
