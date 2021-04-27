@@ -1,3 +1,4 @@
+<!--The page for showing newest tutorials-->
 <template>
   <v-container>
     <v-row justify="center">
@@ -111,7 +112,6 @@
 }
 .des {
   overflow-y: scroll;
-  /*height: 250px;*/
 }
 .edit-btn {
   position: absolute;
@@ -138,14 +138,12 @@
 }
 </style>
 <script>
-import DataService from "../services/DataService";
-import subjectsList from "../assets/subjects.json";
+import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
 
 export default {
   components: {},
   data() {
     return {
-      subjects: subjectsList,
       tutorials: [],
       threads: [],
       title: "",
@@ -153,66 +151,72 @@ export default {
     };
   },
   computed: {
-    items() {
-      return Array.from({ length: 20 }, (k, v) => v + 1);
-    },
-
     currentUser() {
+      //store the current user data
       return this.$store.state.auth.user;
     },
   },
 
   created() {
+    //fetch lastest turoials when enter the page
     this.fetchLatestTutorials();
     this.fetchLatestDiscussions();
+    //add resize event to sizeheight of the card
     window.addEventListener("resize", this.setHeight);
+    //set height of the card
     this.setHeight();
   },
 
   methods: {
+    //function tp fetch lastest turoials from db
     fetchLatestTutorials() {
       DataService.getLatestTutorials().then((response) => {
         const rawData = response.data;
-        console.log(rawData);
         //mapping the subjects
         rawData.forEach((element) => {
           element.subject = this.subjects[element.subject - 1]["text"];
         });
+        //get the data to the local variable/data vue
         this.tutorials = rawData;
       });
     },
 
+    //function triggered when hover the card for flipping
     flip(event, id) {
       let card = this.$refs[id][0];
       if (!card.classList.contains("is-flipped")) {
         card.classList.add("is-flipped");
       }
-      console.log(card);
+      //set the height to prevent overflow
       this.setHeight();
     },
 
+    //function triggered when hover the card for unflipping
     unflip(event, id) {
       let card = this.$refs[id][0];
       if (card.classList.contains("is-flipped")) {
         card.classList.remove("is-flipped");
       }
     },
-
+    //function to dynamically set the height of the card to prevent overflow
     setHeight() {
       let elements = document.querySelectorAll(".des");
       let title_elements = document.querySelectorAll(".des-title");
 
+      //set card description height
       elements.forEach(function(element) {
-        console.log(element.offsetHeight);
         element.style.height =
+          //reference to parent height in DOM tree
           element.parentElement.parentElement.offsetHeight * 0.68 + "px";
       });
+      //set card title height
       title_elements.forEach(function(element) {
-        console.log(element.offsetHeight);
         element.style.height =
+          //reference to parent height in DOM tree
           element.parentElement.parentElement.offsetHeight * 0.15 + "px";
       });
     },
+    //redirect to viewtutorial
     viewTutorial(tutorial_id) {
       this.$router.push({
         name: "viewTutorial",

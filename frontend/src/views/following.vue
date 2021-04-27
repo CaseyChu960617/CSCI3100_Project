@@ -4,11 +4,9 @@
     <v-row justify="center">
       <v-col sm="11">
         <v-card-title
-          >Check out for latest tutorials !<v-spacer /><v-btn
-            icon
-            @click.stop="dialog = true"
+          >My Tutorials<v-spacer /><!--<v-btn icon @click.stop="dialog = true"
             ><v-icon>mdi-plus</v-icon></v-btn
-          ></v-card-title
+          >--></v-card-title
         >
         <modal
           :dialog.sync="dialog"
@@ -73,9 +71,9 @@
               ></v-img>
               <v-card-title>{{ tutorial.title }}</v-card-title>
               <v-card-text class="sub">{{ tutorial.subject }} </v-card-text>
-              <v-card-text>
+              <!--  <v-card-text>
                 Instructor {{ tutorial.author.username }}
-              </v-card-text>
+              </v-card-text>-->
             </v-card>
 
             <v-card elevation="8" class="card__face card__face--back" ref="back"
@@ -84,8 +82,14 @@
                 <v-card-text class="des"
                   >{{ tutorial.description }}
                 </v-card-text>
-
                 <div class="btn-container">
+                  <!-- <v-btn class="view-btn">View</v-btn>
+                  <v-btn
+                    class="edit-btn ml-3"
+                    @click="editTutorial(tutorial._id)"
+                    >Edit</v-btn
+                  >
+                  <v-btn class="delete-btn ml-3">Delete</v-btn>-->
                   <v-btn
                     class="mx-2"
                     fab
@@ -95,6 +99,30 @@
                     @click="viewTutorial(tutorial._id)"
                   >
                     <v-icon dark> mdi-eye </v-icon>
+                  </v-btn>
+                  <v-btn
+                    class="mx-2"
+                    fab
+                    dark
+                    small
+                    color="primary"
+                    @click="editTutorial(tutorial._id)"
+                  >
+                    <v-icon dark>
+                      mdi-pen
+                    </v-icon>
+                  </v-btn>
+                  <v-btn
+                    class="mx-2"
+                    fab
+                    dark
+                    small
+                    color="primary"
+                    @click="deleteTutorial(tutorial._id)"
+                  >
+                    <v-icon dark>
+                      mdi-delete
+                    </v-icon>
                   </v-btn>
                 </div>
               </div>
@@ -121,12 +149,11 @@
         color="#99CFEA"
         dark
         fab
-        @click="toggle()"
+        @click.stop="dialog = true"
       >
-        <v-icon v-if="buttonClose == -1" color="black">mdi-menu</v-icon>
-        <v-icon v-if="buttonClose == 1" color="black">mdi-close</v-icon>
+        <v-icon color="black">mdi-plus</v-icon>
       </v-btn>
-      <v-btn
+      <!--<v-btn
         class="extended mr-0"
         fab
         dark
@@ -134,11 +161,11 @@
         color="#1F5A98"
         width="185px"
         @click.stop="dialog = true"
-      >
-        <!--<v-icon style="float:left">mdi-plus</v-icon>-->
-        Create tutorial
+      >-->
+      <!--<v-icon style="float:left">mdi-plus</v-icon>-->
+      <!-- Create tutorial
       </v-btn>
-      <v-btn
+        <v-btn
         class="extended mr-0"
         fab
         dark
@@ -147,9 +174,9 @@
         width="185px"
         @click="goToMyTutorial"
       >
-        <!--<v-icon style="float:left">mdi-book-open-blank-variant</v-icon>-->View
+       View
         my tutorials
-      </v-btn>
+      </v-btn>-->>
     </v-speed-dial>
   </v-container>
 </template>
@@ -221,14 +248,15 @@
   overflow-y: scroll;
   /*height: 250px;*/
 }
-.edit-btn {
+.btn-container {
   position: absolute;
   bottom: 10px;
-  left: 76px;
 }
 .view-btn {
-  position: absolute;
-  bottom: 10px;
+}
+.edit-btn {
+}
+.delete-btn {
 }
 .des::-webkit-scrollbar {
   display: none;
@@ -239,122 +267,5 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-
-.btn-container {
-  position: absolute;
-  bottom: 10px;
-}
 </style>
-<script>
-import modal from "../components/modal/tutorForm.vue"; //using a child component to render a pop-up modal on the same page
-import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
-import subjectsList from "../assets/subjects.json"; //import a json object from a json file stored CUHK subject list
-
-export default {
-  components: {
-    modal, //declare modal component
-  },
-  data() {
-    return {
-      subjects: subjectsList,
-      tutorials: [],
-      title: "",
-      dialog: false, //boolean varaible of whether the modal is pop up or not
-      load: true,
-      editedItem: {},
-      buttonClose: -1, //boolean to determine the close should be closed or not
-    };
-  },
-
-  created() {
-    //fetch tutorial when enter this page
-    this.fetchUserTutorials();
-    window.addEventListener("resize", this.setHeight);
-    this.setHeight();
-  },
-
-  methods: {
-    show(bool) {
-      //set boolean of showing the modal
-      this.dialog = bool;
-    },
-    toggle() {
-      //set boolean to determine the close should be closed or not
-      this.buttonClose *= -1;
-    },
-
-    //function triggered when hover the card for flipping
-    flip(event, id) {
-      let card = this.$refs[id][0];
-
-      if (!card.classList.contains("is-flipped")) {
-        card.classList.add("is-flipped");
-      }
-
-      //set the height to prevent overflow
-
-      this.setHeight();
-    },
-
-    //function triggered when hover the card for unflipping
-    unflip(event, id) {
-      let card = this.$refs[id][0];
-
-      if (card.classList.contains("is-flipped")) {
-        card.classList.remove("is-flipped");
-      }
-    },
-
-    //function to dynamically set the height of the card to prevent overflow
-    setHeight() {
-      let elements = document.querySelectorAll(".des");
-      let title_elements = document.querySelectorAll(".des-title");
-
-      //set card description height
-      elements.forEach(function(element) {
-        element.style.height =
-          //reference to parent height in DOM tree
-          element.parentElement.parentElement.offsetHeight * 0.68 + "px";
-      });
-      //set card title height
-      title_elements.forEach(function(element) {
-        element.style.height =
-          //reference to parent height in DOM tree
-          element.parentElement.parentElement.offsetHeight * 0.15 + "px";
-      });
-    },
-
-    //function to fetch user tutorials
-    fetchUserTutorials() {
-      //get request
-
-      DataService.get(
-        "tutorial/userTutorials",
-        this.$route.params.user_id
-      ).then((response) => {
-        let rawData = response.data;
-        //mapping the subjects
-        rawData.forEach((element) => {
-          element.subject = this.subjects[element.subject - 1]["text"];
-        });
-        this.tutorials = rawData;
-      });
-    },
-
-    //redirect to mytutorial
-    goToMyTutorial() {
-      this.$router.push({
-        name: "myTutorial",
-      });
-    },
-
-    //redirect the viewtutorial
-    viewTutorial(tutorial_id) {
-      this.$router.push({
-        name: "viewTutorial",
-        params: { tutorial_id: tutorial_id },
-      });
-    },
-  },
-};
-</script>
+<script></script>

@@ -13,39 +13,43 @@
 </template>
 
 <script>
-import DataService from "../services/DataService";
-import EditProfile from "../components/profile/editProfile.vue";
-import ViewProfile from "../components/profile/viewProfile.vue";
+import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
+import EditProfile from "../components/profile/editProfile.vue"; //using a child component to render edit profile
+import ViewProfile from "../components/profile/viewProfile.vue"; //using a child component to render viewproffile
 
 export default {
   components: {
-    EditProfile,
-    ViewProfile,
+    EditProfile, //decalre editprofile component
+    ViewProfile, //declare viewprofile component
   },
   data() {
     return {
       edit: true,
-      canEdit: false,
+      canEdit: false, //boolean to decide whether profile can be dit or not
       profile: {},
       loading: false,
     };
   },
   watch: {
+    //watch the change of user_id
     "$route.params.user_id"() {
       this.fetchUser();
     },
   },
   created() {
+    //fetch user data when enter the page
     this.fetchUser();
   },
   methods: {
+    //function to fetch the user data from database
     fetchUser() {
       this.loading = true;
-      console.log(this.$route.params.user_id);
+
       DataService.getProfile(this.$route.params.user_id)
         .then((response) => {
-          console.log(this.profile);
+          //get the response data from db
           this.profile = response.data;
+          //check if the id we fetch make with the current login user id, then we allow them to edit the profile
           this.profile._id == this.$store.state.auth.user.user_id
             ? (this.canEdit = true)
             : (this.canEdit = false);
@@ -53,11 +57,13 @@ export default {
         })
         .catch((err) => {
           this.loading = false;
-          console.log(err);
+          //if error is 401 403
           if (err.response.status == 401 || err.response.status == 403) {
             alert("Please Login again");
+            //redirect the homepage
             this.$router.push("/home");
           } else {
+            //if other error appears
             alert(err.response.data.message);
           }
         });

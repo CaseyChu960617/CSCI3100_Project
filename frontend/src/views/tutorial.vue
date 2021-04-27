@@ -14,32 +14,6 @@
           @submit="save()"
         ></modal>
 
-        <!-- <v-divider />
-          <v-virtual-scroll
-            bench="25"
-            min-height="83vh"
-            max-height="83vh"
-            item-height="75"
-            :items="items"
-          >
-            <template v-slot:default="{ item }">
-              <v-list-item :key="item">
-                <v-list-item-content>
-                  <v-list-item-title class="text-wrap">
-                    <strong>ID {{ item }}</strong>
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider />
-            </template>
-          </v-virtual-scroll> -->
-
-        <!-- <v-col md="6" sm="12"
-        ><v-card tile elevation="16" outlined height="100%">
-          <v-card-text>content</v-card-text>
-        </v-card></v-col
-      ><v-spacer />-->
-
         <v-row>
           <v-col
             cols="12"
@@ -137,7 +111,6 @@
         width="185px"
         @click.stop="dialog = true"
       >
-        <!--<v-icon style="float:left">mdi-plus</v-icon>-->
         Create tutorial
       </v-btn>
       <v-btn
@@ -149,8 +122,7 @@
         width="185px"
         @click="goToMyTutorial"
       >
-        <!--<v-icon style="float:left">mdi-book-open-blank-variant</v-icon>-->View
-        my tutorials
+        View my tutorials
       </v-btn>
     </v-speed-dial>
   </v-container>
@@ -255,13 +227,13 @@
 }
 </style>
 <script>
-import modal from "../components/modal/tutorForm.vue";
-import DataService from "../services/DataService";
-import subjectsList from "../assets/subjects.json";
+import modal from "../components/modal/tutorForm.vue"; //using a child component to render a pop-up modal on the same page
+import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
+import subjectsList from "../assets/subjects.json"; //import a json object from a json file stored CUHK subject list
 
 export default {
   components: {
-    modal,
+    modal, //declare modal component
   },
   data() {
     return {
@@ -276,59 +248,73 @@ export default {
   },
   computed: {
     currentUser() {
+      //store the current user data
       return this.$store.state.auth.user;
-    },
-    items() {
-      return Array.from({ length: 20 }, (k, v) => v + 1);
     },
   },
 
   created() {
+    //fetch all turoials when enter the page
     this.fetchAllTutorials();
+    //add resize event to sizeheight of the card
     window.addEventListener("resize", this.setHeight);
+    //set height of the card
     this.setHeight();
   },
   destroyed() {
+    //add resize event to sizeheight of the card
     window.removeEventListener("resize", this.setDesHeight);
   },
 
   methods: {
     show(bool) {
+      //set boolean of showing the modal
       this.dialog = bool;
     },
 
+    //function triggered when hover the card for flipping
     flip(event, id) {
       let card = this.$refs[id][0];
+
       if (!card.classList.contains("is-flipped")) {
         card.classList.add("is-flipped");
       }
+      //set the height to prevent overflow
+
       this.setHeight();
     },
 
+    //function triggered when hover the card for unflipping
     unflip(event, id) {
       let card = this.$refs[id][0];
+
       if (card.classList.contains("is-flipped")) {
         card.classList.remove("is-flipped");
       }
     },
 
+    //function to dynamically set the height of the card to prevent overflow
     setHeight() {
       let elements = document.querySelectorAll(".des");
       let title_elements = document.querySelectorAll(".des-title");
 
+      //set card description height
       elements.forEach(function(element) {
         element.style.height =
+          //reference to parent height in DOM tree
           element.parentElement.parentElement.offsetHeight * 0.68 + "px";
       });
+      //set card title height
       title_elements.forEach(function(element) {
         element.style.height =
+          //reference to parent height in DOM tree
           element.parentElement.parentElement.offsetHeight * 0.15 + "px";
       });
     },
 
+    //function to fetch all tutorials
     fetchAllTutorials() {
       DataService.getAllTutorial().then((response) => {
-        console.log("all Data is ", response.data);
         let rawData = response.data;
         //mapping the subjects
         rawData.forEach((element) => {
@@ -338,12 +324,14 @@ export default {
       });
     },
 
+    //redirect to mytutorial
     goToMyTutorial() {
       this.$router.push({
         name: "myTutorial",
       });
     },
 
+    //redirect to viewtutorial
     viewTutorial(tutorial_id) {
       this.$router.push({
         name: "viewTutorial",
@@ -351,6 +339,7 @@ export default {
       });
     },
 
+    //redirect to edittutorial
     editTutorial(tutorialId) {
       this.$router.push({
         name: "editTutorial",
