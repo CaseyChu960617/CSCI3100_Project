@@ -165,16 +165,16 @@
 }
 </style>
 <script>
-import DataService from "../services/DataService";
-import subjectsList from "../assets/subjects.json";
-import viewChapter from "../components/tutorial/viewChapter";
+import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
+import subjectsList from "../assets/subjects.json"; //import a json object from a json file stored CUHK subject list
+import viewChapter from "../components/tutorial/viewChapter"; //using a child component to view chapter on the same page
 
 export default {
-  components: { viewChapter },
+  components: { viewChapter }, //declare viewchapter component
   data() {
     return {
       author: null,
-      subjects: subjectsList,
+      subjects: subjectsList, //subjectList from subjects.json
       tutorial: null, //the whole returned object from tutorial
       chapters: [],
       selectedId: null,
@@ -185,19 +185,24 @@ export default {
 
   computed: {
     currentUser() {
+      //store the current user data
       return this.$store.state.auth.user;
     },
   },
 
   created() {
+    //fetch the tutorial when enter this page
     this.fetchTutorial();
   },
   methods: {
+    //fetch the tutorial
     fetchTutorial() {
+      //get request
       DataService.get(
         "tutorial/getOneTutorial",
         this.$route.params.tutorial_id
       ).then((response) => {
+        //get the tutorial content
         this.tutorial = response.data;
         this.chapters = response.data.chapters;
         if (this.tutorial == "") this.noThumbnail = true;
@@ -205,23 +210,31 @@ export default {
       });
     },
 
+    //function that change indicator variables for conditional rendering
     selectChapter(chapter_id, viewTutorial) {
       if (viewTutorial === 0) {
+        //user is switching view from tutorial metaData to chapter
         this.viewTutorial = 0;
+        //set the selected chapter id for condional rendering
         this.selectedId = chapter_id;
       } else {
+        //user is switching view from to chapter tutorial metaData
         this.viewTutorial = 1;
       }
     },
 
+    //fetching one chapter from the database
     fetchOneChapter(chapter_id) {
       DataService.get("tutorial/getOneChapter", chapter_id).then((response) => {
+        //get the chapter content
         this.content = response.data.content;
       });
     },
 
+    //fetching all chapter from the database
     fetchAllChapter(chapter_id) {
       DataService.get("tutorial/getOneChapter", chapter_id).then((response) => {
+        //get the chapter content
         this.content = response.data.content;
       });
     },

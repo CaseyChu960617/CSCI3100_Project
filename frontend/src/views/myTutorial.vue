@@ -269,10 +269,9 @@
 }
 </style>
 <script>
-import modal from "../components/modal/tutorForm.vue";
-import DataService from "../services/DataService";
-import subjectsList from "../assets/subjects.json";
-//import authHeader from "../services/auth-header.js";
+import modal from "../components/modal/tutorForm.vue"; //using a child component to render a pop-up modal on the same page
+import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
+import subjectsList from "../assets/subjects.json"; //import a json object from a json file stored CUHK subject list
 
 export default {
   components: {
@@ -289,21 +288,22 @@ export default {
     };
   },
   computed: {
-    items() {
-      return Array.from({ length: 20 }, (k, v) => v + 1);
-    },
-
     currentUser() {
+      //store the login user
       return this.$store.state.auth.user;
     },
   },
 
   created() {
+    //fetch all turoials when enter the page
     this.fetchMyTutorial();
+    //add resize event to sizeheight of the card
     window.addEventListener("resize", this.setHeight);
+    //set height of the card
     this.setHeight();
   },
   destroyed() {
+    //add resize event to sizeheight of the card
     window.removeEventListener("resize", this.setDesHeight);
   },
 
@@ -316,6 +316,7 @@ export default {
           rawData.forEach((element) => {
             element.subject = this.subjects[element.subject - 1]["text"];
           });
+          //store the response data into tutorials varaibles in vue
           this.tutorials = rawData;
         }
       );

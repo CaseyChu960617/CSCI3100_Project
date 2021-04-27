@@ -13,6 +13,7 @@ import editTutorial from "./views/editTutorial.vue";
 import myTutorial from "./views/myTutorial.vue";
 import viewTutorial from "./views/viewTutorial.vue";
 import userTutorial from "./views/userTutorial.vue";
+import following from "./views/following.vue";
 //import { component } from "vue/types/umd";
 
 Vue.use(Router);
@@ -77,6 +78,11 @@ export const router = new Router({
       name: "viewTutorial",
       path: "/tutorial/:tutorial_id",
       component: viewTutorial,
+    },
+    {
+      name: "following",
+      path: "/following",
+      component: following,
     },
   ],
 });
