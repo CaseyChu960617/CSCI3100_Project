@@ -166,17 +166,11 @@ export default {
         username: this.account.username,
         gender: this.account.gender,
       };
-      DataService.updateProfile(
-        data
-        //,
-        //{
-        //  headers: authHeader(),
-        //}
-      )
-        .then((res) => {
+      DataService.updateProfile(data)
+        .then((response) => {
           alert("Profile saved.");
-          localStorage.setItem("user", JSON.stringify(res.data));
-          this.$store.dispatch("auth/editProfile", res.data);
+          localStorage.setItem("user", JSON.stringify(response.data));
+          this.$store.dispatch("auth/editProfile", response.data);
           this.refreshProfile();
         })
         .catch((err) => {
@@ -184,8 +178,8 @@ export default {
           if (err.response.status == 401 || err.response.status == 403) {
             alert("Please Login again");
             this.$router.push("/home");
-          } else {
-            console.log(err.response.data);
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
           }
         });
     },
