@@ -96,7 +96,7 @@ img {
 
 <script>
 import DataService from "../../services/DataService";
-import authHeader from "../../services/auth-header.js";
+//import authHeader from "../../services/auth-header.js";
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
 import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
@@ -278,9 +278,13 @@ export default {
         thread_id: this.thread._id,
         content: this.content,
       };
-      DataService.postComment(data, {
-        headers: authHeader(),
-      })
+      DataService.postComment(
+        data
+        //,
+        //{
+        //  headers: authHeader(),
+        //}
+      )
         .then((res) => {
           this.content = "";
           this.commentloading = false;

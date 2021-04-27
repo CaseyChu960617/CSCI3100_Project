@@ -172,7 +172,7 @@ export default {
       };
       //console.log(data);
       DataService.post("tutorial/createChapter", data, {
-        header: authHeader(),
+        headers: authHeader(),
       }).then((response) => {
         //console.log("respone is ", response.data);
         console.log("this.tutorial._id :", response.data);
@@ -208,18 +208,9 @@ export default {
 
     changeEdit(id, editMetadata) {
       this.selectedId = id;
-      //console.log("this.editMetadata ", this.editMetadata);
-      //console.log("this.selectedId ", this.selectedId);
-
-      // if (this.currentId !== this.selectedId && this.currentId !== null) {
-      //   alert(this.currentId + " will be saved first");
-      //
-      // }
-      //
 
       this.saveWhenChange(this.editMetadata, this.currentId, this.selectedId);
       this.currentId = this.selectedId; //need to be emmited
-      //alert("changed id");
       if (editMetadata) {
         this.editMetadata = 1;
         console.log(this.editMetadata);

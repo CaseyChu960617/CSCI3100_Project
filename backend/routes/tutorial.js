@@ -13,6 +13,7 @@ const {
   createChapter,
   editTutorial,
   editChapter,
+  deleteTutorial,
   deleteChapter,
 } = require("../controllers/tutorial");
 
@@ -43,7 +44,7 @@ router.put("/editChapter", authJwt.verifyToken, editChapter);
 
 //router.put("/postComment", authJwt.verifyToken, postComment);
 
-//router.delete("/deleteTutorial/:tutorial_id", authJwt.verifyToken, deleteTutorial);
+router.delete("/deleteTutorial/:tutorial_id", authJwt.verifyToken, deleteTutorial);
 
 router.delete("/deleteChapter/:tutorial_id/:chapter_id", authJwt.verifyToken, deleteChapter);
 

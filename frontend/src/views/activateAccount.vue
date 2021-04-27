@@ -13,7 +13,7 @@
 
 <script>
 import DataService from "../services/DataService";
-import authHeader from "../services/auth-header.js";
+//import authHeader from "../services/auth-header.js";
 
 export default {
   data() {
@@ -32,9 +32,13 @@ export default {
 
   methods: {
     activateAccount() {
-      DataService.get("auth/activateAccount", this.$route.params.user_id, {
-        headers: authHeader(),
-      }).then(() => {
+      DataService.get(
+        "auth/activateAccount",
+        this.$route.params.user_id
+        //{
+        //  headers: authHeader(),
+        //}
+      ).then(() => {
         this.currentUser.activation = true;
         this.$router.push("/home");
       });

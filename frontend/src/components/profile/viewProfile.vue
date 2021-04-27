@@ -129,9 +129,12 @@ export default {
         my_user_id: this.currentUser.user_id,
         follow_id: this.profile._id,
       };
-      DataService.follow(data, {
-        headers: authHeader(),
-      }).then((response) => {
+      DataService.follow(data
+      //, 
+      //{
+      //  headers: authHeader(),
+      //}
+      ).then((response) => {
         var user = JSON.parse(localStorage.getItem("user"));
         user.following = Object.values(response.data);
         localStorage.setItem("user", JSON.stringify(user));
@@ -145,9 +148,12 @@ export default {
         follow_id: this.profile._id,
       };
 
-      DataService.unfollow(data, {
-        headers: authHeader(),
-      }).then((response) => {
+      DataService.unfollow(data
+      //, 
+      //{
+      //  headers: authHeader(),
+      //}
+      ).then((response) => {
         var user = JSON.parse(localStorage.getItem("user"));
         user.following = Object.values(response.data);
         localStorage.setItem("user", JSON.stringify(user));

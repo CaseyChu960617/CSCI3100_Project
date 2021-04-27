@@ -63,7 +63,7 @@ import CodeBlock from "@ckeditor/ckeditor5-code-block/src/codeblock";
 import Mathematics from "ckeditor5-math/src/math";
 import Indent from "@ckeditor/ckeditor5-indent/src/indent";
 import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock";
-import authHeader from "../../services/auth-header.js";
+//import authHeader from "../../services/auth-header.js";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import dotenv from "dotenv";
 dotenv.config();
@@ -225,9 +225,14 @@ export default {
         content: this.chapter.content,
       };
 
-      DataService.put("tutorial/editChapter", data, {
-        headers: authHeader(),
-      }).then((response) => {
+      DataService.put(
+        "tutorial/editChapter",
+        data
+        //,
+        //{
+        //  headers: authHeader(),
+        //}
+      ).then((response) => {
         console.log(response);
         DataService.get("tutorial/getOneChapter", this.chapterId).then(
           (response) => {

@@ -1,12 +1,17 @@
 import http from "../http-common";
-const Thread = "/thread/";
-const Tutorial = "/tutorial/";
-const Profile = "/user/";
-const Subject = "subject/";
-const Upload = "/upload/";
-const Chat = "/chat/";
+import authHeader from "./auth-header";
+const thread = "/thread/";
+const tutorial = "/tutorial/";
+const profile = "/user/";
+const subject = "subject/";
+const upload = "/upload/";
+const chat = "/chat/";
+const header = {
+  headers: authHeader(),
+}
+
 class DataService {
-  getAll(table, header) {
+  getAll(table) {
     return http.get(`/${table}`, header);
   }
 
@@ -15,7 +20,7 @@ class DataService {
     return http.get(`/${table}/${id}`); //, header);
   }
 
-  create(table, data, header) {
+  create(table, data) {
     return http.post(`/${table}`, data, header);
   }
 
@@ -23,66 +28,74 @@ class DataService {
     return http.put(`/${table}/${id}`, data, header);
   }
 
-  delete(table, id, header) {
+  delete(table, id) {
     //, //id, header) {
     return http.delete(`/${table}/${id}`, header); //header);
   }
 
-  deleteChapter(tutorial_id, chapter_id, header) {
+  deleteTutorial(tutorial_id) {
     //, //id, header) {
     return http.delete(
-      Tutorial + `deleteChapter/${tutorial_id}/${chapter_id}`,
+      tutorial + `deleteTutorial/${tutorial_id}`,
       header
-    ); //header);
+    );
+  }
+
+  deleteChapter(tutorial_id, chapter_id) {
+    //, //id, header) {
+    return http.delete(
+      tutorial + `deleteChapter/${tutorial_id}/${chapter_id}`,
+      header
+    );
   }
 
   //discussions
   getAllThread() {
-    return http.get(Thread);
+    return http.get(thread);
   }
 
   getSubThread(id) {
-    return http.get(Thread + Subject + id);
+    return http.get(thread + subject + id);
   }
 
   getOneThread(id) {
-    return http.get(Thread + id);
+    return http.get(thread + id);
   }
 
   createThread(data, header) {
-    return http.post(Thread, data, header);
+    return http.post(thread, data, header);
   }
 
   updateThread(id, data, header) {
-    return http.put(Thread + id, data, header);
+    return http.put(thread + id, data, header);
   }
 
   deleteThread(table, id, header) {
-    return http.delete(Thread + id, header);
+    return http.delete(thread + id, header);
   }
 
-  postComment(data, header) {
-    return http.put(Thread + "postComment", data, header);
+  postComment(data) {
+    return http.put(thread + "postComment", data, header);
   }
 
-  post(table, data, header) {
+  post(table, data) {
     return http.post(`/${table}`, data, header);
   }
 
-  put(table, data, header) {
+  put(table, data) {
     return http.put(`/${table}`, data, header);
   }
 
   getAllTutorial() {
-    return http.get(Tutorial);
+    return http.get(tutorial);
   }
 
   getLatestTutorials() {
-    return http.get(Tutorial + "getLatestTutorials");
+    return http.get(tutorial + "getLatestTutorials");
   }
 
   getLatestThreads() {
-    return http.get(Thread + "getLatestThreads");
+    return http.get(thread + "getLatestThreads");
   }
 
   // create(table, data, header) {
@@ -102,41 +115,41 @@ class DataService {
   // }
 
   // Chat
-  getOneChat(data, header) {
-    return http.post(Chat + "getOneChat", data, header);
+  getOneChat(data) {
+    return http.post(chat + "getOneChat", data, header);
   }
 
   // Profile
   getProfile(id) {
-    return http.get(Profile + id);
+    return http.get(profile + id);
   }
 
-  updateProfile(data, header) {
-    return http.put(Profile + "editProfile", data, header);
+  updateProfile(data) {
+    return http.put(profile + "editProfile", data, header);
   }
 
-  follow(data, header) {
-    return http.put(Profile + "follow", data, header);
+  follow(data) {
+    return http.put(profile + "follow", data, header);
   }
 
-  unfollow(data, header) {
-    return http.put(Profile + "unfollow", data, header);
+  unfollow(data) {
+    return http.put(profile + "unfollow", data, header);
   }
 
-  changePassword(data, header) {
-    return http.put(Profile + "resetPassword", data, header);
+  changePassword(data) {
+    return http.put(profile + "resetPassword", data, header);
   }
 
-  updateProPic(data, header) {
-    return http.put(Profile + "updateProPic", data, header);
+  updateProPic(data) {
+    return http.put(profile + "updateProPic", data, header);
   }
 
-  uploadThumbnail(formData, header) {
-    return http.post(Upload + "uploadThumbnail", formData, header);
+  uploadThumbnail(formData) {
+    return http.post(upload + "uploadThumbnail", formData, header);
   }
 
-  uploadProPic(formData, header) {
-    return http.post(Upload + "uploadProPic", formData, header);
+  uploadProPic(formData) {
+    return http.post(upload + "uploadProPic", formData, header);
   }
 }
 

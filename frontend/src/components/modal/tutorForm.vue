@@ -53,7 +53,7 @@
 <script>
 import subjectsList from "../../assets/subjects.json";
 import DataService from "../../services/DataService";
-import authHeader from "../../services/auth-header.js";
+//import authHeader from "../../services/auth-header.js";
 export default {
   props: ["dialog", "editedItem"],
   data() {
@@ -96,9 +96,14 @@ export default {
         description: this.description,
       };
       //console.log(this.subjects[this.subject - 1]["code"]);
-      DataService.post("tutorial/createTutorial", data, {
-        headers: authHeader(),
-      }).then((response) => {
+      DataService.post(
+        "tutorial/createTutorial",
+        data
+        //,
+        //{
+        //  headers: authHeader(),
+        //}
+      ).then((response) => {
         let tutorialId = response.data;
         console.log("tutorialId is" + tutorialId);
         this.$router.push({

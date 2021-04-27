@@ -305,7 +305,7 @@ exports.deleteTutorial = async (req, res) => {
     tutorial.remove();
 
     res.status(200).send({
-      message: "Thread successfully deleted.",
+      message: "Tutorial successfully deleted.",
     });
   } else {
     res.status(400).send({ message: "Tutorial not found." });

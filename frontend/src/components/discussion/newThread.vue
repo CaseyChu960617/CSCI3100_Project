@@ -84,7 +84,7 @@ import Heading from "@ckeditor/ckeditor5-heading/src/heading";
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 import dotenv from "dotenv";
-import authHeader from "../../services/auth-header.js";
+//import authHeader from "../../services/auth-header.js";
 dotenv.config();
 export default {
   props: ["dialog"],
@@ -210,9 +210,13 @@ export default {
         subject: this.subject,
         content: this.content,
       };
-      DataService.createThread(data, {
-        headers: authHeader(),
-      }).then((response) => {
+      DataService.createThread(
+        data
+        //,
+        //{
+        //  headers: authHeader(),
+        //}
+      ).then((response) => {
         let thread_id = response.data;
         alert("Success");
         this.close();

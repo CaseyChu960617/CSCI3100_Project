@@ -81,9 +81,12 @@ export default {
         my_user_id: this.currentUser.user_id,
         profileImage: this.tempsrc,
       };
-      DataService.updateProPic(data, {
-        headers: authHeader(),
-      }).then((response) => {
+      DataService.updateProPic(data
+      //, 
+      //{
+      //  headers: authHeader(),
+      //}
+      ).then((response) => {
         var user = JSON.parse(localStorage.getItem("user"));
         user.profileImage = response.data;
         localStorage.setItem("user", JSON.stringify(user));

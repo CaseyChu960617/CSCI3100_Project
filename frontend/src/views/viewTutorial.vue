@@ -200,9 +200,7 @@ export default {
       ).then((response) => {
         this.tutorial = response.data;
         this.chapters = response.data.chapters;
-        //console.log(this.tutorial);
         if (this.tutorial == "") this.noThumbnail = true;
-        //console.log(this.chapters);
         this.author = this.tutorial.author;
       });
     },

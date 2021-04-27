@@ -7,20 +7,18 @@ const jwt = require("jsonwebtoken");
 // getProfile function
 exports.getProfile = async (req, res) => {
 
-  //try {
+  console.log(req.params["user_id"]);
+  try {
     User.findOne({ _id: req.params["user_id"] })
       .select("username firstname lastname email gender following profileImage activation")
       .exec()
-      .then((err, doc) => {
-        if (err)
-          res.status(400).send(err.message);
-        else
+      .then((doc) => {
           res.status(200).send(doc);
       });
-  // }
-  //catch(err) {
-
-  //}
+  }
+  catch(err) {
+    res.status(400).send({ message: err.message });
+  }
 };
 
 // editProfile function

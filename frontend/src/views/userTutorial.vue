@@ -299,20 +299,15 @@ export default {
       if (!card.classList.contains("is-flipped")) {
         card.classList.add("is-flipped");
       }
-
-      console.log(card);
-
       this.setHeight();
     },
 
     unflip(event, id) {
       let card = this.$refs[id][0];
-      console.log(card.classList);
 
       if (card.classList.contains("is-flipped")) {
         card.classList.remove("is-flipped");
       }
-      console.log(card);
     },
 
     setHeight() {
@@ -320,26 +315,20 @@ export default {
       let title_elements = document.querySelectorAll(".des-title");
 
       elements.forEach(function(element) {
-        console.log(element.offsetHeight);
         element.style.height =
           element.parentElement.parentElement.offsetHeight * 0.68 + "px";
-
-        console.log(element.offsetHeight);
       });
       title_elements.forEach(function(element) {
-        console.log(element.offsetHeight);
         element.style.height =
           element.parentElement.parentElement.offsetHeight * 0.15 + "px";
       });
     },
 
     fetchUserTutorials() {
-      console.log(this.$route.params.user_id);
       DataService.get(
         "tutorial/userTutorials",
         this.$route.params.user_id
       ).then((response) => {
-        console.log("all Data is ", response.data);
         let rawData = response.data;
         //mapping the subjects
         rawData.forEach((element) => {

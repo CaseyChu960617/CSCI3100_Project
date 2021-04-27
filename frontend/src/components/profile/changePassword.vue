@@ -60,7 +60,7 @@
 
 <script>
 import DataService from "../../services/DataService";
-import authHeader from "../../services/auth-header.js";
+//import authHeader from "../../services/auth-header.js";
 
 export default {
   data() {
@@ -87,9 +87,13 @@ export default {
       this.$emit("switchform");
     },
     changePassword() {
-      DataService.changePassword(this.password, {
-        headers: authHeader(),
-      })
+      DataService.changePassword(
+        this.password
+        //,
+        //{
+        //  headers: authHeader(),
+        //}
+      )
         .then(() => {
           alert("Password has been reset successfully.");
           this.$emit("switchform");
