@@ -39,7 +39,6 @@
 
 <script>
 import DataService from "../../services/DataService";
-import authHeader from "../../services/auth-header.js";
 
 export default {
   props: ["dialog", "src"],
@@ -66,13 +65,21 @@ export default {
       if (file) {
         this.loading = true;
         this.formData.append("file", file);
-        DataService.uploadProPic(this.formData, {
-          headers: authHeader(),
-        }).then((response) => {
-          this.tempsrc = response.data.location;
-          this.formData = new FormData();
-          this.loading = false;
-        });
+        DataService.uploadProPic(this.formData)
+          .then((response) => {
+            this.tempsrc = response.data.location;
+            this.formData = new FormData();
+            this.loading = false;
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err.response.status == 401 || err.response.status == 403) {
+              alert("Please Login again");
+              this.$router.push("/home");
+            } else if (err.response.status == 400) {
+              alert(err.response.data.message);
+            }
+          });
       }
     },
 
@@ -81,20 +88,25 @@ export default {
         my_user_id: this.currentUser.user_id,
         profileImage: this.tempsrc,
       };
-      DataService.updateProPic(data
-      //, 
-      //{
-      //  headers: authHeader(),
-      //}
-      ).then((response) => {
-        var user = JSON.parse(localStorage.getItem("user"));
-        user.profileImage = response.data;
-        localStorage.setItem("user", JSON.stringify(user));
-        this.$store.dispatch("auth/uploadProPic", response.data);
-        console.log(response.data);
-        this.close();
-        this.$emit("refreshProfile");
-      });
+      DataService.updateProPic(data)
+        .then((response) => {
+          var user = JSON.parse(localStorage.getItem("user"));
+          user.profileImage = response.data;
+          localStorage.setItem("user", JSON.stringify(user));
+          this.$store.dispatch("auth/uploadProPic", response.data);
+          console.log(response.data);
+          this.close();
+          this.$emit("refreshProfile");
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$router.push("/home");
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
+        });
     },
   },
 };
