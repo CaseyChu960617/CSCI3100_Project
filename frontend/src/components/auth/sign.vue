@@ -37,6 +37,7 @@ export default {
   methods: {
     switchform() {
       this.signup = !this.signup;
+      console.log(this.signup);
     },
   },
 };

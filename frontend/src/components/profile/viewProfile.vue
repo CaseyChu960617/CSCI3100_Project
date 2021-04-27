@@ -82,7 +82,6 @@
 
 <script>
 import DataService from "../../services/DataService";
-import authHeader from "../../services/auth-header.js";
 
 export default {
   props: ["profile", "loading"],
@@ -108,19 +107,24 @@ export default {
   },
   methods: {
     startChat() {
-      DataService.getOneChat(
-        {
-          user_id_1: this.currentUser.user_id,
-          user_id_2: this.profile._id,
-        },
-        {
-          headers: authHeader(),
-        }
-      ).then((response) => {
-        this.$router.push({
-          name: "chat",
-          params: { chatId: response.data._id },
-        });
+      DataService.getOneChat({
+        user_id_1: this.currentUser.user_id,
+        user_id_2: this.profile._id,
+      }).then((response) => {
+        this.$router
+          .push({
+            name: "chat",
+            params: { chatId: response.data._id },
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err.response.status == 401 || err.response.status == 403) {
+              alert("Please Login again");
+              this.$router.push("/home");
+            } else if (err.response.status == 400) {
+              alert(err.response.data.message);
+            }
+          });
       });
     },
 
@@ -129,17 +133,23 @@ export default {
         my_user_id: this.currentUser.user_id,
         follow_id: this.profile._id,
       };
-      DataService.follow(data
-      //, 
-      //{
-      //  headers: authHeader(),
-      //}
-      ).then((response) => {
-        var user = JSON.parse(localStorage.getItem("user"));
-        user.following = Object.values(response.data);
-        localStorage.setItem("user", JSON.stringify(user));
-        this.$store.dispatch("auth/follow", this.profile._id);
-      });
+
+      DataService.follow(data)
+        .then((response) => {
+          var user = JSON.parse(localStorage.getItem("user"));
+          user.following = Object.values(response.data);
+          localStorage.setItem("user", JSON.stringify(user));
+          this.$store.dispatch("auth/follow", this.profile._id);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$router.push("/home");
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
+        });
     },
 
     unfollow() {
@@ -148,17 +158,22 @@ export default {
         follow_id: this.profile._id,
       };
 
-      DataService.unfollow(data
-      //, 
-      //{
-      //  headers: authHeader(),
-      //}
-      ).then((response) => {
-        var user = JSON.parse(localStorage.getItem("user"));
-        user.following = Object.values(response.data);
-        localStorage.setItem("user", JSON.stringify(user));
-        this.$store.dispatch("auth/unfollow", this.profile._id);
-      });
+      DataService.unfollow(data)
+        .then((response) => {
+          var user = JSON.parse(localStorage.getItem("user"));
+          user.following = Object.values(response.data);
+          localStorage.setItem("user", JSON.stringify(user));
+          this.$store.dispatch("auth/unfollow", this.profile._id);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$router.push("/home");
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
+        });
     },
 
     viewUserTutorials() {

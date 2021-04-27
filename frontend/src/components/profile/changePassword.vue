@@ -87,23 +87,17 @@ export default {
       this.$emit("switchform");
     },
     changePassword() {
-      DataService.changePassword(
-        this.password
-        //,
-        //{
-        //  headers: authHeader(),
-        //}
-      )
+      DataService.changePassword(this.password)
         .then(() => {
           alert("Password has been reset successfully.");
           this.$emit("switchform");
         })
         .catch((err) => {
           console.log(err);
-          if (err.response?.status == 401 || err.response?.status == 403) {
+          if (err.response.status == 401 || err.response.status == 403) {
             alert("Please Login again");
             this.$router.push("/home");
-          } else {
+          } else if (err.response.status == 400) {
             alert(err.response.data.message);
           }
         });

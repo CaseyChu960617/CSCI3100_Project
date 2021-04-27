@@ -111,7 +111,7 @@
 
 <script>
 import DataService from "../../services/DataService";
-import authHeader from "../../services/auth-header.js";
+
 export default {
   data() {
     return {
@@ -143,21 +143,24 @@ export default {
   },
   methods: {
     signup() {
-      //var temp = this.account.email;
+      // The email has to be cuhk link email.
       this.account.email = this.email + "@link.cuhk.edu.hk";
-      DataService.post("auth/signup", this.account, {
-        headers: authHeader(),
-      })
-        .then((res) => {
-          alert(res.data.message);
-          if (res.data.accessToken) {
-            localStorage.setItem("user", JSON.stringify(res.data));
+
+      // Do post request with the inputs
+      DataService.post("auth/signup", this.account)
+        .then((response) => {
+          // Store accessToken and other user information to local storage
+          if (response.data.accessToken) {
+            localStorage.setItem("user", JSON.stringify(response.data));
           }
-          this.$store.dispatch("auth/registered", res.data);
-          this.$router.push("/profile");
+          this.$store.dispatch("auth/registered", response.data);
+          //this.$router.push("/profile");
         })
-        .catch(() => {
-          this.message = "User with this email/username has already existed.";
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status == 400) {
+            this.message = err.response.data.message;
+          }
         });
     },
     back() {

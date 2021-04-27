@@ -139,6 +139,7 @@
 </style>
 <script>
 import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
+import subjectsList from "../assets/subjects.json"; //import a json object from a json file stored CUHK subject list
 
 export default {
   components: {},
@@ -147,7 +148,8 @@ export default {
       tutorials: [],
       threads: [],
       title: "",
-      load: true,
+      loading: true,
+      subjects: subjectsList,
     };
   },
   computed: {
@@ -160,6 +162,7 @@ export default {
   created() {
     //fetch lastest turoials when enter the page
     this.fetchLatestTutorials();
+    this.fetchLatestDiscussions();
     //add resize event to sizeheight of the card
     window.addEventListener("resize", this.setHeight);
     //set height of the card
@@ -175,6 +178,8 @@ export default {
         rawData.forEach((element) => {
           element.subject = this.subjects[element.subject - 1]["text"];
         });
+
+        console.log(this.tutorials);
         //get the data to the local variable/data vue
         this.tutorials = rawData;
       });
@@ -183,7 +188,6 @@ export default {
     //function triggered when hover the card for flipping
     flip(event, id) {
       let card = this.$refs[id][0];
-
       if (!card.classList.contains("is-flipped")) {
         card.classList.add("is-flipped");
       }
@@ -194,7 +198,6 @@ export default {
     //function triggered when hover the card for unflipping
     unflip(event, id) {
       let card = this.$refs[id][0];
-
       if (card.classList.contains("is-flipped")) {
         card.classList.remove("is-flipped");
       }

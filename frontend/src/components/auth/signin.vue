@@ -66,26 +66,31 @@ export default {
   },
   methods: {
     signin() {
+      // If the inputs are valid
       if (this.isValid) {
+        // Do post request with the inputs
         this.$store
           .dispatch("auth/signin", {
             email: this.email,
             password: this.password,
           })
           .then(() => {
+            // Redirect to home page
             this.$router.push("/home");
           })
-          .catch(() => {
-            this.message = "Invalid Username/Password";
-            this.password = "";
+          .catch((err) => {
+            if (err.response.status == 400) {
+              this.message = err.response.data.message;
+            }
           });
-      } else {
-        this.message = "Email/Password cannot be empty";
       }
+      // If the inputs are not valid.
+      else this.message = "Email/Password cannot be empty.";
     },
-    signup() {
-      this.$emit("switchform");
-    },
+  },
+  signup() {
+    console.log("called");
+    this.$emit("switchform");
   },
 };
 </script>

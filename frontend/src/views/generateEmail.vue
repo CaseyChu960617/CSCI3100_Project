@@ -53,10 +53,7 @@ export default {
   methods: {
     //function to generate email  when clicked
     generateEmail() {
-      DataService.get(
-        "auth/generateEmail",
-        this.currentUser.user_id
-      ).then(() => {});
+      DataService.get("auth/generateEmail", this.currentUser.user_id);
     },
   },
 };
