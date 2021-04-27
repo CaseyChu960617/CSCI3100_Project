@@ -4,65 +4,17 @@
       <!-- class="hidden-sm-and-down" -->
       <v-col cols="12" md="3"
         ><v-card tile elevation="16" outlined :height="height"
-          ><ThreadNavBar @refreshList="fetchThreadList(0)" />
-          <ThreadList :threadList="threadList" :loading="listLoading" /></v-card
+          ><ThreadNavBar @refreshList="fetchThreadList(0)"/>
+          <ThreadList :threadList="threadList" :loading="listLoading"/></v-card
       ></v-col>
       <v-col cols="0" md="7"
         ><v-card tile elevation="16" outlined :height="height"
           ><Thread
             :thread="thread"
             :loading="threadLoading"
-            @refreshThread="fetchOneThread($route.params.thread_id)" /></v-card
+            @refreshThread="fetchOneThread($route.params.thread_id)"/></v-card
       ></v-col>
     </v-row>
-
-    <!-- <v-speed-dial
-      v-model="fab"
-      :top="top"
-      :bottom="bottom"
-      :right="right"
-      :left="left"
-      :direction="direction"
-      :open-on-hover="hover"
-      :transition="transition"
-    >
-      <v-btn
-        id="main-btn"
-        slot="activator"
-        v-model="fab"
-        color="#99CFEA"
-        dark
-        fab
-        @click="toggle()"
-      >
-        <v-icon v-if="buttonClose == -1" color="black">mdi-menu</v-icon>
-        <v-icon v-if="buttonClose == 1" color="black">mdi-close</v-icon>
-      </v-btn>
-      <v-btn
-        class="extended mr-0"
-        fab
-        dark
-        small
-        color="#1F5A98"
-        width="185px"
-        @click.stop="dialog = true"
-      >
-        <v-icon style="float:left">mdi-plus</v-icon>
-        Create thread
-      </v-btn>
-      <v-btn
-        class="extended mr-0"
-        fab
-        dark
-        small
-        color="#1F5A98"
-        width="185px"
-        @click="goToMyTutorial"
-      >
-        <v-icon style="float:left">mdi-book-open-blank-variant</v-icon>View
-        My threads
-      </v-btn>
-    </v-speed-dial> -->
   </v-container>
 </template>
 
@@ -163,32 +115,3 @@ export default {
   },
 };
 </script>
-
-
-<style>
-/* .v-speed-dial {
-  position: sticky !important;
-  right: 15vw;
-  bottom: 10vh;
-}
-
-#create .v-btn--floating {
-  position: relative;
-}
-
-#main-btn {
-  position: relative;
-  float: right;
-}
-
-.v-btn.extended {
-  width: 150px;
-  margin-right: 75px;
-  border-radius: 25px;
-  align-content: left;
-}
-
-.v-speed-dial__list {
-  align-items: flex-end !important;
-} */
-</style>

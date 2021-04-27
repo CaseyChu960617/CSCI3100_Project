@@ -3,31 +3,6 @@
     <v-row justify="center">
       <v-col sm="11">
         <v-card-title>What's new in tutorials ?</v-card-title>
-        <!-- <v-divider />
-          <v-virtual-scroll
-            bench="25"
-            min-height="83vh"
-            max-height="83vh"
-            item-height="75"
-            :items="items"
-          >
-            <template v-slot:default="{ item }">
-              <v-list-item :key="item">
-                <v-list-item-content>
-                  <v-list-item-title class="text-wrap">
-                    <strong>ID {{ item }}</strong>
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider />
-            </template>
-          </v-virtual-scroll> -->
-
-        <!-- <v-col md="6" sm="12"
-        ><v-card tile elevation="16" outlined height="100%">
-          <v-card-text>content</v-card-text>
-        </v-card></v-col
-      ><v-spacer />-->
         <v-container>
           <v-row>
             <v-col
@@ -90,9 +65,6 @@
           </v-row>
         </v-container>
       </v-col>
-      <!--  <v-col sm="11">
-        <v-card-title>What's new in Discussion form ? </v-card-title>
-      </v-col>-->
     </v-row>
   </v-container>
 </template>
@@ -177,7 +149,7 @@ export default {
       tutorials: [],
       threads: [],
       title: "",
-      load: true,
+      loading: true,
     };
   },
   computed: {
@@ -192,6 +164,7 @@ export default {
 
   created() {
     this.fetchLatestTutorials();
+    this.fetchLatestDiscussions();
     window.addEventListener("resize", this.setHeight);
     this.setHeight();
   },
@@ -211,9 +184,6 @@ export default {
 
     flip(event, id) {
       let card = this.$refs[id][0];
-      //let frontcard = this.$ref["front-" + id][0];
-      console.log(card.classList);
-
       if (!card.classList.contains("is-flipped")) {
         card.classList.add("is-flipped");
       }
@@ -223,12 +193,9 @@ export default {
 
     unflip(event, id) {
       let card = this.$refs[id][0];
-      console.log(card.classList);
-
       if (card.classList.contains("is-flipped")) {
         card.classList.remove("is-flipped");
       }
-      console.log(card);
     },
 
     setHeight() {
@@ -239,8 +206,6 @@ export default {
         console.log(element.offsetHeight);
         element.style.height =
           element.parentElement.parentElement.offsetHeight * 0.68 + "px";
-
-        console.log(element.offsetHeight);
       });
       title_elements.forEach(function(element) {
         console.log(element.offsetHeight);
