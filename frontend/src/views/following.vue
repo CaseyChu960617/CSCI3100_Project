@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-row>
+      <div>{{ this.following }}</div>
       <v-col
         cols="12"
         sm="6"
@@ -69,13 +70,13 @@ export default {
   methods: {
     //function to fetch following users
     fetchFollowing() {
-      console.log(this.currentUser.user_id);
       //get request
       DataService.get("user/getFollower", this.currentUser.user_id).then(
         (response) => {
           let rawData = response.data;
-          console.log(rawData);
-          this.follwing = rawData;
+
+          this.following = rawData;
+          console.log(this.following);
         }
       );
     },
