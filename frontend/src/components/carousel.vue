@@ -5,4 +5,10 @@
     </v-carousel-item>
   </v-carousel>
 </template>
-
+<style>
+@media (max-width: 959px) {
+  .v-carousel {
+    height: 50vw !important;
+  }
+}
+</style>

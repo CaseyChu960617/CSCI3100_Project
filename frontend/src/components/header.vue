@@ -71,45 +71,38 @@
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item>
+          <v-list-item to="/chat">
             <v-btn
               v-if="currentUser.activation"
-              to="/chat"
-              class="text-capitalize headline"
+              class="text-capitalize headline black--text"
               plain
               ><v-icon class="pr-3">mdi-chat</v-icon>Chat
             </v-btn></v-list-item
           >
-
-          <v-list-item>
+          <v-list-item to="/tutorial">
             <v-btn
               v-if="currentUser.activation"
-              to="/tutorial"
-              class="text-capitalize headline "
+              class="text-capitalize headline black--text"
               plain
               ><v-icon class="pr-3">mdi-book-account</v-icon>Tutorial
             </v-btn>
           </v-list-item>
-
-          <v-list-item>
+          <v-list-item to="/discussion/0">
             <v-btn
               v-if="currentUser.activation"
               to="/discussion/0"
-              class="text-capitalize headline"
+              class="text-capitalize headline black--text"
               plain
               ><v-icon class="pr-3">mdi-chat-question</v-icon>Discussion
             </v-btn>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item :to="`/profile/` + currentUser.user_id">
             <v-btn
+              style="font-size: inheirt; box-shadow: none; background-color: none;"
               v-if="currentUser.activation"
-              :to="`/profile/` + currentUser.user_id"
-              class="mr-4 ml-2 text-capitalize"
-              color="#757575"
-              text
-              ><v-icon class="pr-3">mdi-account-cog</v-icon
-              >{{ currentUser.username }}
+              class="mr-4 text-capitalize"
+              ><v-icon class="pr-3">mdi-account-cog</v-icon>My Profile
             </v-btn>
           </v-list-item>
         </v-list-item-group>
@@ -128,7 +121,8 @@
   max-height: calc(70% + 10vh) !important;
   top: auto;
   bottom: 0;
-  min-width: 100%;
+  position: sticky;
+  height: inherit !important;
 }
 @media screen and (max-width: 970px) {
   #original-navbar {
@@ -136,6 +130,11 @@
   }
   #toggle-icon {
     display: block !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .sign-header-text {
+    display: none;
   }
 }
 #toggle-icon {

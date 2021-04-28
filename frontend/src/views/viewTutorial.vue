@@ -10,7 +10,7 @@
     >
       <v-layout>
         <v-toolbar-title>
-          <div>
+          <div id="subject-fullname">
             {{ this.subjects[this.tutorial.subject - 1]["text"] }}
           </div>
           <div class="navbar-item">
@@ -40,15 +40,16 @@
                 {{ this.author.username[0] }}</span
               >
             </v-avatar>
-
-            Author:
-            {{ this.author.username }}
+            <span id="author-name">
+              Author:
+              {{ this.author.username }}</span
+            >
           </router-link>
         </v-toolbar-title>
       </v-layout>
     </v-toolbar>
     <v-row>
-      <v-col md="3">
+      <v-col lg="3" md="12" sm="12">
         <div class="show-chapters ma-4" elevation="8" min-height="65vh">
           <v-card-title> Chapters </v-card-title>
           <v-virtual-scroll
@@ -58,6 +59,7 @@
             max-height="74vh"
             item-height="80px"
             :items="this.tutorial.chapters"
+            id="view-tutorial-scroll"
           >
             <template v-slot:default="{ item }">
               <v-list-item @click="selectChapter(item._id, 0)">
@@ -71,7 +73,7 @@
           </v-virtual-scroll>
         </div>
       </v-col>
-      <v-col md="9">
+      <v-col lg="9" md="12" sm="12">
         <v-card v-if="viewTutorial" elevation="8" class="ma-4 view-tut-card">
           <div class="tutorial-header">
             {{ this.tutorial.title }}
@@ -109,6 +111,9 @@
   </v-container>
 </template>
 <style>
+.iframely-embed {
+  height: 360px;
+}
 .author {
   position: absolute;
   right: 16px;
@@ -130,6 +135,14 @@
   color: black !important;
   text-decoration: none !important;
 }
+@media (max-width: 970px) {
+  #author-name {
+    display: none;
+  }
+  #subject-fullname {
+    display: none;
+  }
+}
 .meta {
   cursor: pointer;
 }
@@ -143,6 +156,15 @@
   line-height: 2rem;
   word-break: break-all;
   padding: 16px;
+}
+@media (max-width: 1263px) {
+  #view-tutorial-scroll {
+    min-height: 20vh !important;
+    height: 15vh;
+  }
+}
+#view-tutorial-scroll > div {
+  height: 250px !important;
 }
 .view-tut-card {
   overflow-y: scroll;

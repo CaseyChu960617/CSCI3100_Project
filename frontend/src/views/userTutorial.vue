@@ -176,6 +176,9 @@
 .v-speed-dial__list {
   align-items: flex-end !important;
 }
+.v-speed-dial--direction-top .v-speed-dial__list {
+  margin-bottom: 20px;
+}
 
 .tutorial-card {
   transition: transform 0.5s ease-in-out;

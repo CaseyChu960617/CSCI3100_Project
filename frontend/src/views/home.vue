@@ -4,10 +4,14 @@
       <News v-if="currentUser.activation" />
       <GenerateEmail v-else />
     </v-container>
-    <Sign v-else />
+    <Sign id="sign" v-else />
   </div>
 </template>
-
+<style>
+#sign {
+  margin-top: 5% !important;
+}
+</style>
 <script>
 import Sign from "../components/auth/sign.vue"; //using a child component to render sign component
 import News from "./news.vue"; //using a child component to render latest tutorials

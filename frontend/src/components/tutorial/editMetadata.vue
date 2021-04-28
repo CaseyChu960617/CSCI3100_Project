@@ -1,6 +1,6 @@
 <template>
-  <v-container
-    ><v-container>
+  <v-container class="meta-data-container">
+    <v-container class="meta-data-container">
       Tutorial Information
       <v-card class="pa-5">
         <v-row>
@@ -86,7 +86,11 @@
     </v-container>
     <v-container> </v-container></v-container
 ></template>
-
+<style>
+.meta-data-container {
+  max-width: none !important;
+}
+</style>
 <script>
 import DataService from "../../services/DataService";
 import subjectsList from "../../assets/subjects.json";

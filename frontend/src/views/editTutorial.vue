@@ -14,10 +14,10 @@
       </v-layout>
     </v-toolbar>
     <div>
-      <v-row class="ml-2 mt-2">
-        <v-col mt="5" md="3" class="mt-5">
+      <v-row class="mt-2 edit-tutorial-row">
+        <v-col mt="5" lg="3" md="12" sm="12" class="mt-5">
           <div class="pa-5 edit-tutorial" @click="changeEdit(tutorial._id, 1)">
-            Edit tutorial information
+            <b> Edit tutorial information </b>
           </div>
           <v-divider />
           <v-virtual-scroll
@@ -27,6 +27,7 @@
             max-height="74vh"
             item-height="70"
             :items="tutorial.chapters"
+            id="edit-tutorial-scroll"
           >
             <template v-slot:default="{ item }">
               <v-list-item @click="changeEdit(item._id, 0)">
@@ -72,7 +73,7 @@
             <v-icon color="black">mdi-plus</v-icon>
           </v-btn>
         </v-col>
-        <v-col md="9">
+        <v-col lg="9" md="12" sm="12">
           <editMetadata v-if="editMetadata" :ref="'' + selectedId" />
           <editChapter
             :tutorial_id="tutorial._id"
@@ -94,8 +95,25 @@
 </template>
 
 <style>
+@media (max-width: 1263px) {
+  #edit-tutorial-scroll {
+    min-height: 20vh !important;
+    height: 20vh;
+  }
+  .edit-add-chatper {
+    position: absolute !important;
+    right: 10px;
+    top: 80px;
+  }
+}
+#edit-tutorial-scroll > div {
+  height: 500px !important;
+}
 .edit-tutorial {
   cursor: pointer;
+}
+.edit-tutorial-row {
+  margin: 0px !important;
 }
 .delete-btn {
   position: absolute !important;
@@ -106,6 +124,7 @@
 }
 .edit-add-chatper {
   margin-bottom: 20px;
+  margin-top: 10px;
 }
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="pa-0">
     <v-row no-gutters>
-      <v-col mt="5" md="3" class="hidden-sm-and-down my-5 px-5">
+      <v-col mt="5" md="3" class="my-5 px-5">
         <v-card elevation="16">
           <v-card-title>
             <v-icon class="pr-3" color="black" size="40">mdi-chat</v-icon> Chats
@@ -13,6 +13,7 @@
             max-height="74vh"
             item-height="70"
             :items="chats"
+            id="chatlist-scroll"
           >
             <template v-slot:default="{ item }">
               <v-list-item @click="selectChat(item._id)">
@@ -47,7 +48,14 @@
     </v-row>
   </v-container>
 </template>
-
+<style>
+@media (max-width: 959px) {
+  #chatlist-scroll {
+    min-height: 20vh !important;
+    height: 15vh;
+  }
+}
+</style>
 <script>
 import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
 import chat from "../components/chat/chat.vue"; //using a child component chat to render the render interface

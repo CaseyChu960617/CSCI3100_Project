@@ -2,7 +2,12 @@
   <v-container fluid class="pa-0">
     <v-row no-gutters justify="center">
       <v-col cols="12" md="3"
-        ><v-card tile elevation="16" outlined :height="height"
+        ><v-card
+          tile
+          elevation="16"
+          outlined
+          :height="height"
+          id="discussion-list-scroll"
           ><ThreadNavBar @refreshList="fetchThreadList(0)"/>
           <ThreadList :threadList="threadList" :loading="listLoading"/></v-card
       ></v-col>
@@ -16,7 +21,14 @@
     </v-row>
   </v-container>
 </template>
-
+<style>
+@media (max-width: 959px) {
+  #discussion-list-scroll {
+    min-height: 20vh !important;
+    height: 40vh !important;
+  }
+}
+</style>
 <script>
 import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
 import ThreadNavBar from "../components/discussion/threadNavBar.vue"; //using a child component threadNavBar to render the navbar for thread

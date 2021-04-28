@@ -23,7 +23,7 @@
 </template>
 <style>
 .ck-editor__editable {
-  max-height: 500px;
+  height: 600px;
 }
 </style>
 <script>
@@ -173,7 +173,6 @@ export default {
   },
 
   methods: {
-
     // fetch data of one chapter
     fetchOneChapter() {
       // Do a get request to fetch data of one chapter
@@ -201,7 +200,6 @@ export default {
       // Do a put request to update the chapter information to server and database
       DataService.put("tutorial/editChapter", data)
         .then(() => {
-
           // After the editting, fetch the latest data of the chapter
           DataService.get("tutorial/getOneChapter", this.chapterId).then(
             (response) => {

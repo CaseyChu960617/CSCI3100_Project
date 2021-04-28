@@ -33,7 +33,7 @@
     </span>
   </span>
 </template>
-
+<style></style>
 <script>
 export default {
   props: ["threadList", "loading"],
