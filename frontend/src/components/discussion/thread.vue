@@ -61,8 +61,7 @@
     >
   </v-container>
 </template>
-
-
+<style>
 img {
   width: 400px;
 }
