@@ -147,7 +147,6 @@ exports.createTutorial = async (req, res) => {
           published: false,
         },
         (err, doc) => {
-          //console.log(err);
           if (err) 
           res.status(400).send(err.message);
           else 
@@ -189,7 +188,7 @@ exports.createChapter = async (req, res) => {
 
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
     if (err) res.status(400).send({ message: err.message });
-    else res.status(200).send("Success");
+    else res.status(200).send("A new chapter has been created successfully.");
   });
 };
 
@@ -259,7 +258,7 @@ exports.postComment = async (req, res) => {
   const { user_id, content, tutorial_id } = req.body;
 
   User.findById(user_id, { lean: true }, (err, user) => {
-    if (err) res.status(400).send({ message: "User not found!" });
+    if (err) res.status(400).send({ message: "User not found." });
     if (user) {
       var newComment = new TutorialComment(
         {
@@ -305,7 +304,7 @@ exports.deleteTutorial = async (req, res) => {
     tutorial.remove();
 
     res.status(200).send({
-      message: "Tutorial successfully deleted.",
+      message: "Tutorial has been deleted successfully.",
     });
   } else {
     res.status(400).send({ message: "Tutorial not found." });
