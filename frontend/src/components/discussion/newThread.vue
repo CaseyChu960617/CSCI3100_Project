@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" width="800px" @click:outside="close">
-    <v-card height="750px">
+    <v-card>
       <v-card-title class="headline">
         New Thread<v-spacer /><v-btn icon @click="close"
           ><v-icon>mdi-close</v-icon></v-btn
@@ -27,7 +27,7 @@
                 :rules="[rules.required]"
               ></v-autocomplete> </v-row
             ><v-row
-              ><v-container class="mx-15">
+              ><v-container>
                 <ckeditor
                   :editor="editor"
                   v-model="content"
