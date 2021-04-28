@@ -75,7 +75,9 @@ export default {
       testing: "<div class='v-card v-sheet theme--light><p>123</p></div>",
       editorData: "ch",
       editor: ClassicEditor,
+      //editor function configuration
       editorConfig: {
+        //plugins or functions used in ckeditor
         plugins: [
           Heading,
           EssentialsPlugin,
@@ -111,13 +113,18 @@ export default {
           SpecialCharacters,
           SpecialCharactersEssentials,
         ],
-
+        //render the functions in ckeditor toolbar
         toolbar: {
           items: [
             "heading",
             "bold",
             "italic",
             "fontSize",
+            "|",
+            "mediaEmbed",
+            "linkImage",
+            "insertImage",
+            "|",
             "undo",
             "redo",
             "alignment",
@@ -131,23 +138,19 @@ export default {
             "numberedList",
             "removeFormat",
             "|",
-            "mediaEmbed",
-            "linkImage",
-            "insertImage",
             "code",
             "codeBlock",
             "subscript",
             "superscript",
             "HtmlEmbed",
-
             "imageStyle:full",
             "imageStyle:side",
-            "|",
             "imageTextAlternative",
           ],
         },
-
+        //set height of editor
         height: "400px",
+        //font sizes supported
         fontSize: {
           options: ["tiny", "default", "big"],
         },
@@ -183,12 +186,14 @@ export default {
       );
     },
 
+    //using iframely to render the video and enable it to be shown
     EnableVideo() {
       document.querySelectorAll("oembed[url]").forEach((element) => {
         window.iframely.load(element, element.attributes.url.value);
       });
     },
 
+    //save the edited data into varaibles
     save() {
       const data = {
         tutorial_id: this.tutorial_id,
@@ -231,15 +236,20 @@ export default {
     },
   },
 
+  //to import iframely script by inserting script tag at the begininging of document
   mounted() {
+    //create a script tag
     const plugin = document.createElement("script");
+    //set it to be javascript tag
     plugin.setAttribute("type", "text/javascript");
+    //set the src of the iframely script
     plugin.setAttribute(
       "src",
       "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML"
     );
 
     plugin.async = true;
+    //append it to the html document
     document.head.appendChild(plugin);
   },
 };

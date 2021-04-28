@@ -3,8 +3,33 @@
     <v-card elevation="16" outlined>
       <v-card-title class="display-1 pa-10">
         <v-icon class="pr-3" color="black" size="40">mdi-account-cog</v-icon
-        >Profile</v-card-title
-      >
+        >Profile
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              to="/following"
+              id="go-following"
+              class="mx-2"
+              fab
+              dark
+              small
+              color="primary"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon dark>mdi-account-arrow-right </v-icon>
+            </v-btn>
+            <!--<v-btn id="go-following" v-bind="attrs" v-on="on">
+              <v-icon class="pr-3" color="black" size="40"
+                >mdi-account-arrow-right</v-icon
+              >
+              Following
+            </v-btn>-->
+          </template>
+          <span>See who you are following</span>
+        </v-tooltip>
+      </v-card-title>
+
       <v-container>
         <v-row
           ><v-col cols="12" sm="12" md="4" align-self="center"
@@ -116,7 +141,12 @@
   </v-col>
   <ChangePassword v-else @switchform="switchform" />
 </template>
-
+<style>
+#go-following {
+  position: absolute;
+  right: 16px;
+}
+</style>
 <script>
 import DataService from "../../services/DataService";
 import modal from "./uploadProPic.vue";
