@@ -58,7 +58,14 @@
       ></v-app-bar-nav-icon>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute bottom temporary id="drawer">
+    <v-navigation-drawer
+      v-if="currentUser"
+      v-model="drawer"
+      absolute
+      bottom
+      temporary
+      id="drawer"
+    >
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
