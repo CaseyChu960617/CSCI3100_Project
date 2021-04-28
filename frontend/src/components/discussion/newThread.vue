@@ -205,18 +205,30 @@ export default {
         subject: this.subject,
         content: this.content,
       };
-      
+
       // Do a post request to create a new dicussion thread.
-      DataService.createThread(data).then((response) => {
-        let thread_id = response.data;
-        alert("Discussion thread created successfully.");
-        this.close();
-        this.$router.push({
-          name: "discussion",
-          params: { thread_id: thread_id },
+      DataService.createThread(data)
+        .then((response) => {
+          let thread_id = response.data;
+          alert("Discussion thread created successfully.");
+          this.close();
+          this.$router.push({
+            name: "discussion",
+            params: { thread_id: thread_id },
+          });
+          this.$emit("refreshList");
+        })
+        .catch((err) => {
+          // Prompt error and alert messages
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            // Sign out the user automatically
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
         });
-        this.$emit("refreshList");
-      });
     },
 
     EnableVideo() {
