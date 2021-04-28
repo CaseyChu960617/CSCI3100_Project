@@ -49,7 +49,7 @@
       </v-layout>
     </v-toolbar>
     <v-row>
-      <v-col lg="3" md="12" sm="12">
+      <v-col lg="3" md="12" sm="12" class="col-12">
         <div class="show-chapters ma-4" elevation="8" min-height="65vh">
           <v-card-title> Chapters </v-card-title>
           <v-virtual-scroll
@@ -73,7 +73,7 @@
           </v-virtual-scroll>
         </div>
       </v-col>
-      <v-col lg="9" md="12" sm="12">
+      <v-col lg="9" md="12" sm="12" class="col-12">
         <v-card v-if="viewTutorial" elevation="8" class="ma-4 view-tut-card">
           <div class="tutorial-header">
             {{ this.tutorial.title }}
@@ -112,7 +112,7 @@
 </template>
 <style>
 .iframely-embed {
-  height: 360px;
+  max-height: 360px;
 }
 .author {
   position: absolute;
