@@ -99,11 +99,19 @@
 
           <v-list-item :to="`/profile/` + currentUser.user_id">
             <v-btn
-              style="font-size: inheirt; box-shadow: none; background-color: none;"
               v-if="currentUser.activation"
               class="mr-4 text-capitalize"
-              ><v-icon class="pr-3">mdi-account-cog</v-icon>My Profile
+              style="box-shadow:none;font-size:inherit;background-color:transparent;"
+              ><v-icon class="pr-3">mdi-account-cog</v-icon>MY PROFILE
             </v-btn>
+          </v-list-item>
+
+          <v-list-item @click="signout">
+            <v-btn
+              rounded
+              style="box-shadow:none;font-size:inherit;background-color:transparent;"
+              ><v-icon class="pr-3">mdi-logout</v-icon>Sign out</v-btn
+            >
           </v-list-item>
         </v-list-item-group>
       </v-list>
