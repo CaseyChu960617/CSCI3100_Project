@@ -175,12 +175,15 @@ exports.getFollower = async (req, res) => {
     { path: "following", select: "_id username profileImage" },
   ];
 
-  User.findOne({ _id: req.params["user_id"] })
-    .select("following")
-    .populate(populateQuery)
-    .exec()
-    .then((err, doc) => {
-      if (err) res.status(400).send({ message: err.message });
-      else res.status(200).send(doc);
-    });
+  try {
+    User.findOne({ _id: req.params["user_id"] })
+      .select("following")
+      .populate(populateQuery)
+      .exec()
+      .then((doc) => {
+        res.status(200).send(doc);
+      });
+  } catch (err) {
+    return res.status(400).send({ message: err.message });
+  }
 };
