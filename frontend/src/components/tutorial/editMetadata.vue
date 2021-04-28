@@ -89,7 +89,6 @@
 
 <script>
 import DataService from "../../services/DataService";
-//import authHeader from "../../services/auth-header.js";
 import subjectsList from "../../assets/subjects.json";
 
 export default {
@@ -103,7 +102,6 @@ export default {
       description: "",
       thumbnail: "",
       published: "",
-      //noThumbnail: "",
       publishedlist: [
         { text: "published", value: 1 },
         { text: "not published", value: 0 },
@@ -115,39 +113,50 @@ export default {
       tempsrc: null,
     };
   },
+
   created() {
-    //console.log(this.$route.params.tutorialId);
+    // Fetch tutorial information when the editMeta component is created.
     this.fetchTutorial();
   },
+
   methods: {
+    // Function to fetch tutorial information
     fetchTutorial() {
-      //console.log(this.$route.params.tutorialId);
+      // Do a get request to fetch certain tutorial information
       DataService.get(
         "tutorial/getOneTutorial",
         this.$route.params.tutorialId
       ).then((response) => {
-        //console.log(response.data);
         const rawData = response.data;
         this.title = rawData.title;
         this.subject = rawData.subject;
         this.description = rawData.description;
         this.published = rawData.published;
         this.thumbnail = rawData.thumbnail;
-        //if (this.thumbnail == "") this.noThumbnail = true;
-        //console.log(this.noThumbnail);
       });
     },
 
     fileChange(file) {
       if (file != null) {
-        console.log(file);
         this.loading = true;
         this.formData.append("file", file);
-        DataService.uploadThumbnail(this.formData).then((response) => {
-          this.thumbnail = response.data.location;
-          this.formData = new FormData();
-          this.loading = false;
-        });
+        DataService.uploadThumbnail(this.formData)
+          .then((response) => {
+            this.thumbnail = response.data.location;
+            this.formData = new FormData();
+            this.loading = false;
+          })
+          .catch((err) => {
+            // Prompt error and alert messages
+            if (err.response.status == 401 || err.response.status == 403) {
+              alert("Please Login again");
+              // Sign out the user automatically
+              this.$store.dispatch("auth/signout");
+              this.$router.push("/home").catch(() => {});
+            } else if (err.response.status == 400) {
+              alert(err.response.data.message);
+            }
+          });
       } else {
         alert("No file selected!");
       }
@@ -162,18 +171,23 @@ export default {
         published: this.published,
         thumbnail: this.thumbnail,
       };
-      DataService.put(
-        "tutorial/editTutorial",
-        data
-        //,
-        //{
-        //  headers: authHeader(),
-        //}
-      ).then((response) => {
-        console.log(response.data);
-        alert("Saved successfully!");
-        // this.$emit("changeID");
-      });
+
+      // Do a put request to update tutorial information to server and database
+      DataService.put("tutorial/editTutorial", data)
+        .then(() => {
+          alert("Saved successfully!");
+        })
+        .catch((err) => {
+          // Prompt error and alert messages
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            // Sign out the user automatically
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
+        });
     },
   },
 };

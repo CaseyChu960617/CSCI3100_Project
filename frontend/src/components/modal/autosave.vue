@@ -14,7 +14,6 @@
       <v-card-actions>
         <v-spacer />
         <div>
-          <!--<v-btn color="blue darken-1" text @click="close">Preview</v-btn>-->
           <v-btn color="blue darken-1" text @click="close">Not Save</v-btn>
           <v-btn color="blue darken-1" text @click="save">Save</v-btn>
         </div>
@@ -37,11 +36,12 @@ export default {
   created: function() {},
   methods: {
     close() {
+      // Emit show function from the parent component.
       this.$emit("show", false);
     },
 
     save() {
-      console.log(this.currentId);
+      // Emit autosave function from the parent component.
       this.$emit("autosave", this.currentId);
     },
   },

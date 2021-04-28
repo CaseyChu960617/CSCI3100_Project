@@ -113,13 +113,13 @@
 import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
 import editChapter from "../components/tutorial/editChapter.vue"; //using editChpater component as child component
 import editMetadata from "../components/tutorial/editMetadata.vue"; //using editMetadata component as child component
-import authHeader from "../services/auth-header.js"; //add authenication header to ensure token is not expire when making HTTP request
 
 export default {
   components: {
     editChapter, //delcare editChapter component
     editMetadata, //declare editMetadata component
   },
+
   data() {
     return {
       tutorial: null, //the whole returned object from tutorial
@@ -141,6 +141,7 @@ export default {
     //fetch tutorial when enter thae apge
     this.fetchTutorial();
   },
+
   methods: {
     //function to fetch tutorial from database
     fetchTutorial() {
@@ -164,23 +165,42 @@ export default {
         content: "",
       };
       //post request to create new chapter
-      DataService.post("tutorial/createChapter", data, {
-        headers: authHeader(),
-      }).then(() => {
-        DataService.get("tutorial/getOneTutorial", this.tutorial._id).then(
-          (response) => {
-            this.tutorial = response.data;
-            this.chapters = this.tutorial.chapters;
+      DataService.post("tutorial/createChapter", data)
+        .then(() => {
+          DataService.get("tutorial/getOneTutorial", this.tutorial._id).then(
+            (response) => {
+              this.tutorial = response.data;
+              this.chapters = this.tutorial.chapters;
+            }
+          );
+        })
+        .catch((err) => {
+          // Prompt error and alert messages
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
           }
-        );
-      });
+        });
     },
+
     //function to delete chapter
     deleteChapter(chapter_id) {
       //delete request to delete chapter
-      DataService.deleteChapter(this.tutorial._id, chapter_id, {
-        headers: authHeader(),
-      }).then(() => {});
+      DataService.deleteChapter(this.tutorial._id, chapter_id)
+        .then(() => {})
+        .catch((err) => {
+          // Prompt error and alert messages
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
+        });
 
       //delte the corresponding eleemnt in chapters array in frontend so to immediately update without refreshing
       this.chapters.forEach((element, index, object) => {

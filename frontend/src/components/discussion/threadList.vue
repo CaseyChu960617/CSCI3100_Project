@@ -39,6 +39,7 @@ export default {
   props: ["threadList", "loading"],
 
   methods: {
+    // Function to select certain thread with thread_id.
     selectThread(thread_id) {
       this.$router
         .push({
@@ -55,6 +56,7 @@ export default {
       if (this.threadList.length > 0) return true;
       return false;
     },
+
     height() {
       return window.innerHeight - 200 - 65;
     },

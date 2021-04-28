@@ -95,6 +95,7 @@ export default {
       return this.genderlist[this.profile.gender - 1];
     },
     firstChar() {
+      // Make the first character of username to be capital.
       var str = this.profile.username + "";
       return str.substring(0, 1);
     },
@@ -102,25 +103,31 @@ export default {
       return this.$store.state.auth.user;
     },
     followed() {
+      // Return a following list from local storage.
       return this.currentUser.following.includes(this.profile._id);
     },
   },
   methods: {
     startChat() {
+
+      // Do a get request to fetch one chat history.
       DataService.getOneChat({
         user_id_1: this.currentUser.user_id,
         user_id_2: this.profile._id,
       }).then((response) => {
+        // Redirect to chat component
         this.$router
           .push({
             name: "chat",
             params: { chatId: response.data._id },
           })
           .catch((err) => {
-            console.log(err);
+            // Prompt error and alert messages.
             if (err.response.status == 401 || err.response.status == 403) {
               alert("Please Login again");
-              this.$router.push("/home");
+              // Sign out the user automatically.
+              this.$store.dispatch("auth/signout");
+              this.$router.push("/home").catch(() => {});
             } else if (err.response.status == 400) {
               alert(err.response.data.message);
             }
@@ -134,21 +141,25 @@ export default {
         follow_id: this.profile._id,
       };
 
+      // Do a put request to follow certain user.
       DataService.follow(data)
         .then((response) => {
+          // Update the following list locally
           var user = JSON.parse(localStorage.getItem("user"));
           user.following = Object.values(response.data);
           localStorage.setItem("user", JSON.stringify(user));
           this.$store.dispatch("auth/follow", this.profile._id);
         })
         .catch((err) => {
-          console.log(err);
-          if (err.response.status == 401 || err.response.status == 403) {
-            alert("Please Login again");
-            this.$router.push("/home");
-          } else if (err.response.status == 400) {
-            alert(err.response.data.message);
-          }
+            // Prompt error and alert messages.
+            if (err.response.status == 401 || err.response.status == 403) {
+              alert("Please Login again");
+              // Sign out the user automatically.
+              this.$store.dispatch("auth/signout");
+              this.$router.push("/home").catch(() => {});
+            } else if (err.response.status == 400) {
+              alert(err.response.data.message);
+            }
         });
     },
 
@@ -158,25 +169,30 @@ export default {
         follow_id: this.profile._id,
       };
 
+      // Do a put request to unfollow certain user.
       DataService.unfollow(data)
         .then((response) => {
+          // Update the following list locally
           var user = JSON.parse(localStorage.getItem("user"));
           user.following = Object.values(response.data);
           localStorage.setItem("user", JSON.stringify(user));
           this.$store.dispatch("auth/unfollow", this.profile._id);
         })
         .catch((err) => {
-          console.log(err);
-          if (err.response.status == 401 || err.response.status == 403) {
-            alert("Please Login again");
-            this.$router.push("/home");
-          } else if (err.response.status == 400) {
-            alert(err.response.data.message);
-          }
+            // Prompt error and alert messages.
+            if (err.response.status == 401 || err.response.status == 403) {
+              alert("Please Login again");
+              // Sign out the user automatically.
+              this.$store.dispatch("auth/signout");
+              this.$router.push("/home").catch(() => {});
+            } else if (err.response.status == 400) {
+              alert(err.response.data.message);
+            }
         });
     },
 
     viewUserTutorials() {
+      // Redirect to the userTutorial component
       this.$router.push({
         name: "userTutorial",
         params: {

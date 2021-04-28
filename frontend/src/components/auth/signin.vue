@@ -89,7 +89,6 @@ export default {
     },
   },
   signup() {
-    console.log("called");
     this.$emit("switchform");
   },
 };

@@ -10,6 +10,8 @@ const header = {
   headers: authHeader(),
 }
 
+
+
 class DataService {
   getAll(table) {
     return http.get(`/${table}`, header);

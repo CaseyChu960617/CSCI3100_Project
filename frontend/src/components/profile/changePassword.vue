@@ -60,7 +60,6 @@
 
 <script>
 import DataService from "../../services/DataService";
-//import authHeader from "../../services/auth-header.js";
 
 export default {
   data() {
@@ -78,25 +77,31 @@ export default {
       rules: {
         required: (value) => !!value || "Required",
         repeat: (value) =>
-          value == this.password.newPassword || "Password doesn't match",
+          value == this.password.newPassword || "Password does not match",
       },
     };
   },
   methods: {
     back() {
+      // Return to editProfile
       this.$emit("switchform");
     },
+
     changePassword() {
+      // Do a put request to change password with the inputs.
       DataService.changePassword(this.password)
         .then(() => {
+          // If no error, prompt with a message.
           alert("Password has been reset successfully.");
           this.$emit("switchform");
         })
         .catch((err) => {
-          console.log(err);
+          // Prompt error and alert messages.
           if (err.response.status == 401 || err.response.status == 403) {
             alert("Please Login again");
-            this.$router.push("/home");
+            // Sign out the user automatically.
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
           } else if (err.response.status == 400) {
             alert(err.response.data.message);
           }

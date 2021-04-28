@@ -57,6 +57,7 @@ export default {
   },
   methods: {
     close() {
+      // Close the modal.
       this.$emit("show", false);
       this.formData = new FormData();
     },
@@ -65,6 +66,8 @@ export default {
       if (file) {
         this.loading = true;
         this.formData.append("file", file);
+
+        // Do a post request to upload profile picture to cloud storage.
         DataService.uploadProPic(this.formData)
           .then((response) => {
             this.tempsrc = response.data.location;
@@ -72,10 +75,12 @@ export default {
             this.loading = false;
           })
           .catch((err) => {
-            console.log(err);
+            // Prompt error and alert messages.
             if (err.response.status == 401 || err.response.status == 403) {
               alert("Please Login again");
-              this.$router.push("/home");
+              // Sign out the user automatically.
+              this.$store.dispatch("auth/signout");
+              this.$router.push("/home").catch(() => {});
             } else if (err.response.status == 400) {
               alert(err.response.data.message);
             }
@@ -88,8 +93,10 @@ export default {
         my_user_id: this.currentUser.user_id,
         profileImage: this.tempsrc,
       };
+
       DataService.updateProPic(data)
         .then((response) => {
+          // Update the profile picture locally.
           var user = JSON.parse(localStorage.getItem("user"));
           user.profileImage = response.data;
           localStorage.setItem("user", JSON.stringify(user));
@@ -99,13 +106,15 @@ export default {
           this.$emit("refreshProfile");
         })
         .catch((err) => {
-          console.log(err);
-          if (err.response.status == 401 || err.response.status == 403) {
-            alert("Please Login again");
-            this.$router.push("/home");
-          } else if (err.response.status == 400) {
-            alert(err.response.data.message);
-          }
+            // Prompt error and alert messages.
+            if (err.response.status == 401 || err.response.status == 403) {
+              alert("Please Login again");
+              // Sign out the user automatically.
+              this.$store.dispatch("auth/signout");
+              this.$router.push("/home").catch(() => {});
+            } else if (err.response.status == 400) {
+              alert(err.response.data.message);
+            }
         });
     },
   },

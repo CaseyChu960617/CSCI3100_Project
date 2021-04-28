@@ -61,13 +61,7 @@
     >
   </v-container>
 </template>
-<style>
-/* .thread-content { */
-/* overflow-y: scroll;
-  height: 78vh; */
-/* min-height: 65vh; */
-/* max-height: 500px; */
-/* } */
+
 
 img {
   width: 400px;
@@ -96,7 +90,6 @@ img {
 
 <script>
 import DataService from "../../services/DataService";
-//import authHeader from "../../services/auth-header.js";
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
 import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
@@ -221,24 +214,24 @@ export default {
           withCredentials: false,
 
           // Headers sent along with the XMLHttpRequest to the upload server.
-          headers: {
-            //    "X-CSRF-TOKEN": "CSRF-Token",
-            //    Authorization: "Bearer <JSON Web Token>",
-          },
+          headers: {},
         },
       },
     };
   },
+
   created() {
-    if (this.thread) {
+    if (this.tshread) {
       this.appendThread();
     }
   },
+
   watch: {
     thread() {
       this.appendThread();
     },
   },
+
   computed: {
     height() {
       return window.innerHeight - 200 - 65;
@@ -247,6 +240,7 @@ export default {
       return this.tmpThread.comments.length;
     },
   },
+
   methods: {
     appendThread() {
       this.tmpThread = JSON.parse(JSON.stringify(this.thread));
@@ -278,21 +272,26 @@ export default {
         thread_id: this.thread._id,
         content: this.content,
       };
-      DataService.postComment(
-        data
-        //,
-        //{
-        //  headers: authHeader(),
-        //}
-      )
-        .then((res) => {
+      // Do a put request to create a comment and put it to the list of comments
+      // of the discussion thread.
+      DataService.postComment(data)
+        .then((response) => {
           this.content = "";
           this.commentloading = false;
-          this.$emit("refreshThread", res.data._id);
+          this.$emit("refreshThread", response.data._id);
         })
-        .catch(() => {
+        .catch((err) => {
           this.content = "";
           this.commentloading = false;
+          // Prompt error and alert messages
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            // Sign out the user automatically
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
         });
     },
   },

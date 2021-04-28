@@ -27,7 +27,6 @@
 }
 </style>
 <script>
-//import CKEditor from "@ckeditor/ckeditor5-vue2";
 import DataService from "../../services/DataService";
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
@@ -60,21 +59,15 @@ import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specia
 import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials";
 import RemoveFormat from "@ckeditor/ckeditor5-remove-format/src/removeformat";
 import CodeBlock from "@ckeditor/ckeditor5-code-block/src/codeblock";
-import Mathematics from "ckeditor5-math/src/math";
 import Indent from "@ckeditor/ckeditor5-indent/src/indent";
 import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock";
-//import authHeader from "../../services/auth-header.js";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import dotenv from "dotenv";
 dotenv.config();
-//import iframely from "//cdn.iframe.ly/embed.js?api_key=48f28ce86bc9c78e94f884";
+
 export default {
   props: ["chapterId", "tutorial_id"],
-  components: {
-    // Use the <ckeditor> component in this view.
-    // ckeditor: CKEditor.component,
-    //editchapter,
-  },
+  components: {},
 
   data() {
     return {
@@ -117,7 +110,6 @@ export default {
           PageBreak,
           SpecialCharacters,
           SpecialCharactersEssentials,
-          Mathematics,
         ],
 
         toolbar: {
@@ -154,13 +146,7 @@ export default {
             "imageTextAlternative",
           ],
         },
-        math: {
-          engine: "mathjax", // or katex or function. E.g. (equation, element, display) => { ... }
-          lazyLoad: undefined, // async () => { ... }, called once before rendering first equation if engine doesn't exist. After resolving promise, plugin renders equations.
-          outputType: "script", // or span
-          forceOutputType: false, // forces output to use outputType
-          enablePreview: true, // Enable preview view
-        },
+
         height: "400px",
         fontSize: {
           options: ["tiny", "default", "big"],
@@ -175,46 +161,33 @@ export default {
           withCredentials: false,
 
           // Headers sent along with the XMLHttpRequest to the upload server.
-          headers: {
-            //    "X-CSRF-TOKEN": "CSRF-Token",
-            //    Authorization: "Bearer <JSON Web Token>",
-          },
+          headers: {},
         },
       },
     };
   },
+
   created() {
-    console.log("in editChapter, ", this.chapterId);
+    // Fetch one chapter when the editChapter component is first created
     this.fetchOneChapter();
-    //ClassicEditor.create(document.querySelector("#editor"), {
-    //  plugins: [], // <--- MODIFIED
-    //  toolbar: ["bold", "italic"], // <--- MODIFIED
-    //
-    //
-    //})
-    //  .then((editor) => {
-    //    console.log("Editor was initialized", editor);
-    //  })
-    //  .catch((error) => {
-    //    console.error(error.stack);
-    //  });
   },
+
   methods: {
+
+    // fetch data of one chapter
     fetchOneChapter() {
-      //console.log(this.$route.params.tutorialId);
-      // console.log(this.chapterId);
+      // Do a get request to fetch data of one chapter
       DataService.get("tutorial/getOneChapter", this.chapterId).then(
         (response) => {
           this.chapter = response.data;
         }
       );
     },
+
     EnableVideo() {
       document.querySelectorAll("oembed[url]").forEach((element) => {
         window.iframely.load(element, element.attributes.url.value);
       });
-      //alert(this.editor);
-      //console.log(this.editor);
     },
 
     save() {
@@ -225,39 +198,41 @@ export default {
         content: this.chapter.content,
       };
 
-      DataService.put(
-        "tutorial/editChapter",
-        data
-        //,
-        //{
-        //  headers: authHeader(),
-        //}
-      ).then((response) => {
-        console.log(response);
-        DataService.get("tutorial/getOneChapter", this.chapterId).then(
-          (response) => {
-            this.chapter = response.data;
-            alert("Saved successfully!");
-            this.$emit("fetchTutorial");
-            // this.$emit("changeID");
+      // Do a put request to update the chapter information to server and database
+      DataService.put("tutorial/editChapter", data)
+        .then(() => {
+
+          // After the editting, fetch the latest data of the chapter
+          DataService.get("tutorial/getOneChapter", this.chapterId).then(
+            (response) => {
+              this.chapter = response.data;
+              alert("Saved successfully!");
+              // Fetch the updated tutorial information
+              this.$emit("fetchTutorial");
+            }
+          );
+        })
+        .catch((err) => {
+          // Prompt error and alert messages
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
           }
-        );
-      });
+        });
     },
   },
+
+  // Watch the change of chapterId
   watch: {
     chapterId() {
+      // Fetch the chapter information
       this.fetchOneChapter();
     },
-    //"chapter.content"() {
-    //  console.log("change");
-    //  document.querySelectorAll("oembed[url]").forEach((element) => {
-    //    console.log("element ", element);
-    //    alert(this.editor);
-    //    window.iframely.load(element, element.attributes.url.value);
-    //  });
-    //},
   },
+
   mounted() {
     const plugin = document.createElement("script");
     plugin.setAttribute("type", "text/javascript");

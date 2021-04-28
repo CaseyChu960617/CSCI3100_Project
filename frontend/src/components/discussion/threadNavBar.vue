@@ -16,7 +16,7 @@
         <v-list-item
           v-for="subject in subjects"
           :key="subject.value"
-          @click="selectCat(subject.value)"
+          @click="selectSubject(subject.value)"
         >
           <v-list-item-title class="text-center">{{
             subject.code
@@ -35,6 +35,7 @@ export default {
   components: {
     NewThread,
   },
+
   data() {
     return {
       drawer: false,
@@ -42,14 +43,16 @@ export default {
       subjects: null,
     };
   },
+
   created() {
     this.subjects = JSON.parse(JSON.stringify(subjectlist));
     if (this.subjects[0].value != 0) {
       this.subjects.unshift({ value: 0, code: "All" });
     }
   },
+
   methods: {
-    selectCat(sub_id) {
+    selectSubject(sub_id) {
       this.drawer = false;
       this.$router
         .push({
@@ -59,9 +62,11 @@ export default {
         })
         .catch(() => {});
     },
+
     refreshList() {
       this.$emit("refreshList");
     },
+
     show(bool) {
       this.dialog = bool;
     },
