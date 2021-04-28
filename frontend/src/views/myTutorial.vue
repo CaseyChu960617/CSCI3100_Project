@@ -373,16 +373,19 @@ export default {
 
     //delete tutorial
     deleteTutorial(tutorialId) {
-      DataService.deleteTutorial(
-        tutorialId
-        //{
-        //  headers: authHeader(),
-        //}
-      );
+      DataService.deleteTutorial(tutorialId).catch((err) => {
+        // Prompt error and alert messages
+        if (err.response.status == 401 || err.response.status == 403) {
+          alert("Please Login again");
+          this.$store.dispatch("auth/signout");
+          this.$router.push("/home").catch(() => {});
+        } else if (err.response.status == 400) {
+          alert(err.response.data.message);
+        }
+      });
 
       this.tutorials.forEach((element, index, object) => {
         if (tutorialId === element._id) object.splice(index, 1);
-        //console.log(tutorialId);
       });
     },
 

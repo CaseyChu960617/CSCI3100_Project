@@ -15,8 +15,6 @@
 .chapter-content {
   overflow-y: scroll;
   height: 78vh;
-  /*min-height: 65vh;
-  max-height: 500px;*/
 }
 
 img {
@@ -52,29 +50,36 @@ export default {
       chapter: null,
     };
   },
+
   created() {
-    console.log("in editChapter, ", this.chapterId);
+    // Fetch chapter information of certain chaper by id
     this.fetchOneChapter();
   },
+
   methods: {
+    // Function to fetch data of one chapter
     fetchOneChapter() {
+      // Do a get request to fetch data of one chapter
       DataService.get("tutorial/getOneChapter", this.chapterId).then(
         (response) => {
           this.chapter = response.data;
         }
       );
     },
+
     enableVideo() {
       document.querySelectorAll("oembed[url]").forEach((element) => {
         window.iframely.load(element, element.attributes.url.value);
       });
     },
   },
+
   watch: {
     chapterId() {
       this.fetchOneChapter();
     },
   },
+
   mounted() {
     const plugin = document.createElement("script");
     plugin.setAttribute(
@@ -85,6 +90,7 @@ export default {
     document.head.appendChild(plugin);
     console.log("plugin is ", plugin);
   },
+
   updated() {
     this.enableVideo();
   },

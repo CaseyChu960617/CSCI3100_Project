@@ -131,42 +131,6 @@
         </v-card>
       </v-row>
     </v-card>
-    <!--<ul class="list-group list-group-flush ">-->
-    <!--<small class="text-white">{{ currentUser.username }} is typing</small>
-        <li
-          class="list-group-item"
-          v-for="(message, index) in messages"
-          v-bind:key="index"
-        >
-          <span>
-            {{ message.user }}
-            <small>:{{ message.message }}</small>
-          </span>
-        </li>
-        </ul>-->
-    <!--  <v-virtual-scroll :items="messages" height="300" item-height="64">
-        <template v-slot:default="{ item }">
-          <v-list-item :key="item">
-            <v-list-item-action>
-              <v-btn fab small depressed color="primary"> </v-btn>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ item.message }}
-              </v-list-item-title>
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-icon small>
-                {{ item.user }}
-              </v-icon>
-            </v-list-item-action>
-          </v-list-item>
-
-          <v-divider></v-divider>
-        </template>
-      </v-virtual-scroll>-->
 
     <v-card
       style="width: 100%; padding: 12px; margin-right: auto; margin-left: auto"
@@ -216,10 +180,8 @@ export default {
   data() {
     return {
       loading: false,
-      //oppID: this.$route.params.oppId,
       newMessage: null,
       messages: [],
-      //make connection to socket io
       userA: null,
       userB: null,
       chatOpp: null,
@@ -228,8 +190,9 @@ export default {
 
   methods: {
     send() {
+      // If the message is not empty.
       if (this.newMessage != null) {
-        console.log("chat id is ", this.chatId);
+        // Emit the message data to the socket.
         this.socket.emit(
           "send",
           {
@@ -251,37 +214,33 @@ export default {
       }, 5);
     },
 
+    // Function to fetch history of a chat
     getOneChat() {
       this.loading = true;
-      console.log(this.chatId);
-      //const data = {
-      //  uid_1: this.currentUser.uid,
-      //  uid_2: this.oppId,
-      //};
+
+      // Do a get request to fetch history of a chat
       DataService.get("chat/getOneChat", this.chatId)
         .then((response) => {
-          console.log(response.data.messages);
           this.messages = response.data.messages;
           this.loading = false;
 
+          // For UI rendering
           if (response.data.userA._id == this.currentUser.user_id)
             this.chatOpp = response.data.userB;
           else this.chatOpp = response.data.userA;
         })
         .catch((err) => {
-          console.log(err);
-          if (err.response.status == 401 || err.response.status == 403) {
-            alert("Please Login again");
-            this.$router.push("/home");
-          } else {
+          if (err.response.status == 400) {
             alert(err.response.data.message);
           }
         });
     },
   },
 
+  // Watch the change of chatId.
   watch: {
     chatId() {
+      // Fetch the chat history of selected chat if the chatId changes.
       this.getOneChat();
     },
   },
@@ -292,17 +251,13 @@ export default {
   },
 
   created() {
+    // Fetch the chat history when the chat component is created.
     this.getOneChat();
   },
 
   mounted() {
-    //console.log("Join " + this.chatId + " Room");
-
     this.socket.on("updateMessage", (data) => {
-      //pushed to daatbsae
-
       this.messages = [...this.messages, data];
-      //console.log(this.newMessage);
       this.newMessage = null;
     });
   },

@@ -173,10 +173,11 @@ export default {
           this.refreshProfile();
         })
         .catch((err) => {
-          console.log(err);
+          // Prompt error and alert messages
           if (err.response.status == 401 || err.response.status == 403) {
             alert("Please Login again");
-            this.$router.push("/home");
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
           } else if (err.response.status == 400) {
             alert(err.response.data.message);
           }

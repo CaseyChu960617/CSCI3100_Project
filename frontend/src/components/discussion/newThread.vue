@@ -40,7 +40,6 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <!--<v-btn color="blue darken-1" text @click="close">Preview</v-btn>-->
         <v-btn color="blue darken-1" text @click="create" :disabled="!isValid"
           >Create</v-btn
         >
@@ -84,7 +83,6 @@ import Heading from "@ckeditor/ckeditor5-heading/src/heading";
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
 import dotenv from "dotenv";
-//import authHeader from "../../services/auth-header.js";
 dotenv.config();
 export default {
   props: ["dialog"],
@@ -174,10 +172,7 @@ export default {
           withCredentials: false,
 
           // Headers sent along with the XMLHttpRequest to the upload server.
-          headers: {
-            //    "X-CSRF-TOKEN": "CSRF-Token",
-            //    Authorization: "Bearer <JSON Web Token>",
-          },
+          headers: {},
         },
       },
     };
@@ -210,15 +205,11 @@ export default {
         subject: this.subject,
         content: this.content,
       };
-      DataService.createThread(
-        data
-        //,
-        //{
-        //  headers: authHeader(),
-        //}
-      ).then((response) => {
+      
+      // Do a post request to create a new dicussion thread.
+      DataService.createThread(data).then((response) => {
         let thread_id = response.data;
-        alert("Success");
+        alert("Discussion thread created successfully.");
         this.close();
         this.$router.push({
           name: "discussion",
@@ -227,12 +218,11 @@ export default {
         this.$emit("refreshList");
       });
     },
+
     EnableVideo() {
       document.querySelectorAll("oembed[url]").forEach((element) => {
         window.iframely.load(element, element.attributes.url.value);
       });
-      //alert(this.editor);
-      //console.log(this.editor);
     },
   },
 };

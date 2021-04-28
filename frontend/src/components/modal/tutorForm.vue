@@ -86,31 +86,34 @@ export default {
     create() {
       this.$emit("update:editedItem", this.Item);
       this.$emit("submit");
-      //console.log(this.title);
-      //console.log(this.subject);
-      //console.log(this.description);
       const data = {
         user_id: this.currentUser.user_id,
         title: this.title,
         subject: this.subject,
         description: this.description,
       };
-      //console.log(this.subjects[this.subject - 1]["code"]);
-      DataService.post(
-        "tutorial/createTutorial",
-        data
-        //,
-        //{
-        //  headers: authHeader(),
-        //}
-      ).then((response) => {
-        let tutorialId = response.data;
-        console.log("tutorialId is" + tutorialId);
-        this.$router.push({
-          name: "editTutorial",
-          params: { tutorialId: tutorialId },
+
+      // Do a post request to create a new tutorial.
+      DataService.post("tutorial/createTutorial", data)
+        .then((response) => {
+          let tutorialId = response.data;
+          console.log("tutorialId is" + tutorialId);
+          this.$router.push({
+            name: "editTutorial",
+            params: { tutorialId: tutorialId },
+          });
+        })
+        .catch((err) => {
+          // Prompt error and alert messages
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            // Sign out the user automatically
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
         });
-      });
     },
   },
 };

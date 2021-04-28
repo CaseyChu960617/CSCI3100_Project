@@ -87,7 +87,7 @@ export default {
     fetchOneThread(thread_id) {
       //thread is loading
       this.threadLoading = true;
-      //get one thread from batabase
+      //get one thread from database
       DataService.getOneThread(thread_id)
         .then((response) => {
           this.thread = response.data;

@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       edit: true,
-      canEdit: false, //boolean to decide whether profile can be dit or not
+      canEdit: false, //boolean to decide whether profile can be edit or not
       profile: {},
       loading: false,
     };
@@ -49,7 +49,8 @@ export default {
         .then((response) => {
           //get the response data from db
           this.profile = response.data;
-          //check if the id we fetch make with the current login user id, then we allow them to edit the profile
+          //check if the id we fetch make with the current login user id,
+          //then we allow them to edit the profile
           this.profile._id == this.$store.state.auth.user.user_id
             ? (this.canEdit = true)
             : (this.canEdit = false);
@@ -57,13 +58,13 @@ export default {
         })
         .catch((err) => {
           this.loading = false;
-          //if error is 401 403
+          // Prompt error and alert messages.
           if (err.response.status == 401 || err.response.status == 403) {
             alert("Please Login again");
-            //redirect the homepage
-            this.$router.push("/home");
-          } else {
-            //if other error appears
+            // Sign out the user automatically.
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
             alert(err.response.data.message);
           }
         });
