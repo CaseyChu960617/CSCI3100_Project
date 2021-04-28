@@ -14,9 +14,9 @@ import News from "./news.vue"; //using a child component to render latest tutori
 import GenerateEmail from "./generateEmail.vue"; //using a child component to render generate email component
 export default {
   components: {
-    Sign,
-    News,
-    GenerateEmail,
+    Sign, //declare signb component
+    News, //declare news component
+    GenerateEmail, //declare the generate emmail component
   },
   data() {
     return {};

@@ -15,7 +15,7 @@
     </v-toolbar>
     <div>
       <v-row class="ml-2 mt-2">
-        <v-col mt="5" md="3" class="hidden-sm-and-down mt-5">
+        <v-col mt="5" md="3" class="mt-5">
           <div class="pa-5 edit-tutorial" @click="changeEdit(tutorial._id, 1)">
             Edit tutorial information
           </div>
@@ -72,7 +72,7 @@
             <v-icon color="black">mdi-plus</v-icon>
           </v-btn>
         </v-col>
-        <v-col>
+        <v-col md="9">
           <editMetadata v-if="editMetadata" :ref="'' + selectedId" />
           <editChapter
             :tutorial_id="tutorial._id"

@@ -12,7 +12,7 @@
       ></v-img>
 
       <v-spacer></v-spacer>
-      <div v-if="currentUser">
+      <div v-if="currentUser" id="original-navbar">
         <v-btn
           v-if="currentUser.activation"
           to="/chat"
@@ -51,34 +51,63 @@
       <v-app-bar-text v-else class="sign-header-text"
         >Urge to learn, Path to wisdom</v-app-bar-text
       >
+      <v-app-bar-nav-icon
+        id="toggle-icon"
+        v-if="currentUser"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
     </v-app-bar>
 
-    <!-- <v-navigation-drawer v-if="currentUser" v-model="drawer" absolute temporary>
+    <v-navigation-drawer v-model="drawer" absolute bottom temporary id="drawer">
       <v-list nav dense>
-        <v-list-item-group v-model="group">
-          <v-list-item to="/home">
-            <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-btn
+              v-if="currentUser.activation"
+              to="/chat"
+              class="text-capitalize headline"
+              plain
+              ><v-icon class="pr-3">mdi-chat</v-icon>Chat
+            </v-btn></v-list-item
+          >
+
+          <v-list-item>
+            <v-btn
+              v-if="currentUser.activation"
+              to="/tutorial"
+              class="text-capitalize headline "
+              plain
+              ><v-icon class="pr-3">mdi-book-account</v-icon>Tutorial
+            </v-btn>
           </v-list-item>
 
-          <v-list-item to="/item">
-            <v-list-item-icon>
-              <v-icon>mdi-package</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Item</v-list-item-title>
+          <v-list-item>
+            <v-btn
+              v-if="currentUser.activation"
+              to="/discussion/0"
+              class="text-capitalize headline"
+              plain
+              ><v-icon class="pr-3">mdi-chat-question</v-icon>Discussion
+            </v-btn>
           </v-list-item>
 
-          <v-list-item to="/profile">
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
+          <v-list-item>
+            <v-btn
+              v-if="currentUser.activation"
+              :to="`/profile/` + currentUser.user_id"
+              class="mr-4 ml-2 text-capitalize"
+              color="#757575"
+              text
+              ><v-icon class="pr-3">mdi-account-cog</v-icon
+              >{{ currentUser.username }}
+            </v-btn>
           </v-list-item>
         </v-list-item-group>
       </v-list>
-    </v-navigation-drawer> -->
+    </v-navigation-drawer>
   </div>
 </template>
 <style>
@@ -87,6 +116,32 @@
   font-size: 20px;
   right: 30px;
   position: absolute;
+}
+.v-navigation-drawer--bottom.v-navigation-drawer--is-mobile {
+  max-height: calc(70% + 10vh) !important;
+  top: auto;
+  bottom: 0;
+  min-width: 100%;
+}
+@media screen and (max-width: 970px) {
+  #original-navbar {
+    display: none;
+  }
+  #toggle-icon {
+    display: block !important;
+  }
+}
+#toggle-icon {
+  display: none;
+}
+#drawer {
+  display: none;
+}
+.v-navigation-drawer--is-mobile:not(.v-navigation-drawer--close),
+.v-navigation-drawer--temporary:not(.v-navigation-drawer--close) {
+  box-shadow: 0px 8px 10px -5px rgb(0 0 0 / 20%),
+    0px 16px 24px 2px rgb(0 0 0 / 14%), 0px 6px 30px 5px rgb(0 0 0 / 12%);
+  display: block !important;
 }
 </style>
 <script>

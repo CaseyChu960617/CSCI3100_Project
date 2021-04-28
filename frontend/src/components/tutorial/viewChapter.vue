@@ -1,16 +1,17 @@
 <template>
-  <div>
-    <v-card elevation="8" class="ma-4">
-      <v-card-title>{{ this.chapter.title }}</v-card-title>
-      <v-divider class="mx-4"></v-divider>
-      <v-card-text
-        class="chapter-content pa-5"
-        v-html="chapter.content"
-      ></v-card-text>
-    </v-card>
-  </div>
+  <v-card elevation="8" class="ma-4" id="view-chapter-card">
+    <v-card-title>{{ this.chapter.title }}</v-card-title>
+    <v-divider class="mx-4"></v-divider>
+    <v-card-text
+      class="chapter-content pa-5"
+      v-html="chapter.content"
+    ></v-card-text>
+  </v-card>
 </template>
 <style>
+#view-chapter-card {
+  flex-basis: 0;
+}
 .chapter-content {
   overflow-y: scroll;
   height: 78vh;
