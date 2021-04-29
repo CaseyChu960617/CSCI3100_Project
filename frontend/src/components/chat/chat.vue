@@ -16,7 +16,9 @@
             <v-img :src="chatOpp.profileImage" height="100%" />
           </v-avatar>
           <v-avatar v-else color="grey" size="45">
-            <span class="white--text headline"> {{ chatOpp.username[0] }}</span>
+            <span class="white--text headline">
+              {{ chatOpp.username | firstchar }}</span
+            >
           </v-avatar> </span
         >{{ chatOpp.username }}
       </div>
@@ -32,15 +34,12 @@
 
       <v-container
         v-if="messages.length == 0"
-        align="center"
-        justify="center"
         style="align-self: center; text-align: center"
-        ;
       >
         Starting Chatting !
       </v-container>
 
-      <v-row justify="space-around d-flex flex-column">
+      <v-row class="space-around d-flex flex-column">
         <v-card v-for="message in messages" :key="message.timestamp" flat>
           <v-list-item
             :key="message.timestamp"
@@ -153,8 +152,6 @@
               elevation="2"
               color="primary"
               v-on:click="send"
-              justify="center"
-              align="center"
               style="text-align: center; display: inline; align-self: center"
               >Send</v-btn
             >
@@ -184,8 +181,15 @@ export default {
       messages: [],
       userA: null,
       userB: null,
-      chatOpp: null,
+      chatOpp: {},
     };
+  },
+
+  filters: {
+    firstchar(value) {
+      value = "" + value;
+      return value.charAt(0);
+    },
   },
 
   methods: {
@@ -208,7 +212,7 @@ export default {
           this.chatId
         );
       }
-      setTimeout(function() {
+      setTimeout(function () {
         const scrollbar = document.querySelector(".scroll-bar");
         scrollbar.scrollTo(0, scrollbar.scrollHeight);
       }, 5);
