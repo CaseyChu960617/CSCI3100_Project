@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" max-width="40%" @click:outside="close">
+  <v-dialog v-model="dialog" @click:outside="close">
     <v-card>
-      <v-card-title class="headline">
+      <v-card-title class="create-own">
         Create your own Tutorial<v-spacer /><v-btn icon @click="close"
           ><v-icon>mdi-close</v-icon></v-btn
         >
@@ -48,7 +48,25 @@
     </v-card>
   </v-dialog>
 </template>
-
+<style>
+@media screen and (max-width: 330px) {
+  .create-own {
+    font-size: 16px !important;
+  }
+}
+@media screen and (max-width: 440px) and (min-width: 331px) {
+  .create-own {
+    font-size: 18px !important;
+  }
+}
+.create-own {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 2rem;
+  letter-spacing: normal !important;
+  font-family: "Roboto", sans-serif !important;
+}
+</style>
 <script>
 import subjectsList from "../../assets/subjects.json";
 import DataService from "../../services/DataService";
