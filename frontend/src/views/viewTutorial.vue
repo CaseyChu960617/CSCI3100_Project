@@ -3,7 +3,7 @@
     <v-toolbar
       :scroll-off-screen="true"
       :scroll-target="'#scrolling-techniques'"
-      style="background:#eee;"
+      style="background: #eee"
       height="100px"
       class="meta"
       @click="selectChapter('null', 1)"
@@ -11,7 +11,7 @@
       <v-layout>
         <v-toolbar-title>
           <div id="subject-fullname">
-            {{ this.subjects[this.tutorial.subject - 1]["text"] }}
+            {{ subjects[tutorial.subject - 1].text }}
           </div>
           <div class="navbar-item">
             <strong> {{ this.tutorial.title }} </strong>
@@ -20,7 +20,7 @@
 
         <v-toolbar-title class="author pa-4">
           <router-link
-            :to="{ name: 'profile', params: { user_id: this.author._id } }"
+            :to="{ name: 'profile', params: { user_id: author._id } }"
           >
             <v-avatar
               class="avatar mr-2"
@@ -37,12 +37,12 @@
               style="cursor: pointer"
             >
               <span class="white--text headline">
-                {{ this.author.username[0] }}</span
+                {{ author.username[0] }}</span
               >
             </v-avatar>
             <span id="author-name">
               Author:
-              {{ this.author.username }}</span
+              {{ author.username }}</span
             >
           </router-link>
         </v-toolbar-title>
@@ -76,9 +76,9 @@
       <v-col lg="9" md="12" sm="12" class="col-12">
         <v-card v-if="viewTutorial" elevation="8" class="ma-4 view-tut-card">
           <div class="tutorial-header">
-            {{ this.tutorial.title }}
+            {{ tutorial.title }}
             <span class="course-code">
-              {{ this.subjects[this.tutorial.subject - 1]["code"] }}
+              {{ subjects[tutorial.subject - 1]["code"] }}
             </span>
           </div>
           <v-divider class="mx-4"></v-divider>
@@ -96,9 +96,7 @@
               ></v-img>
             </div>
 
-            <v-card-title>
-              Description
-            </v-card-title>
+            <v-card-title> Description </v-card-title>
             <v-divider class="mx-4"></v-divider>
             <v-card-text class="des tut-des">
               {{ this.tutorial.description }}
@@ -197,7 +195,7 @@ export default {
     return {
       author: null,
       subjects: subjectsList, //subjectList from subjects.json
-      tutorial: null, //the whole returned object from tutorial
+      tutorial: {}, //the whole returned object from tutorial
       chapters: [],
       selectedId: null,
       noThumbnail: true,
