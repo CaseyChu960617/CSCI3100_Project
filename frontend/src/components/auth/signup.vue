@@ -60,7 +60,7 @@
                 v-model="account.password"
                 label="Password"
                 clearable
-                :rules="[rules.required, , rules.min]"
+                :rules="[rules.required, rules.min]"
                 @keypress.enter="signin"
                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="show1 ? 'text' : 'password'"
@@ -134,7 +134,7 @@ export default {
       isValid: false,
       show1: false,
       rules: {
-        min: (v) => v.length >= 8 || "Min 8 characters",
+        min: (value) => value.length >= 8 || "Min 8 characters",
         required: (value) => !!value || "Required",
         repeat: (value) =>
           value == this.account.password || "Password doesn't match",

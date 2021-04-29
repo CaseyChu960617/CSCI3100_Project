@@ -87,9 +87,9 @@ export default {
       // If the inputs are not valid.
       else this.message = "Email/Password cannot be empty.";
     },
-  },
-  signup() {
-    this.$emit("switchform");
+    signup() {
+      this.$emit("switchform");
+    },
   },
 };
 </script>
