@@ -162,7 +162,6 @@ export default {
   created() {
     //fetch lastest turoials when enter the page
     this.fetchLatestTutorials();
-    this.fetchLatestDiscussions();
     //add resize event to sizeheight of the card
     window.addEventListener("resize", this.setHeight);
     //set height of the card
