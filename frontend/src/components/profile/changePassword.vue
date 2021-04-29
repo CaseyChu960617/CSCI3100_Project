@@ -1,7 +1,11 @@
 <template>
   <v-col cols="12" sm="8" md="6">
     <v-card elevation="16" outlined>
-      <v-card-title class="display-1 pa-10">
+      <v-card-title
+        class="pt-7 pl-5 forgot-pw pr-2"
+        style="font-size:2.215rem;    font-family: 'Roboto', sans-serif !important;font-weight: 400;
+    line-height: 2.5rem;"
+      >
         <v-icon class="pr-3" color="black" size="40">mdi-account-key</v-icon
         >Change Password</v-card-title
       >
@@ -57,7 +61,13 @@
     </v-card>
   </v-col>
 </template>
-
+<style>
+@media screen and (max-width: 405px) {
+  .forgot-pw {
+    font-size: 24px !important;
+  }
+}
+</style>
 <script>
 import DataService from "../../services/DataService";
 

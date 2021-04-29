@@ -11,7 +11,7 @@
     </div>
     <div v-else>
       <v-row justify="center">
-        <v-col cols="6">
+        <v-col cols="12" style="max-width:1120px">
           <Signup @switchform="switchform" />
         </v-col>
       </v-row>
