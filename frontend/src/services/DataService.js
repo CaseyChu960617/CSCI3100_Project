@@ -11,7 +11,6 @@ const header = {
 }
 
 
-
 class DataService {
   getAll(table) {
     return http.get(`/${table}`, header);

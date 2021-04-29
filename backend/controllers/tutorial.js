@@ -237,7 +237,7 @@ exports.editChapter = async (req, res) => {
   };
 
   Chapter.findOneAndUpdate({ _id: chapter_id }, update, (err, doc) => {
-    if (err) res.status(400).json({ error: "Bad request." });
+    if (err) res.status(400).send({ message: err.message });
   });
 
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, 
@@ -252,7 +252,7 @@ exports.editChapter = async (req, res) => {
 
 };
 
-// postComment function
+/*// postComment function
 exports.postComment = async (req, res) => {
 
   const { user_id, content, tutorial_id } = req.body;
@@ -293,7 +293,7 @@ exports.postComment = async (req, res) => {
       });
     }
   });
-};
+};*/
 
 // deleteTutorial function
 exports.deleteTutorial = async (req, res) => {

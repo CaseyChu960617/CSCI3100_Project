@@ -25,7 +25,7 @@ exports.editProfile = async (req, res) => {
   const { user_id, firstname, lastname, gender, username } = req.body;
 
 
-  if (email == "" || password == "")
+  if (password == "")
       res.status(400).send({ message: "Email or password cannot be emptied."});
 
   if (username == "")
