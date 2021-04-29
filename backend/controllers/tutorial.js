@@ -60,52 +60,66 @@ exports.getOneTutorial = async (req, res) => {
     { path: "chapters", select: "_id title content lastModifiedAt" },
   ];
 
-  Tutorial.findOne({ _id: req.params["tutorial_id"] })
-    .select(
-      "_id title subject description thumbnail chapters published lastModified lastEditedAt createdAt"
-    )
-    .populate(populateQuery)
-    .exec()
-    .then((doc) => {
-      res.status(200).send(doc);
-    });
+  try {
+    Tutorial.findOne({ _id: ObjectId(req.params["tutorial_id"]) })
+      .select(
+        "_id title subject description thumbnail chapters published lastModified lastEditedAt createdAt"
+      )
+      .populate(populateQuery)
+      .exec()
+      .then((doc) => {
+        res.status(200).send(doc);
+      })
+  } catch(err) {
+    res.status(400).send({ message: "Invalid tutorial_id." });
+  }
 };
 
 // getOneChapter function
 exports.getOneChapter = async (req, res) => {
-
-  Chapter.findOne({ _id: req.params["chapter_id"] })
-    .select("title content lastEditedAt createdAt")
-    .exec()
-    .then((doc) => {
-      res.status(200).send(doc);
-    });
+  try {
+    Chapter.findOne({ _id: ObjectId(req.params["chapter_id"]) })
+      .select("title content lastEditedAt createdAt")
+      .exec()
+      .then((doc) => {
+        res.status(200).send(doc);
+      });
+    } catch(err) {
+      res.status(400).send({ message: "Invalid chapter_id. "});
+    }
 };
 
 // getUserTutorial function
 exports.getMyTutorials = async (req, res) => {
-
-  Tutorial.find({ author: req.params["user_id"] })
-    .sort({ lastModifiedAtDate: -1 })
-    .select("author subject title description thumbnail createdAt lastModifiedAt")
-    .populate("author", "_id username")
-    .exec()
-    .then((docs) => {
-      res.status(200).send(docs);
-    });
+  try {
+    Tutorial.find({ author: ObjectId(req.params["user_id"]) })
+      .sort({ lastModifiedAtDate: -1 })
+      .select("author subject title description thumbnail createdAt lastModifiedAt")
+      .populate("author", "_id username")
+      .exec()
+      .then((docs) => {
+        res.status(200).send(docs);
+      });
+  } catch(err) {
+    res.status(400).send({ message: "Invalid user_id."});
+  }
 };
 
 // getUserTutorial function
 exports.getUserTutorials = async (req, res) => {
-
-  Tutorial.find({ $and: [{ author: req.params["user_id"]}, { published: 1}] })
-    .sort({ lastModifiedAtDate: -1 })
-    .select("author subject title description thumbnail createdAt lastModifiedAt")
-    .populate("author", "_id username")
-    .exec()
-    .then((docs) => {
-      res.status(200).send(docs);
-    });
+  try {
+    Tutorial.find({ $and: [{ author: ObjectId(req.params["user_id"])}, 
+    { published: 1}] })
+      .sort({ lastModifiedAtDate: -1 })
+      .select("author subject title description thumbnail createdAt lastModifiedAt")
+      .populate("author", "_id username")
+      .exec()
+      .then((docs) => {
+        res.status(200).send(docs);
+      });
+  } catch(err) {
+    res.status(400).send({ message: "Invalid user_id."});
+  }
 };
 
 // getOneTutorial function
@@ -130,9 +144,9 @@ exports.getFollowingTutorials = async (req, res) => {
 exports.createTutorial = async (req, res) => {
 
   const { user_id, subject, title, description } = req.body;
+  try {
+    const user = await User.findOne({ _id: ObjectId(user_id)});
 
-  User.findById(user_id, { lean: true }, (err, user) => {
-    if (err) res.status(400).send({ error: err.message });
     if (user) {
       Tutorial.create(
         {
@@ -148,13 +162,38 @@ exports.createTutorial = async (req, res) => {
         },
         (err, doc) => {
           if (err) 
-          res.status(400).send(err.message);
+            res.status(400).send({ message: err.message });
           else 
             res.status(200).send(doc._id);
-        }
-      );
-    } else res.status(400).send("User not found.");
-  });
+        });
+    }
+  //User.findById(new ObjectId(user_id), { lean: true }, (err, user) => {
+    //if (err) res.status(400).send({ error: err.message });
+    //if (user) {
+      // Tutorial.create(
+      //   {
+      //     author: user._id,
+      //     title: title,
+      //     subject: subject,
+      //     description: description,
+      //     createdAt: new Date().toLocaleString("zh-HK"),
+      //     lastEditedAt: new Date().toLocaleString("zh-HK"),
+      //     lastModifiedAt: new Date().toLocaleString("zh-HK"),
+      //     lastModifiedAtDate: new Date().getTime(),
+      //     published: false,
+      //   },
+      //   (err, doc) => {
+      //     if (err) 
+      //     res.status(400).send({ message: err.message });
+      //     else 
+      //       res.status(200).send(doc._id);
+      //   }
+      // );
+    //} 
+  //});
+  } catch(err) {
+    res.status(400).send({ message: "User not found." });
+  }
 };
 
 // createChapter function
@@ -186,7 +225,7 @@ exports.createChapter = async (req, res) => {
     },
   };
 
-  Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err) => {
+  Tutorial.findOneAndUpdate({ _id: new ObjectId(tutorial_id) }, update, (err) => {
     if (err) res.status(400).send({ message: err.message });
     else res.status(200).send("A new chapter has been created successfully.");
   });
@@ -217,10 +256,14 @@ exports.editTutorial = async (req, res) => {
     },
   };
 
-  Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
-    if (err) res.status(400).send({ message: err.message });
-    else res.status(200).send({ message: "Edit tutorial successfully."});
-  });
+  try {
+    Tutorial.findOneAndUpdate({ _id: ObjectId(tutorial_id) }, update, (err,doc) => {
+      if (doc) res.status(200).send({ message: "Edit tutorial successfully."});
+      else res.status(400).send({ message: "Tutorial not found."});
+    });
+  } catch(err) {
+    res.status(400).send({ message: err.message });
+  }
 };
 
 // editChapter function
@@ -228,28 +271,29 @@ exports.editChapter = async (req, res) => {
 
   const { tutorial_id, chapter_id, title, content } = req.body;
 
-  const update = {
-    $set: {
-      title: title,
-      content: content,
-      lastEditedAt: new Date().toLocaleDateString("zh-HK"),
-    },
-  };
+  try {
 
-  Chapter.findOneAndUpdate({ _id: chapter_id }, update, (err, doc) => {
-    if (err) res.status(400).send({ message: err.message });
-  });
+    const chapter = await Chapter.findOne({ _id: ObjectId(chapter_id)});
 
-  Tutorial.findOneAndUpdate({ _id: tutorial_id }, 
-    { $set: { lastModifiedAtDate: new Date().getTime() } }, 
-    (err) => {
-      if (err)
-        res.status(400).send({ message: err.message });
-      else
-        res.status(200).send("Edit chapter sucessfully");
-    });
+    if (chapter) {
+      chapter.title = title;
+      chapter.content = content;
+      chapter.lastEditedAt =  new Date().toLocaleDateString("zh-HK");
+      chapter.save();
 
-
+      Tutorial.findOneAndUpdate({ _id: ObjectId(tutorial_id) }, 
+      { $set: { lastModifiedAtDate: new Date().getTime() } }, 
+      (err,doc) => {
+        if (doc) return res.status(200).send({ message: "Edit chapter successfully."});
+        else return res.status(400).send({ message: "Tutorial not found."});
+      });
+    }
+    else {
+      return res.status(400).send({ message: "Chapter not found."});
+    }
+  } catch(err) {
+    return res.status(400).send({ message: err.message });
+  }
 };
 
 /*// postComment function
@@ -298,16 +342,20 @@ exports.postComment = async (req, res) => {
 // deleteTutorial function
 exports.deleteTutorial = async (req, res) => {
   
-  const tutorial = await Tutorial.findOne({ _id: req.params["tutorial_id"] });
+  try {
+    const tutorial = await Tutorial.findOne({ _id: ObjectId(req.params["tutorial_id"]) });
 
-  if (tutorial) {
-    tutorial.remove();
+    if (tutorial) {
+      tutorial.remove();
 
-    res.status(200).send({
-      message: "Tutorial has been deleted successfully.",
-    });
-  } else {
-    res.status(400).send({ message: "Tutorial not found." });
+      res.status(200).send({
+        message: "Tutorial has been deleted successfully.",
+      });
+    } else {
+      res.status(400).send({ message: "Tutorial not found." });
+    }
+  } catch(err) {
+    res.status(400).send({ message: err.message});
   }
 };
 
@@ -317,20 +365,23 @@ exports.deleteChapter = async (req, res) => {
   const tutorial_id = req.params["tutorial_id"];
   const chapter_id = req.params["chapter_id"];
 
-  const chapter = await Chapter.findOne({ _id: chapter_id });
+  try {
+    const chapter = await Chapter.findOne({ _id: ObjectId(chapter_id) });
 
-  if (chapter) {
-    chapter.remove();
+    if (chapter) {
+      chapter.remove();
 
-    Tutorial.findOneAndUpdate(
-      { _id: tutorial_id },
-      { $pullAll: { chapters: [ObjectId(chapter._id)] } },
-      (err, doc) => {
-        if (err) res.status(400).send({ message: err.message });
-        else res.status(200).send(doc);
-      }
-    );
-  } else {
-    res.status(400).send({ message: "Chapter not found." });
+      Tutorial.findOneAndUpdate(
+        { _id: ObjectId(tutorial_id) },
+        { $pullAll: { chapters: [ObjectId(chapter._id)] } },
+        (doc) => {
+         res.status(200).send({ message: "Chapter has been deleted successfully."});
+        }
+      );
+    } else {
+      res.status(400).send({ message: "Chapter not found." });
+    }
+  } catch(err) {
+    res.status(400).send({ message: err.message });
   }
 };

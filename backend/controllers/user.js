@@ -51,9 +51,7 @@ exports.editProfile = async (req, res) => {
       user.firstname = firstname;
       user.lastname = lastname;
       user.gender = gender;
-      user.save((err) => {
-        if (err) res.status(400).send({ message: err.message });
-      });
+      user.save();
 
       // Renew token when finish editing profile.
       const accessToken = jwt.sign(
@@ -82,9 +80,8 @@ exports.editProfile = async (req, res) => {
         user.firstname = firstname;
         user.lastname = lastname;
         user.gender = gender;
-        user.save((err) => {
-          if (err) res.status(400).send({ message: err.message });
-        });
+        user.save();
+        
         // Generate a token if password is matched.
         const accessToken = jwt.sign(
           {
