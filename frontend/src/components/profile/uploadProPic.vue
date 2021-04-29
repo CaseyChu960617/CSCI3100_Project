@@ -104,7 +104,7 @@ export default {
           user.profileImage = response.data;
           localStorage.setItem("user", JSON.stringify(user));
           this.$store.dispatch("auth/uploadProPic", response.data);
-          console.log(response.data);
+
           this.close();
           this.$emit("refreshProfile");
         })

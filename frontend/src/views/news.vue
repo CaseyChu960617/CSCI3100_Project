@@ -178,7 +178,6 @@ export default {
           element.subject = this.subjects[element.subject - 1]["text"];
         });
 
-        console.log(this.tutorials);
         //get the data to the local variable/data vue
         this.tutorials = rawData;
       });
