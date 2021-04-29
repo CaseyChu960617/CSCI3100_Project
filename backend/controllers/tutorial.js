@@ -68,7 +68,10 @@ exports.getOneTutorial = async (req, res) => {
       .populate(populateQuery)
       .exec()
       .then((doc) => {
-        res.status(200).send(doc);
+        if (doc)
+         res.status(200).send(doc);
+        else
+         res.status(400).send({ message: "Tutorial not found."});
       })
   } catch(err) {
     res.status(400).send({ message: "Invalid tutorial_id." });
@@ -292,7 +295,7 @@ exports.editChapter = async (req, res) => {
       return res.status(400).send({ message: "Chapter not found."});
     }
   } catch(err) {
-    return res.status(400).send({ message: err.message });
+    return res.status(400).send({ message: "Invalid chapter_id/tutorial_id" });
   }
 };
 

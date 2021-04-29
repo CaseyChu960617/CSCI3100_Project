@@ -44,27 +44,32 @@ exports.getLatestThreads = async (req, res) => {
 exports.getSubject = async (req, res) => {
 
   try {
-    // If no subject filter, get all threads.
-    if (req.params["subject_id"] == 0) {
-      Thread.find()
-      .sort({ lastModifiedAtDate: -1 })
-      .select("author subject title createdAt lastEditedAt")
-      .populate("author", "_id username")
-      .exec()
-      .then((docs) => {
-        res.status(200).send(docs);
-      });
-    }
-    else {
-      // Get threads from certain subject with subject_id.
-      Thread.find({ subject: req.params["subject_id"] })
+
+    if (!isNaN(req.params["subject_id"])) { 
+      // If no subject filter, get all threads.
+      if (req.params["subject_id"] == 0) {
+        Thread.find()
         .sort({ lastModifiedAtDate: -1 })
-        .select("author subject title createdAt lastModifiedAt")
+        .select("author subject title createdAt lastEditedAt")
         .populate("author", "_id username")
         .exec()
         .then((docs) => {
-          return res.status(200).send(docs);
+          res.status(200).send(docs);
         });
+      }
+      else {
+        // Get threads from certain subject with subject_id.
+        Thread.find({ subject: req.params["subject_id"] })
+          .sort({ lastModifiedAtDate: -1 })
+          .select("author subject title createdAt lastModifiedAt")
+          .populate("author", "_id username")
+          .exec()
+          .then((docs) => {
+            return res.status(200).send(docs);
+          });
+      }
+    } else {
+      res.status(400).send({ message: "Invalid subject_id."});
     }
   } catch (err) {
     res.status(400).send({ message: err.message });
