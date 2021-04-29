@@ -41,12 +41,7 @@ export const router = new Router({
     },
     {
       name: "chat",
-      path: "/chat/:chatId",
-      component: chatList,
-    },
-    {
-      name: "chat",
-      path: "/chat",
+      path: "/chat/:chatId?",
       component: chatList,
     },
     {
