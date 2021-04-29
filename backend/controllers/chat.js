@@ -101,3 +101,34 @@ exports.getOneChat = async (req, res) => {
     } else res.status(200).send(doc);
   });
 };
+
+// Send message function.
+exports.sendMessage = async (data) => {
+  const newMessage = new Message(
+    {
+      sender: new ObjectId(data.sender._id),
+      message: data.message,
+      timestamp: data.timestamp,
+    },
+    (err) => {
+      if (err) {
+        res.status(400).send({ message: err.message });
+      }
+    }
+  );
+
+  newMessage.save((err) => {
+    if (err)
+      res
+        .status(400)
+        .send({ message: "message cannot be posted successfully." });
+  });
+
+  Chat.findOneAndUpdate(
+    { _id: data.chatId },
+    { $push: { messages: newMessage._id } },
+    (err) => {
+      if (err) res.status(400).send({ message: err.message });
+    }
+  );
+}

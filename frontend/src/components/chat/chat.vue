@@ -230,7 +230,14 @@ export default {
           else this.chatOpp = response.data.userA;
         })
         .catch((err) => {
-          if (err.response.status == 400) {
+          this.loading = false;
+          // Prompt error and alert messages.
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            // Sign out the user automatically.
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
             alert(err.response.data.message);
           }
         });

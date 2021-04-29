@@ -109,7 +109,6 @@ export default {
   },
   methods: {
     startChat() {
-
       // Do a get request to fetch one chat history.
       DataService.getOneChat({
         user_id_1: this.currentUser.user_id,
@@ -151,15 +150,15 @@ export default {
           this.$store.dispatch("auth/follow", this.profile._id);
         })
         .catch((err) => {
-            // Prompt error and alert messages.
-            if (err.response.status == 401 || err.response.status == 403) {
-              alert("Please Login again");
-              // Sign out the user automatically.
-              this.$store.dispatch("auth/signout");
-              this.$router.push("/home").catch(() => {});
-            } else if (err.response.status == 400) {
-              alert(err.response.data.message);
-            }
+          // Prompt error and alert messages.
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            // Sign out the user automatically.
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
         });
     },
 
@@ -179,15 +178,15 @@ export default {
           this.$store.dispatch("auth/unfollow", this.profile._id);
         })
         .catch((err) => {
-            // Prompt error and alert messages.
-            if (err.response.status == 401 || err.response.status == 403) {
-              alert("Please Login again");
-              // Sign out the user automatically.
-              this.$store.dispatch("auth/signout");
-              this.$router.push("/home").catch(() => {});
-            } else if (err.response.status == 400) {
-              alert(err.response.data.message);
-            }
+          // Prompt error and alert messages.
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            // Sign out the user automatically.
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
         });
     },
 

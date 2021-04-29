@@ -125,12 +125,12 @@ export default {
           });
         })
         .catch((err) => {
-          //catch error
+          // Prompt error and alert messages
           if (err.response.status == 401 || err.response.status == 403) {
             alert("Please Login again");
-            //redirect to homepage
-            this.$router.push("/home");
-          } else {
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
             alert(err.response.data.message);
           }
         });

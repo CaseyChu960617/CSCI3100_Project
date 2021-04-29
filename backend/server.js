@@ -8,6 +8,7 @@ const Message = require("./models/message");
 const Chat = require("./models/chat");
 var ObjectId = require("mongoose").Types.ObjectId;
 const mongoose = require("mongoose");
+const { sendMessage } = require("./controllers/chat");
 
 //Import routes
 const authRoutes = require("./routes/auth");
@@ -73,41 +74,9 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("send", (data) => {
-    //console.log(data.sender + " send in room " + data.chatId);
-    console.log(data);
 
-    
     io.to(data.chatId).emit("updateMessage", data);
-    //const { sender_id, message } = req.body;
-
-    const newMessage = new Message(
-      {
-        sender: new ObjectId(data.sender._id),
-        message: data.message,
-        timestamp: data.timestamp,
-      },
-      (err) => {
-        if (err) {
-          console.log(err);
-          res.status(400).json({ error: "Bad request." });
-        }
-      }
-    );
-
-    newMessage.save((err) => {
-      if (err)
-        res
-          .status(400)
-          .json({ error: "message cannot be posted successfully." });
-    });
-
-    Chat.findOneAndUpdate(
-      { _id: data.chatId },
-      { $push: { messages: newMessage._id } },
-      (err) => {
-        if (err) res.status(400).send(err.message);
-      }
-    );
+    sendMessage(data);
   });
   socket.on("leave", (data) => {
     socket.disconnect();

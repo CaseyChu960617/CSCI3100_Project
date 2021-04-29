@@ -219,7 +219,7 @@ exports.editTutorial = async (req, res) => {
 
   Tutorial.findOneAndUpdate({ _id: tutorial_id }, update, (err, doc) => {
     if (err) res.status(400).send({ message: err.message });
-    else res.status(200).send("Sucess");
+    else res.status(200).send({ message: "Edit tutorial successfully."});
   });
 };
 
@@ -326,7 +326,7 @@ exports.deleteChapter = async (req, res) => {
       { _id: tutorial_id },
       { $pullAll: { chapters: [ObjectId(chapter._id)] } },
       (err, doc) => {
-        if (err) res.status(400).json({ error: err.message });
+        if (err) res.status(400).send({ message: err.message });
         else res.status(200).send(doc);
       }
     );

@@ -19,7 +19,7 @@ class DataService {
 
   get(table, id) {
     //header) {
-    return http.get(`/${table}/${id}`); //, header);
+    return http.get(`/${table}/${id}`, header); //, header);
   }
 
   create(table, data) {
