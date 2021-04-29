@@ -48,8 +48,8 @@
           ><v-icon>mdi-logout</v-icon>Sign out</v-btn
         >
       </div>
-      <v-app-bar-text v-else class="sign-header-text"
-        >Urge to learn, Path to wisdom</v-app-bar-text
+      <v-app-bar-title v-else class="sign-header-text"
+        >Urge to learn, Path to wisdom</v-app-bar-title
       >
       <v-app-bar-nav-icon
         id="toggle-icon"
@@ -101,7 +101,11 @@
             <v-btn
               v-if="currentUser.activation"
               class="mr-4 text-capitalize"
-              style="box-shadow:none;font-size:inherit;background-color:transparent;"
+              style="
+                box-shadow: none;
+                font-size: inherit;
+                background-color: transparent;
+              "
               ><v-icon class="pr-3">mdi-account-cog</v-icon>MY PROFILE
             </v-btn>
           </v-list-item>
@@ -109,7 +113,11 @@
           <v-list-item @click="signout">
             <v-btn
               rounded
-              style="box-shadow:none;font-size:inherit;background-color:transparent;"
+              style="
+                box-shadow: none;
+                font-size: inherit;
+                background-color: transparent;
+              "
               ><v-icon class="pr-3">mdi-logout</v-icon>Sign out</v-btn
             >
           </v-list-item>

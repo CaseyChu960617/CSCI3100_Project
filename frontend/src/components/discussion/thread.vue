@@ -1,65 +1,82 @@
 <template>
-  <v-container v-if="thread" fluid class="pa-0">
-    <v-app-bar>
-      <v-app-bar-title class="thread-header">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <div v-bind="attrs" v-on="on">
-              {{ thread.title }}
-            </div>
-          </template>
-          <span>{{ thread.title }}</span>
-        </v-tooltip>
-      </v-app-bar-title>
-    </v-app-bar>
+  <span
+    ><v-row v-if="loading" justify="center" class="mt-8">
+      <v-progress-circular
+        indeterminate
+        size="100"
+        color="primary"
+      ></v-progress-circular>
+    </v-row>
+    <span v-else>
+      <v-container v-if="thread" fluid class="pa-0">
+        <v-app-bar>
+          <v-app-bar-title class="thread-header">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <div v-bind="attrs" v-on="on">
+                  {{ thread.title }}
+                </div>
+              </template>
+              <span>{{ thread.title }}</span>
+            </v-tooltip>
+          </v-app-bar-title>
+        </v-app-bar>
 
-    <v-virtual-scroll
-      bench="100"
-      :height="height"
-      item-height="65"
-      :items="tmpThread.comments"
-    >
-      <template v-slot:default="{ item }">
-        <v-card
-          v-if="item.commentSection"
-          :loading="commentloading"
-          outlined
-          elevation="8"
-          height="100%"
-          class="ma-2 pt-4"
+        <v-virtual-scroll
+          bench="100"
+          :height="height"
+          item-height="65"
+          :items="tmpThread.comments"
         >
-          <v-card-title class="pt-0">Comment</v-card-title>
-          <ckeditor
-            :editor="editor"
-            v-model="content"
-            :config="editorConfig"
-          ></ckeditor>
-          <v-row justify="center">
-            <v-btn
-              rounded
-              color="#99CFEA"
-              class="black--text my-5"
-              @click="post()"
-              >Post</v-btn
-            ></v-row
-          >
-        </v-card>
-        <v-card v-else outlined elevation="8" height="100%" class="ma-2 pt-4">
-          <router-link
-            class="pl-4"
-            :to="{ name: 'profile', params: { user_id: item.author._id } }"
-            >{{ item.author.username }}</router-link
-          ><v-divider class="mt-2" />
-          <v-card-text v-html="item.content"></v-card-text>
-        </v-card>
-      </template>
-    </v-virtual-scroll>
-  </v-container>
-  <v-container v-else fluid class="pa-0">
-    <v-card-text class="title text-center"
-      >Have not selected any thread</v-card-text
-    >
-  </v-container>
+          <template v-slot:default="{ item }">
+            <v-card
+              v-if="item.commentSection"
+              :loading="commentloading"
+              outlined
+              elevation="8"
+              height="100%"
+              class="ma-2 pt-4"
+            >
+              <v-card-title class="pt-0">Comment</v-card-title>
+              <ckeditor
+                :editor="editor"
+                v-model="content"
+                :config="editorConfig"
+              ></ckeditor>
+              <v-row justify="center">
+                <v-btn
+                  rounded
+                  color="#99CFEA"
+                  class="black--text my-5"
+                  @click="post()"
+                  >Post</v-btn
+                ></v-row
+              >
+            </v-card>
+            <v-card
+              v-else
+              outlined
+              elevation="8"
+              height="100%"
+              class="ma-2 pt-4"
+            >
+              <router-link
+                class="pl-4"
+                :to="{ name: 'profile', params: { user_id: item.author._id } }"
+                >{{ item.author.username }}</router-link
+              ><v-divider class="mt-2" />
+              <v-card-text v-html="item.content"></v-card-text>
+            </v-card>
+          </template>
+        </v-virtual-scroll>
+      </v-container>
+      <v-container v-else fluid class="pa-0">
+        <v-card-text class="title text-center"
+          >Have not selected any thread</v-card-text
+        >
+      </v-container>
+    </span>
+  </span>
 </template>
 <style>
 img {

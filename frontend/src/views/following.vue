@@ -1,26 +1,30 @@
 <template>
   <v-container>
-    <v-card-title>
-      You are following:
-    </v-card-title>
-    <v-row v-if="following.following != null">
+    <v-card-title> You are following: </v-card-title>
+    <v-row v-if="following">
       <v-col
         cols="12"
         sm="6"
         md="4"
         v-for="user in following.following"
-        :key="user"
+        :key="user._id"
         class="following-card"
       >
         <v-card elevation="8" :ref="'front-' + user._id" class="pa-3">
           <router-link
             :to="{ name: 'profile', params: { user_id: user._id } }"
-            style="    text-decoration: none;"
+            style="text-decoration: none"
           >
             <v-avatar
               class="avatar mr-2"
               v-if="user.profileImage"
-              style="cursor: pointer;min-width:45px;min-height:45px;width:45px;height:45px;"
+              style="
+                cursor: pointer;
+                min-width: 45px;
+                min-height: 45px;
+                width: 45px;
+                height: 45px;
+              "
             >
               <v-img :src="user.profileImage" height="100%" />
             </v-avatar>
@@ -63,7 +67,8 @@ export default {
   components: {},
   data() {
     return {
-      following: null,
+      following: {},
+      loading: false,
     };
   },
 
@@ -82,12 +87,13 @@ export default {
   methods: {
     //function to fetch following users
     fetchFollowing() {
+      this.loading = true;
       //get request
       DataService.get("user/getFollower", this.currentUser.user_id).then(
         (response) => {
-          let rawData = response.data;
           //stored in following array
-          this.following = rawData;
+          this.following = response.data;
+          this.loading = false;
         }
       );
     },
