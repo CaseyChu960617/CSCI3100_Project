@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const verifyToken = (req, res, next) => {
     try {
         let accessToken = req.headers['x-access-token'];
-        //console.log(accessToken);
+        console.log(accessToken);
         if (!accessToken) {
             return res.status(403).send("No token provided or token expired. Please sign in again.");
         }

@@ -9,10 +9,10 @@ const {
 } = require('../controllers/chat');
 
 // All the routes for Chat module
-router.get('/getAllChats/:user_id', authJwt.verifyToken, getAllChats);
+router.get('/getAllChats/:user_id', getAllChats);
 
-router.get('/getOneChat/:chat_id', authJwt.verifyToken, getOneChatById);
+router.get('/getOneChat/:chat_id',  getOneChatById);
 
-router.post('/getOneChat', authJwt.verifyToken, getOneChat);
+router.post('/getOneChat', getOneChat);
 
 module.exports = router;
