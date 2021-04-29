@@ -100,23 +100,26 @@
           <v-list-item :to="`/profile/` + currentUser.user_id">
             <v-btn
               v-if="currentUser.activation"
-              class="mr-4 text-capitalize"
+              class="mr-4 text-capitalize headline black--text"
               style="
                 box-shadow: none;
                 font-size: inherit;
                 background-color: transparent;
+                    opacity: 0.62;
               "
-              ><v-icon class="pr-3">mdi-account-cog</v-icon>MY PROFILE
+              ><v-icon class="pr-3">mdi-account-cog</v-icon>My profile
             </v-btn>
           </v-list-item>
 
           <v-list-item @click="signout">
             <v-btn
+              class="mr-4 text-capitalize headline black--text"
               rounded
               style="
                 box-shadow: none;
                 font-size: inherit;
                 background-color: transparent;
+                    opacity: 0.62;
               "
               ><v-icon class="pr-3">mdi-logout</v-icon>Sign out</v-btn
             >
