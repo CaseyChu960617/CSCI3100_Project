@@ -69,7 +69,7 @@ exports.signUp = async (req, res) => {
             message: "Registered successfully"
         });
     } catch (err) {
-        return res.status(400).send({ message: "User with this email/username has already existed." });
+        res.status(400).send({ message: "User with this email/username has already existed." });
     }
 };
 
@@ -85,7 +85,7 @@ exports.signIn = async (req, res) => {
 
     // If not exist, handle the error.
     if (!user) {
-        return res.status(400).send({ message: "User with this email is not found." });
+        res.status(400).send({ message: "User with this email is not found." });
     }
 
     else {
@@ -115,7 +115,7 @@ exports.signIn = async (req, res) => {
         }
     else
         // If password is not matched, handle the error.
-        return res.status(400).send({ message: "Incorrect password." });
+        res.status(400).send({ message: "Incorrect password." });
     }
 };
 
@@ -127,7 +127,7 @@ exports.activateAccount = async (req, res) => {
             const user = await User.findByIdAndUpdate({ _id: req.params['user_id'] } , 
                 {  activation: true }, 
                 { new: true, lean: true});
-
+        
             // Generate a token.
             const accessToken = jwt.sign({
                 user_id: user._id },
@@ -135,7 +135,7 @@ exports.activateAccount = async (req, res) => {
                 { expiresIn: '300m'});
 
             // Return the new data of the user.
-            return res.status(200).json({
+            res.status(200).json({
                 accessToken: accessToken,
                 user_id: user._id,
                 lastname: user.lastname,
@@ -174,10 +174,10 @@ exports.generateEmail = async (req, res) => {
         // Send Email.
         mg.messages().send(data);
 
-        return res.status(200).send({ message: "Activation email has been generated."});
+        res.status(200).send({ message: "Activation email has been generated."});
     
     } catch(err) {
-        return res.status(400).send({ message: "User not found."});
+        res.status(400).send({ message: "User not found."});
     }
 };
 

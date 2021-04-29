@@ -13,10 +13,10 @@ exports.getProfile = async (req, res) => {
       )
       .exec()
       .then((doc) => {
-        return res.status(200).send(doc);
+         res.status(200).send(doc);
       });
   } catch (err) {
-    return res.status(400).send({ message: "user_id is not valid." });
+      res.status(400).send({ message: "user_id is not valid." });
   }
 };
 
@@ -26,13 +26,13 @@ exports.editProfile = async (req, res) => {
 
 
   if (email == "" || password == "")
-  return res.status(400).send({ message: "Email or password cannot be emptied."});
+      res.status(400).send({ message: "Email or password cannot be emptied."});
 
   if (username == "")
-  return res.status(400).send({ message: "Username cannot be emptied."});
+      res.status(400).send({ message: "Username cannot be emptied."});
 
   if (gender < 1 || gender > 3)
-  return res.status(400).send({ message: "Invalid gender."});
+      res.status(400).send({ message: "Invalid gender."});
 
   const user = await User.findOne({ _id: user_id }, (err) => {
     if (err) res.status(400).send({ message: err.message });
@@ -43,7 +43,7 @@ exports.editProfile = async (req, res) => {
   } else {
     // Find if there are other user using the new username
     const otherUser = await User.findOne({ username: username }, (err) => {
-      if (err) return res.status(400).send({ message: err.message });
+      if (err) res.status(400).send({ message: err.message });
     });
 
     if (!otherUser) {
@@ -52,7 +52,7 @@ exports.editProfile = async (req, res) => {
       user.lastname = lastname;
       user.gender = gender;
       user.save((err) => {
-        if (err) return res.status(400).send({ message: err.message });
+        if (err) res.status(400).send({ message: err.message });
       });
 
       // Renew token when finish editing profile.
@@ -64,7 +64,7 @@ exports.editProfile = async (req, res) => {
         { expiresIn: "20m" }
       );
 
-      return res.status(200).send({
+      res.status(200).send({
         accessToken: accessToken,
         user_id: user._id,
         lastname: user.lastname,
@@ -83,7 +83,7 @@ exports.editProfile = async (req, res) => {
         user.lastname = lastname;
         user.gender = gender;
         user.save((err) => {
-          if (err) return res.status(400).send({ message: err.message });
+          if (err) res.status(400).send({ message: err.message });
         });
         // Generate a token if password is matched.
         const accessToken = jwt.sign(
@@ -94,7 +94,7 @@ exports.editProfile = async (req, res) => {
           { expiresIn: "20m" }
         );
 
-        return res.status(200).send({
+        res.status(200).send({
           accessToken: accessToken,
           user_id: user._id,
           lastname: user.lastname,
@@ -125,7 +125,7 @@ exports.follow = async (req, res) => {
   );
 
   const user = await User.findOne({ _id: my_user_id }).select("following");
-  return res.status(200).send(user.following);
+  res.status(200).send(user.following);
 };
 
 // unfollow function.
@@ -141,7 +141,7 @@ exports.unfollow = async (req, res) => {
   );
 
   const user = await User.findOne({ _id: my_user_id }).select("following");
-  return res.status(200).send(user.following);
+  res.status(200).send(user.following);
 };
 
 // updateProPic function.
@@ -157,7 +157,7 @@ exports.updateProPic = async (req, res) => {
   );
 
   const user = await User.findOne({ _id: my_user_id }).select("profileImage");
-  return res.status(200).send(user.profileImage);
+  res.status(200).send(user.profileImage);
 };
 
 exports.resetPassword = async (req, res) => {
