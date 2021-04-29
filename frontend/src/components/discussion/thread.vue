@@ -326,7 +326,6 @@ export default {
     );
     plugin.async = true;
     document.head.appendChild(plugin);
-    console.log("plugin is ", plugin);
   },
   updated() {
     this.enableVideo();
