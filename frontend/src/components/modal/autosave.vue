@@ -29,6 +29,7 @@ export default {
     return {};
   },
   computed: {
+    //store the dat of current user
     currentUser() {
       return this.$store.state.auth.user;
     },

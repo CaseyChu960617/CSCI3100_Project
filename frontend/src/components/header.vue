@@ -174,10 +174,12 @@ export default {
   }),
   computed: {
     currentUser() {
+      //store currentUser information
       return this.$store.state.auth.user;
     },
   },
   methods: {
+    //function to signout
     signout() {
       this.$store.dispatch("auth/signout");
       this.$router.push("/home").catch(() => {});

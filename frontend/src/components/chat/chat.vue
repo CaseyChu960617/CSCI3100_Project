@@ -170,6 +170,7 @@ export default {
   props: ["chatId", "socket", "oppUsername"],
   computed: {
     currentUser() {
+      //store the curren tuser
       return this.$store.state.auth.user;
     },
   },
@@ -186,6 +187,7 @@ export default {
   },
 
   filters: {
+    //filter the string to be first character of the string
     firstchar(value) {
       value = "" + value;
       return value.charAt(0);
@@ -193,10 +195,11 @@ export default {
   },
 
   methods: {
+    //function to send new message
     send() {
       // If the message is not empty.
       if (this.newMessage != null) {
-        // Emit the message data to the socket.
+        // Emit the message data to the socketin backend.
         this.socket.emit(
           "send",
           {
@@ -212,7 +215,8 @@ export default {
           this.chatId
         );
       }
-      setTimeout(function () {
+      //scroll the chatroom to bottom few second later after the message is succesfuly sent
+      setTimeout(function() {
         const scrollbar = document.querySelector(".scroll-bar");
         scrollbar.scrollTo(0, scrollbar.scrollHeight);
       }, 5);
@@ -255,7 +259,7 @@ export default {
       this.getOneChat();
     },
   },
-
+  //scroll the chatroom to the bootom when some data is updated in the vue lifecycle (eg.new messages is sent)
   updated() {
     const scrollbar = document.querySelector(".scroll-bar");
     scrollbar.scrollTo(0, scrollbar.scrollHeight);
@@ -267,6 +271,7 @@ export default {
   },
 
   mounted() {
+    //recieve the update message event from backend to instantly update or render the message in the chatroom
     this.socket.on("updateMessage", (data) => {
       this.messages = [...this.messages, data];
       this.newMessage = null;

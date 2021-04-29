@@ -51,12 +51,13 @@ export default {
     },
   },
   computed: {
+    //function to check if there exist some threads
     haveList() {
       if (!this.threadList) return false;
       if (this.threadList.length > 0) return true;
       return false;
     },
-
+    //set the viewing window height
     height() {
       return window.innerHeight - 200 - 65;
     },

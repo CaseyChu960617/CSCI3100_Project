@@ -65,6 +65,7 @@ export default {
     };
   },
   methods: {
+    //function to sign in
     signin() {
       // If the inputs are valid
       if (this.isValid) {
@@ -87,6 +88,7 @@ export default {
       // If the inputs are not valid.
       else this.message = "Email/Password cannot be empty.";
     },
+    //switch the form for user to sign up
     signup() {
       this.$emit("switchform");
     },

@@ -44,6 +44,7 @@ export default {
     };
   },
 
+  //fetch the subjects list from json file when enter the page
   created() {
     this.subjects = JSON.parse(JSON.stringify(subjectlist));
     if (this.subjects[0].value != 0) {
@@ -52,6 +53,7 @@ export default {
   },
 
   methods: {
+    //function to select subject and so to render threads that are under the coresponding subjects category
     selectSubject(sub_id) {
       this.drawer = false;
       this.$router
@@ -63,10 +65,12 @@ export default {
         .catch(() => {});
     },
 
+    //function to refresh the list
     refreshList() {
       this.$emit("refreshList");
     },
 
+    //function to show the modal
     show(bool) {
       this.dialog = bool;
     },

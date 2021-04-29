@@ -47,41 +47,36 @@
     </v-card>
   </v-dialog>
 </template>
-<style>
-.ck-editor__editable {
-  height: 150px;
-}
-</style>
 <script>
 import subjectsList from "../../assets/subjects.json";
 import DataService from "../../services/DataService";
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
-import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
-import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
-import LinkPlugin from "@ckeditor/ckeditor5-link/src/link";
-import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph";
-import List from "@ckeditor/ckeditor5-list/src/list";
-import MathType from "@wiris/mathtype-ckeditor5";
-import Font from "@ckeditor/ckeditor5-font/src/font";
-import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline";
-import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough";
-import Code from "@ckeditor/ckeditor5-basic-styles/src/code";
-import Subscript from "@ckeditor/ckeditor5-basic-styles/src/subscript";
-import Superscript from "@ckeditor/ckeditor5-basic-styles/src/superscript";
-import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
-import HtmlEmbed from "@ckeditor/ckeditor5-html-embed/src/htmlembed";
-import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
-import Image from "@ckeditor/ckeditor5-image/src/image";
-import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar";
-import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption";
-import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle";
-import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize";
-import LinkImage from "@ckeditor/ckeditor5-link/src/linkimage";
-import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert";
-import Heading from "@ckeditor/ckeditor5-heading/src/heading";
-import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
-import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
+import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor"; //import ckeditor features
+import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials"; //import ckeditor features
+import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold"; //import ckeditor features
+import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic"; //import ckeditor features
+import LinkPlugin from "@ckeditor/ckeditor5-link/src/link"; //import ckeditor features
+import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph"; //import ckeditor features
+import List from "@ckeditor/ckeditor5-list/src/list"; //import ckeditor features
+import MathType from "@wiris/mathtype-ckeditor5"; //import ckeditor features
+import Font from "@ckeditor/ckeditor5-font/src/font"; //import ckeditor features
+import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline"; //import ckeditor features
+import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough"; //import ckeditor features
+import Code from "@ckeditor/ckeditor5-basic-styles/src/code"; //import ckeditor features
+import Subscript from "@ckeditor/ckeditor5-basic-styles/src/subscript"; //import ckeditor features
+import Superscript from "@ckeditor/ckeditor5-basic-styles/src/superscript"; //import ckeditor features
+import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter"; //import ckeditor features
+import HtmlEmbed from "@ckeditor/ckeditor5-html-embed/src/htmlembed"; //import ckeditor features
+import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed"; //import ckeditor features
+import Image from "@ckeditor/ckeditor5-image/src/image"; //import ckeditor features
+import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar"; //import ckeditor features
+import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption"; //import ckeditor features
+import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle"; //import ckeditor features
+import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize"; //import ckeditor features
+import LinkImage from "@ckeditor/ckeditor5-link/src/linkimage"; //import ckeditor features
+import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert"; //import ckeditor features
+import Heading from "@ckeditor/ckeditor5-heading/src/heading"; //import ckeditor features
+import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight"; //import ckeditor features
+import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak"; //import ckeditor features
 import dotenv from "dotenv";
 dotenv.config();
 export default {
@@ -99,7 +94,9 @@ export default {
       content: null,
 
       editor: ClassicEditor,
+      //configuration of the editor
       editorConfig: {
+        //plugins for the editor
         plugins: [
           Heading,
           EssentialsPlugin,
@@ -128,7 +125,7 @@ export default {
           ImageInsert,
           PageBreak,
         ],
-
+        //toolbar for the editor
         toolbar: {
           items: [
             "heading",
@@ -159,7 +156,9 @@ export default {
           ],
           shouldNotGroupWhenFull: true,
         },
+        //height of the editor
         height: "400px",
+        //allowed fontsize
         fontSize: {
           options: ["tiny", "default", "big"],
         },
@@ -179,13 +178,16 @@ export default {
   },
   computed: {
     currentUser() {
+      //store the currentuser
       return this.$store.state.auth.user;
     },
     height() {
+      //set the viewing window height
       return window.innerHeight - 200;
     },
   },
   mounted() {
+    //append script tag to import iframely script for rendering video from its url
     const plugin = document.createElement("script");
     plugin.setAttribute(
       "src",
@@ -195,9 +197,11 @@ export default {
     document.head.appendChild(plugin);
   },
   methods: {
+    //close the modal when user leaves
     close() {
       this.$emit("show", false);
     },
+    //function to create thread
     create() {
       const data = {
         user_id: this.currentUser.user_id,
@@ -231,6 +235,7 @@ export default {
         });
     },
 
+    //function to render the video by its url using iframely
     EnableVideo() {
       document.querySelectorAll("oembed[url]").forEach((element) => {
         window.iframely.load(element, element.attributes.url.value);
@@ -239,9 +244,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.ck-editor__editable {
-  height: 44vh;
-}
-</style>

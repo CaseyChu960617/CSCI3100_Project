@@ -41,7 +41,7 @@ img {
 <script>
 import dotenv from "dotenv";
 dotenv.config();
-import DataService from "../../services/DataService";
+import DataService from "../../services/DataService"; //handling HTML requests
 export default {
   props: ["chapterId"],
 
@@ -68,6 +68,7 @@ export default {
     },
 
     enableVideo() {
+      //Render the embed video from its url using iframely
       document.querySelectorAll("oembed[url]").forEach((element) => {
         window.iframely.load(element, element.attributes.url.value);
       });
@@ -76,11 +77,13 @@ export default {
 
   watch: {
     chapterId() {
+      //watch the chage of current viewing chapter id, if it changes, fetch the new chapter
       this.fetchOneChapter();
     },
   },
 
   mounted() {
+    //set the script tag to import iframely sciprt
     const plugin = document.createElement("script");
     plugin.setAttribute(
       "src",
@@ -88,10 +91,10 @@ export default {
     );
     plugin.async = true;
     document.head.appendChild(plugin);
-    console.log("plugin is ", plugin);
   },
 
   updated() {
+    //call function to render the video
     this.enableVideo();
   },
 };

@@ -27,41 +27,42 @@
 }
 </style>
 <script>
-import DataService from "../../services/DataService";
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
-import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
-import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
-import LinkPlugin from "@ckeditor/ckeditor5-link/src/link";
-import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph";
-import List from "@ckeditor/ckeditor5-list/src/list";
-import MathType from "@wiris/mathtype-ckeditor5/src/plugin";
-import Font from "@ckeditor/ckeditor5-font/src/font";
-import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline";
-import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough";
-import Code from "@ckeditor/ckeditor5-basic-styles/src/code";
-import Subscript from "@ckeditor/ckeditor5-basic-styles/src/subscript";
-import Superscript from "@ckeditor/ckeditor5-basic-styles/src/superscript";
-import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
-import HtmlEmbed from "@ckeditor/ckeditor5-html-embed/src/htmlembed";
-import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
-import Image from "@ckeditor/ckeditor5-image/src/image";
-import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar";
-import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption";
-import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle";
-import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize";
-import LinkImage from "@ckeditor/ckeditor5-link/src/linkimage";
-import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert";
-import Heading from "@ckeditor/ckeditor5-heading/src/heading";
-import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
-import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
-import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters";
-import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials";
-import RemoveFormat from "@ckeditor/ckeditor5-remove-format/src/removeformat";
-import CodeBlock from "@ckeditor/ckeditor5-code-block/src/codeblock";
-import Indent from "@ckeditor/ckeditor5-indent/src/indent";
-import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock";
-import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
+//ckeditor features
+import DataService from "../../services/DataService"; //ckeditor features
+import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor"; //ckeditor features
+import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials"; //ckeditor features
+import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold"; //ckeditor features
+import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic"; //ckeditor features
+import LinkPlugin from "@ckeditor/ckeditor5-link/src/link"; //ckeditor features
+import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph"; //ckeditor features
+import List from "@ckeditor/ckeditor5-list/src/list"; //ckeditor features
+import MathType from "@wiris/mathtype-ckeditor5/src/plugin"; //ckeditor features
+import Font from "@ckeditor/ckeditor5-font/src/font"; //ckeditor features
+import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline"; //ckeditor features
+import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough"; //ckeditor features
+import Code from "@ckeditor/ckeditor5-basic-styles/src/code"; //ckeditor features
+import Subscript from "@ckeditor/ckeditor5-basic-styles/src/subscript"; //ckeditor features
+import Superscript from "@ckeditor/ckeditor5-basic-styles/src/superscript"; //ckeditor features
+import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter"; //ckeditor features
+import HtmlEmbed from "@ckeditor/ckeditor5-html-embed/src/htmlembed"; //ckeditor features
+import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed"; //ckeditor features
+import Image from "@ckeditor/ckeditor5-image/src/image"; //ckeditor features
+import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar"; //ckeditor features
+import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption"; //ckeditor features
+import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle"; //ckeditor features
+import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize"; //ckeditor features
+import LinkImage from "@ckeditor/ckeditor5-link/src/linkimage"; //ckeditor features
+import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert"; //ckeditor features
+import Heading from "@ckeditor/ckeditor5-heading/src/heading"; //ckeditor features
+import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight"; //ckeditor features
+import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak"; //ckeditor features
+import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters"; //ckeditor features
+import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials"; //ckeditor features
+import RemoveFormat from "@ckeditor/ckeditor5-remove-format/src/removeformat"; //ckeditor features
+import CodeBlock from "@ckeditor/ckeditor5-code-block/src/codeblock"; //ckeditor features
+import Indent from "@ckeditor/ckeditor5-indent/src/indent"; //ckeditor features
+import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock"; //ckeditor features
+import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment"; //ckeditor features
 import dotenv from "dotenv";
 dotenv.config();
 

@@ -40,7 +40,6 @@
       <v-card-actions>
         <v-spacer />
         <div>
-          <!--<v-btn color="blue darken-1" text @click="close">Preview</v-btn>-->
           <v-btn color="blue darken-1" text @click="create" :disabled="!isValid"
             >Start creating</v-btn
           >
@@ -53,7 +52,6 @@
 <script>
 import subjectsList from "../../assets/subjects.json";
 import DataService from "../../services/DataService";
-//import authHeader from "../../services/auth-header.js";
 export default {
   props: ["dialog", "editedItem"],
   data() {
@@ -70,19 +68,18 @@ export default {
     };
   },
   computed: {
+    //store the data of current user
     currentUser() {
       return this.$store.state.auth.user;
     },
   },
-  created: function() {
-    if (Object.keys(this.editedItem).length > 0) {
-      Object.assign(this.Item, this.editedItem);
-    }
-  },
+
   methods: {
+    //emit an event to close the tutorial form when user leaves
     close() {
       this.$emit("show", false);
     },
+    //functio to create a new tutorial
     create() {
       this.$emit("update:editedItem", this.Item);
       this.$emit("submit");

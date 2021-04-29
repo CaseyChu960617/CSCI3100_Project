@@ -51,6 +51,7 @@ export default {
     };
   },
   computed: {
+    //store the data of currentUser
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -62,6 +63,7 @@ export default {
       this.formData = new FormData();
     },
 
+    //handling change/upload of propic image
     fileChange(file) {
       if (file) {
         this.loading = true;
@@ -88,12 +90,13 @@ export default {
       }
     },
 
+    //function for saving the edited profile data
     save() {
       const data = {
         my_user_id: this.currentUser.user_id,
         profileImage: this.tempsrc,
       };
-
+      //update propic to database
       DataService.updateProPic(data)
         .then((response) => {
           // Update the profile picture locally.
@@ -106,15 +109,15 @@ export default {
           this.$emit("refreshProfile");
         })
         .catch((err) => {
-            // Prompt error and alert messages.
-            if (err.response.status == 401 || err.response.status == 403) {
-              alert("Please Login again");
-              // Sign out the user automatically.
-              this.$store.dispatch("auth/signout");
-              this.$router.push("/home").catch(() => {});
-            } else if (err.response.status == 400) {
-              alert(err.response.data.message);
-            }
+          // Prompt error and alert messages.
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            // Sign out the user automatically.
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
         });
     },
   },

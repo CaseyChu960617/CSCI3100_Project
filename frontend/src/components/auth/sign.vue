@@ -36,6 +36,7 @@ export default {
     };
   },
   methods: {
+    //switch form the indicate whether signup is allowed or not
     switchform() {
       this.signup = !this.signup;
     },

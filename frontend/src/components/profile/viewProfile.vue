@@ -26,11 +26,6 @@
             ></v-col
           ><v-col cols="12" sm="12" md="8">
             <v-container>
-              <!-- <v-text-field
-                readonly
-                v-model="profile.email"
-                label="Email"
-              ></v-text-field> -->
               <v-text-field
                 :loading="loading"
                 readonly
@@ -66,7 +61,7 @@
               ></v-text-field>
               <v-row class="my-1">
                 <v-btn text @click="startChat">Chat</v-btn><v-spacer />
-                <!-- <v-btn text @click="follow">Threads</v-btn><v-spacer /> -->
+
                 <v-btn text @click="viewUserTutorials">Tutorials</v-btn
                 ><v-spacer />
                 <v-btn text v-if="followed" @click="unfollow">Unfollow</v-btn>
@@ -92,6 +87,7 @@ export default {
   },
   computed: {
     gender() {
+      //store the list of gender for editing profile
       return this.genderlist[this.profile.gender - 1];
     },
     firstChar() {
@@ -100,6 +96,7 @@ export default {
       return str.substring(0, 1);
     },
     currentUser() {
+      //store the current user data
       return this.$store.state.auth.user;
     },
     followed() {
@@ -134,6 +131,7 @@ export default {
       });
     },
 
+    //function to follow the user
     follow() {
       const data = {
         my_user_id: this.currentUser.user_id,
@@ -161,7 +159,7 @@ export default {
           }
         });
     },
-
+    //function to unfollow the user
     unfollow() {
       const data = {
         my_user_id: this.currentUser.user_id,

@@ -99,7 +99,7 @@ export default {
   components: {},
   data() {
     return {
-      formData: new FormData(),
+      formData: new FormData(), //define a formData for form inpp=ut
       subjects: subjectsList,
       title: "",
       subject: "",
@@ -141,6 +141,7 @@ export default {
     },
 
     fileChange(file) {
+      //function to handle the change of Thumbnail
       if (file != null) {
         this.loading = true;
         this.formData.append("file", file);
@@ -167,6 +168,7 @@ export default {
     },
 
     save() {
+      //update/save the edited data to database
       const data = {
         tutorial_id: this.$route.params.tutorialId,
         title: this.title,

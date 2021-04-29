@@ -142,6 +142,7 @@ export default {
     };
   },
   methods: {
+    //function to signup
     signup() {
       // The email has to be cuhk link email.
       this.account.email = this.email + "@link.cuhk.edu.hk";
@@ -163,6 +164,7 @@ export default {
           }
         });
     },
+    //swtich form and render the original signin view
     back() {
       this.$emit("switchform");
     },

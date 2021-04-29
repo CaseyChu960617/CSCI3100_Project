@@ -105,40 +105,40 @@ img {
 </style>
 
 <script>
-import DataService from "../../services/DataService";
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
-import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
-import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
-import LinkPlugin from "@ckeditor/ckeditor5-link/src/link";
-import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph";
-import List from "@ckeditor/ckeditor5-list/src/list";
-import MathType from "@wiris/mathtype-ckeditor5/src/plugin";
-import Font from "@ckeditor/ckeditor5-font/src/font";
-import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline";
-import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough";
-import Code from "@ckeditor/ckeditor5-basic-styles/src/code";
-import Subscript from "@ckeditor/ckeditor5-basic-styles/src/subscript";
-import Superscript from "@ckeditor/ckeditor5-basic-styles/src/superscript";
-import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
-import HtmlEmbed from "@ckeditor/ckeditor5-html-embed/src/htmlembed";
-import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
-import Image from "@ckeditor/ckeditor5-image/src/image";
-import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar";
-import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption";
-import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle";
-import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize";
-import LinkImage from "@ckeditor/ckeditor5-link/src/linkimage";
-import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert";
-import Heading from "@ckeditor/ckeditor5-heading/src/heading";
-import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
-import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak";
-import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters";
-import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials";
-import Indent from "@ckeditor/ckeditor5-indent/src/indent";
-import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock";
-import CodeBlock from "@ckeditor/ckeditor5-code-block/src/codeblock";
-import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
+import DataService from "../../services/DataService"; //import ckeditor features
+import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor"; //import ckeditor features
+import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials"; //import ckeditor features
+import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold"; //import ckeditor features
+import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic"; //import ckeditor features
+import LinkPlugin from "@ckeditor/ckeditor5-link/src/link"; //import ckeditor features
+import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph"; //import ckeditor features
+import List from "@ckeditor/ckeditor5-list/src/list"; //import ckeditor features
+import MathType from "@wiris/mathtype-ckeditor5/src/plugin"; //import ckeditor features
+import Font from "@ckeditor/ckeditor5-font/src/font"; //import ckeditor features
+import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline"; //import ckeditor features
+import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough"; //import ckeditor features
+import Code from "@ckeditor/ckeditor5-basic-styles/src/code"; //import ckeditor features
+import Subscript from "@ckeditor/ckeditor5-basic-styles/src/subscript"; //import ckeditor features
+import Superscript from "@ckeditor/ckeditor5-basic-styles/src/superscript"; //import ckeditor features
+import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter"; //import ckeditor features
+import HtmlEmbed from "@ckeditor/ckeditor5-html-embed/src/htmlembed"; //import ckeditor features
+import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed"; //import ckeditor features
+import Image from "@ckeditor/ckeditor5-image/src/image"; //import ckeditor features
+import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar"; //import ckeditor features
+import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption"; //import ckeditor features
+import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle"; //import ckeditor features
+import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize"; //import ckeditor features
+import LinkImage from "@ckeditor/ckeditor5-link/src/linkimage"; //import ckeditor features
+import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert"; //import ckeditor features
+import Heading from "@ckeditor/ckeditor5-heading/src/heading"; //import ckeditor features
+import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight"; //import ckeditor features
+import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak"; //import ckeditor features
+import SpecialCharacters from "@ckeditor/ckeditor5-special-characters/src/specialcharacters"; //import ckeditor features
+import SpecialCharactersEssentials from "@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials"; //import ckeditor features
+import Indent from "@ckeditor/ckeditor5-indent/src/indent"; //import ckeditor features
+import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock"; //import ckeditor features
+import CodeBlock from "@ckeditor/ckeditor5-code-block/src/codeblock"; //import ckeditor features
+import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment"; //import ckeditor features
 import dotenv from "dotenv";
 dotenv.config();
 export default {
@@ -149,7 +149,9 @@ export default {
       commentloading: false,
       content: "",
       editor: ClassicEditor,
+      //configure the ckeditor
       editorConfig: {
+        //plugins for the editor
         plugins: [
           Heading,
           EssentialsPlugin,
@@ -184,7 +186,7 @@ export default {
           SpecialCharacters,
           SpecialCharactersEssentials,
         ],
-
+        //define the features/ functions on the toolbar
         toolbar: {
           items: [
             "heading",
@@ -218,6 +220,7 @@ export default {
             "imageTextAlternative",
           ],
         },
+        //define type that allowed fontsize
         fontSize: {
           options: ["tiny", "default", "big"],
         },
@@ -235,7 +238,7 @@ export default {
       },
     };
   },
-
+  //append the thread when enter the apge
   created() {
     if (this.tshread) {
       this.appendThread();
@@ -243,15 +246,18 @@ export default {
   },
 
   watch: {
+    //watch the change of thread and append new posted comment
     thread() {
       this.appendThread();
     },
   },
 
   computed: {
+    //set the height of the viewing window
     height() {
       return window.innerHeight - 200 - 65;
     },
+    //get the number of comment of that thread
     threadLength() {
       return this.tmpThread.comments.length;
     },

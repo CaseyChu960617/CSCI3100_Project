@@ -19,12 +19,6 @@
             >
               <v-icon dark>mdi-account-arrow-right </v-icon>
             </v-btn>
-            <!--<v-btn id="go-following" v-bind="attrs" v-on="on">
-              <v-icon class="pr-3" color="black" size="40"
-                >mdi-account-arrow-right</v-icon
-              >
-              Following
-            </v-btn>-->
           </template>
           <span>See who you are following</span>
         </v-tooltip>
@@ -148,14 +142,14 @@
 }
 </style>
 <script>
-import DataService from "../../services/DataService";
+import DataService from "../../services/DataService"; //handling HTTP request
 import modal from "./uploadProPic.vue";
 import ChangePassword from "../../components/profile/changePassword.vue";
 
 export default {
   components: {
-    modal,
-    ChangePassword,
+    modal, //use modal component
+    ChangePassword, //use change password component
   },
   props: ["loading", "profile"],
   data() {
@@ -174,19 +168,23 @@ export default {
     };
   },
   computed: {
+    //store the data of current user
     currentUser() {
       return this.$store.state.auth.user;
     },
   },
   watch: {
+    //store the profile data into account variable
     profile() {
       this.account = this.profile;
     },
   },
   methods: {
+    //emit event to child component to swtich the form view for changing password
     changePassword() {
       this.$emit("switchform");
     },
+    //function to save/update the edited profile
     saveProfile() {
       const data = {
         user_id: this.account._id,
@@ -195,11 +193,13 @@ export default {
         username: this.account.username,
         gender: this.account.gender,
       };
+      //request to update profile in database
       DataService.updateProfile(data)
         .then((response) => {
           alert("Profile saved.");
           localStorage.setItem("user", JSON.stringify(response.data));
           this.$store.dispatch("auth/editProfile", response.data);
+          //refresh the profile view after uupdating
           this.refreshProfile();
         })
         .catch((err) => {
@@ -213,12 +213,15 @@ export default {
           }
         });
     },
+    //showing the modal
     show(bool) {
       this.dialog = bool;
     },
+    //switchform then change editability of the original form
     switchform() {
       this.edit = !this.edit;
     },
+    //emit event to child component to refresh profile
     refreshProfile() {
       this.$emit("refreshProfile");
     },
