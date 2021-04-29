@@ -8,9 +8,19 @@ const jwt = require("jsonwebtoken");
 exports.signUp = async (req, res) => {
 
     const { lastname, firstname, username, email, password, gender } = req.body;
-        
+
     try {
-        // If no error, hashed the password and create a new user.
+
+        if (email == "" || password == "")
+            return res.status(400).send({ message: "Email or password cannot be emptied."});
+
+        if (username == "")
+            return res.status(400).send({ message: "Username cannot be emptied."});
+        
+        if (gender < 1 || gender > 3)
+            return res.status(400).send({ message: "Invalid gender."});
+
+            // If no error, hashed the password and create a new user.
         hashedPassword = await bcrypt.hash(password, 10)
         var newUser = await User.create({
             lastname: lastname,
@@ -36,10 +46,7 @@ exports.signUp = async (req, res) => {
          }
         
          // Send email with predefined content and template。.
-         mg.messages().send(data, (err) => {
-             if (err) 
-                 res.status(400).send({ message: err.message });
-         });
+         mg.messages().send(data);
 
          // Generate and sign a token
         const accessToken = jwt.sign({
@@ -48,7 +55,7 @@ exports.signUp = async (req, res) => {
             { expiresIn: '300m'});
 
         // Return json with user info when user is created successfully.
-        res.status(201).json({
+        return res.status(201).json({
             accessToken: accessToken,
             user_id: newUser._id,
             lastname: newUser.lastname,
@@ -62,7 +69,7 @@ exports.signUp = async (req, res) => {
             message: "Registered successfully"
         });
     } catch (err) {
-        res.status(400).send({ message: "User with this email/username has already existed." });
+        return res.status(400).send({ message: "User with this email/username has already existed." });
     }
 };
 
@@ -78,7 +85,7 @@ exports.signIn = async (req, res) => {
 
     // If not exist, handle the error.
     if (!user) {
-        res.status(400).send({ message: "User with this email is not found." });
+        return res.status(400).send({ message: "User with this email is not found." });
     }
 
     else {
@@ -93,7 +100,7 @@ exports.signIn = async (req, res) => {
                 process.env.JWT_ACC_SECRET,
                 {expiresIn: '300m'});
 
-            res.status(200).send({
+            return res.status(200).send({
                 accessToken: accessToken,
                 user_id: user._id,
                 lastname: user.lastname,
@@ -108,71 +115,69 @@ exports.signIn = async (req, res) => {
         }
     else
         // If password is not matched, handle the error.
-        res.status(400).send({ message: "Incorrect password." });
+        return res.status(400).send({ message: "Incorrect password." });
     }
 };
 
 // activateAccount function.
 exports.activateAccount = async (req, res) => {
    
-    // if user_id is not null.
-    if (req.params['user_id']) {
+    try {
+            // Search db for the user with this user_id and update its status.
+            const user = await User.findByIdAndUpdate({ _id: req.params['user_id'] } , 
+                {  activation: true }, 
+                { new: true, lean: true});
 
-        // Search db for the user with this user_id and update its status.
-        const user = await User.findByIdAndUpdate({ _id: user_id } , 
-            {  activation: true }, 
-            { new: true, lean: true});
+            // Generate a token.
+            const accessToken = jwt.sign({
+                user_id: user._id },
+                process.env.JWT_ACC_SECRET,
+                { expiresIn: '300m'});
 
-        // Generate a token.
-        const accessToken = jwt.sign({
-            user_id: user._id },
-            process.env.JWT_ACC_SECRET,
-            { expiresIn: '300m'});
-
-        // Return the new data of the user.
-        res.status(200).json({
-            accessToken: accessToken,
-            user_id: user._id,
-            lastname: user.lastname,
-            firstname: user.firstname,
-            username: user.username,
-            email: user.email,
-            gender: user.gender,
-            activation: user.activation,
-            following: user.following,
-            profileImage: user.profileImage
-         });
-    }
-    else {
-        // If userId is null, handle the error.
-        return res.status(400).send({ message: "Failed to activate account." });
+            // Return the new data of the user.
+            return res.status(200).json({
+                accessToken: accessToken,
+                user_id: user._id,
+                lastname: user.lastname,
+                firstname: user.firstname,
+                username: user.username,
+                email: user.email,
+                gender: user.gender,
+                activation: user.activation,
+                following: user.following,
+                profileImage: user.profileImage
+            });
+    
+    } catch(err) {
+        return res.status(400).send({ message: "User not found." });
     }
 };
 
 exports.generateEmail = async (req, res) => {
     
-    const user = await User.findOne({ _id: req.params['user_id'] });
+    try {
+        const user = await User.findOne({ _id: req.params['user_id'] });
 
-    if (!user) 
-        res.status(400).send({ message: "User not found."});
+        // Email data
+        activate_link= process.env.CLIENT_URL + "/activateAccount/" + user._id
+        const data = {
+                from: 'noreply@urge.org',
+                to: user.email,
+                subject: "Account activiation",
+                template: "testing",
+                "h:X-Mailgun-Variables": '{"test": "test",  "firstname":"John"}',
+                "v:act":activate_link,
+                "v:fname":user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1),
+                inline: "../frontend/src/assets/Logo/urge.gif"
+        }
+
+        // Send Email.
+        mg.messages().send(data);
+
+        return res.status(200).send({ message: "Activation email has been generated."});
     
-    // Email data
-    activate_link= process.env.CLIENT_URL + "/activateAccount/" + user._id
-     const data = {
-            from: 'noreply@urge.org',
-            to: user.email ,
-            subject: "Account activiation",
-            template: "testing",
-            "h:X-Mailgun-Variables": '{"test": "test",  "firstname":"John"}',
-            "v:act":activate_link,
-            "v:fname":user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1),
-            inline: "../frontend/src/assets/Logo/urge.gif"
-     }
-
-     // Send Email.
-     mg.messages().send(data, (err) => {
-         if (err) 
-            res.status(400).send({ message: err.message });
-     });
+    } catch(err) {
+        return res.status(400).send({ message: "User not found."});
+    }
 };
 

@@ -88,7 +88,9 @@ export default {
       else this.message = "Email/Password cannot be empty.";
     },
   },
+
   signup() {
+    console.log("Clicked");
     this.$emit("switchform");
   },
 };

@@ -7,22 +7,32 @@ const jwt = require("jsonwebtoken");
 // getProfile function
 exports.getProfile = async (req, res) => {
   try {
-    User.findOne({ _id: req.params["user_id"] })
+    User.findOne({ _id: new ObjectId(req.params["user_id"]) })
       .select(
         "username firstname lastname email gender following profileImage activation"
       )
       .exec()
       .then((doc) => {
-        res.status(200).send(doc);
+        return res.status(200).send(doc);
       });
   } catch (err) {
-    res.status(400).send({ message: err.message });
+    return res.status(400).send({ message: "user_id is not valid." });
   }
 };
 
 // editProfile function
 exports.editProfile = async (req, res) => {
   const { user_id, firstname, lastname, gender, username } = req.body;
+
+
+  if (email == "" || password == "")
+  return res.status(400).send({ message: "Email or password cannot be emptied."});
+
+  if (username == "")
+  return res.status(400).send({ message: "Username cannot be emptied."});
+
+  if (gender < 1 || gender > 3)
+  return res.status(400).send({ message: "Invalid gender."});
 
   const user = await User.findOne({ _id: user_id }, (err) => {
     if (err) res.status(400).send({ message: err.message });
@@ -33,7 +43,7 @@ exports.editProfile = async (req, res) => {
   } else {
     // Find if there are other user using the new username
     const otherUser = await User.findOne({ username: username }, (err) => {
-      if (err) res.status(400).send({ message: err.message });
+      if (err) return res.status(400).send({ message: err.message });
     });
 
     if (!otherUser) {
@@ -42,7 +52,7 @@ exports.editProfile = async (req, res) => {
       user.lastname = lastname;
       user.gender = gender;
       user.save((err) => {
-        if (err) res.status(400).send({ message: err.message });
+        if (err) return res.status(400).send({ message: err.message });
       });
 
       // Renew token when finish editing profile.
@@ -54,7 +64,7 @@ exports.editProfile = async (req, res) => {
         { expiresIn: "20m" }
       );
 
-      res.status(200).send({
+      return res.status(200).send({
         accessToken: accessToken,
         user_id: user._id,
         lastname: user.lastname,
@@ -73,7 +83,7 @@ exports.editProfile = async (req, res) => {
         user.lastname = lastname;
         user.gender = gender;
         user.save((err) => {
-          if (err) res.status(400).send({ message: err.message });
+          if (err) return res.status(400).send({ message: err.message });
         });
         // Generate a token if password is matched.
         const accessToken = jwt.sign(
@@ -84,7 +94,7 @@ exports.editProfile = async (req, res) => {
           { expiresIn: "20m" }
         );
 
-        res.status(200).send({
+        return res.status(200).send({
           accessToken: accessToken,
           user_id: user._id,
           lastname: user.lastname,
@@ -115,7 +125,7 @@ exports.follow = async (req, res) => {
   );
 
   const user = await User.findOne({ _id: my_user_id }).select("following");
-  res.status(200).send(user.following);
+  return res.status(200).send(user.following);
 };
 
 // unfollow function.
@@ -131,7 +141,7 @@ exports.unfollow = async (req, res) => {
   );
 
   const user = await User.findOne({ _id: my_user_id }).select("following");
-  res.status(200).send(user.following);
+  return res.status(200).send(user.following);
 };
 
 // updateProPic function.
@@ -147,7 +157,7 @@ exports.updateProPic = async (req, res) => {
   );
 
   const user = await User.findOne({ _id: my_user_id }).select("profileImage");
-  res.status(200).send(user.profileImage);
+  return res.status(200).send(user.profileImage);
 };
 
 exports.resetPassword = async (req, res) => {
@@ -176,7 +186,7 @@ exports.getFollower = async (req, res) => {
   ];
 
   try {
-    User.findOne({ _id: req.params["user_id"] })
+    User.findOne({ _id: new ObjectId(req.params["user_id"]) })
       .select("following")
       .populate(populateQuery)
       .exec()
