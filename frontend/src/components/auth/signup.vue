@@ -1,7 +1,10 @@
 <template>
   <v-card>
     <v-toolbar flat>
-      <v-toolbar-title class="display-1 pt-4 pl-4"
+      <v-toolbar-title
+        class="display-1 pl-3 mt-5"
+        style=" white-space: break-spaces;"
+        id="mem-reg"
         >Member Registration</v-toolbar-title
       >
     </v-toolbar>
@@ -9,7 +12,7 @@
       <v-form v-model="isValid">
         <v-container>
           <v-row>
-            <v-col cols="4">
+            <v-col md="4" class="col-12">
               <v-text-field
                 v-model="account.firstname"
                 label="First Name"
@@ -18,7 +21,7 @@
                 :rules="[rules.required]"
               ></v-text-field>
             </v-col>
-            <v-col cols="4"
+            <v-col md="4" class="col-12"
               ><v-text-field
                 v-model="account.lastname"
                 label="Last Name"
@@ -27,7 +30,7 @@
                 :rules="[rules.required]"
               ></v-text-field>
             </v-col>
-            <v-col cols="4"
+            <v-col md="4" class="col-12"
               ><v-select
                 v-model="account.gender"
                 :items="genderlist"
@@ -55,7 +58,7 @@
             :rules="[rules.required]"
           ></v-text-field>
           <v-row>
-            <v-col cols="5">
+            <v-col md="5" class="col-12">
               <v-text-field
                 v-model="account.password"
                 label="Password"
@@ -69,7 +72,7 @@
               ></v-text-field
             ></v-col>
             <v-spacer />
-            <v-col cols="5">
+            <v-col md="5" class="col-12">
               <v-text-field
                 v-model="repeatpassword"
                 label="Repeat Password"
@@ -108,6 +111,17 @@
     </div>
   </v-card>
 </template>
+<style>
+@media screen and (max-width: 392px) {
+  #mem-reg {
+    white-space: break-spaces;
+    font-size: 30px !important;
+  }
+}
+#mem-reg {
+  padding-top: 25px;
+}
+</style>
 
 <script>
 import DataService from "../../services/DataService";
