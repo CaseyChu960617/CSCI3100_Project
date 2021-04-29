@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 
 // getAllThread function.
 exports.getAllThreads = async (req, res) => {
-  
+  try { 
   // Get all threads without filtering and sort by last edited time.
   Thread.find()
     .sort({ lastModifiedAtDate: -1 })
@@ -15,23 +15,29 @@ exports.getAllThreads = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.status(200).send(docs);
+      return res.status(200).send(docs);
     });
+  } catch(err) {
+      return res.status(400).send({ message: err.message });
+  }
 };
 
 // getLatestThreads function.
 exports.getLatestThreads = async (req, res) => {
-
-  // Get 3 latest threads.
-  Thread.find()
-    .sort({ lastModifiedAtDate: -1 })
-    .limit(3)
-    .select("author subject title createdAt lastEditedAt")
-    .populate("author", "_id username")
-    .exec()
-    .then((docs) => {
-      res.status(200).send(docs);
-    });
+  try {
+    // Get 3 latest threads.
+    Thread.find()
+      .sort({ lastModifiedAtDate: -1 })
+      .limit(3)
+      .select("author subject title createdAt lastEditedAt")
+      .populate("author", "_id username")
+      .exec()
+      .then((docs) => {
+        return res.status(200).send(docs);
+      });
+  } catch(err) {
+    return res.status(400).send({ message: err.message });
+  }
 };
 
 // getSubject function.
@@ -46,7 +52,7 @@ exports.getSubject = async (req, res) => {
       .populate("author", "_id username")
       .exec()
       .then((docs) => {
-        res.status(200).send(docs);
+        return res.status(200).send(docs);
       });
     }
     else {
@@ -57,11 +63,11 @@ exports.getSubject = async (req, res) => {
         .populate("author", "_id username")
         .exec()
         .then((docs) => {
-          res.status(200).send(docs);
+          return res.status(200).send(docs);
         });
     }
   } catch (err) {
-    res.status(400).send({ message: err.message });
+    return res.status(400).send({ message: err.message });
   }
 };
 
@@ -79,20 +85,23 @@ exports.getOneThread = async (req, res) => {
       },
     },
   ];
-
-  // Get all data of certain thread with the thread_id.
-  Thread.findById(req.params["thread_id"])
-    .select("author title content comments createdAt lastModifiedAt")
-    .populate(populateQuery)
-    .exec()
-    .then((doc) => {
-      res.status(200).send(doc);
-    });
+  try {
+    // Get all data of certain thread with the thread_id.
+    Thread.findById(req.params["thread_id"])
+      .select("author title content comments createdAt lastModifiedAt")
+      .populate(populateQuery)
+      .exec()
+      .then((doc) => {
+        return res.status(200).send(doc);
+      });
+    } catch(err) {
+      return res.status(400).send({ message: err.message });
+    }
 };
 
 // getMyThreads function.
 exports.getUserThreads = async (req, res) => {
-
+  try {
   // Find all threads that created by current user.
   Thread.find({ author: req.params["user_id"] })
     .sort({ lastModifiedAtDate: -1 })
@@ -100,25 +109,30 @@ exports.getUserThreads = async (req, res) => {
     .populate("author", "_id username")
     .exec()
     .then((docs) => {
-      res.status(200).send(docs);
+      return res.status(200).send(docs);
     });
+  } catch(err) {
+    return res.status(400).send({ message: err.message });
+  }
 };
 
 // getFollowingThreads function.
 exports.getFollowingThreads = async (req, res) => {
 
   const { following } = req.body;
-
-  // get all threads created by the users that is followed by current user.
-  Thread.find({ author: { $in: following } })
-    .sort({ lastModifiedAtDate: -1 })
-    .select("author subject title createdAt lastModifiedAt")
-    .populate("author", "_id username")
-    .exec()
-    .then((err, docs) => {
-      if (err) res.status(400).send({ message: err.message });
-      else res.status(200).send(docs);
-    });
+  try {
+    // get all threads created by the users that is followed by current user.
+    Thread.find({ author: { $in: following } })
+      .sort({ lastModifiedAtDate: -1 })
+      .select("author subject title createdAt lastModifiedAt")
+      .populate("author", "_id username")
+      .exec()
+      .then((docs) => {
+        res.status(200).send(docs);
+      });
+  } catch(err) {
+    return res.status(400).send({ message: err.message });
+  }
 };
 
 // createThread function
