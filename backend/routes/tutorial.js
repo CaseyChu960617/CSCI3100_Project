@@ -22,7 +22,7 @@ router.get("/", getAllTutorials);
 
 router.get("/getLatestTutorials", getLatestTutorials);
 
-router.get("/subjecty/:subject_id", getSubject);
+//router.get("/subject/:subject_id", getSubject);
 
 router.get("/getOneTutorial/:tutorial_id", getOneTutorial);
 
