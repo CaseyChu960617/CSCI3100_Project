@@ -98,7 +98,7 @@ export default {
         profileImage: this.tempsrc,
       };
       //update propic to database
-      DataService.updateProPic(data)
+      DataService.updateProPic(data, { headers: authHeader() })
         .then((response) => {
           // Update the profile picture locally.
           var user = JSON.parse(localStorage.getItem("user"));

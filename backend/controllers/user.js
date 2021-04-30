@@ -185,6 +185,7 @@ exports.updateProPic = async (req, res) => {
   res.status(200).send(user.profileImage);
 };
 
+// changePassword function.
 exports.changePassword = async (req, res) => {
   const { user_id, oldPassword, newPassword } = req.body;
   
@@ -207,6 +208,7 @@ exports.changePassword = async (req, res) => {
   }
 };
 
+// Get follower function.
 exports.getFollower = async (req, res) => {
   var populateQuery = [
     { path: "following", select: "_id username profileImage" },

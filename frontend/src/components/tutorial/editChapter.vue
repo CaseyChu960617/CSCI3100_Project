@@ -13,7 +13,6 @@
         </v-container>
       </template>
     </v-container>
-    <!--<v-btn @click="hi()">dasdsa</v-btn>-->
     <v-row justify="center">
       <v-btn rounded color="#99CFEA" class="black--text my-5" @click="save"
         >Save</v-btn

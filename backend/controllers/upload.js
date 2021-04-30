@@ -35,6 +35,7 @@ exports.uploadProPic = async (req, res) => {
   }
 }
 
+// uploadThumbnail function
 exports.uploadThumbnail = async (req, res) => {
 
   try {
@@ -65,6 +66,7 @@ exports.uploadThumbnail = async (req, res) => {
   }
 }
 
+// uploadTutotrialPic function
 exports.uploadTutorialPic = async (req, res) => {
   try {
        uploadSingleTutorialPic(req, res, (err) => {
@@ -91,6 +93,7 @@ exports.uploadTutorialPic = async (req, res) => {
   }
 }
 
+// uploadDiscussionPic function
 exports.uploadDiscussionPic = async (req, res) => {
   
   try {
