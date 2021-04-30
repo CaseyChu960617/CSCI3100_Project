@@ -4,9 +4,6 @@ import home from "./views/home.vue";
 import tutorial from "./views/tutorial.vue";
 import discussion from "./views/discussion.vue";
 import profile from "./views/profile.vue";
-
-//import chat from "./components/chat/chat.vue";
-
 import activateAccount from "./views/activateAccount.vue";
 import chatList from "./views/chatList.vue";
 import editTutorial from "./views/editTutorial.vue";
@@ -14,10 +11,10 @@ import myTutorial from "./views/myTutorial.vue";
 import viewTutorial from "./views/viewTutorial.vue";
 import userTutorial from "./views/userTutorial.vue";
 import following from "./views/following.vue";
-//import { component } from "vue/types/umd";
 
 Vue.use(Router);
 
+//define routes to different pages
 export const router = new Router({
   mode: "history",
   routes: [

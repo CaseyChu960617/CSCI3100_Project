@@ -3,11 +3,7 @@
     <v-card> </v-card>
     <v-row justify="center">
       <v-col sm="11">
-        <v-card-title
-          >My Tutorials<v-spacer /><!--<v-btn icon @click.stop="dialog = true"
-            ><v-icon>mdi-plus</v-icon></v-btn
-          >--></v-card-title
-        >
+        <v-card-title>My Tutorials<v-spacer /></v-card-title>
         <modal
           :dialog.sync="dialog"
           :editedItem="editedItem"
@@ -15,33 +11,6 @@
           @show="show"
           @submit="save()"
         ></modal>
-
-        <!-- <v-divider />
-          <v-virtual-scroll
-            bench="25"
-            min-height="83vh"
-            max-height="83vh"
-            item-height="75"
-            :items="items"
-          >
-            <template v-slot:default="{ item }">
-              <v-list-item :key="item">
-                <v-list-item-content>
-                  <v-list-item-title class="text-wrap">
-                    <strong>ID {{ item }}</strong>
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider />
-            </template>
-          </v-virtual-scroll> -->
-
-        <!-- <v-col md="6" sm="12"
-        ><v-card tile elevation="16" outlined height="100%">
-          <v-card-text>content</v-card-text>
-        </v-card></v-col
-      ><v-spacer />-->
-
         <v-row>
           <v-col
             cols="12"
@@ -71,9 +40,6 @@
               ></v-img>
               <v-card-title>{{ tutorial.title }}</v-card-title>
               <v-card-text class="sub">{{ tutorial.subject }} </v-card-text>
-              <!--  <v-card-text>
-                Instructor {{ tutorial.author.username }}
-              </v-card-text>-->
             </v-card>
 
             <v-card elevation="8" class="card__face card__face--back" ref="back"
@@ -83,13 +49,6 @@
                   >{{ tutorial.description }}
                 </v-card-text>
                 <div class="btn-container">
-                  <!-- <v-btn class="view-btn">View</v-btn>
-                  <v-btn
-                    class="edit-btn ml-3"
-                    @click="editTutorial(tutorial._id)"
-                    >Edit</v-btn
-                  >
-                  <v-btn class="delete-btn ml-3">Delete</v-btn>-->
                   <v-btn
                     class="mx-2"
                     fab
@@ -153,30 +112,6 @@
       >
         <v-icon color="black">mdi-plus</v-icon>
       </v-btn>
-      <!--<v-btn
-        class="extended mr-0"
-        fab
-        dark
-        small
-        color="#1F5A98"
-        width="185px"
-        @click.stop="dialog = true"
-      >-->
-      <!--<v-icon style="float:left">mdi-plus</v-icon>-->
-      <!-- Create tutorial
-      </v-btn>
-        <v-btn
-        class="extended mr-0"
-        fab
-        dark
-        small
-        color="#1F5A98"
-        width="185px"
-        @click="goToMyTutorial"
-      >
-       View
-        my tutorials
-      </v-btn>-->>
     </v-speed-dial>
   </v-container>
 </template>

@@ -103,7 +103,6 @@
         width="185px"
         @click.stop="dialog = true"
       >
-        <!--<v-icon style="float:left">mdi-plus</v-icon>-->
         Create tutorial
       </v-btn>
       <v-btn
@@ -115,8 +114,7 @@
         width="185px"
         @click="goToMyTutorial"
       >
-        <!--<v-icon style="float:left">mdi-book-open-blank-variant</v-icon>-->View
-        my tutorials
+        View my tutorials
       </v-btn>
     </v-speed-dial>
   </v-container>

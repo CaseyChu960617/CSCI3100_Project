@@ -85,12 +85,6 @@
         </v-col>
       </v-row>
     </div>
-    <!--<autosave
-      :dialog.sync="dialog"
-      @show="show"
-      @autosave="autosave"
-      :currentId="currentId"
-    />-->
   </v-container>
 </template>
 
