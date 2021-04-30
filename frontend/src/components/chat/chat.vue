@@ -11,16 +11,21 @@
       "
     >
       <div>
-        <span class="mr-2">
-          <v-avatar size="45" v-if="chatOpp.profileImage">
-            <v-img :src="chatOpp.profileImage" height="100%" />
-          </v-avatar>
-          <v-avatar v-else color="grey" size="45">
-            <span class="white--text headline">
-              {{ chatOpp.username | firstchar }}</span
-            >
-          </v-avatar> </span
-        >{{ chatOpp.username }}
+        <router-link
+          :to="{ name: 'profile', params: { user_id: chatOpp._id } }"
+          style="text-decoration: none"
+        >
+          <span class="mr-2">
+            <v-avatar size="45" v-if="chatOpp.profileImage">
+              <v-img :src="chatOpp.profileImage" height="100%" />
+            </v-avatar>
+            <v-avatar v-else color="grey" size="45">
+              <span class="white--text headline">
+                {{ chatOpp.username | firstchar }}</span
+              >
+            </v-avatar> </span
+          >{{ chatOpp.username }}</router-link
+        >
       </div>
     </v-card>
     <v-card
