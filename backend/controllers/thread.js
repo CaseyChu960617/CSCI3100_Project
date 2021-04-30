@@ -257,8 +257,11 @@ exports.postComment = async (req, res) => {
             res.status(200).send(doc);
         });
       }
+      else {
+        res.status(400).send({ message: "User not found." });
+      }
   } catch(err) {
-    res.status(400).send({ message: "Invalid user_id/threa_id."});
+    res.status(400).send({ message: "Invalid user_id/thread_id."});
   }
 };
 

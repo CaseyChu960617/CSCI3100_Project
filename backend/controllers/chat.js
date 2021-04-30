@@ -47,7 +47,7 @@ exports.getOneChatById = async (req, res) => {
   try {
 
     // Find the chat and all the messages in the chat with this chat_id.
-    await Chat.findOne({ _id: req.params["chat_id"] })
+    await Chat.findOne({ _id: ObjectId(req.params["chat_id"]) })
       .select("userA userB messages")
       .populate(populateQuery)
       .exec()
@@ -71,7 +71,7 @@ exports.getOneChatById = async (req, res) => {
           res.status(400).send({ message: "Chat not found." });
       });
   } catch(err) {
-    return res.status(400).send({ message: err.message });
+    return res.status(400).send({ message: "Invalid chat_id." });
   }
 };
 
