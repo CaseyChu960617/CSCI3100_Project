@@ -52,19 +52,6 @@ exports.getOneChatById = async (req, res) => {
       .populate(populateQuery)
       .exec()
       .then((doc) => {
-       //// If chat does no exist, create a chat.
-       //if (!doc) {
-       //  Chat.create(
-       //    {
-       //      userA: user_id_1,
-       //      userB: user_id_2,
-       //      messages: [],
-       //    },
-       //    (doc) => {
-       //      res.status(200).send(doc);
-       //    }
-       //  );
-        //} else 
         if (doc)
           res.status(200).send(doc);
         else

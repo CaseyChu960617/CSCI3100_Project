@@ -373,7 +373,7 @@ export default {
 
     //delete tutorial
     deleteTutorial(tutorialId) {
-      DataService.deleteTutorial(tutorialId).catch((err) => {
+      DataService.deleteTutorial(tutorialId, { headers: authHeader() }).catch((err) => {
         // Prompt error and alert messages
         if (err.response.status == 401 || err.response.status == 403) {
           alert("Please Login again");

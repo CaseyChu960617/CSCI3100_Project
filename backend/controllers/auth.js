@@ -20,7 +20,7 @@ exports.signUp = async (req, res) => {
         if (gender < 1 || gender > 3)
             return res.status(400).send({ message: "Invalid gender."});
 
-            // If no error, hashed the password and create a new user.
+        // If no error, hashed the password and create a new user.
         hashedPassword = await bcrypt.hash(password, 10)
         var newUser = await User.create({
             lastname: lastname,
