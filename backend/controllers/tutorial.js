@@ -125,7 +125,7 @@ exports.getUserTutorials = async (req, res) => {
   }
 };
 
-/*// getOneTutorial function
+/*// getFollowingTutorial function
 exports.getFollowingTutorials = async (req, res) => {
 
   const { following } = req.body;
