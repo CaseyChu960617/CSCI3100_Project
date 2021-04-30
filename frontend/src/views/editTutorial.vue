@@ -132,7 +132,7 @@
 import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
 import editChapter from "../components/tutorial/editChapter.vue"; //using editChpater component as child component
 import editMetadata from "../components/tutorial/editMetadata.vue"; //using editMetadata component as child component
-
+import authHeader from "../services/auth-header";
 export default {
   components: {
     editChapter, //delcare editChapter component
@@ -184,7 +184,9 @@ export default {
         content: "",
       };
       //post request to create new chapter
-      DataService.post("tutorial/createChapter", data)
+      DataService.post("tutorial/createChapter", data, {
+        headers: authHeader(),
+      })
         .then(() => {
           DataService.get("tutorial/getOneTutorial", this.tutorial._id).then(
             (response) => {
@@ -208,7 +210,9 @@ export default {
     //function to delete chapter
     deleteChapter(chapter_id) {
       //delete request to delete chapter
-      DataService.deleteChapter(this.tutorial._id, chapter_id)
+      DataService.deleteChapter(this.tutorial._id, chapter_id, {
+        headers: authHeader(),
+      })
         .then(() => {})
         .catch((err) => {
           // Prompt error and alert messages

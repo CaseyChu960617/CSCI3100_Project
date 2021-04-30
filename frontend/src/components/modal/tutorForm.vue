@@ -70,6 +70,8 @@
 <script>
 import subjectsList from "../../assets/subjects.json";
 import DataService from "../../services/DataService";
+import authHeader from "../../services/auth-header";
+
 export default {
   props: ["dialog", "editedItem"],
   data() {
@@ -109,7 +111,9 @@ export default {
       };
 
       // Do a post request to create a new tutorial.
-      DataService.post("tutorial/createTutorial", data)
+      DataService.post("tutorial/createTutorial", data, {
+        headers: authHeader(),
+      })
         .then((response) => {
           let tutorialId = response.data;
           this.$router.push({

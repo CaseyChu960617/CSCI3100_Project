@@ -70,6 +70,7 @@
 </style>
 <script>
 import DataService from "../../services/DataService";
+import authHeader from "../../services/auth-header";
 
 export default {
   data() {
@@ -99,7 +100,7 @@ export default {
 
     changePassword() {
       // Do a put request to change password with the inputs.
-      DataService.changePassword(this.password)
+      DataService.changePassword(this.password, { headers: authHeader() })
         .then(() => {
           // If no error, prompt with a message.
           alert("Password has been reset successfully.");

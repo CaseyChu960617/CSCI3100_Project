@@ -9,11 +9,11 @@ const {
 } = require('../controllers/upload');
 
 // All the routes for Upload Module
-router.post("/uploadProPic", uploadProPic);
+router.post("/uploadProPic", authJwt.verifyToken, uploadProPic);
 
-router.post("/uploadThumbnail", uploadThumbnail);
+router.post("/uploadThumbnail", authJwt.verifyToken, uploadThumbnail);
 
-router.post("/uploadTutorialPic", uploadTutorialPic);
+router.post("/uploadTutorialPic",  uploadTutorialPic);
 
 router.post("/uploadDiscussionPic", uploadDiscussionPic);
 

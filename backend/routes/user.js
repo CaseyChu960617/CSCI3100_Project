@@ -14,15 +14,15 @@ const {
 // All the routes for User module
 router.get("/:user_id", getProfile);
 
-router.put("/editProfile", editProfile);
+router.put("/editProfile", authJwt.verifyToken, editProfile);
 
-router.put("/follow", follow);
+router.put("/follow", authJwt.verifyToken, follow);
 
-router.put("/unfollow", unfollow);
+router.put("/unfollow", authJwt.verifyToken, unfollow);
 
-router.put("/updateProPic", updateProPic);
+router.put("/updateProPic", authJwt.verifyToken, updateProPic);
 
-router.put("/changePassword",  changePassword);
+router.put("/changePassword",  authJwt.verifyToken, changePassword);
 
 router.get("/getFollower/:user_id", getFollower);
 

@@ -77,6 +77,7 @@
 
 <script>
 import DataService from "../../services/DataService";
+import authHeader from "../../services/auth-header";
 
 export default {
   props: ["profile", "loading"],
@@ -107,10 +108,13 @@ export default {
   methods: {
     startChat() {
       // Do a get request to fetch one chat history.
-      DataService.getOneChat({
-        user_id_1: this.currentUser.user_id,
-        user_id_2: this.profile._id,
-      }).then((response) => {
+      DataService.getOneChat(
+        {
+          user_id_1: this.currentUser.user_id,
+          user_id_2: this.profile._id,
+        },
+        { headers: authHeader() }
+      ).then((response) => {
         // Redirect to chat component
         this.$router
           .push({
@@ -139,7 +143,7 @@ export default {
       };
 
       // Do a put request to follow certain user.
-      DataService.follow(data)
+      DataService.follow(data, { headers: authHeader() })
         .then((response) => {
           // Update the following list locally
           var user = JSON.parse(localStorage.getItem("user"));
@@ -167,7 +171,7 @@ export default {
       };
 
       // Do a put request to unfollow certain user.
-      DataService.unfollow(data)
+      DataService.unfollow(data, { headers: authHeader() })
         .then((response) => {
           // Update the following list locally
           var user = JSON.parse(localStorage.getItem("user"));

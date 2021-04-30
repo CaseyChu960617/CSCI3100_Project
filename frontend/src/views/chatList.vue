@@ -61,6 +61,7 @@ import DataService from "../services/DataService"; //handling HTTP request (GET,
 import chat from "../components/chat/chat.vue"; //using a child component chat to render the render interface
 import io from "socket.io-client"; //import socketio for real-time chat
 import dotenv from "dotenv";
+import authHeader from "../services/auth-header";
 dotenv.config();
 
 export default {
@@ -111,7 +112,9 @@ export default {
     //fetch all chatlist to  be shown on the list on the left
     fetchChatList() {
       //get all chat of the current users in the database
-      DataService.get("chat/getAllChats", this.currentUser.user_id)
+      DataService.getAllChats(this.currentUser.user_id, {
+        headers: authHeader(),
+      })
         .then((response) => {
           const rawData = response.data;
           //put each chat info into chatlist array

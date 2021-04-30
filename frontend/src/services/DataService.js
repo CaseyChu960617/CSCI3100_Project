@@ -1,27 +1,23 @@
 import http from "../http-common";
-import authHeader from "./auth-header";
 const thread = "/thread/";
 const tutorial = "/tutorial/";
 const profile = "/user/";
 const subject = "subject/";
 const upload = "/upload/";
 const chat = "/chat/";
-const header = {
-  headers: authHeader(),
-}
 
 
 class DataService {
   getAll(table) {
-    return http.get(`/${table}`, header);
+    return http.get(`/${table}`);
   }
 
   get(table, id) {
     //header) {
-    return http.get(`/${table}/${id}`, header); //, header);
+    return http.get(`/${table}/${id}`); //, header);
   }
 
-  create(table, data) {
+  create(table, data, header) {
     return http.post(`/${table}`, data, header);
   }
 
@@ -29,12 +25,12 @@ class DataService {
     return http.put(`/${table}/${id}`, data, header);
   }
 
-  delete(table, id) {
+  delete(table, id, header) {
     //, //id, header) {
-    return http.delete(`/${table}/${id}`, header); //header);
+    return http.delete(`/${table}/${id}`, header);
   }
 
-  deleteTutorial(tutorial_id) {
+  deleteTutorial(tutorial_id, header) {
     //, //id, header) {
     return http.delete(
       tutorial + `deleteTutorial/${tutorial_id}`,
@@ -42,7 +38,7 @@ class DataService {
     );
   }
 
-  deleteChapter(tutorial_id, chapter_id) {
+  deleteChapter(tutorial_id, chapter_id, header) {
     //, //id, header) {
     return http.delete(
       tutorial + `deleteChapter/${tutorial_id}/${chapter_id}`,
@@ -75,15 +71,15 @@ class DataService {
     return http.delete(thread + id, header);
   }
 
-  postComment(data) {
+  postComment(data, header) {
     return http.put(thread + "postComment", data, header);
   }
 
-  post(table, data) {
+  post(table, data, header) {
     return http.post(`/${table}`, data, header);
   }
 
-  put(table, data) {
+  put(table, data, header) {
     return http.put(`/${table}`, data, header);
   }
 
@@ -95,28 +91,16 @@ class DataService {
     return http.get(tutorial + "getLatestTutorials");
   }
 
-  getLatestThreads() {
-    return http.get(thread + "getLatestThreads");
+  // Chat
+  getAllChats(id, header) {
+    return http.get(chat + "getAllChats/" + id, header);
   }
 
-  // create(table, data, header) {
-  //   return http.post(`/${table}`, data, header);
-  // }
-
-  // post(table, data) {
-  //   return http.post(`/${table}`, data);
-  // }
-
-  // update(table, id, data, header) {
-  //   return http.put(`/${table}/${id}`, data, header);
-  // }
-
-  // delete(table, id, header) {
-  //   return http.delete(`/${table}/${id}`, header);
-  // }
-
-  // Chat
-  getOneChat(data) {
+  getOneChatById(id, header) {
+    return http.get(chat + "getOneChat/" + id, header);
+  }
+  
+  getOneChat(data, header) {
     return http.post(chat + "getOneChat", data, header);
   }
 
@@ -125,31 +109,31 @@ class DataService {
     return http.get(profile + id);
   }
 
-  updateProfile(data) {
+  updateProfile(data, header) {
     return http.put(profile + "editProfile", data, header);
   }
 
-  follow(data) {
+  follow(data, header) {
     return http.put(profile + "follow", data, header);
   }
 
-  unfollow(data) {
+  unfollow(data, header) {
     return http.put(profile + "unfollow", data, header);
   }
 
-  changePassword(data) {
+  changePassword(data, header) {
     return http.put(profile + "changePassword", data, header);
   }
 
-  updateProPic(data) {
+  updateProPic(data, header) {
     return http.put(profile + "updateProPic", data, header);
   }
 
-  uploadThumbnail(formData) {
+  uploadThumbnail(formData, header) {
     return http.post(upload + "uploadThumbnail", formData, header);
   }
 
-  uploadProPic(formData) {
+  uploadProPic(formData, header) {
     return http.post(upload + "uploadProPic", formData, header);
   }
 }

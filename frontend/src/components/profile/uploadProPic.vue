@@ -39,6 +39,7 @@
 
 <script>
 import DataService from "../../services/DataService";
+import authHeader from "../../services/auth-header"
 
 export default {
   props: ["dialog", "src"],
@@ -70,7 +71,7 @@ export default {
         this.formData.append("file", file);
 
         // Do a post request to upload profile picture to cloud storage.
-        DataService.uploadProPic(this.formData)
+        DataService.uploadProPic(this.formData, { headers: authHeader() })
           .then((response) => {
             this.tempsrc = response.data.location;
             this.formData = new FormData();

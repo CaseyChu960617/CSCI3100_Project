@@ -26,11 +26,11 @@ router.get('/userThreads/:user_id', getUserThreads);
 
 //router.post('/followingThreads', authJwt, getFollowingThreads);
 
-router.post('/', createThread);
+router.post('/', authJwt.verifyToken, createThread);
 
 //router.put('/editThread',  editThread);
 
-router.put('/postComment', postComment);
+router.put('/postComment', authJwt.verifyToken, postComment);
 
 //router.delete('/deleteThread', authJwt.verifyToken, deleteThread);
 

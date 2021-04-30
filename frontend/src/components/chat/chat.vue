@@ -170,7 +170,7 @@
 <script>
 //import io from "socket.io-client";
 import DataService from "../../services/DataService";
-
+import authHeader from "../../services/auth-header";
 export default {
   props: ["chatId", "socket", "oppUsername"],
   computed: {
@@ -232,7 +232,9 @@ export default {
       this.loading = true;
 
       // Do a get request to fetch history of a chat
-      DataService.get("chat/getOneChat", this.chatId)
+      DataService.getOneChatById(this.chatId, {
+        headers: authHeader(),
+      })
         .then((response) => {
           this.messages = response.data.messages;
           this.loading = false;

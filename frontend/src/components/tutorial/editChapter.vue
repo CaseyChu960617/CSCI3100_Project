@@ -64,6 +64,7 @@ import Indent from "@ckeditor/ckeditor5-indent/src/indent"; //ckeditor features
 import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock"; //ckeditor features
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment"; //ckeditor features
 import dotenv from "dotenv";
+import authHeader from "../../services/auth-header";
 dotenv.config();
 
 export default {
@@ -204,7 +205,7 @@ export default {
       };
 
       // Do a put request to update the chapter information to server and database
-      DataService.put("tutorial/editChapter", data)
+      DataService.put("tutorial/editChapter", data, { headers: authHeader() })
         .then(() => {
           // After the editting, fetch the latest data of the chapter
           DataService.get("tutorial/getOneChapter", this.chapterId).then(

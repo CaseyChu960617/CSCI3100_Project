@@ -140,6 +140,7 @@ import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock"; //import c
 import CodeBlock from "@ckeditor/ckeditor5-code-block/src/codeblock"; //import ckeditor features
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment"; //import ckeditor features
 import dotenv from "dotenv";
+import authHeader from "../../services/auth-header";
 dotenv.config();
 export default {
   props: ["thread", "loading"],
@@ -296,7 +297,7 @@ export default {
       };
       // Do a put request to create a comment and put it to the list of comments
       // of the discussion thread.
-      DataService.postComment(data)
+      DataService.postComment(data, { headers: authHeader() })
         .then((response) => {
           this.content = "";
           this.commentloading = false;

@@ -94,6 +94,7 @@
 <script>
 import DataService from "../../services/DataService";
 import subjectsList from "../../assets/subjects.json";
+import authHeader from "../../services/auth-header";
 
 export default {
   components: {},
@@ -145,7 +146,7 @@ export default {
       if (file != null) {
         this.loading = true;
         this.formData.append("file", file);
-        DataService.uploadThumbnail(this.formData)
+        DataService.uploadThumbnail(this.formData, { headers: authHeader() })
           .then((response) => {
             this.thumbnail = response.data.location;
             this.formData = new FormData();
@@ -179,7 +180,7 @@ export default {
       };
 
       // Do a put request to update tutorial information to server and database
-      DataService.put("tutorial/editTutorial", data)
+      DataService.put("tutorial/editTutorial", data, { headers: authHeader() })
         .then(() => {
           alert("Saved successfully!");
         })

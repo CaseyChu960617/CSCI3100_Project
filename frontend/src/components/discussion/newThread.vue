@@ -78,6 +78,7 @@ import Heading from "@ckeditor/ckeditor5-heading/src/heading"; //import ckeditor
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight"; //import ckeditor features
 import PageBreak from "@ckeditor/ckeditor5-page-break/src/pagebreak"; //import ckeditor features
 import dotenv from "dotenv";
+import authHeader from "../../services/auth-header"
 dotenv.config();
 export default {
   props: ["dialog"],
@@ -211,7 +212,7 @@ export default {
       };
 
       // Do a post request to create a new dicussion thread.
-      DataService.createThread(data)
+      DataService.createThread(data, { headers: authHeader() })
         .then((response) => {
           let thread_id = response.data;
           alert("Discussion thread created successfully.");
