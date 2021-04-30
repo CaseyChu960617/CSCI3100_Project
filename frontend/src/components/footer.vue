@@ -2,6 +2,7 @@
   <div>
     <v-app-bar color="#1F5A98" class="white--text foot" flat height="100">
       <v-card-text
+        id="footer-text"
         style="overflow-y: auto; height:100px; maxWidth: 500px;"
         max-width="500"
       >
@@ -21,3 +22,13 @@
     </v-app-bar>
   </div>
 </template>
+<style>
+#footer-text::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#footer-text {
+  scrollbar-width: none; /* Firefox */
+}
+</style>
