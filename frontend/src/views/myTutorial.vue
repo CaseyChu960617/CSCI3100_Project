@@ -207,7 +207,7 @@
 import modal from "../components/modal/tutorForm.vue"; //using a child component to render a pop-up modal on the same page
 import DataService from "../services/DataService"; //handling HTTP request (GET,POST,PUT,DELETE,...)
 import subjectsList from "../assets/subjects.json"; //import a json object from a json file stored CUHK subject list
-
+import authHeader from "../services/auth-header";
 export default {
   components: {
     modal,
@@ -308,16 +308,18 @@ export default {
 
     //delete tutorial
     deleteTutorial(tutorialId) {
-      DataService.deleteTutorial(tutorialId, { headers: authHeader() }).catch((err) => {
-        // Prompt error and alert messages
-        if (err.response.status == 401 || err.response.status == 403) {
-          alert("Please Login again");
-          this.$store.dispatch("auth/signout");
-          this.$router.push("/home").catch(() => {});
-        } else if (err.response.status == 400) {
-          alert(err.response.data.message);
+      DataService.deleteTutorial(tutorialId, { headers: authHeader() }).catch(
+        (err) => {
+          // Prompt error and alert messages
+          if (err.response.status == 401 || err.response.status == 403) {
+            alert("Please Login again");
+            this.$store.dispatch("auth/signout");
+            this.$router.push("/home").catch(() => {});
+          } else if (err.response.status == 400) {
+            alert(err.response.data.message);
+          }
         }
-      });
+      );
 
       this.tutorials.forEach((element, index, object) => {
         if (tutorialId === element._id) object.splice(index, 1);
