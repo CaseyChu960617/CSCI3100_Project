@@ -153,7 +153,7 @@ exports.createTutorial = async (req, res) => {
     
     const user = await User.findOne({ _id: ObjectId(user_id)});
 
-    if (!isNaN(subject)| subject > 0 | subject < 0)
+    if (!isNaN(subject)| subject > 154 | subject < 0)
       res.status(400).send({ message: "Invalid subject_id." });
 
     if (user) {
@@ -180,7 +180,7 @@ exports.createTutorial = async (req, res) => {
       res.status(400).send({ message: "User not found." });
     }
   } catch(err) {
-    res.status(400).send({ message: err.message});
+    res.status(400).send({ message: "Invalid user_id."});
 
   }
 };
@@ -251,7 +251,7 @@ exports.editTutorial = async (req, res) => {
       else res.status(400).send({ message: "Tutorial not found."});
     });
   } catch(err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).send({ message: "Invalid tutorial_id." });
   }
 };
 
@@ -344,7 +344,7 @@ exports.deleteTutorial = async (req, res) => {
       res.status(400).send({ message: "Tutorial not found." });
     }
   } catch(err) {
-    res.status(400).send({ message: err.message});
+    res.status(400).send({ message: "Invalid tutorial_id."});
   }
 };
 
@@ -371,6 +371,6 @@ exports.deleteChapter = async (req, res) => {
       res.status(400).send({ message: "Chapter not found." });
     }
   } catch(err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).send({ message: "Invalid chapter_id/tutorial_id." });
   }
 };
