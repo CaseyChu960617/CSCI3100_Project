@@ -112,19 +112,23 @@ exports.getOneChat = async (req, res) => {
 
 // Send message function.
 exports.sendMessage = async (data) => {
+  try {
     // Create a new message and push the objectId 
     // to the messages list in corresponding chat
     const newMessage = new Message(
       {
-        sender: ObjectId(data.sender._id),
+        sender: new ObjectId(data.sender._id),
         message: data.message,
         timestamp: data.timestamp,
       });
 
     newMessage.save();
-    console.log(newMessage._id);
+
     Chat.findOneAndUpdate(
       { _id: data.chatId },
-      { $push: { messages: newMessage._id } }, (err) => {
-      });
+      { $push: { messages: newMessage._id } });
+      
+  } catch(err) {
+
+  }
 }
