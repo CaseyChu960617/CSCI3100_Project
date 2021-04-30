@@ -81,7 +81,7 @@ exports.editProfile = async (req, res) => {
         user.lastname = lastname;
         user.gender = gender;
         user.save();
-        
+
         // Generate a token if password is matched.
         const accessToken = jwt.sign(
           {
@@ -112,33 +112,52 @@ exports.editProfile = async (req, res) => {
 // follow function.
 exports.follow = async (req, res) => {
   const { my_user_id, follow_id } = req.body;
+  
+  try {
+    User.findOneAndUpdate(
+      { _id: my_user_id },
+      { $push: { following: follow_id } },
+      (err) => {
+        if (err) res.status(400).send({ message: err.message });
+      }
+    );
 
-  User.findOneAndUpdate(
-    { _id: my_user_id },
-    { $push: { following: follow_id } },
-    (err) => {
-      if (err) res.status(400).send({ message: err.message });
+    const user = await User.findOne({ _id: my_user_id }).select("following");
+    if (user) {
+      res.status(200).send(user.following);
     }
-  );
-
-  const user = await User.findOne({ _id: my_user_id }).select("following");
-  res.status(200).send(user.following);
+    else {
+      res.status(400).send({ message: "User not found."});
+    }
+  } catch(err) {
+    res.statsu(400).send({ message: "Invalid user_id." });
+  }
 };
 
 // unfollow function.
 exports.unfollow = async (req, res) => {
   const { my_user_id, follow_id } = req.body;
   //  console.log(my_user_id);
-  User.findOneAndUpdate(
-    { _id: my_user_id },
-    { $pullAll: { following: [ObjectId(follow_id)] } },
-    (err) => {
-      if (err) res.status(400).send({ message: err.message });
-    }
-  );
 
-  const user = await User.findOne({ _id: my_user_id }).select("following");
-  res.status(200).send(user.following);
+  try {
+    User.findOneAndUpdate(
+      { _id: my_user_id },
+      { $pullAll: { following: [ObjectId(follow_id)] } },
+      (err) => {
+        if (err) res.status(400).send({ message: err.message });
+      }
+    );
+
+    const user = await User.findOne({ _id: my_user_id }).select("following");
+    if (user) {
+      res.status(200).send(user.following);
+    }
+    else {
+      res.status(400).send({ message: "User not found."});
+    }
+  } catch(err) {
+    res.status(400).send({ message: "Invalid user_id."});
+  }
 };
 
 // updateProPic function.
@@ -159,21 +178,25 @@ exports.updateProPic = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
   const { user_id, oldPassword, newPassword } = req.body;
+  
+  try {
+    const user = await User.findOne({ _id: ObjectId(user_id) });
 
-  const user = await User.findOne({ _id: user_id });
-
-  // If user is not found.
-  if (!user) res.status(400).send({ message: err.message });
-  else {
-    // compare the input with the old password.
-    if (await bcrypt.compare(oldPassword, user.password)) {
-      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-      user.password = hashedNewPassword;
-      user.save((err) => {
-        if (err) res.status(400).send({ message: err.message });
-      });
-      res.status(200).send({ message: "Password has been reset successfully" });
-    } else res.status(400).send({ message: "Old password is not matched." });
+    // If user is not found.
+    if (!user) res.status(400).send({ message: "User not found." });
+    else {
+      // compare the input with the old password.
+      if (await bcrypt.compare(oldPassword, user.password)) {
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedNewPassword;
+        user.save((err) => {
+          if (err) res.status(400).send({ message: err.message });
+        });
+        res.status(200).send({ message: "Password has been reset successfully" });
+      } else res.status(400).send({ message: "Old password is not matched." });
+    }
+  } catch(err) {
+    res.status(400).send({ message: "Invalid user_id."});
   }
 };
 
@@ -183,7 +206,7 @@ exports.getFollower = async (req, res) => {
   ];
 
   try {
-    User.findOne({ _id: new ObjectId(req.params["user_id"]) })
+    User.findOne({ _id: ObjectId(req.params["user_id"]) })
       .select("following")
       .populate(populateQuery)
       .exec()
@@ -191,6 +214,6 @@ exports.getFollower = async (req, res) => {
         res.status(200).send(doc);
       });
   } catch (err) {
-    return res.status(400).send({ message: err.message });
+    return res.status(400).send({ message: "Invalid user_id." });
   }
 };

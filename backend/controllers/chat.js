@@ -95,40 +95,40 @@ exports.getOneChat = async (req, res) => {
 
   try {
 
-    const userA = User.findOne({ _id: ObjectId(user_id_1)});
-    const userB = User.findOne({ _id: ObjectId(user_id_2)});
+    const userA = await User.findOne({ _id: ObjectId(user_id_1)});
+    const userB = await User.findOne({ _id: ObjectId(user_id_2)});
 
     if (userA && userB) {
-    // Find one chat with two user_id.
-    await Chat.findOne({
-      $or: [
-        { userA: user_id_1, userB: user_id_2 },
-        { userA: user_id_2, userB: user_id_1 },
-      ],
-    })
-    .select("userA userB messages")
-    .populate(populateQuery)
-    .exec()
-    .then((doc) => {
-      // If the chat does not exist, create a chat.
-        if (!doc) {
-          Chat.create(
-            {
-              userA: user_id_1,
-              userB: user_id_2,
-              messages: [],
-              createdAtDate: new Date().getTime(),
-            },
-            (doc) => {
-              res.status(200).send(doc);
-            });
-        } else res.status(200).send(doc);
-      });
+      // Find one chat with two user_id.
+      await Chat.findOne({
+        $or: [
+          { userA: user_id_1, userB: user_id_2 },
+          { userA: user_id_2, userB: user_id_1 },
+        ],
+      })
+      .select("userA userB messages")
+      .populate(populateQuery)
+      .exec()
+      .then((doc) => {
+        // If the chat does not exist, create a chat.
+          if (!doc) {
+            Chat.create(
+              {
+                userA: user_id_1,
+                userB: user_id_2,
+                messages: [],
+                createdAtDate: new Date().getTime(),
+              },
+              (doc) => {
+                res.status(200).send(doc);
+              });
+          } else res.status(200).send(doc);
+        });
     } else {
       res.status(400).send({ message: "User not found." });
     }
   } catch(err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).send({ message: "Invalid user_ids." });
   }
 };
 
