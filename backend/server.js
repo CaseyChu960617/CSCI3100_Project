@@ -78,7 +78,6 @@ io.on("connection", async (socket) => {
     io.to(data.chatId).emit("updateMessage", data);
     sendMessage(data);
   });
-
   socket.on("leave", (data) => {
     socket.disconnect();
     console.log("disconnected");
