@@ -24,7 +24,7 @@ exports.getAllChats = async (req, res) => {
       res.status(400).send({ message: "User not found."});
     }
   } catch(err) {
-    return res.status(400).send({ message: err.message });
+    return res.status(400).send({ message: "Invalid user_id." });
   }
 };
 
@@ -46,27 +46,29 @@ exports.getOneChatById = async (req, res) => {
 
   try {
 
-    
-
     // Find the chat and all the messages in the chat with this chat_id.
     await Chat.findOne({ _id: req.params["chat_id"] })
       .select("userA userB messages")
       .populate(populateQuery)
       .exec()
       .then((doc) => {
-        // If chat does no exist, create a chat.
-        if (!doc) {
-          Chat.create(
-            {
-              userA: user_id_1,
-              userB: user_id_2,
-              messages: [],
-            },
-            (doc) => {
-              res.status(200).send(doc);
-            }
-          );
-        } else res.status(200).send(doc);
+       //// If chat does no exist, create a chat.
+       //if (!doc) {
+       //  Chat.create(
+       //    {
+       //      userA: user_id_1,
+       //      userB: user_id_2,
+       //      messages: [],
+       //    },
+       //    (doc) => {
+       //      res.status(200).send(doc);
+       //    }
+       //  );
+        //} else 
+        if (doc)
+          res.status(200).send(doc);
+        else
+          res.status(400).send({ message: "Chat not found." });
       });
   } catch(err) {
     return res.status(400).send({ message: err.message });

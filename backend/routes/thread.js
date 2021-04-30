@@ -28,7 +28,7 @@ router.get('/userThreads/:user_id', getUserThreads);
 
 router.post('/', createThread);
 
-router.put('/editThread',  editThread);
+//router.put('/editThread',  editThread);
 
 router.put('/postComment', postComment);
 

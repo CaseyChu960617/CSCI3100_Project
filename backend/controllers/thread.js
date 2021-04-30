@@ -45,7 +45,7 @@ exports.getSubject = async (req, res) => {
 
   try {
 
-    if (!isNaN(req.params["subject_id"])) { 
+    if (!isNaN(req.params["subject_id"])||req.params["subject_id"]<0 || req.params["subject_id"]>154) { 
       // If no subject filter, get all threads.
       if (req.params["subject_id"] == 0) {
         Thread.find()
@@ -104,7 +104,7 @@ exports.getOneThread = async (req, res) => {
           res.status(400).send({ message: "Tutorial not found."});
       });
     } catch(err) {
-      res.status(400).send({ message: err.message });
+      res.status(400).send({ message: "Invalid thread_id." });
     }
 };
 
@@ -125,7 +125,7 @@ exports.getUserThreads = async (req, res) => {
   }
 };
 
-// getFollowingThreads function.
+/*// getFollowingThreads function.
 exports.getFollowingThreads = async (req, res) => {
 
   const { following } = req.body;
@@ -143,7 +143,7 @@ exports.getFollowingThreads = async (req, res) => {
   } catch(err) {
     return res.status(400).send({ message: err.message });
   }
-};
+};*/
 
 // createThread function
 exports.createThread = async (req, res) => {
@@ -180,11 +180,11 @@ exports.createThread = async (req, res) => {
         );
       } else res.status(400).send({ message: "User not found."});
   } catch(err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).send({ message: "Invalid user_id." });
   }
 };
 
-// editThread function.
+/*// editThread function.
 exports.editThread = async (req, res) => {
 
   const { thread_id, title, content } = req.body;
@@ -213,9 +213,9 @@ exports.editThread = async (req, res) => {
     }
 
   } catch(err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).send({ message: "Invalid thread_id" });
   }
-};
+};*/
 
 // postComment function.
 exports.postComment = async (req, res) => {
@@ -260,7 +260,7 @@ exports.postComment = async (req, res) => {
         });
       }
   } catch(err) {
-    res.status(400).send({ message: err.message});
+    res.status(400).send({ message: "Invalid user_id/threa_id."});
   }
 };
 
@@ -281,6 +281,6 @@ exports.deleteThread = async (req, res) => {
       res.status(400).send({ message: "Thread not found."});
     }
   } catch(err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).send({ message: "Invalid thread_id." });
   }
 };
