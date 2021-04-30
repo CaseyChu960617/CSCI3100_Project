@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-app-bar color="#1F5A98" class="white--text" flat height="100">
-      <!-- <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon> -->
       <v-img
         src="../assets/Logo/urge.gif"
         max-width="175"

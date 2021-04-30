@@ -145,7 +145,7 @@
 import DataService from "../../services/DataService"; //handling HTTP request
 import modal from "./uploadProPic.vue";
 import ChangePassword from "../../components/profile/changePassword.vue";
-import authHeader from "../../services/auth-header";
+import authHeader from "../../services/auth-header"
 
 export default {
   components: {
