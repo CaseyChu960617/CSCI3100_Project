@@ -16,7 +16,7 @@ const {
 // All the routes for Discussion forum module
 router.get('/',  getAllThreads);
 
-router.get('/getLatestThreads', getLatestThreads);
+//router.get('/getLatestThreads', getLatestThreads);
 
 router.get('/subject/:subject_id', getSubject);
 

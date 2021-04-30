@@ -114,23 +114,29 @@ exports.follow = async (req, res) => {
   const { my_user_id, follow_id } = req.body;
   
   try {
-    User.findOneAndUpdate(
-      { _id: my_user_id },
-      { $push: { following: follow_id } },
-      (err) => {
-        if (err) res.status(400).send({ message: err.message });
-      }
-    );
+    const followee = await User.findOne({ _id: ObjectId(follow_id)});
 
-    const user = await User.findOne({ _id: my_user_id }).select("following");
-    if (user) {
-      res.status(200).send(user.following);
+    if (followee) {
+      User.findOneAndUpdate(
+        { _id: ObjectId(my_user_id) },
+        { $push: { following: follow_id } },
+        (err) => {
+          if (err) res.status(400).send({ message: err.message });
+        }
+      );
+
+      const user = await User.findOne({ _id: ObjectId(my_user_id) }).select("following");
+      if (user) {
+        res.status(200).send(user.following);
+      } else {
+        res.status(400).send({ message: "User not found."});
+      }
     }
     else {
       res.status(400).send({ message: "User not found."});
     }
   } catch(err) {
-    res.statsu(400).send({ message: "Invalid user_id." });
+    res.status(400).send({ message: "Invalid user_id." });
   }
 };
 
@@ -140,17 +146,24 @@ exports.unfollow = async (req, res) => {
   //  console.log(my_user_id);
 
   try {
-    User.findOneAndUpdate(
-      { _id: my_user_id },
-      { $pullAll: { following: [ObjectId(follow_id)] } },
-      (err) => {
-        if (err) res.status(400).send({ message: err.message });
-      }
-    );
+    const followee = await User.findOne({ _id: ObjectId(follow_id)});
 
-    const user = await User.findOne({ _id: my_user_id }).select("following");
-    if (user) {
-      res.status(200).send(user.following);
+    if (followee) {
+      await User.findOneAndUpdate(
+        { _id: ObjectId(my_user_id) },
+        { $pullAll: { following: [ObjectId(follow_id)] } },
+        (err) => {
+          if (err) res.status(400).send({ message: err.message });
+        }
+      );
+
+      const user = await User.findOne({ _id: ObjectId(my_user_id) }).select("following");
+      if (user) {
+        res.status(200).send(user.following);
+      }
+      else {
+        res.status(400).send({ message: "User not found."});
+      } 
     }
     else {
       res.status(400).send({ message: "User not found."});
@@ -176,7 +189,7 @@ exports.updateProPic = async (req, res) => {
   res.status(200).send(user.profileImage);
 };
 
-exports.resetPassword = async (req, res) => {
+exports.changePassword = async (req, res) => {
   const { user_id, oldPassword, newPassword } = req.body;
   
   try {
@@ -189,9 +202,7 @@ exports.resetPassword = async (req, res) => {
       if (await bcrypt.compare(oldPassword, user.password)) {
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
         user.password = hashedNewPassword;
-        user.save((err) => {
-          if (err) res.status(400).send({ message: err.message });
-        });
+        user.save();
         res.status(200).send({ message: "Password has been reset successfully" });
       } else res.status(400).send({ message: "Old password is not matched." });
     }

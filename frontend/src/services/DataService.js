@@ -138,7 +138,7 @@ class DataService {
   }
 
   changePassword(data) {
-    return http.put(profile + "resetPassword", data, header);
+    return http.put(profile + "changePassword", data, header);
   }
 
   updateProPic(data) {

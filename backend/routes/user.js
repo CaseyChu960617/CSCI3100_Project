@@ -8,7 +8,7 @@ const {
     follow, 
     unfollow, 
     updateProPic, 
-    resetPassword 
+    changePassword 
 } = require("../controllers/user");
 
 // All the routes for User module
@@ -22,7 +22,7 @@ router.put("/unfollow", unfollow);
 
 router.put("/updateProPic", updateProPic);
 
-router.put("/resetPassword",  resetPassword);
+router.put("/changePassword",  changePassword);
 
 router.get("/getFollower/:user_id", getFollower);
 
