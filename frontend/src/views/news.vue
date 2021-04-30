@@ -11,7 +11,7 @@
               sm="6"
               md="4"
               v-for="tutorial in tutorials"
-              :key="tutorial"
+              :key="tutorial._id"
               class="tutorial-card"
               :ref="'' + tutorial._id"
               @mouseover="flip($event, tutorial._id)"
@@ -206,13 +206,13 @@ export default {
       let title_elements = document.querySelectorAll(".des-title");
 
       //set card description height
-      elements.forEach(function(element) {
+      elements.forEach(function (element) {
         element.style.height =
           //reference to parent height in DOM tree
           element.parentElement.parentElement.offsetHeight * 0.68 + "px";
       });
       //set card title height
-      title_elements.forEach(function(element) {
+      title_elements.forEach(function (element) {
         element.style.height =
           //reference to parent height in DOM tree
           element.parentElement.parentElement.offsetHeight * 0.15 + "px";

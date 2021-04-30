@@ -77,7 +77,7 @@ export default {
           })
           .then(() => {
             // Redirect to home page
-            this.$router.push("/home");
+            this.$router.push("/home").catch(() => {});
           })
           .catch((err) => {
             if (err.response.status == 400) {
