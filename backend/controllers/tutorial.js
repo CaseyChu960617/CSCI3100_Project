@@ -148,12 +148,11 @@ exports.createTutorial = async (req, res) => {
 
   const { user_id, subject, title, description } = req.body;
 
-    console.log(user_id);
   try {
     
     const user = await User.findOne({ _id: ObjectId(user_id)});
 
-    if (!isNaN(subject)| subject > 154 | subject < 0)
+    if (!isNaN(subject)|| subject > 154 || subject < 0)
       res.status(400).send({ message: "Invalid subject_id." });
 
     if (user) {
