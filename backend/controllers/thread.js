@@ -153,6 +153,9 @@ exports.createThread = async (req, res) => {
   try {
     // Check if current user exists
     const user = await User.findOne({ _id: ObjectId(user_id)});
+
+    if (!isNaN(subject)| subject > 0 | subject < 0)
+      res.status(400).send({ message: "Invalid subject_id." });
       // If current user exists
       if (user) {
         

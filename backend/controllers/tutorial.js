@@ -31,7 +31,7 @@ exports.getLatestTutorials = async (req, res) => {
     });
 };
 
-// getSubject function
+/*// getSubject function
 exports.getSubject = async (req, res) => {
 
   Tutorial.find({ $and: [{ subject: req.params["subject_id"]}, { published: 1}] })
@@ -42,7 +42,7 @@ exports.getSubject = async (req, res) => {
     .then((docs) => {
       res.status(200).send(docs);
     });
-};
+};*/
 
 // getOneTutorial function
 exports.getOneTutorial = async (req, res) => {
@@ -125,7 +125,7 @@ exports.getUserTutorials = async (req, res) => {
   }
 };
 
-// getOneTutorial function
+/*// getOneTutorial function
 exports.getFollowingTutorials = async (req, res) => {
 
   const { following } = req.body;
@@ -141,14 +141,20 @@ exports.getFollowingTutorials = async (req, res) => {
       if (err) res.status(400).send({ message: err.message });
       else res.status(200).send(docs);
     });
-};
+};*/
 
 // createTutorial function
 exports.createTutorial = async (req, res) => {
 
   const { user_id, subject, title, description } = req.body;
+
+    console.log(user_id);
   try {
+    
     const user = await User.findOne({ _id: ObjectId(user_id)});
+
+    if (!isNaN(subject)| subject > 0 | subject < 0)
+      res.status(400).send({ message: "Invalid subject_id." });
 
     if (user) {
       Tutorial.create(
@@ -170,32 +176,12 @@ exports.createTutorial = async (req, res) => {
             res.status(200).send(doc._id);
         });
     }
-  //User.findById(new ObjectId(user_id), { lean: true }, (err, user) => {
-    //if (err) res.status(400).send({ error: err.message });
-    //if (user) {
-      // Tutorial.create(
-      //   {
-      //     author: user._id,
-      //     title: title,
-      //     subject: subject,
-      //     description: description,
-      //     createdAt: new Date().toLocaleString("zh-HK"),
-      //     lastEditedAt: new Date().toLocaleString("zh-HK"),
-      //     lastModifiedAt: new Date().toLocaleString("zh-HK"),
-      //     lastModifiedAtDate: new Date().getTime(),
-      //     published: false,
-      //   },
-      //   (err, doc) => {
-      //     if (err) 
-      //     res.status(400).send({ message: err.message });
-      //     else 
-      //       res.status(200).send(doc._id);
-      //   }
-      // );
-    //} 
-  //});
+    else {
+      res.status(400).send({ message: "User not found." });
+    }
   } catch(err) {
-    res.status(400).send({ message: "User not found." });
+    res.status(400).send({ message: err.message});
+
   }
 };
 
