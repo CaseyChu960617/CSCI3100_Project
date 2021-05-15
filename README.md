@@ -5,7 +5,7 @@
 ## Purpose: 
 - To develop a multi-functional online learning platform for CUHK students to LEARN and SHARE KNOWLEDGE. 
 
-## 3 Key-functinos of the website:
+## 3 Key-functions of the website:
 
 1. TUTORIAL POSTING AND BROWSING SYSTEM
 - Urge allows all CUHK students and professors to upload their teaching materials online to share knowledge.
