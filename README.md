@@ -24,7 +24,7 @@
 
 ## Installation
 
-Urge requires [Node.js](https://nodejs.org/).
+Urge requires [Node.js](https://nodejs.org/) and [Vue.js](https://vuejs.org/).
 
 - Start the frontend.
    - Under the project folder. (.env is not uploaded to the repo)
