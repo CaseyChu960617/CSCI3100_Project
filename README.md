@@ -1,4 +1,4 @@
-# CSCI3100-Project
+# Urge - A online learning platform - CSCI3100-Project
 - Group: A8
 - Project name: Urge
 
